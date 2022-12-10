@@ -19,6 +19,7 @@ CMAKEFLAGS = \
     -D DEAL_II_CXX_FLAGS="-march=native" \
     -D DEAL_II_WITH_CXX17=OFF \
     -D DEAL_II_COMPONENT_EXAMPLES=OFF 
+PKGCONFIGSET = lib/pkgconfig
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
 
