@@ -37,10 +37,7 @@ else
   OPTFLAGS=-O2 -fPIC
   LOPTFLAGS=-O1 -fPIC
 endif
-ifeq "${TACC_SYSTEM}" "ls6"
-  BLAS_FLAGS = --download-fblaslapack=yes
-  MPI_FLAGS = CC=clang CXX=clang++ FC=flang --download-mpich=yes
-else ifeq "${TACC_SYSTEM}" "nvarm"
+ifeq "${TACC_SYSTEM}" "nvarm"
   BLAS_FLAGS = --download-fblaslapack=yes
   MPI_FLAGS = --with-mpi-compilers=1 --with-cc=`which mpicc` --with-cxx=`which mpicxx` 
 else ifeq "${TACC_SYSTEM}" "oneapi"
@@ -302,6 +299,8 @@ config-help :
 config-view :
 	cat ${PETSC_SRC_DIR}/configure.log
 #	less ${PETSC_DIR}/${PETSC_ARCH}/lib/petsc/conf/configure.log
+log-view :
+	@cat ${PACKAGEROOT}/petsc/petsc-${PACKAGEVERSION}/configure.log
 
 include ${STOCKYARD}/makefiles/Make.git
 GITREPO = https://gitlab.com/petsc/petsc.git
