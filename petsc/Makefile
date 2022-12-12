@@ -285,7 +285,7 @@ petsc_varsfile :
 	                CUDA=${CUDA} DEBUG=${DEBUG} CUSTEXT=${CUSTOMEXT} \
 	                petscarch ) \
 	 && varsfile=vars-$${petscarch}.sh \
-	 && installdir=${PACKAGEROOT}/petsc-${PACKAGEVERSION} \
+	 && installdir=${PACKAGEROOT}/petsc/petsc-${PACKAGEVERSION} \
 	 && make --no-print-directory varsfile VARSFILE=$${varsfile} \
 	        INSTALLDIR=$$installdir \
 	        LIBDIR=$${installdir}/$$petscarch/lib \
