@@ -1,5 +1,5 @@
 cmake -Wno-dev \
-  -D CMAKE_INSTALL_PREFIX:PATH=${PREFIXLOCATION} \
+  -D CMAKE_INSTALL_PREFIX:PATH=${installdir} \
   -D CMAKE_BUILD_TYPE:STRING=RELEASE \
   -D BUILD_SHARED_LIBS:BOOL=ON \
   -D Trilinos_VERBOSE_CONFIGURE=ON \
@@ -139,7 +139,7 @@ cmake -Wno-dev \
   -D SWIG_EXECUTABLE:FILEPATH=${TACC_SWIG_DIR}/bin/swig \
   -D Trilinos_EXTRA_LD_FLAGS=${PYTHON_LOAD_FLAG} \
   \
-  ${TRILINOS_LOCATION}/trilinos-${VERSION}
+  ${srcdir}
 #  | tee /admin/build/admin/rpms/stampede2/SPECS/trilinos-${VERSION}-cmake.log 2>&1
 
 export TEMPORARILY_REMOVED="\
