@@ -4,7 +4,7 @@
 ####
 ################################################################
 
-PACKAGE = dealii
+PACKAGE = DEALII
 PACKAGEROOT = ${STOCKYARD}
 PACKAGEVERSION = 9.4.1
 MAKEINCLUDES = ${STOCKYARD}/makefiles
