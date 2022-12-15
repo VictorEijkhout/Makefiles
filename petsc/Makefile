@@ -20,27 +20,18 @@ MAKEINCLUDES = ${STOCKYARD}/makefiles
 PETSC_SRC_DIR = ${PACKAGEROOT}/petsc/petsc-${PACKAGEVERSION}
 info ::
 	@echo "     [TACC_SYSTEM=system (default: ${TACC_SYSTEM})]"
-ifeq "${TACC_SYSTEM}" "stampede"
-  PETSCARCH = sandybridge
-  OPTPLAGS=-O2 -xhost -g
-  LOPTFLAGS=${OPTFLAGS}
-else ifeq "${TACC_SYSTEM}" "stampede2"
-  PETSCARCH = skx-${TACC_FAMILY_COMPILER}
-  OPTFLAGS=-O2 -fPIC
-  LOPTFLAGS=-O1 -fPIC
+ifeq "${TACC_SYSTEM}" "stampede2"
+  TACC_SYSTEM=skx
 else ifeq "${TACC_SYSTEM}" "frontera"
-  PETSCARCH = clx-${TACC_FAMILY_COMPILER}-${TACC_FAMILY_MPI}-${PACKAGEVERSION}
-  OPTFLAGS=-O2 -fPIC
-  LOPTFLAGS=-O1 -fPIC
-else 
-  PETSCARCH = ${TACC_SYSTEM}
-  OPTFLAGS=-O2 -fPIC
-  LOPTFLAGS=-O1 -fPIC
+  TACC_SYSTEM=clx
+else ifeq "${TACC_SYSTEM}" "frontera"
+  TACC_SYSTEM=milan
 endif
-ifeq "${TACC_SYSTEM}" "ls6"
-  BLAS_FLAGS = --download-fblaslapack=yes
-  MPI_FLAGS = CC=clang CXX=clang++ FC=flang --download-mpich=yes
-else ifeq "${TACC_SYSTEM}" "nvarm"
+PETSCARCH = ${TACC_SYSTEM}-${TACC_FAMILY_COMPILER}-${TACC_FAMILY_MPI}
+OPTFLAGS=-O2 -fPIC
+LOPTFLAGS=-O1 -fPIC
+
+ifeq "${TACC_SYSTEM}" "nvarm"
   BLAS_FLAGS = --download-fblaslapack=yes
   MPI_FLAGS = --with-mpi-compilers=1 --with-cc=`which mpicc` --with-cxx=`which mpicxx` 
 else ifeq "${TACC_SYSTEM}" "oneapi"
@@ -283,15 +274,26 @@ install ::
 	    && ${TIME} make MAKE_NP=4 \
 	  ) 2>&1 | tee $${scriptdir}/$${logfile} \
 	 && popd \
-	 && cat $${logfile} \
-	    | grep '^make.*check' \
-	    | sed -e 's/^make //' -e 's/ check//' -e 's/PETSC/; export PETSC/g' \
-	    | sed -e 's/^ *;//' \
-	    > vars-$${petscarch}.sh \
-	 && echo "export PKG_CONFIG_PATH=$${PKG_CONFIG_PATH}:$${PETSC_DIR}/$${petscarch}/lib/pkgconfig" \
-	    >> vars-$${petscarch}.sh \
-	 && echo && echo "Variable settings: vars-$${petscarch}.sh" \
+	 && varsfile=vars-$${petscarch}.sh \
+	 && make --no-print-directory petsc_varsfile VARSFILE=$$varsfile \
 	 && chmod -R g+rX,o+rX ${PETSC_SRC_DIR}/$${petscarch}
+.PHONY: petsc_varsfile
+include ${MAKEINCLUDES}/Make.vars
+petsc_varsfile :
+	@export petscarch=$$( make --no-print-directory \
+	                SCALAR=${SCALAR} PRECISION=${PRECISION} \
+	                CUDA=${CUDA} DEBUG=${DEBUG} CUSTEXT=${CUSTOMEXT} \
+	                petscarch ) \
+	 && varsfile=vars-$${petscarch}.sh \
+	 && installdir=${PACKAGEROOT}/petsc/petsc-${PACKAGEVERSION} \
+	 && make --no-print-directory varsfile VARSFILE=$${varsfile} \
+	        INSTALLDIR=$$installdir \
+	        LIBDIR=$${installdir}/$$petscarch/lib \
+	        INCDIR=$${installdir}/$$petscarch/include \
+	        PKGCONFIGSET=$${petscarch}/lib/pkgconfig \
+	 && echo "export PETSC_DIR=$$installdir" >>$${varsfile} \
+	 && echo "export PETSC_ARCH=$$petscarch"                           >>$${varsfile} \
+	 && echo && echo "Variable settings in: $${varsfile}" && echo \
 
 info ::
 	@echo "make config-help config-view"
@@ -302,6 +304,8 @@ config-help :
 config-view :
 	cat ${PETSC_SRC_DIR}/configure.log
 #	less ${PETSC_DIR}/${PETSC_ARCH}/lib/petsc/conf/configure.log
+log-view :
+	@cat ${PACKAGEROOT}/petsc/petsc-${PACKAGEVERSION}/configure.log
 
 include ${STOCKYARD}/makefiles/Make.git
 GITREPO = https://gitlab.com/petsc/petsc.git
