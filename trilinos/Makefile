@@ -14,12 +14,12 @@ MODULES =
 
 include ${MAKEINCLUDES}/Make.info
 
-PACKAGEVERSION=git
 TRILINOS_HOME=${STOCKYARD}/trilinos
 TRILINOS_SRC=${TRILINOS_HOME}/trilinos-${PACKAGEVERSION}
 TRILINOS_INSTALL=${TRILINOS_HOME}/installation-${TACC_FAMILY_COMPILER}
 
 info ::
+	@echo "================ cmake configure:"
 	@echo "make configure install"
 	@echo "    [ PACKAGEVERSION=... (default=${PACKAGEVERSION}) ]"
 .PHONY: configure install config-help
