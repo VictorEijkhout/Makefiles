@@ -6,7 +6,7 @@ if [ $# -eq 1 ] ; then
 fi
 
 if [ "${TACC_SYSTEM}" != "macbookair" ] ; then
-    options="P4P=1 KOKKOS=1"
+    options="P4P=1 KOKKOS=1 FORTRAN=0"
     module load cuda
     for d in 1 0 ; do
 	make install DEBUG=$d PACKAGEVERSION=$version \
@@ -15,7 +15,12 @@ if [ "${TACC_SYSTEM}" != "macbookair" ] ; then
     module unload cuda
 fi
 
-options="HDF5=1 METIS=1 P4P=1 KOKKOS=1 SLEPC=1 FFTW=1"
+if [ "${TACC_SYSTEM}" = "ls6" ] ; then
+    fortran=0
+else
+    fortran=1
+fi
+options="HDF5=1 METIS=1 P4P=1 KOKKOS=1 SLEPC=1 FORTRAN=$fortran"
 for d in 1 0 ; do
     # make with default official version
     make install DEBUG=$d PACKAGEVERSION=$version \

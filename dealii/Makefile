@@ -4,9 +4,9 @@
 ####
 ################################################################
 
-PACKAGE = dealii
+PACKAGE = DEALII
 PACKAGEROOT = ${STOCKYARD}
-PACKAGEVERSION = 9.1.1
+PACKAGEVERSION = 9.4.1
 MAKEINCLUDES = ${STOCKYARD}/makefiles
 MODE = mpi
 MODULES = petsc
@@ -19,9 +19,12 @@ CMAKEFLAGS = \
     -D DEAL_II_CXX_FLAGS="-march=native" \
     -D DEAL_II_WITH_CXX17=OFF \
     -D DEAL_II_COMPONENT_EXAMPLES=OFF 
+PKGCONFIGSET = lib/pkgconfig
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
 
-GITURL = https://github.com/dealii/dealii/archive/v${PACKAGEVERSION}.tar.gz
+GITREPO = https://github.com/dealii/dealii/archive/v${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.git
 
+TGZURL = https://github.com/dealii/dealii/releases/download/v${PACKAGEVERSION}/dealii-${PACKAGEVERSION}.tar.gz
+include ${MAKEINCLUDES}/Make.download
