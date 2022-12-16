@@ -28,11 +28,10 @@ include ${MAKEINCLUDES}/Make.install
 # include ${MAKEINCLUDES}/Make.cmake
 # include ${MAKEINCLUDES}/Make.cbuild
 
-TGZURL = https://github.com/cburstedde/p4est/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
+TGZURL = https://p4est.github.io/release/p4est-${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 
 GITREPO = https://github.com/cburstedde/p4est.git
 SUBMODULE = yes
-BOOTSTRAP = ./bootstrap
+PULLAFTERACTIONS = ./bootstrap
 include ${MAKEINCLUDES}/Make.git
-
