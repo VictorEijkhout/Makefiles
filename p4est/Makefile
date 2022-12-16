@@ -13,10 +13,20 @@ MODULES = petsc
 
 include ${MAKEINCLUDES}/Make.info
 
-CONFIGUREFLAGS="LIBS=-mkl --enable-mpi"
+CONFIGURE_FLAGS=--enable-mpi
+## CMAKEFLAGS=--enable-mpi
 PKGCONFIGSET = lib/pkgconfig
+
+##
+## configure version
+##
 include ${MAKEINCLUDES}/Make.configure
 include ${MAKEINCLUDES}/Make.install
+##
+## cmake version
+##
+# include ${MAKEINCLUDES}/Make.cmake
+# include ${MAKEINCLUDES}/Make.cbuild
 
 TGZURL = https://p4est.github.io/release/p4est-${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
