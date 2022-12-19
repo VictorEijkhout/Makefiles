@@ -37,6 +37,9 @@ ifeq "${TACC_SYSTEM}" "nvarm"
 else ifeq "${TACC_SYSTEM}" "oneapi"
   BLAS_FLAGS=--with-blas-lapack-dir=${MKLROOT}
   MPI_FLAGS = --with-mpi-compilers=1 --with-cc=`which mpicc` --with-cxx=`which mpicxx` 
+else ifeq "${TACC_SYSTEM}" "macbookair"
+  BLAS_FLAGS=
+  MPI_FLAGS = --download-mpich=yes
 else
   BLAS_FLAGS=--with-blas-lapack-dir=${MKLROOT}
   MPI_FLAGS = --with-mpi-compilers=1 --with-cc=`which mpicc` --with-cxx=`which mpicxx` 
