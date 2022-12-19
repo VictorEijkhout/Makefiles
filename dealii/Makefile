@@ -22,6 +22,13 @@ CMAKEFLAGS = \
 PKGCONFIGSET = lib/pkgconfig
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
+.PHONY: complex
+info ::
+	@echo "================"
+	@echo "make complex: configure build with complex. Make sure to load complex petsc!"
+complex :
+	@make --no-print-directory configure build PACKAGEVERSION=${PACKAGEVERSION} \
+	    INSTALLEXT="complex" CMAKEFLAGS="${CMAKEFLAGS} -DDEAL_II_WITH_PETSC_COMPLEX=ON"
 
 GITREPO = https://github.com/dealii/dealii/archive/v${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.git
