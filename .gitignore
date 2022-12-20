@@ -2,3 +2,4 @@
 */vars*.sh
 */*~
 */.cmakeopts
+*/cmakeopts
