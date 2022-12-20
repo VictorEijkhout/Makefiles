@@ -51,7 +51,10 @@ configure ::
 	           && echo "export TACC_TRILINOS_LIB=$${INSTALL_PREFIX}/lib64" \
 	        ) > $${varfile} \
 	     && echo "Set environment by sourcing: trilinos_vars.sh" \
-	    ) 2>&1 | tee configure.log \
+	    ) 2>&1 | tee configure.log
+
+old_vars_rule :
+	foo \
 	 && make --no-print-directory varsfile VARSFILE=$$varfile \
 	        PACKAGE=${PACKAGE} \
 	        INSTALLDIR="$${installdir}" \
