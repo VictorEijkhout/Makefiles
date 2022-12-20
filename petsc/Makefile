@@ -14,7 +14,7 @@ info ::
 
 PACKAGE = PETSC
 PACKAGEROOT = ${STOCKYARD}
-PACKAGEVERSION = 3.18.1
+PACKAGEVERSION = 3.18.2
 MAKEINCLUDES = ${STOCKYARD}/makefiles
 MODULEROOT = ${HOME}/modulefiles
 
@@ -278,13 +278,29 @@ install ::
 	    && ${TIME} make MAKE_NP=4 \
 	  ) 2>&1 | tee $${scriptdir}/$${logfile} \
 	 && popd \
-	 && varsfile=vars-$${petscarch}.sh \
-	 && make --no-print-directory petsc_varsfile VARSFILE=$$varsfile \
-	 && chmod -R g+rX,o+rX ${PETSC_SRC_DIR}/$${petscarch}
+	 && make --no-print-directory petsc_varsfile
+public ::
+	@source ${MAKEINCLUDES}/names.sh \
+	 && export MODE=${MODE} && export MODULEROOT=${MODULEROOT} \
+	 && export INSTALLPATH=${PACKAGEROOT}/petsc/petsc-${PACKAGEVERSION}/$$petscarch \
+	 && setnames ${PACKAGEROOT} ${PACKAGE} ${PACKAGEVERSION} ${INSTALLEXT} \
+	 && chmod -R g+rX,o+rX ${INSTALLPATH}
 info ::
 	@echo "make petsc_varsfile"
 .PHONY: petsc_varsfile
 petsc_varsfile :
+	@source ${MAKEINCLUDES}/names.sh \
+	 && export MODE=${MODE} && export MODULEROOT=${MODULEROOT} \
+	 && export INSTALLPATH=${PACKAGEROOT}/petsc/petsc-${PACKAGEVERSION}/$$petscarch \
+	 && setnames ${PACKAGEROOT} ${PACKAGE} ${PACKAGEVERSION} ${INSTALLEXT} \
+	 && make --no-print-directory varsmodule \
+	 && modulefile=$$( make --no-print-directory varsmodulename ) \
+	 && echo " .. adding petsc vars to: $${modulefile}" \
+	 && ( \
+	    echo "setenv( \"PETSC_DIR\",  \"${PACKAGEROOT}/petsc/petsc-${PACKAGEVERSION}\" )" ; \
+	    echo "setenv( \"PETSC_ARCH\", \"$${petscarch}\" )" \
+	    ) >>$${modulefile}
+old_vars_rule :
 	@export petscarch=$$( make --no-print-directory \
 	                SCALAR=${SCALAR} PRECISION=${PRECISION} \
 	                CUDA=${CUDA} DEBUG=${DEBUG} CUSTEXT=${CUSTOMEXT} \
@@ -298,19 +314,7 @@ petsc_varsfile :
 	        PKGCONFIGSET=$${petscarch}/lib/pkgconfig \
 	 && echo "export PETSC_DIR=$$installdir" >>$${varsfile} \
 	 && echo "export PETSC_ARCH=$$petscarch"                           >>$${varsfile} \
-	 && echo && echo "Variable settings in: $${varsfile}" && echo \
-	\
-	 && source ${MAKEINCLUDES}/names.sh \
-	 && export MODE=${MODE} && export MODULEROOT=${MODULEROOT} \
-	 && export INSTALLPATH=${PACKAGEROOT}/petsc/petsc-${PACKAGEVERSION}/$$petscarch \
-	 && setnames ${PACKAGEROOT} ${PACKAGE} ${PACKAGEVERSION} ${INSTALLEXT} \
-	 && make --no-print-directory varsmodule \
-	 && modulefile=$$( make --no-print-directory varsmodulename ) \
-	 && echo " .. adding petsc vars to: $${modulefile}" \
-	 && ( \
-	    echo "setenv( \"PETSC_DIR\",  \"${PACKAGEROOT}/petsc/petsc-${PACKAGEVERSION}\" )" ; \
-	    echo "setenv( \"PETSC_ARCH\", \"$${petscarch}\" )" \
-	    ) >>$${modulefile}
+	 && echo && echo "Variable settings in: $${varsfile}" && echo
 
 info ::
 	@echo "make config-help config-view"
