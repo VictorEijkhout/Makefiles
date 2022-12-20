@@ -59,7 +59,6 @@ configure ::
 	        INCDIR="$${installdir}/include" \
 	        PKGCONFIGSET="${PKGCONFIGSET}" 
 
-include ${MAKEINCLUDES}/Make.vars
 include ${MAKEINCLUDES}/Make.cbuild
 
 TGZURL = https://github.com/trilinos/Trilinos/archive/refs/tags/trilinos-release-${PACKAGEVERSION}.tar.gz
