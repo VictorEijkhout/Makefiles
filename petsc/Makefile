@@ -242,7 +242,7 @@ WITH_X = "--with-x=1"
 
 configure :
 	@echo && echo "there is no configure rule" && echo
-include ${MAKEINCLUDES}/Make.install
+include ${MAKEINCLUDES}/Make.vars
 NOINSTALL = 1
 install ::
 	@if [ ${CUDA} -eq 1 -a -z "${TACC_CUDA_DIR}" ] ; then \
