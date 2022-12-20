@@ -304,7 +304,13 @@ petsc_varsfile :
 	 && export MODE=${MODE} && export MODULEROOT=${MODULEROOT} \
 	 && export INSTALLPATH=${PACKAGEROOT}/petsc/petsc-${PACKAGEVERSION}/$$petscarch \
 	 && setnames ${PACKAGEROOT} ${PACKAGE} ${PACKAGEVERSION} ${INSTALLEXT} \
-	 && make --no-print-directory varsmodule
+	 && make --no-print-directory varsmodule \
+	 && modulefile=$$( make --no-print-directory varsmodulename ) \
+	 && echo " .. adding petsc vars to: $${modulefile}" \
+	 && ( \
+	    echo "setenv( \"PETSC_DIR\",  \"${PACKAGEROOT}/petsc/petsc-${PACKAGEVERSION}\" )" ; \
+	    echo "setenv( \"PETSC_ARCH\", \"$${petscarch}\" )" \
+	    ) >>$${modulefile}
 
 info ::
 	@echo "make config-help config-view"
