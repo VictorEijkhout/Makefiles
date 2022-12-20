@@ -16,6 +16,7 @@ PACKAGE = PETSC
 PACKAGEROOT = ${STOCKYARD}
 PACKAGEVERSION = 3.18.1
 MAKEINCLUDES = ${STOCKYARD}/makefiles
+MODULEROOT = ${HOME}/modulefiles
 
 PETSC_SRC_DIR = ${PACKAGEROOT}/petsc/petsc-${PACKAGEVERSION}
 info ::
@@ -280,8 +281,9 @@ install ::
 	 && varsfile=vars-$${petscarch}.sh \
 	 && make --no-print-directory petsc_varsfile VARSFILE=$$varsfile \
 	 && chmod -R g+rX,o+rX ${PETSC_SRC_DIR}/$${petscarch}
+info ::
+	@echo "make petsc_varsfile"
 .PHONY: petsc_varsfile
-include ${MAKEINCLUDES}/Make.vars
 petsc_varsfile :
 	@export petscarch=$$( make --no-print-directory \
 	                SCALAR=${SCALAR} PRECISION=${PRECISION} \
@@ -297,6 +299,12 @@ petsc_varsfile :
 	 && echo "export PETSC_DIR=$$installdir" >>$${varsfile} \
 	 && echo "export PETSC_ARCH=$$petscarch"                           >>$${varsfile} \
 	 && echo && echo "Variable settings in: $${varsfile}" && echo \
+	\
+	 && source ${MAKEINCLUDES}/names.sh \
+	 && export MODE=${MODE} && export MODULEROOT=${MODULEROOT} \
+	 && export INSTALLPATH=${PACKAGEROOT}/petsc/petsc-${PACKAGEVERSION}/$$petscarch \
+	 && setnames ${PACKAGEROOT} ${PACKAGE} ${PACKAGEVERSION} ${INSTALLEXT} \
+	 && make --no-print-directory varsmodule
 
 info ::
 	@echo "make config-help config-view"
