@@ -6,7 +6,10 @@
 #SBATCH -p small      # Queue (partition) name
 #SBATCH -N 1               # Total # of nodes 
 #SBATCH -n 1              # Total # of mpi tasks
-#SBATCH -t 06:0:00        # Run time (hh:mm:ss)
+#SBATCH -t 24:0:00        # Run time (hh:mm:ss)
 #SBATCH -A A-ccsc       # Allocation name (req'd if you have more than 1)
 
-make configure build JCOUNT=24
+if [ -z "${NOCONFIGURE}" ] ; then
+    make configure
+fi
+make build JCOUNT=24
