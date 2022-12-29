@@ -105,7 +105,7 @@ cmake -Wno-dev \
       -D Trilinos_ENABLE_SEACASExodus:BOOL=${HAS_SEACAS} \
   -D Trilinos_ENABLE_SECONDARY_STABLE_CODE:BOOL=ON \
   -D Trilinos_ENABLE_Shards:BOOL=ON \
-  -D Trilinos_ENABLE_ShyLU:BOOL=ON \
+  -D Trilinos_ENABLE_ShyLU:BOOL=OFF \
   -D Trilinos_ENABLE_Stokhos:BOOL=ON \
   -D Trilinos_ENABLE_Stratimikos:BOOL=ON \
   -D Trilinos_ENABLE_Teko:BOOL=ON \
