@@ -13,3 +13,4 @@ if [ -z "${NOCONFIGURE}" ] ; then
     make configure
 fi
 make build JCOUNT=24
+
