@@ -20,16 +20,22 @@ TRILINOS_INSTALL=${TRILINOS_HOME}/installation-${TACC_FAMILY_COMPILER}
 
 info ::
 	@echo "================ cmake configure:"
-	@echo "make configure install"
+	@echo "make configure"
 	@echo "    [ PACKAGEVERSION=... (default=${PACKAGEVERSION}) ]"
-.PHONY: configure install config-help
+.PHONY: configure
+LIBDIR = lib64
 configure :: 
 	@source ${MAKEINCLUDES}/names.sh \
 	 && export MODE=${MODE} \
 	 && setnames ${PACKAGEROOT} ${PACKAGE} ${PACKAGEVERSION} "" ${PACKAGEBASENAME} \
+	 && source ${MAKEINCLUDES}/compilers.sh \
+	 && setmpicompilers \
+	    \
 	 && rm -rf $$builddir && mkdir -p $$builddir \
 	 && ( \
 	    cd $${builddir} \
+	     && reportnames && echo \
+	     && reportcompilers && echo \
 	    \
 	     && export HAS_PYTHON=0 \
 	     && export PYTHON_VERSION=${TACC_FAMILY_PYTHON_VERSION} \
@@ -46,12 +52,8 @@ configure ::
 	     && export TRILINOS_LOCATION=${TRILINOS_SCRIPTDIR} \
 	     && export COPTFLAGS="-O2" && export MKLFLAG="-mkl" \
 	     && source $${scriptdir}/trilinos_cmake.sh \
-	     && ( \
-	          echo "export TACC_TRILINOS_INC=$${INSTALL_PREFIX}/include" \
-	           && echo "export TACC_TRILINOS_LIB=$${INSTALL_PREFIX}/lib64" \
-	        ) > $${varfile} \
-	     && echo "Set environment by sourcing: trilinos_vars.sh" \
-	    ) 2>&1 | tee configure.log
+	    ) 2>&1 | tee $$configurelog \
+	 && make --no-print-directory varsmodule
 
 old_vars_rule :
 	foo \

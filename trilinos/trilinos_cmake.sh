@@ -12,6 +12,9 @@ cmake -Wno-dev \
   -D Trilinos_ENABLE_Export_Makefiles:BOOL=ON \
   -D Trilinos_ENABLE_Fortran:BOOL=ON \
   \
+  -D CMAKE_C_COMPILER=${CC} \
+  -D CMAKE_CXX_COMPILER=${CXX} \
+  -D CMAKE_Fortran_COMPILER=${FC} \
   -D CMAKE_C_FLAGS:STRING="${COPTFLAGS} ${MKLFLAG}" \
   -D CMAKE_CXX_FLAGS:STRING="${COPTFLAGS} ${MKLFLAG} -DMPICH_SKIP_MPICXX" \
   -D Trilinos_EXTRA_LINK_FLAGS=${PYTHON_LOAD_FLAG} \

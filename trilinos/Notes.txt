@@ -1,2 +1,4 @@
 F: ShyLU temporarily disabled because dealii complains
 
+Cmake seems to have a hard time picking up the compilers, so set CMAKE_C_COMPILER &c explicitly.
+
