@@ -5,16 +5,6 @@ if [ $# -eq 1 ] ; then
   version=$1
 fi
 
-if [ "${TACC_SYSTEM}" = "frontera" -o "${TACC_SYSTEM}" = "ls6" ] ; then
-    options="P4P=1 KOKKOS=1 FORTRAN=0"
-    module load cuda
-    for d in 1 0 ; do
-	make install DEBUG=$d PACKAGEVERSION=$version \
-	     $options CUDA=1
-    done
-    module unload cuda
-fi
-
 if [ "${TACC_SYSTEM}" = "ls6" -o "${TACC_SYSTEM}" = "macbookair" ] ; then
     fortran=0
 else
@@ -25,13 +15,28 @@ if [ "${TACC_SYSTEM}" = "stampede2" ] ; then
 else
     p4p=1
 fi
+slepc=0
 
-options="HDF5=1 METIS=0 P4P=${p4p} KOKKOS=0 SLEPC=1 FORTRAN=${fortran}"
-for d in 1 0 ; do
+##
+## regular versions
+##
+options="HDF5=1 METIS=0 P4P=${p4p} KOKKOS=0 SLEPC=${slepc} FORTRAN=${fortran}"
+for d in 0 1 ; do
     # make with default official version
     make install DEBUG=$d PACKAGEVERSION=$version \
 	$options
-    # make latest git pull
-    # make configure install DEBUG=$d $options PACKAGEVERSION=git
+    exit
 done
 
+##
+## cuda versions
+##
+if [ "${TACC_SYSTEM}" = "frontera" -o "${TACC_SYSTEM}" = "ls6" ] ; then
+    options="P4P=${p4p} KOKKOS=1 FORTRAN=0"
+    module load cuda
+    for d in 1 0 ; do
+	make install DEBUG=$d PACKAGEVERSION=$version \
+	     $options CUDA=1
+    done
+    module unload cuda
+fi

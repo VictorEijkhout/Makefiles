@@ -22,13 +22,12 @@ PETSC_SRC_DIR = ${PACKAGEROOT}/petsc/petsc-${PACKAGEVERSION}
 info ::
 	@echo "     [TACC_SYSTEM=system (default: ${TACC_SYSTEM})]"
 ifeq "${TACC_SYSTEM}" "stampede2"
-  TACC_SYSTEM=skx
+  TACC_SYSTEM_CODE=skx
 else ifeq "${TACC_SYSTEM}" "frontera"
-  TACC_SYSTEM=clx
+  TACC_SYSTEM_CODE=clx
 else ifeq "${TACC_SYSTEM}" "frontera"
-  TACC_SYSTEM=milan
+  TACC_SYSTEM_CODE=milan
 endif
-PETSCARCH = ${TACC_SYSTEM}-${TACC_FAMILY_COMPILER}-${TACC_FAMILY_MPI}
 OPTFLAGS=-O2 -fPIC
 LOPTFLAGS=-O1 -fPIC
 
@@ -66,75 +65,6 @@ CUDA = 0
 info ::
 	@echo "     [CUDA=0/1 (default: ${CUDA})]"
 CUDA_OPTIONS = --with-cuda=1 --with-cuda-dir=${TACC_CUDA_DIR} --with-cuda-gencodearch=70
-  # --with-cuda=<bool>
-  #      Indicate if you wish to test for cuda  current: 0
-  # --with-cuda-dir=<dir>
-  #      Indicate the root directory of the cuda installation
-  # --with-cuda-pkg-config=<dir>
-  #      Look for cuda using pkg-config utility optional directory to look in
-  # --with-cuda-include=<dirs>
-  #      Indicate the directory of the cuda include files
-  # --with-cuda-lib=<libraries: e.g. [/Users/..../libcuda.a,...]>
-  #      Indicate the cuda libraries
-  # --with-cuda-gencodearch
-  #      Cuda architecture for code generation, for example 70, (this may be used by external packages), use all to build a fat binary for distribution
-
-nocuda :
-	        echo "--with-cuda=yes --with-cudac=nvcc --with-cuda-include=${TACC_CUDA_DIR}/targets/x86_64-linux/include/ --with-cuda-lib=[${TACC_CUDA_DIR}/targets/x86_64-linux/lib/libcufft.so,libcusparse.so,libcusolver.so,libcublas.so,libcuda.so,libcudart.so] --with-precision=single --download-cusp=yes CUDAFLAGS=-arch=sm_70 " 
-
-PACKAGES = 
-PACKAGEINFO =
-
-FORTRAN = 1
-info ::
-	@echo "    [FORTRAN=0/1 (default: ${FORTRAN})]"
-ifeq "${FORTRAN}" "1"
-  PACKAGES += --with-fortran-bindings=1 --with-fc=`which mpif90`
-else 
-  PACKAGES += --with-fortran-bindings=0 --with-fc=0
-endif
-
-FFTW = 0
-info ::
-	@echo "    [FFTW=0/1 (default: ${FFTW})]"
-ifeq "${FFTW}${CUDA}" "10"
-  PACKAGES += --with-fftw=1 --download-fftw=1
-endif
-
-MPE = 0
-info ::
-	@echo "    [MPE=0/1 (default: ${MPE})]"
-ifeq "${MPE}" "1"
-  PACKAGES += --with-mpe=1 --download-mpe=1
-endif
-
-PTSCOTCH = 0
-info ::
-	@echo "    [PTSCOTCH=0/1 (default: ${PTSCOTCH})]"
-ifeq "${PTSCOTCH}${CUDA}" "10"
-  PACKAGES += --with-ptscotch=1 --download-ptscotch=1
-endif
-
-SLEPC = 0
-info ::
-	@echo "    [SLEPC=0/1 (default: ${SLEPC})]"
-ifeq "${SLEPC}" "1"
-  PACKAGES += --with-slepc=1 --download-slepc=1
-endif
-
-SUPERLU = 0
-info ::
-	@echo "    [SUPERLU=0/1 (default: ${SUPERLU})]"
-ifeq "${SUPERLU}" "1"
-  PACKAGES +=  --with-superlu=1 --download-superlu=1 --with-superlu_dist=1 --download-superlu_dist=1 --with-cxx-dialect=C++11 --with-openmp=1
-endif
-
-ZOLTAN = 0
-info ::
-	@echo "    [ZOLTAN=0/1 (default: ${ZOLTAN})]"
-ifeq "${ZOLTAN}${CUDA}" "10"
-  PACKAGES += --with-zoltan=1 --download-zoltan=1
-endif
 
 DEBUG = 0
 info ::
@@ -145,7 +75,12 @@ TIME =
 #   PACKAGES += --download-sundials2=1
 # endif
 
+##
+## Petsc Architecture
+##
+
 .PHONY: petscarch
+PETSCARCH = ${TACC_SYSTEM_CODE}-${TACC_FAMILY_COMPILER}-${TACC_FAMILY_MPI}
 petscarch :
 	@export PETSC_EXT="" \
 	  \
@@ -173,67 +108,13 @@ petscarch :
 	      echo ${PETSCARCH}-$${PETSC_EXT} ; \
 	    fi
 
-CEED = 0
-info ::
-	@echo "    [ CEED=0/1 (default: ${CEED})]"
-ifeq "${CEED}"  "1"
-  PACKAGES += --download-libceed=yes --download-libceed-commit=origin/main
-endif
+####
+#### Packages
+####
 
-CHACO = 0
-info ::
-	@echo "    [ CHACO=0/1 (default: ${CHACO})]"
-ifeq "${CHACO}"  "1"
-  PACKAGES += --download-chaco=yes
-endif
-
-EIGEN = 0
-info ::
-	@echo "    [ EIGEN=0/1 (default: ${EIGEN})]"
-ifeq "${EIGEN}" "1"
-  PACKAGES += --download-eigen=yes
-endif
-
-HDF5 = 0
-info ::
-	@echo "    [ HDF5=0/1 (default: ${HDF5})]"
-ifeq "${HDF5}" "1"
-  PACKAGES += --download-hdf5=yes
-endif
-
-HYPRE = 0
-FEI = 0
-info ::
-	@echo "    [ HYPRE=0/1 (default: ${HYPRE})]"
-	@echo "    [FEI=0/1 (default: ${FEI})]"
-ifeq "${HYPRE}" "1"
-  PACKAGES += --download-hypre=yes
-endif
-ifeq "${FEI}" "1"
-  PACKAGES += --download-hypre-configure-arguments=--with-fei
-endif
-
-KOKKOS = 0
-info ::
-	@echo "    [KOKKOS=0/1 (default: ${KOKKOS})]"
-PACKAGEINFO += kokkos:${KOKKOS},
-ifeq "${KOKKOS}" "1"
-  PACKAGES += --with-kokkos=1 --download-kokkos=1
-endif
-
-MUMPS = 0
-info ::
-	@echo "    [MUMPS=0/1 (default: ${MUMPS})]"
-ifeq "${MUMPS}" "1"
-  PACKAGES += --with-mumps=1 --download-mumps=yes --download-scalapack=yes --download-blacs=yes --download-parmetis=yes --download-metis=yes
-endif
-
-P4P = 0
-info ::
-	@echo "    [ P4P=0/1 (default: ${P4P})]"
-ifeq "${P4P}" "1"
-  PACKAGES += --download-petsc4py=yes --with-python=1 --with-python-exec=python3
-endif
+PACKAGES = 
+PACKAGEINFO =
+include Makefile.packages
 
 X = 0
 info ::
@@ -251,7 +132,7 @@ install ::
 	export scriptdir=`pwd` \
 	&& export petscarch=`make --no-print-directory \
 	                SCALAR=${SCALAR} PRECISION=${PRECISION} ALIGN=${ALIGN} \
-	                CUDA=${CUDA} DEBUG=${DEBUG} CUSTEXT=${CUSTOMEXT} \
+	                CUDA=${CUDA} DEBUG=${DEBUG} CUSTOMEXT=${CUSTOMEXT} \
 	                petscarch` \
 	 && export logfile=petsc-$${petscarch}.log \
 	 && pushd ${PETSC_SRC_DIR} \
@@ -262,13 +143,14 @@ install ::
 	  && export I_MPI_FABRICS=shm:tmi \
 	  && ( set -x && date && pwd \
 	    && echo "Installing with packages: ${PACKAGEINFO}" \
-	    && PETSC_ARCH=$$petscarch ${TIME} python3 ./configure \
+	    && export PETSC_ARCH=$${petscarch} \
+	    && ${TIME} python3 ./configure \
 	        ${MPI_FLAGS} \
 	        --useThreads=0 --download-triangle \
-	        --with-precision=${PRECISION} \
 	        --with-scalar-type=${SCALAR} \
-	        --with-np=4 \
+	        --with-precision=${PRECISION} \
 	        --with-memalign=${ALIGN} \
+	        --with-np=4 \
 	        CFLAGS="${OPTFLAGS}" CXXFLAGS="${OPTFLAGS}" FFLAGS="${OPTFLAGS}" \
 	        `if [ ${X} -eq 1 ]    ; then echo ${WITH_X} ; fi ` \
 	        `if [ ${CUDA} -eq 1 ] ; then echo ${CUDA_OPTIONS} ; fi ` \
