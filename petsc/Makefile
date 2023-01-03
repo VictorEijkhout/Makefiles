@@ -27,6 +27,8 @@ else ifeq "${TACC_SYSTEM}" "frontera"
   TACC_SYSTEM_CODE=clx
 else ifeq "${TACC_SYSTEM}" "frontera"
   TACC_SYSTEM_CODE=milan
+else
+  TACC_SYSTEM_CODE=appl
 endif
 OPTFLAGS=-O2 -fPIC
 LOPTFLAGS=-O1 -fPIC
@@ -128,20 +130,21 @@ NOINSTALL = 1
 install ::
 	@if [ ${CUDA} -eq 1 -a -z "${TACC_CUDA_DIR}" ] ; then \
 	    echo && echo "Please load cuda module" && echo && exit 1 \
-	    ; fi
-	export scriptdir=`pwd` \
-	&& export petscarch=`make --no-print-directory \
+	    ; fi \
+	 && export scriptdir=`pwd` \
+	 && export petscarch=`make --no-print-directory \
 	                SCALAR=${SCALAR} PRECISION=${PRECISION} ALIGN=${ALIGN} \
 	                CUDA=${CUDA} DEBUG=${DEBUG} CUSTOMEXT=${CUSTOMEXT} \
 	                petscarch` \
 	 && export logfile=petsc-$${petscarch}.log \
 	 && pushd ${PETSC_SRC_DIR} \
-	  && echo \
-	  && echo "Configuring version=${PACKAGEVERSION} with arch=$${petscarch} in `pwd`" ; echo \
-	  && rm -rf $${petscarch} \
-	  && export PETSC_DIR=`pwd` \
-	  && export I_MPI_FABRICS=shm:tmi \
-	  && ( set -x && date && pwd \
+	 && echo \
+	 && echo "Configuring version=${PACKAGEVERSION} with arch=$${petscarch} in `pwd`" \
+	 && echo \
+	 && rm -rf $${petscarch} \
+	 && export PETSC_DIR=`pwd` \
+	 && export I_MPI_FABRICS=shm:tmi \
+	 && ( set -x && date && pwd \
 	    && echo "Installing with packages: ${PACKAGEINFO}" \
 	    && export PETSC_ARCH=$${petscarch} \
 	    && ${TIME} python3 ./configure \
