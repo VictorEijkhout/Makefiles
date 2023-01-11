@@ -7,34 +7,14 @@
 ################################################################
 
 PACKAGE = MPICH
-PACKAGEROOT = ${HOME}/Installation
-PACKAGEVERSION = 4.1a1
-MAKEINCLUDES = ${HOME}/Software/makefiles
+PACKAGEROOT = ${STOCKYARD}
+PACKAGEVERSION = 4.1rc1
+MAKEINCLUDES = ${STOCKYARD}/makefiles
+MODE = seq
 
 include ${MAKEINCLUDES}/Make.info
 
-MPICH_HOME=${HOME}/Installation/mpich/
-MPICH_SRC=${MPICH_HOME}/mpich-${PACKAGEVERSION}
-MPICH_BUILD=${MPICH_HOME}/build-${PACKAGEVERSION}
-MPICH_INSTALL=${MPICH_HOME}/installation-${PACKAGEVERSION}
-
-MPICH_BIN=${MPICH_INSTALL}/bin
-
-info ::
-	@echo "make configure install"
-configure ::
-	@/bin/rm -rf ${MPICH_BUILD} ${MPICH_INSTALL}
-	@( source ${MAKEINCLUDES}/names.sh \
-	 && setnames ${PACKAGEROOT} ${PACKAGE} ${PACKAGEVERSION} \
-	 && cd $$srcdir \
-	 && rm -rf $$installdir && mkdir -p $$installdir \
-	 && export CC=clang && export CXX=clang++ && export FC=gfortran \
-	 && if [ "${PACKAGEVERSION}" = "git" ] ; then \
-	        ./autogen.sh \
-	    ; fi \
-	 && ./configure --prefix=$$installdir\
-	) 2>&1 | tee configure.log
-
+include ${MAKEINCLUDES}/Make.configure
 include ${MAKEINCLUDES}/Make.install
 
 TGZURL = http://www.mpich.org/static/downloads/${PACKAGEVERSION}/mpich-${PACKAGEVERSION}.tar.gz
