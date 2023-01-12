@@ -17,19 +17,11 @@ PACKAGEROOT = ${STOCKYARD}
 PACKAGEVERSION = 3.18.2
 MAKEINCLUDES = ${STOCKYARD}/makefiles
 MODULEROOT = ${HOME}/modulefiles
+MODE = mpi
 
 PETSC_SRC_DIR = ${PACKAGEROOT}/petsc/petsc-${PACKAGEVERSION}
 info ::
 	@echo "     [TACC_SYSTEM=system (default: ${TACC_SYSTEM})]"
-ifeq "${TACC_SYSTEM}" "stampede2"
-  TACC_SYSTEM_CODE=skx
-else ifeq "${TACC_SYSTEM}" "frontera"
-  TACC_SYSTEM_CODE=clx
-else ifeq "${TACC_SYSTEM}" "frontera"
-  TACC_SYSTEM_CODE=milan
-else
-  TACC_SYSTEM_CODE=appl
-endif
 OPTFLAGS=-O2 -fPIC
 LOPTFLAGS=-O1 -fPIC
 
@@ -41,7 +33,7 @@ else ifeq "${TACC_SYSTEM}" "oneapi"
   MPI_FLAGS = --with-mpi-compilers=1 --with-cc=`which mpicc` --with-cxx=`which mpicxx` 
 else ifeq "${TACC_SYSTEM}" "macbookair"
   BLAS_FLAGS=
-  MPI_FLAGS = --download-mpich=yes
+  MPI_FLAGS = --with-mpi-compilers=1 --with-cc=`which mpicc` --with-cxx=`which mpicxx` 
 else
   BLAS_FLAGS=--with-blas-lapack-dir=${MKLROOT}
   MPI_FLAGS = --with-mpi-compilers=1 --with-cc=`which mpicc` --with-cxx=`which mpicxx` 
@@ -66,7 +58,7 @@ info ::
 CUDA = 0
 info ::
 	@echo "     [CUDA=0/1 (default: ${CUDA})]"
-CUDA_OPTIONS = --with-cuda=1 --with-cuda-dir=${TACC_CUDA_DIR} --with-cuda-gencodearch=70
+CUDA_OPTIONS = --with-cuda=1 --with-cuda-dir=${LMOD_CUDA_DIR} --with-cuda-gencodearch=70
 
 DEBUG = 0
 info ::
@@ -82,15 +74,16 @@ TIME =
 ##
 
 .PHONY: petscarch
-PETSCARCH = ${TACC_SYSTEM_CODE}-${TACC_FAMILY_COMPILER}-${TACC_FAMILY_MPI}
 petscarch :
-	@export PETSC_EXT="" \
+	@source ${MAKEINCLUDES}/names.sh \
+	 && MODE=mpi setnames ${PACKAGEROOT} ${PACKAGE} ${PACKAGEVERSION} ${INSTALLEXT} \
+	 && export PETSC_EXT="" \
 	  \
 	  && if [ "${SCALAR}" = "complex" ] ; then \
 	    export PETSC_EXT=$${PETSC_EXT}complex ; fi \
 	  \
 	  && if [ ${PRECISION} = "single" ] ; then \
-	    export PETSC_EXIT=$${PETSC_EXT}single ; fi \
+	    export PETSC_EXT=$${PETSC_EXT}single ; fi \
 	  \
 	  && if [ ${ALIGN} -ne 16 ] ; then \
 	    export PETSC_EXT=$${PETSC_EXT}a${ALIGN} ; fi \
@@ -104,10 +97,11 @@ petscarch :
 	  && if [ ! -z "${CUSTOMEXT}" ] ; then \
 	    export PETSC_EXT=${CUSTOMEXT} ; fi \
 	  \
+	 && petscarch=$${taccsystemcode}-${LMOD_FAMILY_COMPILER}-${LMOD_FAMILY_MPI} \
 	  && if [ -z $${PETSC_EXT} ] ; then \
-	      echo ${PETSCARCH} ; \
+	      echo $${petscarch} ; \
 	    else \
-	      echo ${PETSCARCH}-$${PETSC_EXT} ; \
+	      echo $${petscarch}-$${PETSC_EXT} ; \
 	    fi
 
 ####
@@ -128,7 +122,7 @@ configure :
 include ${MAKEINCLUDES}/Make.vars
 NOINSTALL = 1
 install ::
-	@if [ ${CUDA} -eq 1 -a -z "${TACC_CUDA_DIR}" ] ; then \
+	@if [ ${CUDA} -eq 1 -a -z "${LMOD_CUDA_DIR}" ] ; then \
 	    echo && echo "Please load cuda module" && echo && exit 1 \
 	    ; fi \
 	 && export scriptdir=`pwd` \
