@@ -12,6 +12,7 @@ PACKAGEVERSION = 4.1rc1
 MAKEINCLUDES = ${STOCKYARD}/makefiles
 MODE = seq
 FAMILY = mpi
+MODULEPATH_ADD = pathJoin(os.getenv(\"MY_MODULEPATH_ROOT\"),\"MPI\",os.getenv(\"LMOD_FAMILY_COMPILER\"),os.getenv(\"LMOD_FAMILY_COMPILER_VERSION\"),"mpich",\"${PACKAGEVERSION}\")
 
 include ${MAKEINCLUDES}/Make.info
 
