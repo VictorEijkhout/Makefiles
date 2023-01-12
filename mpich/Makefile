@@ -11,6 +11,7 @@ PACKAGEROOT = ${STOCKYARD}
 PACKAGEVERSION = 4.1rc1
 MAKEINCLUDES = ${STOCKYARD}/makefiles
 MODE = seq
+FAMILY = mpi
 
 include ${MAKEINCLUDES}/Make.info
 
