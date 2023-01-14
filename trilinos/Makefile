@@ -16,7 +16,7 @@ include ${MAKEINCLUDES}/Make.info
 
 TRILINOS_HOME=${STOCKYARD}/trilinos
 TRILINOS_SRC=${TRILINOS_HOME}/trilinos-${PACKAGEVERSION}
-TRILINOS_INSTALL=${TRILINOS_HOME}/installation-${TACC_FAMILY_COMPILER}
+TRILINOS_INSTALL=${TRILINOS_HOME}/installation-${LMOD_FAMILY_COMPILER}
 
 info ::
 	@echo "================ cmake configure:"
@@ -37,11 +37,6 @@ configure ::
 	     && reportnames && echo \
 	     && reportcompilers && echo \
 	    \
-	     && export HAS_PYTHON=0 \
-	     && export PYTHON_VERSION=${TACC_FAMILY_PYTHON_VERSION} \
-	     && export PYTHON_VERSION=$${PYTHON_VERSION%.*} \
-	     && export PYTHON_LOAD_FLAG=${TACC_PYTHON_LIB}/libpython$${PYTHON_VERSION}.so \
-	    \
 	     && export HAS_HDF5=0 && export HAS_NETCDF=0 && export HAS_MUMPS=0 \
 	     && export HAS_SEACAS=0 && export HAS_STK=0 \
 	    \
@@ -51,18 +46,16 @@ configure ::
 	    \
 	     && export TRILINOS_LOCATION=${TRILINOS_SCRIPTDIR} \
 	     && export COPTFLAGS="-O2" && export MKLFLAG="-mkl" \
+	     && export LMOD_MKL_INC=${MKLROOT}/include \
+	     && export LMOD_MKL_LIB=${MKLROOT}/lib/intel64 \
 	     && source $${scriptdir}/trilinos_cmake.sh \
+	    \
+	     && export HAS_PYTHON=0 \
+	     && export PYTHON_VERSION=3 \
+	     && export PYTHON_VERSION=$${PYTHON_VERSION%.*} \
+	     && export PYTHON_LOAD_FLAG=${TACC_PYTHON_LIB}/libpython$${PYTHON_VERSION}.so \
 	    ) 2>&1 | tee $$configurelog \
 	 && make --no-print-directory varsmodule
-
-old_vars_rule :
-	foo \
-	 && make --no-print-directory varsfile VARSFILE=$$varfile \
-	        PACKAGE=${PACKAGE} \
-	        INSTALLDIR="$${installdir}" \
-	        LIBDIR="$${installdir}/lib" \
-	        INCDIR="$${installdir}/include" \
-	        PKGCONFIGSET="${PKGCONFIGSET}" 
 
 include ${MAKEINCLUDES}/Make.cbuild
 
