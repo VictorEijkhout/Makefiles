@@ -1,4 +1,3 @@
-set -x
 cmake -Wno-dev \
   -D CMAKE_INSTALL_PREFIX:PATH=${installdir} \
   -D CMAKE_BUILD_TYPE:STRING=RELEASE \
@@ -50,7 +49,7 @@ cmake -Wno-dev \
   -D Tpetra_INST_INT_LONG:BOOL=OFF \
   -D Tpetra_INST_INT_UNSIGNED:BOOL=OFF \
   \
-\  -D TPL_ENABLE_Boost:BOOL=ON \
+  -D TPL_ENABLE_Boost:BOOL=ON \
   -D Boost_INCLUDE_DIRS:PATH=$LMOD_BOOST_INC      \
   -D Boost_LIBRARY_DIRS:PATH=$LMOD_BOOST_LIB      \
   -D TPL_ENABLE_BoostLib:BOOL=ON \
