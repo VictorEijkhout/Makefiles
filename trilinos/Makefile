@@ -49,7 +49,7 @@ configure ::
 	     && export COPTFLAGS="-O2" && export MKLFLAG="-mkl" \
 	     && export LMOD_MKL_INC=${MKLROOT}/include \
 	     && export LMOD_MKL_LIB=${MKLROOT}/lib/intel64 \
-	     && if [ -f trilinos_cmake_${TACC_SYSTEM} ] ; then \
+	     && if [ -f trilinos_cmake_${TACC_SYSTEM}.sh ] ; then \
 	            source $${scriptdir}/trilinos_cmake_${TACC_SYSTEM}.sh \
 	        ; else \
 	            source $${scriptdir}/trilinos_cmake.sh \
