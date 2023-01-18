@@ -30,10 +30,10 @@ cmake -Wno-dev \
   \
   -D BLAS_INCLUDE_DIRS:PATH="${LMOD_BLIS_INC}" \
   -D BLAS_LIBRARY_DIRS:PATH="${LMOD_BLIS_LIB}" \
-  -D BLAS_LIBRARY_NAMES:STRING="mkl_intel_lp64;mkl_sequential;mkl_core;pthread" \
+  -D BLAS_LIBRARY_NAMES:STRING="blis" \
   -D LAPACK_INCLUDE_DIRS:PATH="${LMOD_BLIS_INC}" \
   -D LAPACK_LIBRARY_DIRS:PATH="${LMOD_BLIS_LIB}" \
-  -D LAPACK_LIBRARY_NAMES:STRING="mkl_intel_lp64;mkl_sequential;mkl_core;pthread" \
+  -D LAPACK_LIBRARY_NAMES:STRING="blis" \
   \
   -D TPL_ENABLE_HDF5:BOOL=${HAS_HDF5} \
   -D HDF5_INCLUDE_DIRS:PATH=$LMOD_HDF5_INC    \

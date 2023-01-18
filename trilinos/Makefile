@@ -48,7 +48,11 @@ configure ::
 	     && export COPTFLAGS="-O2" && export MKLFLAG="-mkl" \
 	     && export LMOD_MKL_INC=${MKLROOT}/include \
 	     && export LMOD_MKL_LIB=${MKLROOT}/lib/intel64 \
-	     && source $${scriptdir}/trilinos_cmake.sh \
+	     && if [ -f trilinos_cmake_${TACC_SYSTEM} ] ; then \
+	            source $${scriptdir}/trilinos_cmake_${TACC_SYSTEM}.sh \
+	        ; else \
+	            source $${scriptdir}/trilinos_cmake.sh \
+	        ; fi \
 	    \
 	     && export HAS_PYTHON=0 \
 	     && export PYTHON_VERSION=3 \
