@@ -1,3 +1,4 @@
+set -x
 cmake -Wno-dev \
   -D CMAKE_INSTALL_PREFIX:PATH=${installdir} \
   -D CMAKE_BUILD_TYPE:STRING=RELEASE \
