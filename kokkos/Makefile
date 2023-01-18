@@ -11,7 +11,6 @@ PACKAGEROOT = ${STOCKYARD}
 PACKAGEVERSION = git
 MAKEINCLUDES = ${STOCKYARD}/makefiles
 MODE = seq
-MODULES = cuda
 
 include ${MAKEINCLUDES}/Make.info
 
@@ -30,7 +29,7 @@ info ::
 configure_cuda :
 	make --no-print-directory configure \
 	    CMAKEFLAGS="-D Kokkos_ENABLE_SERIAL=ON -D Kokkos_ENABLE_CUDA=ON -D Kokkos_ARCH_TURING75=ON -D Kokkos_ENABLE_CUDA_LAMBDA=ON" \
-	    INSTALLEXT=cuda
+	    INSTALLEXT=cuda MODULES=cuda
 build_cuda :
 	make --no-print-directory build \
 	    INSTALLEXT=cuda
