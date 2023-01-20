@@ -15,11 +15,11 @@ include ${MAKEINCLUDES}/Make.info
 
 info ::
 	@echo "================ bootstrap install"
-	@echo "make configure install"
-.PHONY: configure install
+	@echo "make build"
+.PHONY: configure build
 configure ::
 	@echo "there is no configure rule"
-install ::
+build ::
 	@source ${MAKEINCLUDES}/names.sh \
 	     && export MODE=${MODE} && export INSTALLROOT=${INSTALLROOT} \
 	     && setnames ${PACKAGEROOT} ${PACKAGE} ${PACKAGEVERSION} ${INSTALLEXT} \
