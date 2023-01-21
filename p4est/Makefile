@@ -13,7 +13,7 @@ MODULES = petsc
 
 include ${MAKEINCLUDES}/Make.info
 
-CONFIGURE_FLAGS=--enable-mpi
+CONFIGUREFLAGS=--enable-mpi
 ## CMAKEFLAGS=--enable-mpi
 PKGCONFIGSET = lib/pkgconfig
 
