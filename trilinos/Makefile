@@ -46,7 +46,9 @@ configure ::
 	            source $${scriptdir}/../yaml-cpp/yamlcpp_vars.sh ; fi \
 	    \
 	     && export TRILINOS_LOCATION=${TRILINOS_SCRIPTDIR} \
-	     && export COPTFLAGS="-O2" && export MKLFLAG="-mkl" \
+	     && export COPTFLAGS="-O2" \
+	     && if [ "${LMOD_FAMILY_COMPILER}" = "intel" ] ; then \
+	          export MKLFLAG="-mkl" ; fi \
 	     && export LMOD_MKL_INC=${MKLROOT}/include \
 	     && export LMOD_MKL_LIB=${MKLROOT}/lib/intel64 \
 	     && if [ -f $${scriptdir}/trilinos_cmake_${TACC_SYSTEM}.sh ] ; then \
