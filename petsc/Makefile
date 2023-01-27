@@ -7,7 +7,8 @@
 include ${STOCKYARD}/makefiles/Make.info
 
 info ::
-	@echo "make install "
+	@echo "make build "
+	@echo "    [ JCOUNT=nnn (default: ${JCOUNT}) ]"
 	@echo "     [PACKAGEVERSION= (default=${PACKAGEVERSION})]"
 	@echo "     [PRECISION=single/double (default=${PRECISION})]"
 	@echo "     [CUSTOMEXT=customextension]"
@@ -17,6 +18,8 @@ PACKAGEROOT = ${STOCKYARD}
 PACKAGEVERSION = 3.18.2
 MAKEINCLUDES = ${STOCKYARD}/makefiles
 MODE = mpi
+
+JCOUNT = 4
 
 PETSC_SRC_DIR = ${PACKAGEROOT}/petsc/petsc-${PACKAGEVERSION}
 info ::
@@ -120,7 +123,7 @@ configure :
 	@echo && echo "there is no configure rule" && echo
 include ${MAKEINCLUDES}/Make.vars
 NOINSTALL = 1
-install ::
+build ::
 	@if [ ${CUDA} -eq 1 -a -z "${LMOD_CUDA_DIR}" ] ; then \
 	    echo && echo "Please load cuda module" && echo && exit 1 \
 	    ; fi \
@@ -146,14 +149,14 @@ install ::
 	        --with-scalar-type=${SCALAR} \
 	        --with-precision=${PRECISION} \
 	        --with-memalign=${ALIGN} \
-	        --with-np=4 \
+	        --with-np=${JCOUNT} \
 	        CFLAGS="${OPTFLAGS}" CXXFLAGS="${OPTFLAGS}" FFLAGS="${OPTFLAGS}" \
 	        `if [ ${X} -eq 1 ]    ; then echo ${WITH_X} ; fi ` \
 	        `if [ ${CUDA} -eq 1 ] ; then echo ${CUDA_OPTIONS} ; fi ` \
 	        --with-debugging=${DEBUG} \
 	        "${BLAS_FLAGS}" \
 	        ${PACKAGES} \
-	    && ${TIME} make MAKE_NP=4 \
+	    && ${TIME} make MAKE_NP=${JCOUNT} \
 	  ) 2>&1 | tee $${scriptdir}/$${logfile} \
 	 && popd \
 	 && make --no-print-directory petsc_varsfile
