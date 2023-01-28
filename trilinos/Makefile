@@ -36,7 +36,6 @@ configure ::
 	    cd $${builddir} \
 	     && reportnames && echo \
 	     && reportcompilers && echo \
-	&& set -x \
 	    \
 	     && export HAS_HDF5=0 && export HAS_NETCDF=0 && export HAS_MUMPS=0 \
 	     && export HAS_SEACAS=0 && export HAS_STK=0 \

@@ -39,3 +39,15 @@ include ${MAKEINCLUDES}/Make.git
 
 TGZURL = https://github.com/dealii/dealii/releases/download/v${PACKAGEVERSION}/dealii-${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
+
+##
+## testing
+##
+info ::
+	@echo && echo "================" && echo "make test [ TESTSTEP=nnn ]"
+.PHONY: test
+TESTSTEP = 17
+test :
+	@cd testing-${PACKAGEVERSION} \
+	 && make --no-print-directory test STEP=${TESTSTEP}
+
