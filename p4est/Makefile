@@ -20,6 +20,7 @@ PKGCONFIGSET = lib/pkgconfig
 ##
 ## configure version
 ##
+#LIBS = -lirc
 include ${MAKEINCLUDES}/Make.configure
 include ${MAKEINCLUDES}/Make.install
 ##
