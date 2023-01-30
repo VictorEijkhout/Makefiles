@@ -18,7 +18,8 @@ include ${MAKEINCLUDES}/Make.cbuild
 info ::
 	@echo "make docs : doxygen html & latex docs"
 	@echo "    [ LATEXDOC=0/1 (default=${LATEXDOC}) ]"
-.PHONY: docs
+	@echo "make opendocs"
+.PHONY: docs opendocs
 LATEXDOC=0
 docs :
 	@source ${MAKEINCLUDES}/names.sh \
@@ -42,6 +43,13 @@ docs :
 	         && cp -r $$t $${doctarget}/ \
 	      ; fi \
 	    ; done
+opendocs :
+	@source ${MAKEINCLUDES}/names.sh \
+	 && export MODE=${MODE} && export INSTALLROOT=${INSTALLROOT} \
+	 && setnames ${PACKAGEROOT} ${PACKAGE} ${PACKAGEVERSION} ${INSTALLEXT} \
+	 && doctarget=$${installdir}/../docs-${PACKAGEVERSION} \
+	 && ls $$doctarget \
+	 && open $$doctarget/html/index.html
 
 GITREPO = git@github.com:rabauke/mpl.git
 include ${MAKEINCLUDES}/Make.git
