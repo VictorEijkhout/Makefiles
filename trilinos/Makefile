@@ -36,7 +36,6 @@ configure ::
 	    cd $${builddir} \
 	     && reportnames && echo \
 	     && reportcompilers && echo \
-	&& set -x \
 	    \
 	     && export HAS_HDF5=0 && export HAS_NETCDF=0 && export HAS_MUMPS=0 \
 	     && export HAS_SEACAS=0 && export HAS_STK=0 \
@@ -46,7 +45,9 @@ configure ::
 	            source $${scriptdir}/../yaml-cpp/yamlcpp_vars.sh ; fi \
 	    \
 	     && export TRILINOS_LOCATION=${TRILINOS_SCRIPTDIR} \
-	     && export COPTFLAGS="-O2" && export MKLFLAG="-mkl" \
+	     && export COPTFLAGS="-O2" \
+	     && if [ "${LMOD_FAMILY_COMPILER}" = "intel" ] ; then \
+	          export MKLFLAG="-mkl" ; fi \
 	     && export LMOD_MKL_INC=${MKLROOT}/include \
 	     && export LMOD_MKL_LIB=${MKLROOT}/lib/intel64 \
 	     && if [ -f $${scriptdir}/trilinos_cmake_${TACC_SYSTEM}.sh ] ; then \

@@ -1,0 +1,13 @@
+# Listing of Parameters
+# ---------------------
+# The number of times the 1-cell coarse mesh should be refined globally for
+# our computations.
+set Global mesh refinement steps         = 4
+
+# The number of eigenvalues/eigenfunctions to be computed.
+set Number of eigenvalues/eigenfunctions = 3 
+
+# A functional description of the potential.
+set Potential = -2/sqrt(x^2+y^2+z^2)
+#-2.0/sqrt((x-1.5)^2 + y^2 + z^2) - 2.0/sqrt((x+1.5)^2 + y^2 + z^2)
+
