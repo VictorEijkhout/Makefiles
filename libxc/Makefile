@@ -3,12 +3,14 @@
 #### Makefile for libxc
 ####
 #### https://www.tddft.org/programs/libxc/installation/
+#### Note: Conquest only supports version 5, but version 6 is out
 ####
 ################################################################
 
 PACKAGE = LIBXC
 PACKAGEROOT = ${STOCKYARD}
-PACKAGEVERSION = 6.1.0
+PACKAGEVERSION = 4.3.4
+# 5.2.3
 MAKEINCLUDES = ${STOCKYARD}/makefiles
 MODE = seq
 
