@@ -3,7 +3,7 @@
 #### Makefile for libxc
 ####
 #### https://www.tddft.org/programs/libxc/installation/
-#### Note: Conquest only supports version 5, but version 6 is out
+#### Note: Conquest only supports version 4 and 5, but version 6 is out
 ####
 ################################################################
 
@@ -20,7 +20,7 @@ CMAKEFLAGS = \
     -D CMAKE_C_FLAGS="-O2" \
     -D ENABLE_FORTRAN=ON \
     -D ENABLE_XHOST=OFF \
-    -D BUILD_SHARED_LIBS=ON
+    -D BUILD_SHARED_LIBS=OFF
 LIBDIR = lib64
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
