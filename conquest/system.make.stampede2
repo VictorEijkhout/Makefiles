@@ -1,0 +1,40 @@
+# -*- makefile -*-
+
+# Set compilers
+FC=mpif90
+F77=mpif77
+
+# Linking flags
+LINKFLAGS= 
+## -L/usr/local/lib
+ARFLAGS=
+
+# Compilation flags
+# NB for gcc10 you need to add -fallow-argument-mismatch
+COMPFLAGS= -O2 -g $(XC_COMPFLAGS)
+COMPFLAGS_F77= $(COMPFLAGS)
+
+# Set BLAS and LAPACK libraries
+BLAS = -mkl
+
+# Full library call; remove scalapack if using dummy diag module
+LIBS= $(FFT_LIB) $(XC_LIB) $(BLAS) \
+    -L${TACC_MKL_LIB} \
+    -lmkl_scalapack_lp64 -lmkl_intel_lp64 -lmkl_intel_thread -lmkl_core -lmkl_blacs_intelmpi_lp64 -lpthread
+##  VLE -lscalapack
+
+# Conquest XC library
+#XC_LIBRARY = LibXC_v5
+XC_LIBRARY = LibXC_v4
+## CQ
+XC_LIB = -L${LMOD_LIBXC_LIB} -lxcf90 -lxc
+XC_COMPFLAGS = -I${LMOD_LIBXC_INC}
+
+# Set FFT library
+FFT_LIB= -L${LMOD_FFTW3_LIB} -lfftw3
+FFT_OBJ=fft_fftw3.o
+
+# Matrix multiplication kernel type
+MULT_KERN = default
+# Use dummy DiagModule or not
+DIAG_DUMMY = 

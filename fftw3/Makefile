@@ -26,8 +26,6 @@ CONFIGUREFLAGS =  --with-pic \
             --enable-avx512 
 
 include ${MAKEINCLUDES}/Make.install
-INSTALL_USE_DESTDIR  = true
-## make DESTDIR=$RPM_BUILD_ROOT install
 
 TGZURL = http://fftw.org/fftw-${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
