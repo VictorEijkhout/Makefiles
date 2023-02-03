@@ -4,7 +4,7 @@
 ####
 ################################################################
 
-PACKAGE = CXXOPTS
+PACKAGE = fmtlib
 PACKAGEROOT = ${STOCKYARD}
 PACKAGEVERSION = 6.1.2
 MAKEINCLUDES = ${STOCKYARD}/makefiles
