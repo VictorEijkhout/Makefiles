@@ -1,19 +1,24 @@
 ################################################################
 ####
-#### Makefile for fmtlib
+#### Makefile for Blas++
 ####
 ################################################################
 
-PACKAGE = CXXOPTS
+PACKAGE = BLASPP
 PACKAGEROOT = ${STOCKYARD}
-PACKAGEVERSION = 6.1.2
+PACKAGEVERSION = git
 MAKEINCLUDES = ${STOCKYARD}/makefiles
 MODE = seq
 
 include ${MAKEINCLUDES}/Make.info
 
 include ${MAKEINCLUDES}/Make.cmake
+CMAKEFLAGS = -Dblas=mkl
+LIBDIR = lib64
+# .cmake files are on the CMAKE_MODULE_PATH
+CMAKE_MODULEPATH_ADD = lib64/blaspp
+
 include ${MAKEINCLUDES}/Make.cbuild
 
-TGZURL = https://github.com/fmtlib/fmt/archive/${PACKAGEVERSION}.tar.gz
-include ${MAKEINCLUDES}/Make.download
+GITREPO= git@github.com:icl-utk-edu/blaspp.git
+include ${MAKEINCLUDES}/Make.git
