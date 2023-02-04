@@ -1,15 +1,15 @@
 ################################################################
 ####
-#### Makefile for Lapack++
+#### Makefile for WarpX
 ####
 ################################################################
 
-PACKAGE = LAPACKPP
+PACKAGE = warpx
 PACKAGEROOT = ${STOCKYARD}
 PACKAGEVERSION = git
 MAKEINCLUDES = ${STOCKYARD}/makefiles
-MODE = seq
-MODULES = blaspp
+MODE = mpi
+MODULES = blaspp lapackpp
 
 include ${MAKEINCLUDES}/Make.info
 
@@ -17,5 +17,5 @@ include ${MAKEINCLUDES}/Make.cmake
 
 include ${MAKEINCLUDES}/Make.cbuild
 
-GITREPO= git@github.com:icl-utk-edu/lapackpp.git
+GITREPO= https://github.com/ECP-WarpX/WarpX.git
 include ${MAKEINCLUDES}/Make.git
