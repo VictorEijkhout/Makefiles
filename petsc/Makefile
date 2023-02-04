@@ -126,24 +126,26 @@ NOINSTALL = 1
 build ::
 	@if [ ${CUDA} -eq 1 -a -z "${LMOD_CUDA_DIR}" ] ; then \
 	    echo && echo "Please load cuda module" && echo && exit 1 \
-	    ; fi \
-	 && export scriptdir=`pwd` \
+	    ; fi
+	@source ${MAKEINCLUDES}/names.sh \
+	 && export MODE=${MODE} && export INSTALLROOT=${INSTALLROOT} \
+	 && setnames ${PACKAGEROOT} ${PACKAGE} ${PACKAGEVERSION} \
+	 \
 	 && export petscarch=`make --no-print-directory \
 	                SCALAR=${SCALAR} PRECISION=${PRECISION} ALIGN=${ALIGN} \
 	                CUDA=${CUDA} DEBUG=${DEBUG} CUSTOMEXT=${CUSTOMEXT} \
 	                petscarch` \
-	 && export logfile=petsc-$${petscarch}.log \
-	 && pushd ${PETSC_SRC_DIR} \
-	 && echo \
-	 && echo "Configuring version=${PACKAGEVERSION} with arch=$${petscarch} in `pwd`" \
-	 && echo \
-	 && rm -rf $${petscarch} \
-	 && export PETSC_DIR=`pwd` \
-	 && export I_MPI_FABRICS=shm:tmi \
-	 && ( set -x && date && pwd \
-	    && echo "Installing with packages: ${PACKAGEINFO}" \
-	    && export PETSC_ARCH=$${petscarch} \
-	    && ${TIME} python3 ./configure \
+	 && ( \
+	    cd $$srcdir \
+	     && echo "Configuring version=${PACKAGEVERSION} with arch=$${petscarch} in `pwd`" \
+	     && echo \
+	     && rm -rf $${petscarch} \
+	     && export PETSC_DIR=`pwd` \
+	     && export I_MPI_FABRICS=shm:tmi \
+	     && date && pwd \
+	     && echo "Installing with packages: ${PACKAGEINFO}" \
+	     && export PETSC_ARCH=$${petscarch} \
+	     && ${TIME} python3 ./configure \
 	        ${MPI_FLAGS} \
 	        --useThreads=0 --download-triangle \
 	        --with-scalar-type=${SCALAR} \
@@ -157,9 +159,9 @@ build ::
 	        "${BLAS_FLAGS}" \
 	        ${PACKAGES} \
 	    && ${TIME} make MAKE_NP=${JCOUNT} \
-	  ) 2>&1 | tee $${scriptdir}/$${logfile} \
-	 && popd \
-	 && make --no-print-directory petsc_varsfile
+	  ) 2>&1 | tee $${installlog} \
+	 && make --no-print-directory varsmodule
+
 public ::
 	@source ${MAKEINCLUDES}/names.sh \
 	 && export MODE=${MODE} && export MODULEROOT=${MODULEROOT} \
@@ -204,8 +206,15 @@ config-help :
 	cd ${PETSC_SRC_DIR} ; \
 	  ./configure -help
 config-view :
-	cat ${PETSC_SRC_DIR}/configure.log
-#	less ${PETSC_DIR}/${PETSC_ARCH}/lib/petsc/conf/configure.log
+	@source ${MAKEINCLUDES}/names.sh \
+	 && export MODE=${MODE} && export INSTALLROOT=${INSTALLROOT} \
+	 && setnames ${PACKAGEROOT} ${PACKAGE} ${PACKAGEVERSION} \
+	 \
+	 && export petscarch=`make --no-print-directory \
+	                SCALAR=${SCALAR} PRECISION=${PRECISION} ALIGN=${ALIGN} \
+	                CUDA=${CUDA} DEBUG=${DEBUG} CUSTOMEXT=${CUSTOMEXT} \
+	                petscarch` \
+	 && cat $$srcdir/configure.log
 log-view :
 	@cat ${PACKAGEROOT}/petsc/petsc-${PACKAGEVERSION}/configure.log
 
