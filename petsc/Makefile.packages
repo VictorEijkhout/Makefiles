@@ -1,3 +1,9 @@
+# -*- makefile
+################################################################
+####
+#### make include file with package definitions for petsc
+####
+################################################################
 
 CEED = 0
 info ::
@@ -40,7 +46,7 @@ HDF5 = 0
 info ::
 	@echo "    [ HDF5=0/1 (default: ${HDF5})]"
 ifeq "${HDF5}" "1"
-  PACKAGES += --download-hdf5=yes
+  PACKAGES += --with-hdf5=1 --download-hdf5=1 --download-hdf5-configure-arguments="--with-zlib=yes" --download-hdf5-fortran-bindings=1
 endif
 
 HYPRE = 0
