@@ -162,7 +162,7 @@ public ::
 	 && export MODE=${MODE} && export MODULEROOT=${MODULEROOT} \
 	 && export INSTALLPATH=${PACKAGEROOT}/petsc/petsc-${PACKAGEVERSION}/$$petscarch \
 	 && setnames ${PACKAGEROOT} ${PACKAGE} ${PACKAGEVERSION} ${INSTALLEXT} \
-	 && chmod -R g+rX,o+rX ${INSTALLPATH}
+	 && chmod -R g+rX,o+rX $$installdir
 info ::
 	@echo "make petsc_varsfile"
 .PHONY: petsc_varsfile
