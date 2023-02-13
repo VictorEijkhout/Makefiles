@@ -7,7 +7,6 @@
 PACKAGE = fmtlib
 PACKAGEROOT = ${STOCKYARD}
 PACKAGEVERSION = 6.1.2
-MAKEINCLUDES = ${STOCKYARD}/makefiles
 MODE = seq
 
 include ${MAKEINCLUDES}/Make.info
