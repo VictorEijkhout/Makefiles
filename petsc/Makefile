@@ -8,22 +8,16 @@ include ${STOCKYARD}/makefiles/Make.info
 
 info ::
 	@echo "make build "
-	@echo "    [ JCOUNT=nnn (default: ${JCOUNT}) ]"
-	@echo "     [PACKAGEVERSION= (default=${PACKAGEVERSION})]"
-	@echo "     [PRECISION=single/double (default=${PRECISION})]"
 	@echo "     [CUSTOMEXT=customextension]"
 
 PACKAGE = PETSC
 PACKAGEROOT = ${STOCKYARD}
-PACKAGEVERSION = 3.18.2
-MAKEINCLUDES = ${STOCKYARD}/makefiles
+PACKAGEVERSION = 3.18.3
 MODE = mpi
 
 JCOUNT = 4
 
 PETSC_SRC_DIR = ${PACKAGEROOT}/petsc/petsc-${PACKAGEVERSION}
-info ::
-	@echo "     [TACC_SYSTEM=system (default: ${TACC_SYSTEM})]"
 OPTFLAGS=-O2 -fPIC
 LOPTFLAGS=-O1 -fPIC
 
@@ -160,14 +154,16 @@ build ::
 	        ${PACKAGES} \
 	    && ${TIME} make MAKE_NP=${JCOUNT} \
 	  ) 2>&1 | tee $${installlog} \
-	 && make --no-print-directory varsmodule
+	 && make --no-print-directory varsmodule \
+	        PKGCONFIGSET=$${petscarch}/lib/pkgconfig \
+	        EXTRAVARS="PETSC_DIR=$${srcdir} PETSC_ARCH=$${petscarch}"
 
 public ::
 	@source ${MAKEINCLUDES}/names.sh \
 	 && export MODE=${MODE} && export MODULEROOT=${MODULEROOT} \
 	 && export INSTALLPATH=${PACKAGEROOT}/petsc/petsc-${PACKAGEVERSION}/$$petscarch \
 	 && setnames ${PACKAGEROOT} ${PACKAGE} ${PACKAGEVERSION} ${INSTALLEXT} \
-	 && chmod -R g+rX,o+rX ${INSTALLPATH}
+	 && chmod -R g+rX,o+rX $$installdir
 info ::
 	@echo "make petsc_varsfile"
 .PHONY: petsc_varsfile

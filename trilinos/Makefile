@@ -7,7 +7,6 @@
 PACKAGE = trilinos
 PACKAGEROOT = ${STOCKYARD}
 PACKAGEVERSION = 13-4-1
-MAKEINCLUDES = ${STOCKYARD}/makefiles
 MODE = mpi
 MODULES = boost
 #boost swig

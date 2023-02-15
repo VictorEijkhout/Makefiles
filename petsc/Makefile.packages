@@ -1,4 +1,9 @@
-# -*- makefile -*-
+# -*- makefile
+################################################################
+####
+#### make include file with package definitions for petsc
+####
+################################################################
 
 CEED = 0
 info ::
@@ -25,8 +30,7 @@ FORTRAN = 1
 info ::
 	@echo "    [FORTRAN=0/1 (default: ${FORTRAN})]"
 ifeq "${FORTRAN}" "1"
-  PACKAGES += --with-fortran-bindings=1 --with-fc=${HOME}/bin/mpif90
-  ## `which mpif90`
+  PACKAGES += --with-fortran-bindings=1 --with-fc=`which mpif90`
 else 
   PACKAGES += --with-fortran-bindings=0 --with-fc=0
 endif
@@ -42,8 +46,7 @@ HDF5 = 0
 info ::
 	@echo "    [ HDF5=0/1 (default: ${HDF5})]"
 ifeq "${HDF5}" "1"
-  PACKAGES += --with-hdf5=1 --download-hdf5=yes \
-      --download-hdf5-configure-arguments=\"--with\-zlib=yes\" --download-hdf5-fortran-bindings=1
+  PACKAGES += --with-hdf5=1 --download-hdf5=1 --download-hdf5-configure-arguments="--with-zlib=yes" --download-hdf5-fortran-bindings=1
 endif
 
 HYPRE = 0

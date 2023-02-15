@@ -1,20 +1,19 @@
 ################################################################
 ####
-#### Makefile for Lapack++
+#### Makefile for benchpro
 ####
 ################################################################
 
-PACKAGE = LAPACKPP
+PACKAGE = benchpro
 PACKAGEROOT = ${STOCKYARD}
 PACKAGEVERSION = git
 MODE = seq
-MODULES = blaspp
 
 include ${MAKEINCLUDES}/Make.info
 
-include ${MAKEINCLUDES}/Make.cmake
+configure build :
+	@echo "no such rule"
+include ${MAKEINCLUDES}/Make.vars
 
-include ${MAKEINCLUDES}/Make.cbuild
-
-GITREPO= git@github.com:icl-utk-edu/lapackpp.git
+GITREPO = https://github.com/TACC/benchpro.git
 include ${MAKEINCLUDES}/Make.git
