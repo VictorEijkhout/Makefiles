@@ -155,7 +155,9 @@ build ::
 	        ${PACKAGES} \
 	    && ${TIME} make MAKE_NP=${JCOUNT} \
 	  ) 2>&1 | tee $${installlog} \
-	 && make --no-print-directory varsmodule
+	 && make --no-print-directory varsmodule \
+	        PKGCONFIGSET=$${petscarch}/lib/pkgconfig \
+	        EXTRAVARS="PETSC_DIR=$${srcdir} PETSC_ARCH=$${petscarch}"
 
 public ::
 	@source ${MAKEINCLUDES}/names.sh \
