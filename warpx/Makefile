@@ -9,7 +9,8 @@ PACKAGEROOT = ${STOCKYARD}
 PACKAGEVERSION = git
 MAKEINCLUDES = ${STOCKYARD}/makefiles
 MODE = mpi
-MODULES = blaspp lapackpp
+MODULES =
+#blaspp lapackpp
 
 include ${MAKEINCLUDES}/Make.info
 
