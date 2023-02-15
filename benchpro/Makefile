@@ -7,7 +7,6 @@
 PACKAGE = benchpro
 PACKAGEROOT = ${STOCKYARD}
 PACKAGEVERSION = git
-MAKEINCLUDES = ${STOCKYARD}/makefiles
 MODE = seq
 
 include ${MAKEINCLUDES}/Make.info

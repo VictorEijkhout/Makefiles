@@ -7,7 +7,6 @@
 PACKAGE = warpx
 PACKAGEROOT = ${STOCKYARD}
 PACKAGEVERSION = git
-MAKEINCLUDES = ${STOCKYARD}/makefiles
 MODE = mpi
 MODULES = blaspp lapackpp
 
