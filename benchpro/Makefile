@@ -16,5 +16,5 @@ configure build :
 	@echo "no such rule"
 include ${MAKEINCLUDES}/Make.vars
 
-GITREPO = git clone https://github.com/TACC/benchpro.git
+GITREPO = https://github.com/TACC/benchpro.git
 include ${MAKEINCLUDES}/Make.git
