@@ -152,11 +152,11 @@ build ::
 	        --with-debugging=${DEBUG} \
 	        "${BLAS_FLAGS}" \
 	        ${PACKAGES} \
-	    && ${TIME} make MAKE_NP=${JCOUNT} \
-	  ) 2>&1 | tee $${installlog} \
-	 && make --no-print-directory varsmodule \
+	     && ${TIME} make MAKE_NP=${JCOUNT} \
+	     && make --no-print-directory varsmodule \
 	        PKGCONFIGSET=$${petscarch}/lib/pkgconfig \
-	        EXTRAVARS="PETSC_DIR=$${srcdir} PETSC_ARCH=$${petscarch}"
+	        EXTRAVARS="PETSC_DIR=$${srcdir} PETSC_ARCH=$${petscarch}" \
+	  ) 2>&1 | tee $${installlog}
 
 public ::
 	@source ${MAKEINCLUDES}/names.sh \
