@@ -8,7 +8,8 @@ PACKAGE = warpx
 PACKAGEROOT = ${STOCKYARD}
 PACKAGEVERSION = git
 MODE = mpi
-MODULES = blaspp lapackpp
+MODULES =
+#blaspp lapackpp
 
 include ${MAKEINCLUDES}/Make.info
 
