@@ -130,7 +130,7 @@ build ::
 	                CUDA=${CUDA} DEBUG=${DEBUG} CUSTOMEXT=${CUSTOMEXT} \
 	                petscarch` \
 	 && ( \
-	    cd $$srcdir \
+	    pushd $$srcdir \
 	     && echo "Configuring version=${PACKAGEVERSION} with arch=$${petscarch} in `pwd`" \
 	     && echo \
 	     && rm -rf $${petscarch} \
@@ -153,9 +153,10 @@ build ::
 	        "${BLAS_FLAGS}" \
 	        ${PACKAGES} \
 	     && ${TIME} make MAKE_NP=${JCOUNT} \
-	     && make --no-print-directory varsmodule \
-	        PKGCONFIGSET=$${petscarch}/lib/pkgconfig \
-	        EXTRAVARS="PETSC_DIR=$${srcdir} PETSC_ARCH=$${petscarch}" \
+	     && popd \
+	         && make --no-print-directory varsmodule \
+	            PKGCONFIGSET=$${petscarch}/lib/pkgconfig \
+	            EXTRAVARS="PETSC_DIR=$${srcdir} PETSC_ARCH=$${petscarch}" \
 	  ) 2>&1 | tee $${installlog}
 
 public ::
