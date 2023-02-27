@@ -51,6 +51,7 @@ configure ::
 	     \
 	     && export HAS_PYTHON=${PYTHON} \
 	     \
+	     && set -x \
 	     && if [ -f $${scriptdir}/trilinos_cmake_${TACC_SYSTEM}.sh ] ; then \
 	            source $${scriptdir}/trilinos_cmake_${TACC_SYSTEM}.sh \
 	        ; else \

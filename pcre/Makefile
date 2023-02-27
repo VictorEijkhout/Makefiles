@@ -1,14 +1,14 @@
 ################################################################
 ####
-#### Makefile for swig
+#### Makefile for pcre
 ####
-#### https://www.swig.org/
+#### https://www.pcre.org/
 ####
 ################################################################
 
-PACKAGE = swig
+PACKAGE = pcre2
 PACKAGEROOT = ${STOCKYARD}
-PACKAGEVERSION = 4.1.1
+PACKAGEVERSION = git 
 MODE = seq
 
 include ${MAKEINCLUDES}/Make.info
@@ -16,5 +16,5 @@ include ${MAKEINCLUDES}/Make.info
 include ${MAKEINCLUDES}/Make.configure
 include ${MAKEINCLUDES}/Make.install
 
-TGZURL = http://prdownloads.sourceforge.net/swig/swig-${PACKAGEVERSION}.tar.gz
-include ${MAKEINCLUDES}/Make.download
+GITREPO = https://github.com/PhilipHazel/pcre2.git
+include ${MAKEINCLUDES}/Make.git

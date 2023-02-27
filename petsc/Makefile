@@ -42,6 +42,13 @@ installed :
 	@ls -d ${PETSC_SRC_DIR}/${PETSCARCH}*
 
 PRECISION = double
+info ::
+	@echo "    [PRECISION=single/double/quad (default: ${PRECISION})]"
+.PHONY: precstring
+precstring :
+	@if [ "${PRECISION}" = "quad" ] ; then \
+	    echo "__float128 --download-f2cblaslapack" \
+	; else echo ${PRECISION} ; fi
 
 SCALAR = real
 info ::
@@ -61,6 +68,10 @@ info ::
 	@echo "     [DEBUG=0/1, default=${DEBUG}]"
 TIME =
 
+TRIANGLE = 0
+info ::
+	@echo "    [ TRIANGLE=0/1 (default=${TRIANGLE}) ]"
+
 # ifeq "${SCALAR}${PRECISION}${CUDA}" "realdouble0"
 #   PACKAGES += --download-sundials2=1
 # endif
@@ -79,6 +90,9 @@ petscarch :
 	    export PETSC_EXT=$${PETSC_EXT}complex ; fi \
 	  \
 	  && if [ ${PRECISION} = "single" ] ; then \
+	    export PETSC_EXT=$${PETSC_EXT}single ; fi \
+	  \
+	  && if [ ${PRECISION} = "quad" ] ; then \
 	    export PETSC_EXT=$${PETSC_EXT}single ; fi \
 	  \
 	  && if [ ${ALIGN} -ne 16 ] ; then \
@@ -141,9 +155,10 @@ build ::
 	     && export PETSC_ARCH=$${petscarch} \
 	     && ${TIME} python3 ./configure \
 	        ${MPI_FLAGS} \
-	        --useThreads=0 --download-triangle \
+	        --useThreads=0 --download-triangle=${TRIANGLE} \
 	        --with-scalar-type=${SCALAR} \
-	        --with-precision=${PRECISION} \
+	        --with-precision=$$( cd $$scriptdir \
+	                && make --no-print-directory precstring PRECISION=${PRECISION} ) \
 	        --with-memalign=${ALIGN} \
 	        --with-np=${JCOUNT} \
 	        CFLAGS="${OPTFLAGS}" CXXFLAGS="${OPTFLAGS}" FFLAGS="${OPTFLAGS}" \
@@ -180,21 +195,6 @@ petsc_varsfile :
 	    echo "setenv( \"PETSC_DIR\",  \"${PACKAGEROOT}/petsc/petsc-${PACKAGEVERSION}\" )" ; \
 	    echo "setenv( \"PETSC_ARCH\", \"$${petscarch}\" )" \
 	    ) >>$${modulefile}
-old_vars_rule :
-	@export petscarch=$$( make --no-print-directory \
-	                SCALAR=${SCALAR} PRECISION=${PRECISION} \
-	                CUDA=${CUDA} DEBUG=${DEBUG} CUSTEXT=${CUSTOMEXT} \
-	                petscarch ) \
-	 && varsfile=vars-$${petscarch}.sh \
-	 && installdir=${PACKAGEROOT}/petsc/petsc-${PACKAGEVERSION} \
-	 && make --no-print-directory varsfile VARSFILE=$${varsfile} \
-	        INSTALLDIR=$$installdir \
-	        LIBDIR=$${installdir}/$$petscarch/lib \
-	        INCDIR=$${installdir}/$$petscarch/include \
-	        PKGCONFIGSET=$${petscarch}/lib/pkgconfig \
-	 && echo "export PETSC_DIR=$$installdir" >>$${varsfile} \
-	 && echo "export PETSC_ARCH=$$petscarch"                           >>$${varsfile} \
-	 && echo && echo "Variable settings in: $${varsfile}" && echo
 
 info ::
 	@echo "make config-help config-view"

@@ -1,36 +1,21 @@
 ################################################################
 ####
-#### Makefile for fmtlib
+#### Makefile for swig
 ####
-#### https://github.com/fmtlib
+#### https://www.swig.org/
 ####
 ################################################################
 
-PACKAGE = fmtlib
+PACKAGE = swig
 PACKAGEROOT = ${STOCKYARD}
-PACKAGEVERSION = 6.1.2
+PACKAGEVERSION = 4.1.1
 MODE = seq
+MODULES = pcre2
 
 include ${MAKEINCLUDES}/Make.info
 
-include ${MAKEINCLUDES}/Make.cmake
-include ${MAKEINCLUDES}/Make.cbuild
+include ${MAKEINCLUDES}/Make.configure
+include ${MAKEINCLUDES}/Make.install
 
-info ::
-	@echo "make docs, docview (after configure)"
-.PHONY: docs docview
-docs :
-	@source ${MAKEINCLUDES}/names.sh \
-	 && export MODE=${MODE} && export INSTALLROOT=${INSTALLROOT} \
-	 && setnames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" \
-	 && if [ ! -d "$${builddir}" ] ; then \
-	      echo "Please rerun configuration: need build dir" && exit 1 ; fi \
-	 && cd "$${builddir}" && make doc
-docview :
-	@source ${MAKEINCLUDES}/names.sh \
-	 && export MODE=${MODE} && export INSTALLROOT=${INSTALLROOT} \
-	 && setnames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" \
-	 && cd $${installdir}/doc/html && open index.html
-
-TGZURL = https://github.com/fmtlib/fmt/archive/${PACKAGEVERSION}.tar.gz
+TGZURL = http://prdownloads.sourceforge.net/swig/swig-${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
