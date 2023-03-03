@@ -1,20 +1,23 @@
 ################################################################
 ####
-#### Makefile for CXXOPTS installation
+#### Makefile for Blas++
 ####
 ################################################################
 
-PACKAGE = CXXOPTS
+PACKAGE = BLASPP
 PACKAGEROOT = ${STOCKYARD}
-PACKAGEVERSION = 3.0.0
-MODULES = 
+PACKAGEVERSION = git
 MODE = seq
 
 include ${MAKEINCLUDES}/Make.info
 
-PKGCONFIGSET = lib64/pkgconfig
 include ${MAKEINCLUDES}/Make.cmake
+CMAKEFLAGS = -Dblas=mkl
+LIBDIR = lib64
+# .cmake files are on the CMAKE_MODULE_PATH
+CMAKE_MODULEPATH_ADD = lib64/blaspp
+
 include ${MAKEINCLUDES}/Make.cbuild
 
-TGZURL = https://github.com/jarro2783/cxxopts/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
-include ${MAKEINCLUDES}/Make.download
+GITREPO= git@github.com:icl-utk-edu/blaspp.git
+include ${MAKEINCLUDES}/Make.git

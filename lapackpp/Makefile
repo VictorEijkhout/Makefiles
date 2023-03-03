@@ -1,20 +1,20 @@
 ################################################################
 ####
-#### Makefile for CXXOPTS installation
+#### Makefile for Lapack++
 ####
 ################################################################
 
-PACKAGE = CXXOPTS
+PACKAGE = LAPACKPP
 PACKAGEROOT = ${STOCKYARD}
-PACKAGEVERSION = 3.0.0
-MODULES = 
+PACKAGEVERSION = git
 MODE = seq
+MODULES = blaspp
 
 include ${MAKEINCLUDES}/Make.info
 
-PKGCONFIGSET = lib64/pkgconfig
 include ${MAKEINCLUDES}/Make.cmake
+
 include ${MAKEINCLUDES}/Make.cbuild
 
-TGZURL = https://github.com/jarro2783/cxxopts/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
-include ${MAKEINCLUDES}/Make.download
+GITREPO= git@github.com:icl-utk-edu/lapackpp.git
+include ${MAKEINCLUDES}/Make.git

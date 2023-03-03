@@ -1,20 +1,21 @@
 ################################################################
 ####
-#### Makefile for CXXOPTS installation
+#### Makefile for WarpX
 ####
 ################################################################
 
-PACKAGE = CXXOPTS
+PACKAGE = warpx
 PACKAGEROOT = ${STOCKYARD}
-PACKAGEVERSION = 3.0.0
-MODULES = 
-MODE = seq
+PACKAGEVERSION = git
+MODE = mpi
+MODULES =
+#blaspp lapackpp
 
 include ${MAKEINCLUDES}/Make.info
 
-PKGCONFIGSET = lib64/pkgconfig
 include ${MAKEINCLUDES}/Make.cmake
+
 include ${MAKEINCLUDES}/Make.cbuild
 
-TGZURL = https://github.com/jarro2783/cxxopts/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
-include ${MAKEINCLUDES}/Make.download
+GITREPO= https://github.com/ECP-WarpX/WarpX.git
+include ${MAKEINCLUDES}/Make.git

@@ -7,7 +7,6 @@
 PACKAGE = boost
 PACKAGEROOT = ${STOCKYARD}
 PACKAGEVERSION = 1_81_0
-MAKEINCLUDES = ${STOCKYARD}/makefiles
 MODE = seq
 MODULES = 
 
@@ -33,6 +32,7 @@ build ::
 	    ) 2>&1 | tee $@.log \
 	 && make --no-print-directory varsmodule
 include ${MAKEINCLUDES}/Make.vars
+include ${MAKEINCLUDES}/Make.public
 
 TGZURL = https://boostorg.jfrog.io/artifactory/main/release/1.81.0/source/boost_${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download

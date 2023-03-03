@@ -7,23 +7,21 @@
 PACKAGE = trilinos
 PACKAGEROOT = ${STOCKYARD}
 PACKAGEVERSION = 13-4-1
-MAKEINCLUDES = ${STOCKYARD}/makefiles
 MODE = mpi
 MODULES = boost
 #boost swig
 
 include ${MAKEINCLUDES}/Make.info
 
-TRILINOS_HOME=${STOCKYARD}/trilinos
-TRILINOS_SRC=${TRILINOS_HOME}/trilinos-${PACKAGEVERSION}
-TRILINOS_INSTALL=${TRILINOS_HOME}/installation-${LMOD_FAMILY_COMPILER}
-
 info ::
 	@echo "================ cmake configure:"
 	@echo "make configure"
 	@echo "    [ PACKAGEVERSION=... (default=${PACKAGEVERSION}) ]"
+	@echo "    [ PYTHON=ON/OFF (default: ${PYTHON} ) ]"
 .PHONY: configure
 LIBDIR = lib64
+CMAKE_PREFIXPATH_SET = lib/cmake
+PYTHON = ON
 configure :: 
 	@source ${MAKEINCLUDES}/names.sh \
 	 && export MODE=${MODE} \
@@ -50,13 +48,15 @@ configure ::
 	          export MKLFLAG="-mkl" ; fi \
 	     && export LMOD_MKL_INC=${MKLROOT}/include \
 	     && export LMOD_MKL_LIB=${MKLROOT}/lib/intel64 \
+	     \
+	     && export HAS_PYTHON=${PYTHON} \
+	     \
 	     && if [ -f $${scriptdir}/trilinos_cmake_${TACC_SYSTEM}.sh ] ; then \
 	            source $${scriptdir}/trilinos_cmake_${TACC_SYSTEM}.sh \
 	        ; else \
 	            source $${scriptdir}/trilinos_cmake.sh \
 	        ; fi \
 	    \
-	     && export HAS_PYTHON=0 \
 	     && export PYTHON_VERSION=3 \
 	     && export PYTHON_VERSION=$${PYTHON_VERSION%.*} \
 	     && export PYTHON_LOAD_FLAG=${TACC_PYTHON_LIB}/libpython$${PYTHON_VERSION}.so \

@@ -8,16 +8,15 @@
 
 PACKAGE = MPICH
 PACKAGEROOT = ${STOCKYARD}
-PACKAGEVERSION = 4.1rc1
-MAKEINCLUDES = ${STOCKYARD}/makefiles
+PACKAGEVERSION = 4.1
 MODE = seq
 FAMILY = mpi
-MODULEPATH_ADD = pathJoin(os.getenv(\"MY_MODULEPATH_ROOT\"),\"MPI\",os.getenv(\"LMOD_FAMILY_COMPILER\"),os.getenv(\"LMOD_FAMILY_COMPILER_VERSION\"),"mpich",\"${PACKAGEVERSION}\")
 
 include ${MAKEINCLUDES}/Make.info
 
 include ${MAKEINCLUDES}/Make.configure
 include ${MAKEINCLUDES}/Make.install
+PKGCONFIGSET = lib/pkgconfig
 
 TGZURL = http://www.mpich.org/static/downloads/${PACKAGEVERSION}/mpich-${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
