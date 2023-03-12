@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [ "$1" = "-h" ] ; then 
-    echo "1 : petsc"
+    echo "1: petsc"
     echo "2: p4est"
     echo "3: boost"
     echo "4: pcre"
