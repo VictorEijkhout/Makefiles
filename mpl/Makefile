@@ -5,8 +5,7 @@
 ################################################################
 
 PACKAGE = MPL
-PACKAGEROOT = ${STOCKYARD}
-PACKAGEVERSION = 0.2.0
+PACKAGEVERSION = 0.3.0
 MODE = mpi
 
 include ${MAKEINCLUDES}/Make.info
