@@ -7,7 +7,6 @@
 ################################################################
 
 PACKAGE = pcre2
-PACKAGEROOT = ${STOCKYARD}
 PACKAGEVERSION = git 
 MODE = seq
 

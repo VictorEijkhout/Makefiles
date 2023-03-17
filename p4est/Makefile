@@ -5,7 +5,6 @@
 ################################################################
 
 PACKAGE = p4est
-PACKAGEROOT = ${STOCKYARD}
 PACKAGEVERSION = 2.8
 MODE = mpi
 MODULES = petsc

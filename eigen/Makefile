@@ -5,7 +5,6 @@
 ################################################################
 
 PACKAGE = EIGEN
-PACKAGEROOT = ${STOCKYARD}
 PACKAGEVERSION = 3.4.0
 MODULES = 
 MODE = seq

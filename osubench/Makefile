@@ -7,7 +7,6 @@
 ################################################################
 
 PACKAGE = OSUBENCHMARK
-PACKAGEROOT = ${STOCKYARD}
 PACKAGEVERSION = 6.0
 MODULES =
 MODE = mpi

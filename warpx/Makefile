@@ -5,7 +5,6 @@
 ################################################################
 
 PACKAGE = warpx
-PACKAGEROOT = ${STOCKYARD}
 PACKAGEVERSION = git
 MODE = mpi
 MODULES =

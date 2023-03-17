@@ -5,7 +5,6 @@
 ################################################################
 
 PACKAGE = BLASPP
-PACKAGEROOT = ${STOCKYARD}
 PACKAGEVERSION = git
 MODE = seq
 

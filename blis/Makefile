@@ -5,7 +5,6 @@
 ################################################################
 
 PACKAGE = blis
-PACKAGEROOT = ${STOCKYARD}
 PACKAGEVERSION = git
 MODE = seq
 

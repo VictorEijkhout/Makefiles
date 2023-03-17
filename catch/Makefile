@@ -5,7 +5,6 @@
 ################################################################
 
 PACKAGE = CATCH2
-PACKAGEROOT = ${STOCKYARD}
 PACKAGEVERSION = 3.1.1
 MODE = seq
 MODULES = 

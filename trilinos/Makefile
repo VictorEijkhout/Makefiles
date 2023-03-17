@@ -5,7 +5,6 @@
 ################################################################
 
 PACKAGE = trilinos
-PACKAGEROOT = ${STOCKYARD}
 PACKAGEVERSION = 13-4-1
 MODE = mpi
 MODULES = boost

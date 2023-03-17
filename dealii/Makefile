@@ -5,7 +5,6 @@
 ################################################################
 
 PACKAGE = DEALII
-PACKAGEROOT = ${STOCKYARD}
 PACKAGEVERSION = 9.4.1
 MODE = mpi
 MODULES = p4est petsc trilinos

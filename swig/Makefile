@@ -7,7 +7,6 @@
 ################################################################
 
 PACKAGE = swig
-PACKAGEROOT = ${STOCKYARD}
 PACKAGEVERSION = 4.1.1
 MODE = seq
 MODULES = pcre2

@@ -7,7 +7,6 @@
 ################################################################
 
 PACKAGE = CONQUEST
-PACKAGEROOT = ${STOCKYARD}
 PACKAGEVERSION = git
 MODE = mpi
 MODULES = fftw3 xclib

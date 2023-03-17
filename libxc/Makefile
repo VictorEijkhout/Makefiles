@@ -8,7 +8,6 @@
 ################################################################
 
 PACKAGE = LIBXC
-PACKAGEROOT = ${STOCKYARD}
 PACKAGEVERSION = 4.3.4
 # 5.2.3
 MODE = seq

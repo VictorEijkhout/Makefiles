@@ -7,7 +7,6 @@
 ################################################################
 
 PACKAGE = ASPECT
-PACKAGEROOT = ${STOCKYARD}
 PACKAGEVERSION = 2.4.0
 MODE = mpi
 MODULES = dealii

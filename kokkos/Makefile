@@ -7,7 +7,6 @@
 ################################################################
 
 PACKAGE = KOKKOS
-PACKAGEROOT = ${STOCKYARD}
 PACKAGEVERSION = git
 MODE = seq
 
