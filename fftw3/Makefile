@@ -5,7 +5,6 @@
 ################################################################
 
 PACKAGE = FFTW3
-PACKAGEROOT = ${STOCKYARD}
 PACKAGEVERSION = 3.3.10
 MODE = mpi
 MODULES = 

@@ -11,7 +11,6 @@ info ::
 	@echo "     [CUSTOMEXT=customextension]"
 
 PACKAGE = PETSC
-PACKAGEROOT = ${STOCKYARD}
 PACKAGEVERSION = 3.18.3
 MODE = mpi
 

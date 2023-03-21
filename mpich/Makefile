@@ -7,10 +7,10 @@
 ################################################################
 
 PACKAGE = MPICH
-PACKAGEROOT = ${STOCKYARD}
 PACKAGEVERSION = 4.1
 MODE = seq
 FAMILY = mpi
+NOMODULE = 1
 
 include ${MAKEINCLUDES}/Make.info
 

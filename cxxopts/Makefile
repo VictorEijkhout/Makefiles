@@ -5,9 +5,7 @@
 ################################################################
 
 PACKAGE = CXXOPTS
-PACKAGEROOT = ${STOCKYARD}
-PACKAGEVERSION = 3.0.0
-MODULES = 
+PACKAGEVERSION = 3.1.1
 MODE = seq
 
 include ${MAKEINCLUDES}/Make.info

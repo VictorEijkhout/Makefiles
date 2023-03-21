@@ -5,7 +5,6 @@
 ################################################################
 
 PACKAGE = LAPACKPP
-PACKAGEROOT = ${STOCKYARD}
 PACKAGEVERSION = git
 MODE = seq
 MODULES = blaspp

@@ -5,8 +5,7 @@
 ################################################################
 
 PACKAGE = MPL
-PACKAGEROOT = ${STOCKYARD}
-PACKAGEVERSION = 0.2.0
+PACKAGEVERSION = 0.3.0
 MODE = mpi
 
 include ${MAKEINCLUDES}/Make.info
@@ -24,6 +23,8 @@ docs :
 	@source ${MAKEINCLUDES}/names.sh \
 	 && export MODE=${MODE} && export INSTALLROOT=${INSTALLROOT} \
 	 && setnames ${PACKAGEROOT} ${PACKAGE} ${PACKAGEVERSION} ${INSTALLEXT} \
+	 && setmodulenames ${PACKAGEROOT} ${PACKAGE} ${PACKAGEVERSION} ${INSTALLEXT} \
+	 && setdirlognames ${PACKAGEROOT} ${PACKAGE} ${PACKAGEVERSION} ${INSTALLEXT} \
 	 && cd $${builddir}/doc/doxygen \
 	 && doctarget=$${installdir}/../docs-${PACKAGEVERSION} \
 	 && if "${LATEXDOC}" = "1" ] ; then \
@@ -46,6 +47,8 @@ opendocs :
 	@source ${MAKEINCLUDES}/names.sh \
 	 && export MODE=${MODE} && export INSTALLROOT=${INSTALLROOT} \
 	 && setnames ${PACKAGEROOT} ${PACKAGE} ${PACKAGEVERSION} ${INSTALLEXT} \
+	 && setmodulenames ${PACKAGEROOT} ${PACKAGE} ${PACKAGEVERSION} ${INSTALLEXT} \
+	 && setdirlognames ${PACKAGEROOT} ${PACKAGE} ${PACKAGEVERSION} ${INSTALLEXT} \
 	 && doctarget=$${installdir}/../docs-${PACKAGEVERSION} \
 	 && ls $$doctarget \
 	 && open $$doctarget/html/index.html

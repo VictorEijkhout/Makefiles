@@ -5,7 +5,6 @@
 ################################################################
 
 PACKAGE = benchpro
-PACKAGEROOT = ${STOCKYARD}
 PACKAGEVERSION = git
 MODE = seq
 

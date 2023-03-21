@@ -5,7 +5,6 @@
 ################################################################
 
 PACKAGE = boost
-PACKAGEROOT = ${STOCKYARD}
 PACKAGEVERSION = 1_81_0
 MODE = seq
 MODULES = 

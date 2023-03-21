@@ -7,7 +7,6 @@
 ################################################################
 
 PACKAGE = fmtlib
-PACKAGEROOT = ${STOCKYARD}
 PACKAGEVERSION = 6.1.2
 MODE = seq
 

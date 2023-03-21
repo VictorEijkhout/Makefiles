@@ -1,12 +1,13 @@
 ################################################################
 ####
-#### Makefile for Eigen installation
+#### Makefile for Libisl installation
+####
+#### https://github.com/nlohmann/json
 ####
 ################################################################
 
-PACKAGE = EIGEN
-PACKAGEVERSION = 3.4.0
-MODULES = 
+PACKAGE = json
+PACKAGEVERSION = 3.11.2
 MODE = seq
 
 include ${MAKEINCLUDES}/Make.info
@@ -15,8 +16,6 @@ PKGCONFIGSET = share/pkgconfig
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
 
-TGZURL = https://gitlab.com/libeigen/eigen/-/archive/${PACKAGEVERSION}/eigen-${PACKAGEVERSION}.tar.gz
+TGZURL = https://github.com/nlohmann/json/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
-
-
 
