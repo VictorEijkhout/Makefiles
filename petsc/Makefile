@@ -4,7 +4,7 @@
 ####
 ################################################################
 
-include ${STOCKYARD}/makefiles/Make.info
+include ${MAKEINCLUDES}/Make.info
 
 info ::
 	@echo "make build "
@@ -214,11 +214,11 @@ config-view :
 log-view :
 	@cat ${PACKAGEROOT}/petsc/petsc-${PACKAGEVERSION}/configure.log
 
-include ${STOCKYARD}/makefiles/Make.git
+include ${MAKEINCLUDES}/Make.git
 GITREPO = https://gitlab.com/petsc/petsc.git
 BRANCH = main
 
-include ${STOCKYARD}/makefiles/Make.download
+include ${MAKEINCLUDES}/Make.download
 TGZURL = https://ftp.mcs.anl.gov/pub/petsc/release-snapshots/petsc-${PACKAGEVERSION}.tar.gz
 
 clean ::
