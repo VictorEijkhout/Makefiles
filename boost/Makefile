@@ -5,7 +5,8 @@
 ################################################################
 
 PACKAGE = boost
-PACKAGEVERSION = 1_81_0
+PACKAGEVERSION = 1.81.0
+PACKAGEVERSION_DOWNLOAD = 1_81_0
 MODE = seq
 MODULES = 
 
@@ -21,6 +22,8 @@ build ::
 	@source ${MAKEINCLUDES}/names.sh \
 	     && export MODE=${MODE} && export INSTALLROOT=${INSTALLROOT} \
 	     && setnames ${PACKAGEROOT} ${PACKAGE} ${PACKAGEVERSION} ${INSTALLEXT} \
+	     && setmodulenames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" \
+	     && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" \
 	 && ( \
 	    rm -rf $$builddir && mkdir -p $$builddir \
 	     && rm -rf $$installdir && mkdir -p $$installdir \
@@ -33,5 +36,5 @@ build ::
 include ${MAKEINCLUDES}/Make.vars
 include ${MAKEINCLUDES}/Make.public
 
-TGZURL = https://boostorg.jfrog.io/artifactory/main/release/1.81.0/source/boost_${PACKAGEVERSION}.tar.gz
+TGZURL = https://boostorg.jfrog.io/artifactory/main/release/1.81.0/source/boost_${PACKAGEVERSION_DOWNLOAD}.tar.gz
 include ${MAKEINCLUDES}/Make.download
