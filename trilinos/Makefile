@@ -5,7 +5,8 @@
 ################################################################
 
 PACKAGE = trilinos
-PACKAGEVERSION = 13-4-1
+PACKAGEVERSION = 13.4.1
+PACKAGEVERSION_DOWNLOAD = 13-4-1
 MODE = mpi
 MODULES = boost
 #boost swig
@@ -65,7 +66,7 @@ configure ::
 
 include ${MAKEINCLUDES}/Make.cbuild
 
-TGZURL = https://github.com/trilinos/Trilinos/archive/refs/tags/trilinos-release-${PACKAGEVERSION}.tar.gz
+TGZURL = https://github.com/trilinos/Trilinos/archive/refs/tags/trilinos-release-${PACKAGEVERSION_DOWNLOAD}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 
 GITREPO = git@github.com:trilinos/Trilinos.git
