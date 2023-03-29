@@ -2,14 +2,15 @@
 ####
 #### Makefile for Parmetis installation
 ####
-#### https://github.com/KarypisLab/ParMETIS
+#### http://glaros.dtc.umn.edu/gkhome/metis/parmetis/download
+####
+#### this compiles on my laptop but not stampede2
 ####
 ################################################################
 
 PACKAGE = parmetis
-PACKAGEVERSION = git
+PACKAGEVERSION = 4.0.3
 MODE = mpi
-MODULES = gklib metis
 
 include ${MAKEINCLUDES}/Make.info
 
@@ -21,7 +22,7 @@ configure ::
 	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" \
 	 \
 	 && rm -rf $${builddir} $${installdir} \
-	 && echo cp Makefile.parmetis $${srcdir} \
+	 && cp Makefile.parmetis $${srcdir} \
 	 && ( cd $${srcdir} \
 	     && make BUILDDIR=$${builddir} prefix=$${installdir} \
 	            config shared=1 openmp=ON \
@@ -46,6 +47,6 @@ clean ::
 	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" \
 	 && cd $${srcdir} && make distclean
 
-GITREPO = git@github.com:KarypisLab/ParMETIS.git
-include ${MAKEINCLUDES}/Make.git
+TGZURL = http://glaros.dtc.umn.edu/gkhome/fetch/sw/parmetis/parmetis-${PACKAGEVERSION}.tar.gz
+include ${MAKEINCLUDES}/Make.download
 
