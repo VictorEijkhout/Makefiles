@@ -4,15 +4,21 @@
 ####
 ################################################################
 
+PACKAGE = PETSC
+PACKAGEVERSION = 3.18.3
+MODE = mpi
+
 include ${MAKEINCLUDES}/Make.info
+list_installations ::
+	@source ${MAKEINCLUDES}/names.sh \
+	 && setnames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" \
+	 && setmodulenames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" \
+	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" \
+	 && echo "installations in $${srcdir}: $$( cd $$srcdir && for d in * ; do if [ -d $${d} ] ; then echo $${d} ; fi ; done )"
 
 info ::
 	@echo "make build "
 	@echo "     [CUSTOMEXT=customextension]"
-
-PACKAGE = PETSC
-PACKAGEVERSION = 3.18.3
-MODE = mpi
 
 JCOUNT = 4
 
@@ -22,9 +28,6 @@ LOPTFLAGS=-O1 -fPIC
 
 ifeq "${TACC_SYSTEM}" "nvarm"
   BLAS_FLAGS = --download-fblaslapack=yes
-  MPI_FLAGS = --with-mpi-compilers=1 --with-cc=`which mpicc` --with-cxx=`which mpicxx` 
-else ifeq "${TACC_SYSTEM}" "oneapi"
-  BLAS_FLAGS=--with-blas-lapack-dir=${MKLROOT}
   MPI_FLAGS = --with-mpi-compilers=1 --with-cc=`which mpicc` --with-cxx=`which mpicxx` 
 else ifeq "${TACC_SYSTEM}" "macbookair"
   BLAS_FLAGS=
@@ -137,6 +140,8 @@ build ::
 	@source ${MAKEINCLUDES}/names.sh \
 	 && export MODE=${MODE} && export INSTALLROOT=${INSTALLROOT} \
 	 && setnames ${PACKAGEROOT} ${PACKAGE} ${PACKAGEVERSION} \
+	 && setmodulenames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" \
+	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" \
 	 \
 	 && export petscarch=`make --no-print-directory \
 	                SCALAR=${SCALAR} PRECISION=${PRECISION} ALIGN=${ALIGN} \
@@ -169,12 +174,16 @@ build ::
 	     && ${TIME} make MAKE_NP=${JCOUNT} \
 	     && popd \
 	         && make --no-print-directory varsmodule \
+	            MODULEVERSIONEXTRA=$${petscarch} \
 	            PKGCONFIGSET=$${petscarch}/lib/pkgconfig \
 	            EXTRAVARS="PETSC_DIR=$${srcdir} PETSC_ARCH=$${petscarch}" \
-	  ) 2>&1 | tee $${installlog}
+	  ) 2>&1 | tee $${scriptdir}/install-$${petscarch}.log
+## $${installlog}
 
 public ::
 	@source ${MAKEINCLUDES}/names.sh \
+	 && setmodulenames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" \
+	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" \
 	 && export MODE=${MODE} && export MODULEROOT=${MODULEROOT} \
 	 && export INSTALLPATH=${PACKAGEROOT}/petsc/petsc-${PACKAGEVERSION}/$$petscarch \
 	 && setnames ${PACKAGEROOT} ${PACKAGE} ${PACKAGEVERSION} ${INSTALLEXT} \
@@ -187,6 +196,8 @@ petsc_varsfile :
 	 && export MODE=${MODE} && export MODULEROOT=${MODULEROOT} \
 	 && export INSTALLPATH=${PACKAGEROOT}/petsc/petsc-${PACKAGEVERSION}/$$petscarch \
 	 && setnames ${PACKAGEROOT} ${PACKAGE} ${PACKAGEVERSION} ${INSTALLEXT} \
+	 && setmodulenames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" \
+	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" \
 	 && make --no-print-directory varsmodule \
 	 && modulefile=$$( make --no-print-directory varsmodulename ) \
 	 && echo " .. adding petsc vars to: $${modulefile}" \
