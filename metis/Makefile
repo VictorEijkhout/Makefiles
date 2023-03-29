@@ -1,15 +1,15 @@
 ################################################################
 ####
-#### Makefile for Parmetis installation
+#### Makefile for Metis installation
 ####
-#### https://github.com/KarypisLab/Gklib
+#### https://github.com/KarypisLab/METIS
 ####
 ################################################################
 
-PACKAGE = gklib
+PACKAGE = metis
 PACKAGEVERSION = git
 MODE = mpi
-MODULES = gklib metis
+MODULES = gklib
 
 include ${MAKEINCLUDES}/Make.info
 
@@ -20,12 +20,14 @@ configure ::
 	 && setmodulenames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" \
 	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" \
 	 \
-	 && rm -rf $${builddir} $${installdir} \
-	 && cp Makefile.gklib $${srcdir}/Makefile \
+	 && requirenonzero builddir \
+	 && rm -rf $${builddir} && mkdir -p $${builddir} \
+	 && cp Makefile.metis $${srcdir}/Makefile \
 	 && ( cd $${srcdir} \
+	     && requirenonzero installdir \
 	     && make BUILDDIR=$${builddir} prefix=$${installdir} \
 	            config shared=1 openmp=ON \
-	            cc-flags="-D_POSIX_C_SOURCE=199309L" \
+	            gklib_path=${TACC_GKLIB_DIR} \
 	    ) 2>&1 | tee $${configurelog}
 build ::
 	@source ${MAKEINCLUDES}/names.sh \
@@ -47,6 +49,6 @@ clean ::
 	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" \
 	 && cd $${srcdir} && make distclean
 
-GITREPO = git@github.com:KarypisLab/GKlib.git
+GITREPO = git@github.com:KarypisLab/Metis.git
 include ${MAKEINCLUDES}/Make.git
 
