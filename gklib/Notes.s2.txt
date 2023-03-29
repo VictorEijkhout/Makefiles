@@ -1,0 +1,7 @@
+Building C object CMakeFiles/GKlib.dir/string.c.o
+/opt/apps/gcc/9.1.0/bin/gcc  -I/work2/00434/eijkhout/gklib/gklib-git/. -I/work2/00434/eijkhout/gklib/gklib-git/test -DLINUX -D_FILE_OFFSET_BITS=64 -std=c99 -fno-strict-aliasing -march=native -fPIC -Werror -Wall -pedantic -Wno-unused-function -Wno-unused-but-set-variable -Wno-unused-variable -Wno-unknown-pragmas -Wno-unused-label -D__OPENMP__ -fopenmp -DNDEBUG -DNDEBUG2 -DHAVE_EXECINFO_H -DHAVE_GETLINE -O3 -MD -MT CMakeFiles/GKlib.dir/string.c.o -MF CMakeFiles/GKlib.dir/string.c.o.d -o CMakeFiles/GKlib.dir/string.c.o -c /work2/00434/eijkhout/gklib/gklib-git/string.c
+In file included from /work2/00434/eijkhout/gklib/gklib-git/./GKlib.h:41,
+                 from /work2/00434/eijkhout/gklib/gklib-git/string.c:21:
+/usr/include/signal.h:156:29: error: unknown type name ‘siginfo_t’
+  156 | extern void psiginfo (const siginfo_t *__pinfo, const char *__s);
+      |                             ^~~~~~~~~
