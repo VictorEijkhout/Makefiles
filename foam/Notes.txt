@@ -1,0 +1,35 @@
+==== cmake 
+
+ThirdParty/AllMake.stage1:
+"Starting ThirdParty AllMake: Stage1"
+bunch of tests like:
+[ ! -z "$WM_THIRD_PARTY_USE_CMAKE_322" ] 
+
+variables expicitly disabled in bashrc
+
+cmake settings in prefs.sh:
+# System installed CMake
+export CMAKE_SYSTEM=1
+export CMAKE_DIR=${TACC_CMAKE_DIR}
+export CMAKE_BIN_DIR=${TACC_CMAKE_BIN}
+
+ALSO: system bison/flex/m4 paraview in prefs.sh
+ditto module paraview (module load swr ospray paraview)
+
+==== compiler & mpi
+
+settings in etc/prefs.sh
+
+compiler is WM_COMPILER, environment variable with prescribed names,
+tested in bashrc
+## VLE : ${WM_COMPILER:=Gcc}; export WM_COMPILER
+: ${WM_COMPILER:=Icc}; export WM_COMPILER
+
+mpi is WM_MPLIB, set in prefs.sh, 
+tested in bashrc :
+# WM_MPLIB = SYSTEMOPENMPI | OPENMPI | MPICH | MPICH-GM | HPMPI | GAMMA | MPI | QSMPI | MVAPICH2
+: ${WM_MPLIB:=OPENMPI}; export WM_MPLIB
+
+OpenMP:
+flags are in wmake/rules/linux64Icc/{c,c++}
+set in bashrc: WM_CFLAGS / WM_CXXFLAGS
