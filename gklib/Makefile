@@ -21,11 +21,11 @@ configure ::
 	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" \
 	 \
 	 && rm -rf $${builddir} $${installdir} \
-	 && echo cp Makefile.gklib $${srcdir} \
+	 && cp Makefile.gklib $${srcdir}/Makefile \
 	 && ( cd $${srcdir} \
 	     && make BUILDDIR=$${builddir} prefix=$${installdir} \
 	            config shared=1 openmp=ON \
-	            cc-flags=-fPIC cxx-flags=-fPIC \
+	            cc-flags="-D_POSIX_C_SOURCE=199309L" \
 	    ) 2>&1 | tee $${configurelog}
 build ::
 	@source ${MAKEINCLUDES}/names.sh \
@@ -34,6 +34,7 @@ build ::
 	 && setmodulenames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" \
 	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" \
 	 && ( cd $${srcdir} \
+	    && set -x \
 	    && make BUILDDIR=$${builddir} \
 	    && make BUILDDIR=$${builddir} install \
 	    ) 2>&1 | tee $${installlog}
