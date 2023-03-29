@@ -1,6 +1,6 @@
 ################################################################
 ####
-#### Makefile for Parmetis installation
+#### Makefile for GKlib installation
 ####
 #### https://github.com/KarypisLab/Gklib
 ####
@@ -34,10 +34,10 @@ build ::
 	 && setmodulenames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" \
 	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" \
 	 && ( cd $${srcdir} \
-	    && set -x \
 	    && make BUILDDIR=$${builddir} \
 	    && make BUILDDIR=$${builddir} install \
 	    ) 2>&1 | tee $${installlog}
+include ${MAKEINCLUDES}/Make.vars
 
 clean ::
 	@source ${MAKEINCLUDES}/names.sh \
