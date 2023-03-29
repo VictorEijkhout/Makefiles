@@ -1,36 +1,47 @@
 ################################################################
 ####
-#### Makefile for P4est installation
+#### Makefile for Parmetis installation
+####
+#### http://glaros.dtc.umn.edu/gkhome/metis/parmetis/download
 ####
 ################################################################
 
-PACKAGE = p4est
-PACKAGEVERSION = 2.8
+PACKAGE = parmetis
+PACKAGEVERSION = 4.0.3
 MODE = mpi
-MODULES = petsc
 
 include ${MAKEINCLUDES}/Make.info
 
-CONFIGUREFLAGS=--enable-mpi
-## CMAKEFLAGS=--enable-mpi
-PKGCONFIGSET = lib/pkgconfig
+configure :: 
+	@source ${MAKEINCLUDES}/names.sh \
+	 && export MODE=${MODE} \
+	 && setnames ${PACKAGEROOT} ${PACKAGE} ${PACKAGEVERSION} "" ${PACKAGEBASENAME} \
+	 && setmodulenames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" \
+	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" \
+	 \
+	 && ( cd $${srcdir} \
+	     && make BUILDDIR=$${builddir} prefix=$${installdir} \
+	            config shared=1 \
+	    ) 2>&1 | tee $${configlog}
+build ::
+	@source ${MAKEINCLUDES}/names.sh \
+	 && export MODE=${MODE} \
+	 && setnames ${PACKAGEROOT} ${PACKAGE} ${PACKAGEVERSION} "" ${PACKAGEBASENAME} \
+	 && setmodulenames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" \
+	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" \
+	 && ( cd $${srcdir} \
+	    && make BUILDDIR=$${builddir} \
+	    && make BUILDDIR=$${builddir} install \
+	    ) 2>&1 | tee $${installlog}
 
-##
-## configure version
-##
-#LIBS = -lirc
-include ${MAKEINCLUDES}/Make.configure
-include ${MAKEINCLUDES}/Make.install
-##
-## cmake version
-##
-# include ${MAKEINCLUDES}/Make.cmake
-# include ${MAKEINCLUDES}/Make.cbuild
+clean ::
+	@source ${MAKEINCLUDES}/names.sh \
+	 && export MODE=${MODE} \
+	 && setnames ${PACKAGEROOT} ${PACKAGE} ${PACKAGEVERSION} "" ${PACKAGEBASENAME} \
+	 && setmodulenames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" \
+	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" \
+	 && cd $${srcdir} && make distclean
 
-TGZURL = https://p4est.github.io/release/p4est-${PACKAGEVERSION}.tar.gz
+TGZURL = http://glaros.dtc.umn.edu/gkhome/fetch/sw/parmetis/parmetis-${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 
-GITREPO = https://github.com/cburstedde/p4est.git
-SUBMODULE = yes
-PULLAFTERACTIONS = ./bootstrap
-include ${MAKEINCLUDES}/Make.git
