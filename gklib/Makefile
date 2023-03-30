@@ -37,6 +37,7 @@ build ::
 	    && make BUILDDIR=$${builddir} \
 	    && make BUILDDIR=$${builddir} install \
 	    ) 2>&1 | tee $${installlog}
+	 @make varsmodule
 include ${MAKEINCLUDES}/Make.vars
 
 clean ::
