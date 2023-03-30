@@ -23,10 +23,11 @@ configure ::
 	 && rm -rf $${builddir} $${installdir} \
 	 && cp Makefile.gklib $${srcdir}/Makefile \
 	 && ( cd $${srcdir} \
-	     && make BUILDDIR=$${builddir} prefix=$${installdir} \
-	            config shared=1 openmp=ON \
-	            cc-flags="-D_POSIX_C_SOURCE=199309L" \
+	     && make BUILDDIR=$${builddir} \
+	          CONFIG_FLAGS=" -D CMAKE_INSTALL_PREFIX=$${installdir} -D CMAKE_C_FLAGS=\"-DHAVE_GETLINE -D_POSIX_C_SOURCE=199309L\" " \
+	            config \
 	    ) 2>&1 | tee $${configurelog}
+## 	          CONFIG_FLAGS=" -D CMAKE_INSTALL_PREFIX=$${installdir} -D SHARED=1 -D OPENMP=1 -D CMAKE_C_FLAGS=\"-DHAVE_GETLINE -D_POSIX_C_SOURCE=199309L\" "
 build ::
 	@source ${MAKEINCLUDES}/names.sh \
 	 && export MODE=${MODE} \
@@ -34,7 +35,7 @@ build ::
 	 && setmodulenames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" \
 	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" \
 	 && ( cd $${srcdir} \
-	    && make BUILDDIR=$${builddir} \
+	    && make V=1 BUILDDIR=$${builddir} \
 	    && make BUILDDIR=$${builddir} install \
 	    ) 2>&1 | tee $${installlog}
 include ${MAKEINCLUDES}/Make.vars
