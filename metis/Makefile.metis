@@ -79,7 +79,7 @@ cp include/CMakeLists.txt $(LOCALBUILDDIR)/xinclude
 cd $(BUILDDIR) && cmake $(CURDIR) $(CONFIG_FLAGS) 
 endef
 
-all clean install:
+all install clean:
 	@if [ ! -f $(BUILDDIR)/Makefile ]; then \
 		more BUILD.txt; \
 	else \

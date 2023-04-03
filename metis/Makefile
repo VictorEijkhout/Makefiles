@@ -20,16 +20,20 @@ configure ::
 	 && setmodulenames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" \
 	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" \
 	 \
+	 && source ${MAKEINCLUDES}/compilers.sh \
+	 && setmpicompilers \
+	 && reportcompilers \
+	 \
 	 && requirenonzero builddir \
 	 && rm -rf $${builddir} && mkdir -p $${builddir} \
 	 && cp Makefile.metis   $${srcdir}/Makefile \
 	 && cp CMakeLists.metis $${srcdir}/CMakeLists.txt \
 	 && ( cd $${srcdir} \
 	     && requirenonzero installdir \
-	     && make \
+	     && make config \
 	            BUILDDIR=$${srcdir}/build \
 	            prefix=$${installdir} \
-	            config shared=1 openmp=ON \
+	            cc=$${CC} shared=1 openmp=ON \
 	            gklib_path=${TACC_GKLIB_DIR} \
 	    ) 2>&1 | tee $${configurelog}
 ## not quite working BUILDDIR=$${builddir}, see distclean below

@@ -20,6 +20,10 @@ configure ::
 	 && setmodulenames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" \
 	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" \
 	 \
+	 && source ${MAKEINCLUDES}/compilers.sh \
+	 && setmpicompilers \
+	 && reportcompilers \
+	 \
 	 && rm -rf $${builddir} $${installdir} \
 	 && cp Makefile.gklib $${srcdir}/Makefile \
 	 && if [ "${TACC_SYSTEM}" = "macbookair" ] ; then \
@@ -29,6 +33,8 @@ configure ::
 	          CONFIG_FLAGS="\
 	                -DCMAKE_VERBOSE_MAKEFILE=1 \
 	                -D CMAKE_INSTALL_PREFIX=$${installdir} \
+	                -D CMAKE_C_COMPILER=$${CC} \
+	                -D OPENMP=$${ompflag} \
 	                -D CMAKE_C_FLAGS=\"-D_POSIX_C_SOURCE=200809L $${nox86}\" \
 	                " \
 	            config \
