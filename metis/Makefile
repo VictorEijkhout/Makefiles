@@ -22,7 +22,8 @@ configure ::
 	 \
 	 && requirenonzero builddir \
 	 && rm -rf $${builddir} && mkdir -p $${builddir} \
-	 && cp Makefile.metis $${srcdir}/Makefile \
+	 && cp Makefile.metis   $${srcdir}/Makefile \
+	 && cp CMakeLists.metis $${srcdir}/CMakeLists.txt \
 	 && ( cd $${srcdir} \
 	     && requirenonzero installdir \
 	     && make \
