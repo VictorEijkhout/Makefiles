@@ -36,6 +36,7 @@ configure ::
 	                -D CMAKE_C_COMPILER=$${CC} \
 	                -D OPENMP=$${ompflag} \
 	                -D CMAKE_C_FLAGS=\"-D_POSIX_C_SOURCE=200809L $${nox86}\" \
+	                -D CMAKE_POSITION_INDEPENDENT_CODE=ON \
 	                " \
 	            config \
 	    ) 2>&1 | tee $${configurelog}

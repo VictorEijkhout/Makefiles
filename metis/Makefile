@@ -22,7 +22,6 @@ configure ::
 	 \
 	 && source ${MAKEINCLUDES}/compilers.sh \
 	 && setmpicompilers \
-	 && reportcompilers \
 	 \
 	 && requirenonzero builddir \
 	 && rm -rf $${builddir} && mkdir -p $${builddir} \
@@ -30,11 +29,18 @@ configure ::
 	 && cp CMakeLists.metis $${srcdir}/CMakeLists.txt \
 	 && ( cd $${srcdir} \
 	     && requirenonzero installdir \
-	     && make config \
+	     && reportcompilers \
+	     && make \
 	            BUILDDIR=$${srcdir}/build \
-	            prefix=$${installdir} \
-	            cc=$${CC} shared=1 openmp=ON \
-	            gklib_path=${TACC_GKLIB_DIR} \
+	            CONFIG_FLAGS="\
+	                -DCMAKE_VERBOSE_MAKEFILE=1 \
+	                -D CMAKE_INSTALL_PREFIX=$${installdir} \
+	                -D CMAKE_C_COMPILER=$${CC} \
+	                -D OPENMP=$${ompflag} -D SHARED=1 \
+	                -D GKLIB_PATH=${TACC_GKLIB_DIR} \
+	                -D CMAKE_POSITION_INDEPENDENT_CODE=ON \
+	                " \
+	            config \
 	    ) 2>&1 | tee $${configurelog}
 ## not quite working BUILDDIR=$${builddir}, see distclean below
 build ::
