@@ -7,7 +7,8 @@
 ################################################################
 
 PACKAGE = metis
-PACKAGEVERSION = git
+PACKAGEVERSION = 5.2.1
+#PACKAGEVERSION = git
 MODE = mpi
 MODULES = gklib
 
@@ -68,3 +69,5 @@ clean ::
 GITREPO = git@github.com:KarypisLab/Metis.git
 include ${MAKEINCLUDES}/Make.git
 
+TGZURL = https://github.com/KarypisLab/METIS/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
+include ${MAKEINCLUDES}/Make.download
