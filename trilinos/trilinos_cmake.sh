@@ -15,8 +15,6 @@ cmake -Wno-dev \
   -D CMAKE_C_COMPILER=${CC} \
   -D CMAKE_CXX_COMPILER=${CXX} \
   -D CMAKE_Fortran_COMPILER=${FC} \
-  -D CMAKE_C_FLAGS:STRING="${COPTFLAGS} ${MKLFLAG}" \
-  -D CMAKE_CXX_FLAGS:STRING="${COPTFLAGS} ${MKLFLAG} -DMPICH_SKIP_MPICXX" \
   -D CMAKE_CXX_STANDARD:STRING=17 \
   -D Trilinos_EXTRA_LINK_FLAGS=${PYTHON_LOAD_FLAG} \
   \
@@ -29,9 +27,10 @@ cmake -Wno-dev \
   -D TPL_ENABLE_GLM=OFF \
   -D TPL_ENABLE_Matio=OFF \
   \
-  -D BLAS_INCLUDE_DIRS:PATH="${LMOD_MKL_INC}" \
+  -D TPL_ENABLE_BLAS=ON \
   -D BLAS_LIBRARY_DIRS:PATH="${LMOD_MKL_LIB}" \
-  -D BLAS_LIBRARY_NAMES:STRING="mkl_intel_lp64;mkl_sequential;mkl_core;pthread" \
+  -D BLAS_LIBRARY_NAMES:STRING="mkl_intel_lp64;mkl_intel_thread;mkl_core;pthread;iomp5" \
+  -D BLAS_INCLUDE_DIRS:PATH="${LMOD_MKL_INC}" \
   -D LAPACK_INCLUDE_DIRS:PATH="${LMOD_MKL_INC}" \
   -D LAPACK_LIBRARY_DIRS:PATH="${LMOD_MKL_LIB}" \
   -D LAPACK_LIBRARY_NAMES:STRING="mkl_intel_lp64;mkl_sequential;mkl_core;pthread" \

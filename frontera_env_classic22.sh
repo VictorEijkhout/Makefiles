@@ -9,3 +9,5 @@ export MY_MODULEPATH_ROOT=${MODULEROOT}
 module use ${MY_MODULEPATH_ROOT}/Core
 
 module load intel/22.3.0 impi/22.3.0
+
+module load oneapi21/python3
