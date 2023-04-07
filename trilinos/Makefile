@@ -23,7 +23,7 @@ info ::
 .PHONY: configure
 LIBDIR = lib64
 CMAKE_PREFIXPATH_SET = lib/cmake
-PYTHON = ON
+PYTHON = OFF
 configure :: 
 	@source ${MAKEINCLUDES}/names.sh \
 	 && export MODE=${MODE} \
