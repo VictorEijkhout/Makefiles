@@ -65,6 +65,7 @@ for ixy in \
     5,swig,4.1.1 \
     6,trilinos,13.4.1 \
     7,dealii,9.4.1 \
+    8,aspect,2.4.0 \
     ; do \
     n=${ixy%%,*}
     xy=${ixy#*,}
