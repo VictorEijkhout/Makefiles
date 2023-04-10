@@ -15,6 +15,7 @@ function usage() {
     echo " 5: swig"
     echo " 6: trilinos"
     echo " 7: dealii"
+    echo " 8: aspect"
 }
 
 if [ $# -eq 0 ] ; then 
