@@ -7,7 +7,8 @@
 ################################################################
 
 PACKAGE = metis
-PACKAGEVERSION = git
+PACKAGEVERSION = 5.2.1
+#PACKAGEVERSION = git
 MODE = mpi
 MODULES = gklib
 
@@ -20,17 +21,27 @@ configure ::
 	 && setmodulenames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" \
 	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" \
 	 \
+	 && source ${MAKEINCLUDES}/compilers.sh \
+	 && setmpicompilers \
+	 \
 	 && requirenonzero builddir \
 	 && rm -rf $${builddir} && mkdir -p $${builddir} \
 	 && cp Makefile.metis   $${srcdir}/Makefile \
 	 && cp CMakeLists.metis $${srcdir}/CMakeLists.txt \
 	 && ( cd $${srcdir} \
 	     && requirenonzero installdir \
+	     && reportcompilers \
 	     && make \
 	            BUILDDIR=$${srcdir}/build \
-	            prefix=$${installdir} \
-	            config shared=1 openmp=ON \
-	            gklib_path=${TACC_GKLIB_DIR} \
+	            CONFIG_FLAGS="\
+	                -DCMAKE_VERBOSE_MAKEFILE=1 \
+	                -D CMAKE_INSTALL_PREFIX=$${installdir} \
+	                -D CMAKE_C_COMPILER=$${CC} \
+	                -D OPENMP=$${ompflag} -D SHARED=1 \
+	                -D GKLIB_PATH=${TACC_GKLIB_DIR} \
+	                -D CMAKE_POSITION_INDEPENDENT_CODE=ON \
+	                " \
+	            config \
 	    ) 2>&1 | tee $${configurelog}
 ## not quite working BUILDDIR=$${builddir}, see distclean below
 build ::
@@ -58,3 +69,5 @@ clean ::
 GITREPO = git@github.com:KarypisLab/Metis.git
 include ${MAKEINCLUDES}/Make.git
 
+TGZURL = https://github.com/KarypisLab/METIS/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
+include ${MAKEINCLUDES}/Make.download

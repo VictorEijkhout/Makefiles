@@ -15,12 +15,11 @@ cmake -Wno-dev \
   -D CMAKE_C_COMPILER=${CC} \
   -D CMAKE_CXX_COMPILER=${CXX} \
   -D CMAKE_Fortran_COMPILER=${FC} \
-  -D CMAKE_C_FLAGS:STRING="${COPTFLAGS} ${MKLFLAG}" \
-  -D CMAKE_CXX_FLAGS:STRING="${COPTFLAGS} ${MKLFLAG} -DMPICH_SKIP_MPICXX" \
   -D CMAKE_CXX_STANDARD:STRING=17 \
   -D Trilinos_EXTRA_LINK_FLAGS=${PYTHON_LOAD_FLAG} \
   \
   -D TPL_ENABLE_MPI:BOOL=ON \
+  -D Trilinos_ENABLE_OpenMP=ON \
   -D MPI_BASE_DIR=${LMOD_IMPI_DIR}/intel64 \
   -D MPI_INCLUDE_DIRS=${LMOD_IMPI_INC} \
   -D MPI_EXEC:FILEPATH="/opt/apps/xalt/0.6/bin/ibrun" \
@@ -29,12 +28,13 @@ cmake -Wno-dev \
   -D TPL_ENABLE_GLM=OFF \
   -D TPL_ENABLE_Matio=OFF \
   \
-  -D BLAS_INCLUDE_DIRS:PATH="${LMOD_MKL_INC}" \
+  -D TPL_ENABLE_BLAS=ON \
   -D BLAS_LIBRARY_DIRS:PATH="${LMOD_MKL_LIB}" \
-  -D BLAS_LIBRARY_NAMES:STRING="mkl_intel_lp64;mkl_sequential;mkl_core;pthread" \
+  -D BLAS_LIBRARY_NAMES:STRING="mkl_intel_lp64;mkl_intel_thread;mkl_core;iomp5;pthread" \
+  -D BLAS_INCLUDE_DIRS:PATH="${LMOD_MKL_INC}" \
   -D LAPACK_INCLUDE_DIRS:PATH="${LMOD_MKL_INC}" \
   -D LAPACK_LIBRARY_DIRS:PATH="${LMOD_MKL_LIB}" \
-  -D LAPACK_LIBRARY_NAMES:STRING="mkl_intel_lp64;mkl_sequential;mkl_core;pthread" \
+  -D LAPACK_LIBRARY_NAMES:STRING="mkl_intel_lp64;mkl_sequential;mkl_core;iomp5;pthread" \
   \
   -D TPL_ENABLE_HDF5:BOOL=${HAS_HDF5} \
   -D HDF5_INCLUDE_DIRS:PATH=$LMOD_HDF5_INC    \
@@ -121,13 +121,14 @@ cmake -Wno-dev \
   -D Trilinos_ENABLE_Zoltan:BOOL=ON \
       -D Trilinos_ENABLE_Zoltan2:BOOL=ON \
   \
+  -D KOKKOS_IS_REQUIRED_FOR_SEVERAL_PACKAGES=off \
   -D Trilinos_ENABLE_Kokkos:BOOL=ON \
   -D Trilinos_ENABLE_KokkosCore:BOOL=ON \
-  -D Phalanx_KOKKOS_DEVICE_TYPE:STRING="SERIAL" \
+  -D Phalanx_KOKKOS_DEVICE_TYPE:STRING=OPENMP \
   -D Phalanx_INDEX_SIZE_TYPE:STRING="INT" \
   -D Phalanx_SHOW_DEPRECATED_WARNINGS:BOOL=OFF \
   -D Kokkos_ENABLE_Serial:BOOL=ON \
-  -D Kokkos_ENABLE_OpenMP:BOOL=OFF \
+  -D Kokkos_ENABLE_OpenMP:BOOL=ON \
   -D Kokkos_ENABLE_Pthread:BOOL=OFF \
   \
   -D Trilinos_ENABLE_STK:BOOL=${HAS_STK} \
