@@ -5,8 +5,8 @@
 ################################################################
 
 PACKAGE = trilinos
-PACKAGEVERSION = 13.4.1
-PACKAGEVERSION_DOWNLOAD = 13-4-1
+PACKAGEVERSION = 14.0.0
+PACKAGEVERSION_DOWNLOAD = 14-0-0
 MODE = mpi
 MODULES = boost
 #boost swig
