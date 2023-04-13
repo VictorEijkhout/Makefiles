@@ -13,6 +13,7 @@ include ${MAKEINCLUDES}/Make.info
 
 JCOUNT = 12
 .PHONY: configure build
+PKGCONFIGSET = lib/pkgconfig
 configure ::
 	@echo "there is no separate configure rule"
 build :: modules
@@ -26,24 +27,29 @@ build :: modules
 	 && reportcompilers \
 	 \
 	 && requirenonzero srcdir \
-	 && cd $$srcdir \
+	 && pushd $$srcdir \
 	 && make --no-print-directory \
 	        -B OPT=-g -j ${JCOUNT} V=1 \
 	        BUILDDIR=$$builddir/ \
 	        prefix=$$installdir \
 	        all install \
+	 && popd && make varsmodule \
 	 ) 2>&1 | tee install.log \
 	 && echo "See install.log"
+include ${MAKEINCLUDES}/Make.vars
+
+####
+#### Examples
+####
 
 info ::
 	@echo "make examples : copy and build examples"
 .PHONY: examples
-examples : petsc-installation
+examples : 
 	@examples=examples-${PETSC_ARCH} \
 	 && if [ "${TAU}" = "1" ] ; then \
 	     examples=$${examples}-tau \
 	    ; fi \
-	 && rm -rf $${examples} \
 	 && ( \
 	    source ${MAKEINCLUDES}/names.sh \
 	     && setnames ${PACKAGEROOT} ${PACKAGE} ${PACKAGEVERSION} \
