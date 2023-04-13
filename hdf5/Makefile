@@ -1,26 +1,30 @@
 ################################################################
 ####
-#### Makefile for Netcdf installation
+#### Makefile for Hdf5 installation
 ####
-#### https://netcdf.geodynamics.org/
-#### https://github.com/geodynamics/netcdf
+#### https://hdf5.geodynamics.org/
+#### https://github.com/geodynamics/hdf5
 ####
 ################################################################
 
-PACKAGE = NETCDF
-PACKAGEVERSION = 4.9.2
+PACKAGE = HDF5
+PACKAGEVERSION = 1.14
 MODE = mpi
 MODULES = 
 
 include ${MAKEINCLUDES}/Make.info
 
-notCMAKEFLAGS = 
+CMAKEFLAGS = \
+  -D HDF5_ENABLE_Z_LIB_SUPPORT:BOOL=ON \
+  -D ZLIB_INCLUDE_DIR:PATH=${TACC_ZLIB_INC} \
+  -D ZLIB_LIBRARY:FILEPATH=${TACC_ZLIB_LIB} 
 
 include ${MAKEINCLUDES}/Make.cmake
 HASBIN=1
+PKGCONFIGSET = lib/pkgconfig
 include ${MAKEINCLUDES}/Make.cbuild
 
-TGZURL = https://downloads.unidata.ucar.edu/netcdf-c/${PACKAGEVERSION}/netcdf-c-${PACKAGEVERSION}.tar.gz
+TGZURL = https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-${PACKAGEVERSION}/hdf5-${PACKAGEVERSION}.0/src/hdf5-${PACKAGEVERSION}.0.tar.gz
 include ${MAKEINCLUDES}/Make.download
 include ${MAKEINCLUDES}/Make.clean
 
