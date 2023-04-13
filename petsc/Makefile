@@ -181,7 +181,10 @@ build ::
 ## $${installlog}
 
 public ::
+	@echo "public rule disabled"
+nopublic :
 	@source ${MAKEINCLUDES}/names.sh \
+	 && setnames ${PACKAGEROOT} ${PACKAGE} ${PACKAGEVERSION} ${INSTALLEXT} \
 	 && setmodulenames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" \
 	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" \
 	 && export MODE=${MODE} && export MODULEROOT=${MODULEROOT} \

@@ -60,7 +60,8 @@ configure ::
 	     && if [ -f $${scriptdir}/trilinos_cmake_${TACC_SYSTEM}.sh ] ; then \
 	            source $${scriptdir}/trilinos_cmake_${TACC_SYSTEM}.sh \
 	        ; else \
-	            source $${scriptdir}/trilinos_cmake.sh \
+	            BUILDDIR=$$builddir SRCDIR=$$srcdir \
+	              source $${scriptdir}/trilinos_cmake.sh \
 	        ; fi \
 	     \
 	     && export PYTHON_VERSION=3 \
