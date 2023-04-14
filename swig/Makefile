@@ -14,6 +14,7 @@ MODULES = pcre2
 include ${MAKEINCLUDES}/Make.info
 
 include ${MAKEINCLUDES}/Make.configure
+HASBIN = 1
 include ${MAKEINCLUDES}/Make.install
 
 TGZURL = http://prdownloads.sourceforge.net/swig/swig-${PACKAGEVERSION}.tar.gz

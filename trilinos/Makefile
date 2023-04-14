@@ -20,10 +20,13 @@ info ::
 	@echo "make configure"
 	@echo "    [ PACKAGEVERSION=... (default=${PACKAGEVERSION}) ]"
 	@echo "    [ PYTHON=ON/OFF (default: ${PYTHON} ) ]"
-.PHONY: configure
+	@echo "    [ TEUCHOS=ON/OFF (default: ${TEUCHOS} ) ]"
+PYTHON = OFF
+TEUCHOS = ON
+
 LIBDIR = lib64
 CMAKE_PREFIXPATH_SET = lib/cmake
-PYTHON = OFF
+.PHONY: configure
 configure :: 
 	@source ${MAKEINCLUDES}/names.sh \
 	 && export MODE=${MODE} \
@@ -63,6 +66,7 @@ configure ::
 	     && if [ -f $${scriptdir}/trilinos_cmake_${TACC_SYSTEM}.sh ] ; then \
 	            source $${scriptdir}/trilinos_cmake_${TACC_SYSTEM}.sh \
 	        ; else \
+	            HAS_TEUCHOS=${TEUCHOS} \
 	            BUILDDIR=$$builddir SRCDIR=$$srcdir \
 	              source $${scriptdir}/trilinos_cmake.sh \
 	        ; fi \
