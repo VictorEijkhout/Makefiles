@@ -42,7 +42,10 @@ configure ::
 	     && reportcompilers && echo \
 	     \
 	     && export HAS_HDF5=0 && export HAS_NETCDF=0 && export HAS_MUMPS=0 \
-	     && export HAS_SEACAS=0 && export HAS_STK=0 \
+	     && export HAS_SEACAS=ON \
+	     && if [ "$${HAS_NETCDF}" != "ON" ] ; then \
+	            export HAS_SEACAS=OFF ; fi \
+	     && export HAS_STK=0 \
 	     \
 	     && export HAS_YAMLCPP=0 \
 	     && if [ "$${HAS_YAMLCPP}" = "1" ] ; then \
