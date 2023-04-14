@@ -69,7 +69,7 @@ cmake \
   -D yaml-cpp_INCLUDE_DIRS:PATH=${TACC_YAMLCPP_INC} \
   -D yaml-cpp_LIBRARY_DIRS:PATH=${TACC_YAMLCPP_LIB} \
   \
-  -D Trilinos_ENABLE_Amesos:BOOL=ON \
+  -D Trilinos_ENABLE_Amesos:BOOL=${HAS_TEUCHOS} \
       -D Trilinos_ENABLE_Amesos2:BOOL=ON \
       -D Amesos2_ENABLE_KLU2:BOOL=ON \
       -D Amesos2_ENABLE_Basker:BOOL=ON \
@@ -77,15 +77,15 @@ cmake \
   -D Trilinos_ENABLE_AztecOO:Bool=ON \
   -D Trilinos_ENABLE_Belos:BOOL=ON \
   -D Trilinos_ENABLE_Epetra:Bool=ON \
-  -D Trilinos_ENABLE_EpetraExt:Bool=ON \
+  -D Trilinos_ENABLE_EpetraExt:Bool=${HAS_TEUCHOS} \
   -D                 Epetra_ENABLE_TESTS:BOOL=ON \
   -D Trilinos_ENABLE_FEI:Bool=ON \
-  -D Trilinos_ENABLE_Ifpack:Bool=ON \
+  -D Trilinos_ENABLE_Ifpack:Bool=${HAS_TEUCHOS} \
       -D Trilinos_ENABLE_Ifpack2:BOOL=ON \
   -D Trilinos_ENABLE_Intrepid:BOOL=ON \
-      -D Trilinos_ENABLE_Intrepid2:BOOL=ON \
+      -D Trilinos_ENABLE_Intrepid2:BOOL=${HAS_TEUCHOS} \
       -D Intrepid_ENABLE_TESTS:BOOL=ON \
-  -D Trilinos_ENABLE_Isorropia:BOOL=ON \
+  -D Trilinos_ENABLE_Isorropia:BOOL=${HAS_TEUCHOS} \
   -D Trilinos_ENABLE_ML:BOOL=ON \
       -D ML_TAKES_SUPERLU_LESS_THAN_5=TRUE \
       -D ML_ENABLE_SuperLU:BOOL=OFF \
@@ -97,7 +97,7 @@ cmake \
   -D                 NOX_ENABLE_TESTS:BOOL=OFF \
   -D Trilinos_ENABLE_Pamgen:Bool=ON \
   -D Trilinos_ENABLE_Panzer:Bool=ON \
-  -D Trilinos_ENABLE_Phalanx:BOOL=ON \
+  -D Trilinos_ENABLE_Phalanx:BOOL=${HAS_TEUCHOS} \
       -D Phalanx_EXPLICIT_TEMPLATE_INSTANTIATION=ON \
       -D Phalanx_ENABLE_EXAMPLES=OFF \
   -D Trilinos_ENABLE_Piro:BOOL=ON \
@@ -113,7 +113,7 @@ cmake \
   -D Trilinos_ENABLE_Stokhos:BOOL=ON \
   -D Trilinos_ENABLE_Stratimikos:BOOL=ON \
   -D Trilinos_ENABLE_Teko:BOOL=ON \
-  -D Trilinos_ENABLE_Teuchos:BOOL=ON \
+  -D Trilinos_ENABLE_Teuchos:BOOL=${HAS_TEUCHOS} \
       -D Teuchos_ENABLE_LONG_LONG_INT:BOOL=ON \
   -D Trilinos_ENABLE_Thyra:BOOL=ON \
   -D Trilinos_ENABLE_Tpetra:BOOL=ON \
