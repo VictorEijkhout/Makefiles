@@ -10,7 +10,7 @@
 PACKAGE = NETCDF
 PACKAGEVERSION = 4.9.2
 MODE = mpi
-MODULES = 
+MODULES = hdf5
 
 include ${MAKEINCLUDES}/Make.info
 

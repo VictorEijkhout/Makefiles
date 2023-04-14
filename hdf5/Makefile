@@ -2,22 +2,25 @@
 ####
 #### Makefile for Hdf5 installation
 ####
-#### https://hdf5.geodynamics.org/
-#### https://github.com/geodynamics/hdf5
+#### note: also comes in C++ and Fortran download
+####
 ####
 ################################################################
 
 PACKAGE = HDF5
+# there is a micro version but we ignore that for now.
 PACKAGEVERSION = 1.14
 MODE = mpi
-MODULES = 
+MODULES = zlib
 
 include ${MAKEINCLUDES}/Make.info
 
 CMAKEFLAGS = \
   -D HDF5_ENABLE_Z_LIB_SUPPORT:BOOL=ON \
+  -D ZLIB_USE_EXTERNAL:BOOL=ON \
+  -D ZLIB_DIR:PATH=${TACC_ZLIB_DIR} \
   -D ZLIB_INCLUDE_DIR:PATH=${TACC_ZLIB_INC} \
-  -D ZLIB_LIBRARY:FILEPATH=${TACC_ZLIB_LIB} 
+  -D ZLIB_LIBRARY:FILEPATH=${TACC_ZLIB_LIB}/libz.so
 
 include ${MAKEINCLUDES}/Make.cmake
 HASBIN=1
