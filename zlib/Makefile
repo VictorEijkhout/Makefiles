@@ -10,6 +10,9 @@ MODE = seq
 
 include ${MAKEINCLUDES}/Make.info
 
+CMAKFLAGS=\
+  -D CMAKE_C_FLAGS=-fPIC \
+  -D CMAKE_CXX_FLAGS=-fPIC
 include ${MAKEINCLUDES}/Make.cmake
 PKGCONFIGSET = share/pkgconfig
 include ${MAKEINCLUDES}/Make.cbuild
