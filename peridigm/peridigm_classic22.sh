@@ -9,8 +9,9 @@ ladder="\
     1,zlib,1.2.13 \
     2,hdf5,1.14 \
     3,netcdf,4.9.2 \
-    4,trilinos,14.0.0 \
-    5,peridigm,git \
+    4,boost,1.81.0 \
+    5,trilinos,14.0.0 \
+    6,peridigm,git \
     "
 
 function usage() {
