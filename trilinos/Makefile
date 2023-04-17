@@ -44,7 +44,7 @@ configure ::
 	     && reportnames && echo \
 	     && reportcompilers && echo \
 	     \
-	     && export HAS_HDF5=0 && export HAS_NETCDF=0 && export HAS_MUMPS=0 \
+	     && export HAS_HDF5=ON && export HAS_NETCDF=ON && export HAS_MUMPS=0 \
 	     && export HAS_SEACAS=ON \
 	     && if [ "$${HAS_NETCDF}" != "ON" ] ; then \
 	            export HAS_SEACAS=OFF ; fi \

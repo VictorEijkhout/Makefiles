@@ -1,5 +1,5 @@
 cmake \
-  -B ${BUILDDIR} -S ${SRCDIR} -Wno-dev \
+  -B ${BUILDDIR} -S ${SRCDIR} \
   -D CMAKE_INSTALL_PREFIX:PATH=${installdir} \
   -D CMAKE_BUILD_TYPE:STRING=RELEASE \
   -D BUILD_SHARED_LIBS:BOOL=ON \
@@ -79,6 +79,7 @@ cmake \
   -D Trilinos_ENABLE_Epetra:Bool=ON \
   -D Trilinos_ENABLE_EpetraExt:Bool=${HAS_TEUCHOS} \
   -D                 Epetra_ENABLE_TESTS:BOOL=ON \
+  -D Trilinos_ENABLE_ExodusII:Bool=ON \
   -D Trilinos_ENABLE_FEI:Bool=ON \
   -D Trilinos_ENABLE_Ifpack:Bool=${HAS_TEUCHOS} \
       -D Trilinos_ENABLE_Ifpack2:BOOL=ON \
