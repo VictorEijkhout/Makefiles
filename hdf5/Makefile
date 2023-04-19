@@ -3,7 +3,7 @@
 #### Makefile for Hdf5 installation
 ####
 #### note: also comes in C++ and Fortran download
-####
+#### https://portal.hdfgroup.org/display/HDF5/Parallel+HDF5
 ####
 ################################################################
 
@@ -17,10 +17,13 @@ include ${MAKEINCLUDES}/Make.info
 
 CMAKEFLAGS = \
   -D HDF5_ENABLE_Z_LIB_SUPPORT:BOOL=ON \
-  \
   -D ZLIB_DIR:PATH=${TACC_ZLIB_DIR} \
   -D ZLIB_INCLUDE_DIR:PATH=${TACC_ZLIB_INC} \
-  -D ZLIB_LIBRARY:PATH=${TACC_ZLIB_LIB}/libz.so
+  -D ZLIB_LIBRARY:PATH=${TACC_ZLIB_LIB}/libz.so \
+  \
+  -D HDF_ENABLE_PARALLEL:BOOL=ON \
+  -D CMAKE_C_FLAGS=--enable-parallel \
+  -D CMAKE_CXX_FLAGS=--enable-parallel
 
 include ${MAKEINCLUDES}/Make.cmake
 HASBIN=1

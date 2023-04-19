@@ -1,5 +1,5 @@
 cmake \
-  -B ${BUILDDIR} -S ${SRCDIR} -Wno-dev \
+  -B ${BUILDDIR} -S ${SRCDIR} \
   -D CMAKE_INSTALL_PREFIX:PATH=${installdir} \
   -D CMAKE_BUILD_TYPE:STRING=RELEASE \
   -D BUILD_SHARED_LIBS:BOOL=ON \
