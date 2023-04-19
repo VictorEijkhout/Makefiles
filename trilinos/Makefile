@@ -22,7 +22,6 @@ info ::
 	@echo "    [ PYTHON=ON/OFF (default: ${PYTHON} ) ]"
 	@echo "    [ TEUCHOS=ON/OFF (default: ${TEUCHOS} ) ]"
 PYTHON = OFF
-TEUCHOS = ON
 
 LIBDIR = lib64
 CMAKE_PREFIXPATH_SET = lib/cmake
@@ -43,11 +42,9 @@ configure ::
 	    cd $${builddir} \
 	     && reportnames && echo \
 	     && reportcompilers && echo \
+	     && module list && echo \
 	     \
-	     && export HAS_HDF5=0 && export HAS_NETCDF=0 && export HAS_MUMPS=0 \
-	     && export HAS_SEACAS=ON \
-	     && if [ "$${HAS_NETCDF}" != "ON" ] ; then \
-	            export HAS_SEACAS=OFF ; fi \
+	     && export HAS_MUMPS=0 \
 	     && export HAS_STK=0 \
 	     \
 	     && export HAS_YAMLCPP=0 \
@@ -55,10 +52,10 @@ configure ::
 	            source $${scriptdir}/../yaml-cpp/yamlcpp_vars.sh ; fi \
 	     \
 	     && export TRILINOS_LOCATION=${TRILINOS_SCRIPTDIR} \
-	     && if [ "${LMOD_FAMILY_COMPILER}" = "intel" ] ; then \
+	     && if [ "${TACC_FAMILY_COMPILER}" = "intel" ] ; then \
 	          export MKLFLAG="-mkl" ; fi \
-	     && export LMOD_MKL_INC=${MKLROOT}/include \
-	     && export LMOD_MKL_LIB=${MKLROOT}/lib/intel64 \
+	     && export TACC_MKL_INC=${MKLROOT}/include \
+	     && export TACC_MKL_LIB=${MKLROOT}/lib/intel64 \
 	     \
 	     && export HAS_PYTHON=${PYTHON} \
 	     \
@@ -66,7 +63,6 @@ configure ::
 	     && if [ -f $${scriptdir}/trilinos_cmake_${TACC_SYSTEM}.sh ] ; then \
 	            source $${scriptdir}/trilinos_cmake_${TACC_SYSTEM}.sh \
 	        ; else \
-	            HAS_TEUCHOS=${TEUCHOS} \
 	            BUILDDIR=$$builddir SRCDIR=$$srcdir \
 	              source $${scriptdir}/trilinos_cmake.sh \
 	        ; fi \

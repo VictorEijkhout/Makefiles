@@ -22,26 +22,26 @@ cmake \
   -D Trilinos_ENABLE_OpenMP:BOOL=ON \
   \
   -D TPL_ENABLE_MPI:BOOL=ON \
-  -D MPI_BASE_DIR=${LMOD_IMPI_DIR}/intel64 \
-  -D MPI_INCLUDE_DIRS=${LMOD_IMPI_INC} \
+  -D MPI_BASE_DIR=${TACC_IMPI_DIR}/intel64 \
+  -D MPI_INCLUDE_DIRS=${TACC_IMPI_INC} \
   -D MPI_EXEC:FILEPATH="/opt/apps/xalt/0.6/bin/ibrun" \
   -D TPL_ENABLE_GLM=OFF \
   -D TPL_ENABLE_Matio=OFF \
   \
   -D TPL_ENABLE_BLAS=ON \
-  -D BLAS_LIBRARY_DIRS:PATH="${LMOD_MKL_LIB}" \
+  -D BLAS_LIBRARY_DIRS:PATH="${TACC_MKL_LIB}" \
   -D BLAS_LIBRARY_NAMES:STRING="mkl_intel_lp64;mkl_intel_thread;mkl_core;iomp5;pthread" \
-  -D BLAS_INCLUDE_DIRS:PATH="${LMOD_MKL_INC}" \
-  -D LAPACK_INCLUDE_DIRS:PATH="${LMOD_MKL_INC}" \
-  -D LAPACK_LIBRARY_DIRS:PATH="${LMOD_MKL_LIB}" \
+  -D BLAS_INCLUDE_DIRS:PATH="${TACC_MKL_INC}" \
+  -D LAPACK_INCLUDE_DIRS:PATH="${TACC_MKL_INC}" \
+  -D LAPACK_LIBRARY_DIRS:PATH="${TACC_MKL_LIB}" \
   -D LAPACK_LIBRARY_NAMES:STRING="mkl_intel_lp64;mkl_sequential;mkl_core;iomp5;pthread" \
   \
-  -D TPL_ENABLE_HDF5:BOOL=${HAS_HDF5} \
-  -D HDF5_INCLUDE_DIRS:PATH=$LMOD_HDF5_INC    \
-  -D HDF5_LIBRARY_DIRS:PATH=$LMOD_HDF5_LIB    \
-  -D TPL_ENABLE_Netcdf:BOOL=${HAS_NETCDF} \
-  -D Netcdf_INCLUDE_DIRS:PATH=$LMOD_NETCDF_INC    \
-  -D Netcdf_LIBRARY_DIRS:PATH=$LMOD_NETCDF_LIB    \
+  -D TPL_ENABLE_HDF5:BOOL=ON \
+  -D HDF5_INCLUDE_DIRS:PATH=${TACC_HDF5_INC}    \
+  -D HDF5_LIBRARY_DIRS:PATH=${TACC_HDF5_LIB}    \
+  -D TPL_ENABLE_Netcdf:BOOL=ON \
+  -D Netcdf_INCLUDE_DIRS:PATH=${TACC_NETCDF_INC}    \
+  -D Netcdf_LIBRARY_DIRS:PATH=${TACC_NETCDF_LIB}    \
   \
   -D Tpetra_INST_DOUBLE:BOOL=ON \
   -D Tpetra_INST_FLOAT:BOOL=OFF \
@@ -69,7 +69,7 @@ cmake \
   -D yaml-cpp_INCLUDE_DIRS:PATH=${TACC_YAMLCPP_INC} \
   -D yaml-cpp_LIBRARY_DIRS:PATH=${TACC_YAMLCPP_LIB} \
   \
-  -D Trilinos_ENABLE_Amesos:BOOL=${HAS_TEUCHOS} \
+  -D Trilinos_ENABLE_Amesos:BOOL=ON \
       -D Trilinos_ENABLE_Amesos2:BOOL=ON \
       -D Amesos2_ENABLE_KLU2:BOOL=ON \
       -D Amesos2_ENABLE_Basker:BOOL=ON \
@@ -77,15 +77,16 @@ cmake \
   -D Trilinos_ENABLE_AztecOO:Bool=ON \
   -D Trilinos_ENABLE_Belos:BOOL=ON \
   -D Trilinos_ENABLE_Epetra:Bool=ON \
-  -D Trilinos_ENABLE_EpetraExt:Bool=${HAS_TEUCHOS} \
+  -D Trilinos_ENABLE_EpetraExt:Bool=ON \
   -D                 Epetra_ENABLE_TESTS:BOOL=ON \
+  -D Trilinos_ENABLE_ExodusII:Bool=ON \
   -D Trilinos_ENABLE_FEI:Bool=ON \
-  -D Trilinos_ENABLE_Ifpack:Bool=${HAS_TEUCHOS} \
+  -D Trilinos_ENABLE_Ifpack:Bool=ON \
       -D Trilinos_ENABLE_Ifpack2:BOOL=ON \
   -D Trilinos_ENABLE_Intrepid:BOOL=ON \
-      -D Trilinos_ENABLE_Intrepid2:BOOL=${HAS_TEUCHOS} \
+      -D Trilinos_ENABLE_Intrepid2:BOOL=ON \
       -D Intrepid_ENABLE_TESTS:BOOL=ON \
-  -D Trilinos_ENABLE_Isorropia:BOOL=${HAS_TEUCHOS} \
+  -D Trilinos_ENABLE_Isorropia:BOOL=ON \
   -D Trilinos_ENABLE_ML:BOOL=ON \
       -D ML_TAKES_SUPERLU_LESS_THAN_5=TRUE \
       -D ML_ENABLE_SuperLU:BOOL=OFF \
@@ -97,23 +98,23 @@ cmake \
   -D                 NOX_ENABLE_TESTS:BOOL=OFF \
   -D Trilinos_ENABLE_Pamgen:Bool=ON \
   -D Trilinos_ENABLE_Panzer:Bool=ON \
-  -D Trilinos_ENABLE_Phalanx:BOOL=${HAS_TEUCHOS} \
+  -D Trilinos_ENABLE_Phalanx:BOOL=ON \
       -D Phalanx_EXPLICIT_TEMPLATE_INSTANTIATION=ON \
       -D Phalanx_ENABLE_EXAMPLES=OFF \
   -D Trilinos_ENABLE_Piro:BOOL=ON \
   -D Trilinos_ENABLE_Rythmos:BOOL=ON \
   -D Trilinos_ENABLE_Sacado:Bool=ON \
-  -D Trilinos_ENABLE_SEACAS:BOOL=${HAS_SEACAS} \
-      -D Trilinos_ENABLE_SEACASIoss:BOOL=${HAS_SEACAS} \
-      -D Trilinos_ENABLE_SEACASBlot:BOOL=${HAS_SEACAS} \
-      -D Trilinos_ENABLE_SEACASExodus:BOOL=${HAS_SEACAS} \
+  -D Trilinos_ENABLE_SEACAS:BOOL=ON \
+      -D Trilinos_ENABLE_SEACASIoss:BOOL=ON \
+      -D Trilinos_ENABLE_SEACASBlot:BOOL=ON \
+      -D Trilinos_ENABLE_SEACASExodus:BOOL=ON \
   -D Trilinos_ENABLE_SECONDARY_STABLE_CODE:BOOL=ON \
   -D Trilinos_ENABLE_Shards:BOOL=ON \
   -D Trilinos_ENABLE_ShyLU:BOOL=OFF \
   -D Trilinos_ENABLE_Stokhos:BOOL=ON \
   -D Trilinos_ENABLE_Stratimikos:BOOL=ON \
   -D Trilinos_ENABLE_Teko:BOOL=ON \
-  -D Trilinos_ENABLE_Teuchos:BOOL=${HAS_TEUCHOS} \
+  -D Trilinos_ENABLE_Teuchos:BOOL=ON \
       -D Teuchos_ENABLE_LONG_LONG_INT:BOOL=ON \
   -D Trilinos_ENABLE_Thyra:BOOL=ON \
   -D Trilinos_ENABLE_Tpetra:BOOL=ON \
@@ -150,13 +151,13 @@ export TEMPORARILY_REMOVED="\
   -D Trilinos_EXTRA_LD_FLAGS=${PYTHON_LOAD_FLAG}
   \
   -D Trilinos_EXTRA_LINK_FLAGS=${PYTHON_LOAD_FLAG} \
-  -D TPL_MPI_BASE_DIR=${LMOD_IMPI_DIR}intel64 \
-  -D TPL_MPI_INCLUDE_DIRS=${LMOD_IMPI_INC} \
+  -D TPL_MPI_BASE_DIR=${TACC_IMPI_DIR}intel64 \
+  -D TPL_MPI_INCLUDE_DIRS=${TACC_IMPI_INC} \
   \
   -D VLE_SUPERLU_IS_FIXED_AFTER_12.12:BOOL=ON \
   -D TPL_ENABLE_SuperLU:BOOL=${HAS_SUPERLU} \
-      -D SuperLU_INCLUDE_DIRS:PATH="${LMOD_SUPERLUSEQ_DIR}/include" \
-      -D SuperLU_LIBRARY_DIRS:PATH="${LMOD_SUPERLUSEQ_LIB}" \
+      -D SuperLU_INCLUDE_DIRS:PATH="${TACC_SUPERLUSEQ_DIR}/include" \
+      -D SuperLU_LIBRARY_DIRS:PATH="${TACC_SUPERLUSEQ_LIB}" \
       -D SuperLU_LIBRARY_NAMES:STRING="superlu" \
   \
   "

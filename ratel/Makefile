@@ -7,12 +7,15 @@
 PACKAGE = RATEL
 PACKAGEVERSION = git
 CHMODR = 1
-MODULES = petsc
+MODULES = petsc libceed
+MODE = mpi
 
 include ${MAKEINCLUDES}/Make.info
 
 JCOUNT = 12
 .PHONY: configure build
+info ::
+	echo "make configure build"
 configure ::
 	@echo "there is no separate configure rule"
 build :: modules
@@ -23,8 +26,10 @@ build :: modules
 	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" \
 	 \
 	 && source ${MAKEINCLUDES}/compilers.sh \
-	 && reportcompilers \
+	 && setcompilers && reportcompilers \
 	 \
+	 && export CEED_DIR=[path to libCEED] PETSC_DIR=[path to PETSc] PETSC_ARCH=[PETSc arch] ENZYME_LIB=[path to Enzyme] \
+	 && make -j ${JCOUNT}
 	 && export CEED_DIR=$${PETSC_DIR}/$${PETSC_ARCH} \
 	 && echo "make with PETSC_DIR=$${PETSC_DIR}, PETSC_ARCH=$${PETSC_ARCH}, CEED_DIR=$${CEED_DIR}" \
 	 && echo "into builddir: $${builddir}" \
