@@ -5,6 +5,8 @@
 #### https://peridigm.geodynamics.org/
 #### https://github.com/geodynamics/peridigm
 ####
+#### needs a modern enough C++: gcc12 or so.
+####
 ################################################################
 
 PACKAGE = PERIDIGM
