@@ -19,7 +19,7 @@ CMAKEFLAGS = \
 -D Netcdf_DIR:PATH=${TACC_NETCDF_DIR} \
 -D Trilinos_DIR:PATH=${TACC_TRILINOS_DIR} \
 -D BOOST_ROOT=${TACC_BOOST_DIR} \
--D CMAKE_CXX_FLAGS=\"-Wno-dev -qopenmp -std=c++17\"
+-D CMAKE_CXX_FLAGS=\"-qopenmp -std=c++17\"
 
 ## -D CMAKE_CXX_FLAGS:STRING="-O2 -Wall -std=c++11 -pedantic -Wno-long-long -ftrapv -Wno-deprecated" 
 
