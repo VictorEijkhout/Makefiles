@@ -3,7 +3,7 @@
 setx=0
 jcount=24
 list=0
-m=100
+packages=100
 
 ladder="\
     1,zlib,1.2.13 \
@@ -16,7 +16,7 @@ ladder="\
 ## trilinos 14.0.0
 
 function usage() {
-    echo "Usage: $0 [ -h ] [ -x ] [ -j nnn ] [ -l ] nnn"
+    echo "Usage: $0 [ -h ] [ -x ] [ -j nnn ] [ -l ] n1[,n2[,n3...]]"
     echo "where nnn:"
     for ixy in ${ladder} ; do
 	n=${ixy%%,*}
@@ -51,7 +51,7 @@ while [ $# -gt 0 ] ; do
     elif [ "$1" = "-j" ] ; then 
 	shift; jcount=$1; shift
     else
-	m=$1; shift
+	packages=$1; shift
     fi
 done
 
@@ -64,27 +64,32 @@ fi
 
 echo "================ Starting installation with modules:"
 module list
-if [ $m -eq 0 ] ; then 
+if [ "${packages}" = "0" ] ; then 
   exit 0
 fi
 
-echo "---------------- installing package: $m"
-for ixy in ${ladder} \
-    ; do \
-    n=${ixy%%,*}
-    xy=${ixy#*,}
-    x=${xy%,*}
-    y=${xy#*,}
-    echo "n=$n xy=$xy x=$x y=$y"
-    if [ $m -eq $n ] ; then 
-	( cd ../$x && make configure build public JCOUNT=${jcount} PACKAGEVERSION=$y )
-	exit 0
-    fi
-    if [ $list -eq 1 ] ; then 
-	module_avail $x $y
-    else
-	module load $x/$y
-	if [ $? -ne 0 ] ; then echo "Could not load $x" && exit 1 ; fi
-    fi
-done 
+echo "---------------- installing packages: ${packages}"
+for m in $( echo ${packages} | tr , ' ' ) ; do
+    for ixy in ${ladder} \
+	       ; do \
+	n=${ixy%%,*}
+	xy=${ixy#*,}
+	x=${xy%,*}
+	y=${xy#*,}
+	echo "================"
+	echo "Package $n: $x version $y"
+	if [ $m -eq $n ] ; then 
+	    echo "Installing" && echo
+	    ( cd ../$x && make configure build public JCOUNT=${jcount} PACKAGEVERSION=$y )
+	    break
+	fi
+	if [ $list -eq 1 ] ; then 
+	    module_avail $x $y
+	else
+	    module load $x/$y
+	    echo " .. loading"
+	    if [ $? -ne 0 ] ; then echo "Could not load $x" && exit 1 ; fi
+	fi
+    done 
+done
 
