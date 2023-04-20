@@ -16,6 +16,7 @@ include ${MAKEINCLUDES}/Make.info
 
 CMAKEFLAGS = \
 -D CMAKE_BUILD_TYPE:STRING=Release \
+-D Netcdf_DIR:PATH=${TACC_NETCDF_DIR} \
 -D Trilinos_DIR:PATH=${TACC_TRILINOS_DIR} \
 -D BOOST_ROOT=${TACC_BOOST_DIR} \
 -D CMAKE_CXX_FLAGS=\"-Wno-dev -qopenmp -std=c++17\"
