@@ -45,7 +45,7 @@ installed :
 
 PRECISION = double
 info ::
-	@echo "    [PRECISION=single/double/quad (default: ${PRECISION})]"
+	@echo "    [ PRECISION=single/double/quad (default: ${PRECISION})]"
 .PHONY: precstring
 precstring :
 	@if [ "${PRECISION}" = "quad" ] ; then \
@@ -54,11 +54,15 @@ precstring :
 
 SCALAR = real
 info ::
-	@echo "    [SCALAR=real/complex (default: ${SCALAR})]"
+	@echo "    [ SCALAR=real/complex (default: ${SCALAR})]"
+
+INT = 32
+info ::
+	@echo "    [ INT=32/64 (default: ${INT}) ]"
 
 ALIGN = 16
 info ::
-	@echo "     [ALIGN=nn (default: ${ALIGN})]"
+	@echo "    [ ALIGN=nn (default: ${ALIGN})]"
 
 CUDA = 0
 info ::
@@ -74,10 +78,6 @@ TRIANGLE = 0
 info ::
 	@echo "    [ TRIANGLE=0/1 (default=${TRIANGLE}) ]"
 
-# ifeq "${SCALAR}${PRECISION}${CUDA}" "realdouble0"
-#   PACKAGES += --download-sundials2=1
-# endif
-
 ##
 ## Petsc Architecture
 ##
@@ -88,25 +88,28 @@ petscarch :
 	 && MODE=mpi setnames ${PACKAGEROOT} ${PACKAGE} ${PACKAGEVERSION} ${INSTALLEXT} \
 	 && export PETSC_EXT="" \
 	  \
-	  && if [ "${SCALAR}" = "complex" ] ; then \
+	 && if [ "${SCALAR}" = "complex" ] ; then \
 	    export PETSC_EXT=$${PETSC_EXT}complex ; fi \
 	  \
-	  && if [ ${PRECISION} = "single" ] ; then \
+	 && if [ ${PRECISION} = "single" ] ; then \
 	    export PETSC_EXT=$${PETSC_EXT}single ; fi \
 	  \
-	  && if [ ${PRECISION} = "quad" ] ; then \
+	 && if [ ${PRECISION} = "quad" ] ; then \
 	    export PETSC_EXT=$${PETSC_EXT}single ; fi \
 	  \
-	  && if [ ${ALIGN} -ne 16 ] ; then \
+	 && if [ ${INT} = "64" ] ; then \
+	    export PETSC_EXT=$${PETSC_EXT}i64 ; fi \
+	 \
+	 && if [ ${ALIGN} -ne 16 ] ; then \
 	    export PETSC_EXT=$${PETSC_EXT}a${ALIGN} ; fi \
 	  \
-	  && if [ "${CUDA}" -eq 1 ] ; then \
+	 && if [ "${CUDA}" -eq 1 ] ; then \
 	    export PETSC_EXT=$${PETSC_EXT}cuda ; fi \
 	  \
-	  && if [ "${DEBUG}" -eq 1 ] ; then \
+	 && if [ "${DEBUG}" -eq 1 ] ; then \
 	    export PETSC_EXT=$${PETSC_EXT}debug ; fi \
 	  \
-	  && if [ ! -z "${CUSTOMEXT}" ] ; then \
+	 && if [ ! -z "${CUSTOMEXT}" ] ; then \
 	    export PETSC_EXT=${CUSTOMEXT} ; fi \
 	  \
 	 && petscarch=$${taccsystemcode}-${LMOD_FAMILY_COMPILER}-${LMOD_FAMILY_MPI} \
@@ -144,7 +147,8 @@ build ::
 	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" \
 	 \
 	 && export petscarch=`make --no-print-directory \
-	                SCALAR=${SCALAR} PRECISION=${PRECISION} ALIGN=${ALIGN} \
+	                SCALAR=${SCALAR} PRECISION=${PRECISION} INT=${INT} \
+	                ALIGN=${ALIGN} \
 	                CUDA=${CUDA} DEBUG=${DEBUG} CUSTOMEXT=${CUSTOMEXT} \
 	                petscarch` \
 	 && ( \
@@ -161,6 +165,7 @@ build ::
 	        ${MPI_FLAGS} \
 	        --useThreads=0 --download-triangle=${TRIANGLE} \
 	        --with-scalar-type=${SCALAR} \
+	        $$( if [ "${INT}" = "64" ] ; then echo --with-64-bit-indices=1 ; fi ) \
 	        --with-precision=$$( cd $$scriptdir \
 	                && make --no-print-directory precstring PRECISION=${PRECISION} ) \
 	        --with-memalign=${ALIGN} \
@@ -221,7 +226,7 @@ config-view :
 	 && setnames ${PACKAGEROOT} ${PACKAGE} ${PACKAGEVERSION} \
 	 \
 	 && export petscarch=`make --no-print-directory \
-	                SCALAR=${SCALAR} PRECISION=${PRECISION} ALIGN=${ALIGN} \
+	                SCALAR=${SCALAR} INT=${INT} PRECISION=${PRECISION} ALIGN=${ALIGN} \
 	                CUDA=${CUDA} DEBUG=${DEBUG} CUSTOMEXT=${CUSTOMEXT} \
 	                petscarch` \
 	 && cat $$srcdir/configure.log

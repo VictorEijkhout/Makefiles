@@ -1,5 +1,6 @@
 #!/bin/bash
 
+intel=22
 setx=0
 jcount=24
 list=0
@@ -13,10 +14,9 @@ ladder="\
     5,trilinos,14.0.0 \
     6,peridigm,git \
     "
-## trilinos 14.0.0
 
 function usage() {
-    echo "Usage: $0 [ -h ] [ -x ] [ -j nnn ] [ -l ] n1[,n2[,n3...]]"
+    echo "Usage: $0 [ -h ] [ -i n ] [ -x ] [ -j nnn ] [ -l ] n1[,n2[,n3...]]"
     echo "where nnn:"
     for ixy in ${ladder} ; do
 	n=${ixy%%,*}
@@ -27,7 +27,9 @@ function usage() {
     done
 }
 
-source ../env_${TACC_SYSTEM}_classic22.sh >/dev/null 2>&1
+####
+#### Argument parsin
+####
 
 if [ $# -eq 0 ] ; then 
     module list
@@ -35,10 +37,9 @@ if [ $# -eq 0 ] ; then
     exit 0
 fi
 
-function module_avail {
-    module avail $1/$2 2>&1 \
-    | awk 'BEGIN {skip=0} /Where/ {skip=1} /No module/ {skip=1 } skip==0 {print}'
-}
+if [ $setx -gt 0 ] ; then 
+    set -x
+fi
 
 while [ $# -gt 0 ] ; do
     if [ "$1" = "-h" ] ; then 
@@ -48,6 +49,8 @@ while [ $# -gt 0 ] ; do
 	list=1; shift
     elif [ "$1" = "-x" ] ; then 
 	setx=1; shift
+    elif [ "$1" = "-i" ] ; then 
+	shift; intel=$1; shift
     elif [ "$1" = "-j" ] ; then 
 	shift; jcount=$1; shift
     else
@@ -56,17 +59,26 @@ while [ $# -gt 0 ] ; do
 done
 
 
-if [ $setx -gt 0 ] ; then 
-    set -x
-fi
+####
+#### Load modules
+####
 
-## LMOD_SH_DBG_ON=1
+source ../env_${TACC_SYSTEM}_classic${intel}.sh >/dev/null 2>&1
+
+####
+#### Big Install loop
+####
 
 echo "================ Starting installation with modules:"
 module list
 if [ "${packages}" = "0" ] ; then 
   exit 0
 fi
+
+function module_avail {
+    module avail $1/$2 2>&1 \
+    | awk 'BEGIN {skip=0} /Where/ {skip=1} /No module/ {skip=1 } skip==0 {print}'
+}
 
 echo "---------------- installing packages: ${packages}"
 for m in $( echo ${packages} | tr , ' ' ) ; do
