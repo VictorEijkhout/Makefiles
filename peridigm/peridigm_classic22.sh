@@ -13,7 +13,6 @@ ladder="\
     5,trilinos,14.0.0 \
     6,peridigm,git \
     "
-## trilinos 14.0.0
 
 function usage() {
     echo "Usage: $0 [ -h ] [ -x ] [ -j nnn ] [ -l ] n1[,n2[,n3...]]"

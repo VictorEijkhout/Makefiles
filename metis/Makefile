@@ -14,7 +14,7 @@ MODULES = gklib
 
 include ${MAKEINCLUDES}/Make.info
 
-configure :: 
+configure :: modules
 	@source ${MAKEINCLUDES}/names.sh \
 	 && export MODE=${MODE} \
 	 && setnames ${PACKAGEROOT} ${PACKAGE} ${PACKAGEVERSION} "" ${PACKAGEBASENAME} \
@@ -52,7 +52,7 @@ build ::
 	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" \
 	 && ( cd $${srcdir} \
 	    && make V=1 BUILDDIR=$${srcdir}/build \
-	    && make     BUILDDIR=$${srcdir}/build install \
+	    && echo "not doing make     BUILDDIR=$${srcdir}/build install" \
 	    ) 2>&1 | tee $${installlog} \
 	 && make varsmodule \
 	 && ( cd $${srcdir} && make distclean )

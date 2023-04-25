@@ -3,20 +3,32 @@
 setx=0
 jcount=24
 list=0
-m=100
+packages=100
+
+ladder="\
+    1,petsc,3.19.0 \
+    2,p4est,2.8 \
+    3,boost,1.81.0 \
+    4,pcre2,git \
+    5,swig,4.1.1 \
+    6,trilinos,13.4.1 \
+    7,dealii,9.4.1 \
+    8,aspect,2.4.0 \
+    "
 
 function usage() {
     echo "Usage: $0 [ -h ] [ -x ] [ -j nnn ] [ -l ] nnn"
     echo "where nnn:"
-    i=1
-    for p in petsc p4est boost pcre swig trilinos dealii aspect ; do 
-	echo " $i : $p"
-	#module avail $p 2>&1 | awk 'NF>0 {print}'
-	i=$(( i+1 ))
+    for ixy in ${ladder} ; do
+	n=${ixy%%,*}
+	xy=${ixy#*,}
+	x=${xy%,*}
+	y=${xy#*,}
+	echo " $n : $x"
     done
 }
 
-source ../frontera_env_classic22.sh >/dev/null 2>&1
+source ../env_frontera_classic23.sh >/dev/null 2>&1
 
 if [ $# -eq 0 ] ; then 
     module list
@@ -40,7 +52,7 @@ while [ $# -gt 0 ] ; do
     elif [ "$1" = "-j" ] ; then 
 	shift; jcount=$1; shift
     else
-	m=$1; shift
+	packages=$1; shift
     fi
 done
 
@@ -53,35 +65,32 @@ fi
 
 echo "================ Starting installation with modules:"
 module list
-if [ $m -eq 0 ] ; then 
+if [ "${packages}" = "0" ] ; then 
   exit 0
 fi
 
-echo "---------------- installing package: $m"
-for ixy in \
-    1,petsc,3.18.3 \
-    2,p4est,2.8 \
-    3,boost,1.81.0 \
-    4,pcre2,git \
-    5,swig,4.1.1 \
-    6,trilinos,13.4.1 \
-    7,dealii,9.4.1 \
-    8,aspect,2.4.0 \
-    ; do \
-    n=${ixy%%,*}
-    xy=${ixy#*,}
-    x=${xy%,*}
-    y=${xy#*,}
-    echo "n=$n xy=$xy x=$x y=$y"
-    if [ $m -eq $n ] ; then 
-	( cd ../$x && make configure build public JCOUNT=${jcount} PACKAGEVERSION=$y )
-	exit 0
-    fi
-    if [ $list -eq 1 ] ; then 
-	module_avail $x $y
-    else
-	module load $x/$y
-	if [ $? -ne 0 ] ; then echo "Could not load $x" && exit 1 ; fi
-    fi
-done 
+echo "---------------- installing package: ${packages}"
+for m in $( echo ${packages} | tr , ' ' ) ; do
+    for ixy in ${ladder} \
+	       ; do \
+	n=${ixy%%,*}
+	xy=${ixy#*,}
+	x=${xy%,*}
+	y=${xy#*,}
+	echo "================"
+	echo "Package $n: $x version $y"
+	if [ $m -eq $n ] ; then 
+	    echo "Installing" && echo
+	    ( cd ../$x && make configure build public JCOUNT=${jcount} PACKAGEVERSION=$y )
+	    break
+	fi
+	if [ $list -eq 1 ] ; then 
+	    module_avail $x $y
+	else
+	    module load $x/$y
+	    echo " .. loading"
+	    if [ $? -ne 0 ] ; then echo "Could not load $x" && exit 1 ; fi
+	fi
+    done 
+done
 
