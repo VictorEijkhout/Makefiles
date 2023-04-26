@@ -8,7 +8,8 @@ PACKAGE = foamx
 PACKAGEVERSION = git
 MODE = mpi
 MODULES = cmake qt5 \
-    swr ospray paraview
+    swr
+#ospray paraview
 
 include ${MAKEINCLUDES}/Make.info
 
@@ -16,7 +17,10 @@ include ${MAKEINCLUDES}/Make.info
 #### Totally custom configure/build
 ####
 
-configure :
+.PHONY: configure build
+info ::
+	@echo "make configure build"
+configure : modules
 	@source ${MAKEINCLUDES}/names.sh \
 	 && export MODE=${MODE} && export INSTALLROOT=${INSTALLROOT} \
 	 && setnames ${PACKAGEROOT} ${PACKAGE} ${PACKAGEVERSION} \
@@ -27,7 +31,7 @@ configure :
 	 && cp prefs.sh.${TACC_SYSTEM} $${srcdir}/etc/prefs.sh \
 	 && echo " .. set up files copied .. "
 
-build :
+build : modules
 	@source ${MAKEINCLUDES}/names.sh \
 	 && export MODE=${MODE} && export INSTALLROOT=${INSTALLROOT} \
 	 && setnames ${PACKAGEROOT} ${PACKAGE} ${PACKAGEVERSION} \
