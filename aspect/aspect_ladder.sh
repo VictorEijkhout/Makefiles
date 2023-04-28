@@ -17,8 +17,15 @@ ladder="\
     9,aspect,2.4.0 \
     "
 
+compiler=${TACC_FAMILY_COMPILER}
+version=${TACC_FAMILY_COMPILER_VERSION}
+version=${version%%.*}
+
 function usage() {
-    echo "Usage: $0 [ -h ] [ -x ] [ -j nnn ] [ -l ] nnn"
+    echo "Usage: $0 [ -h ] [ -x ] [ -j nnn (default: ${jcount}) ] [ -l ] "
+    echo "    [ -c compiler (default ${TACC_FAMILY_COMPILER} ] "
+    echo "    [ -v compiler_version (default ${TACC_FAMILY_COMPILER_VERSION} ] "
+    echo "    nnn"
     echo "where nnn:"
     for ixy in ${ladder} ; do
 	n=${ixy%%,*}
@@ -28,8 +35,6 @@ function usage() {
 	echo " $n : $x"
     done
 }
-
-source ../env_frontera_${TACC_FAMILY_COMPILER}.sh >/dev/null 2>&1
 
 if [ $# -eq 0 ] ; then 
     usage
@@ -51,10 +56,18 @@ while [ $# -gt 0 ] ; do
 	setx=1; shift
     elif [ "$1" = "-j" ] ; then 
 	shift; jcount=$1; shift
+    elif [ "$1" = "-c" ] ; then 
+	shift; compiler=$1; shift
+    elif [ "$1" = "-v" ] ; then 
+	shift; version=$1; shift
     else
 	packages=$1; shift
     fi
 done
+
+export TACC_FAMILY_COMPILER=${compiler}
+export TACC_FAMILY_COMPILER_VERSION=${version}
+source ../env_frontera_${TACC_FAMILY_COMPILER}${TACC_FAMILY_COMPILER_VERSION}.sh >/dev/null 2>&1
 
 if [ $setx -gt 0 ] ; then 
     set -x
