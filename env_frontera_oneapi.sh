@@ -14,7 +14,7 @@ export MY_MODULEPATH_ROOT=${MODULEROOT}
 module use ${MY_MODULEPATH_ROOT}/Core
 
 intelversion=23.1.0
-echo "loading intel ${intelversion}"
+echo "loading intel oneapi ${intelversion}"
 module load oneapi/${intelversion}
 module load impi/21.9.0
 #module load oneapi21/python3
