@@ -26,19 +26,20 @@ configure :: modules
 	 \
 	 && requirenonzero builddir \
 	 && rm -rf $${builddir} && mkdir -p $${builddir} \
-	 && cp Makefile.metis   $${srcdir}/Makefile \
-	 && cp CMakeLists.metis $${srcdir}/CMakeLists.txt \
+	 && echo "cp Makefile.metis   $${srcdir}/Makefile "\
+	 && echo "cp CMakeLists.metis $${srcdir}/CMakeLists.txt "\
 	 && ( cd $${srcdir} \
 	     && requirenonzero installdir \
 	     && reportcompilers \
-	     && make \
+	     && echo "\
 	            BUILDDIR=$${srcdir}/build \
+	        "\
+	     && make \
 	            CONFIG_FLAGS="\
 	                -DCMAKE_VERBOSE_MAKEFILE=1 \
 	                -D CMAKE_INSTALL_PREFIX=$${installdir} \
 	                -D CMAKE_C_COMPILER=$${CC} \
 	                -D OPENMP=$${ompflag} -D SHARED=1 \
-	                -D GKLIB_PATH=${TACC_GKLIB_DIR} \
 	                -D CMAKE_POSITION_INDEPENDENT_CODE=ON \
 	                " \
 	            config \
@@ -51,7 +52,10 @@ build ::
 	 && setmodulenames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" \
 	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" \
 	 && ( cd $${srcdir} \
-	    && make V=1 BUILDDIR=$${srcdir}/build \
+	    && echo "\
+	        BUILDDIR=$${srcdir}/build \
+	        "\
+	    && make V=1 \
 	    && echo "not doing make     BUILDDIR=$${srcdir}/build install" \
 	    ) 2>&1 | tee $${installlog} \
 	 && make varsmodule \

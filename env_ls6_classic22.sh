@@ -14,3 +14,5 @@ module load intel/22.2.0
 module load impi/22.2.0
 
 module load intel22/python3
+
+module list
