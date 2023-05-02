@@ -11,10 +11,11 @@ ladder="\
     3,boost,1.81.0 \
     4,pcre2,git \
     5,swig,4.1.1 \
-    6,netcdf,4.9.2 \
-    7,trilinos,13.4.1 \
-    8,dealii,9.4.1 \
-    9,aspect,2.4.0 \
+    6,hdf5,1.14 \
+    7,netcdf,4.9.2 \
+    8,trilinos,13.4.1 \
+    9,dealii,9.4.1 \
+    10,aspect,2.4.0 \
     "
 
 compiler=${TACC_FAMILY_COMPILER}
