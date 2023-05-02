@@ -75,6 +75,7 @@ fi
 
 echo "================ Starting installation with modules:"
 module list
+
 if [ "${packages}" = "0" ] ; then 
   exit 0
 fi
@@ -89,6 +90,10 @@ for m in $( echo ${packages} | tr , ' ' ) ; do
 	y=${xy#*,}
 	echo "================"
 	echo "Package $n: $x version $y"
+	module list
+	echo "TACC_FAMILY_COMPILER=${TACC_FAMILY_COMPILER}"
+	echo "TACC_FAMILY_COMPILER_VERSION=${TACC_FAMILY_COMPILER_VERSION}"
+	env | grep -i oneapi | grep -v '/intel/oneapi'
 	if [ $m -eq $n ] ; then 
 	    echo "Installing" && echo
 	    ( cd ../$x && make configure build public JCOUNT=${jcount} PACKAGEVERSION=$y )
