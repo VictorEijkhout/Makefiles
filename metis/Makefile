@@ -3,6 +3,7 @@
 #### Makefile for Metis installation
 ####
 #### https://github.com/KarypisLab/METIS
+#### THIS IS PROBABLY BROKEN AND NO LONGER MAINTAINED
 ####
 ################################################################
 

@@ -1,6 +1,6 @@
 ################################################################
 ####
-#### Makefile for GKlib installation
+#### Makefile for Metis as patched by scivision installation
 ####
 #### https://github.com/scivision/METIS
 ####
