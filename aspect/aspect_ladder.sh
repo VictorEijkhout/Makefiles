@@ -2,20 +2,26 @@
 
 setx=0
 jcount=4
-list=0
-packages=100
+list=
+packages=0
 
 ladder="\
-    1,petsc,3.19.0 \
-    2,p4est,2.8 \
-    3,boost,1.81.0 \
-    4,pcre2,git \
-    5,swig,4.1.1 \
-    6,hdf5,1.14 \
-    7,netcdf,4.9.2 \
-    8,trilinos,13.4.1 \
-    9,dealii,9.4.1 \
-    10,aspect,2.4.0 \
+    zlib,1.14 \
+    petsc,3.19.0 \
+    p4est,2.8 \
+    boost,1.81.0 \
+    pcre2,git \
+    swig,4.1.1 \
+    hdf5,1.14 \
+    netcdf,4.9.2 \
+    trilinos,13.4.1 \
+    dealii,9.4.1 \
+    aspect,2.4.0 \
+    "
+
+## where do the spaces in this come from?
+ladder="\
+    $( i=1 && for l in ${ladder} ; do echo $i,$l && i=$(( i+1 )) ; done ) \
     "
 
 compiler=${TACC_FAMILY_COMPILER}
@@ -33,7 +39,7 @@ function usage() {
 	xy=${ixy#*,}
 	x=${xy%,*}
 	y=${xy#*,}
-	echo " $n : $x"
+	echo " $n : $x / $y"
     done
 }
 
@@ -77,11 +83,15 @@ fi
 echo "================ Starting installation with modules:"
 module list
 
-if [ "${packages}" = "0" ] ; then 
+if [ "${packages}" = "0" -a -z "${list}" ] ; then 
   exit 0
 fi
 
-echo "---------------- installing package: ${packages}"
+if [ -z "${list}" ] ; then
+    echo "---------------- installing packages: ${packages}"
+else
+    echo "---------------- listing packages"
+fi
 for m in $( echo ${packages} | tr , ' ' ) ; do
     for ixy in ${ladder} \
 	       ; do \
@@ -91,18 +101,14 @@ for m in $( echo ${packages} | tr , ' ' ) ; do
 	y=${xy#*,}
 	echo "================"
 	echo "Package $n: $x version $y"
-	module list
-	echo "TACC_FAMILY_COMPILER=${TACC_FAMILY_COMPILER}"
-	echo "TACC_FAMILY_COMPILER_VERSION=${TACC_FAMILY_COMPILER_VERSION}"
-	env | grep -i oneapi | grep -v '/intel/oneapi'
-	if [ $m -eq $n ] ; then 
+	if [ ! -z "${list}" ] ; then 
+	    module_avail $x $y
+	elif [ $m -eq $n ] ; then 
 	    echo "Installing" && echo
 	    ( cd ../$x && make configure build public JCOUNT=${jcount} PACKAGEVERSION=$y )
 	    break
 	fi
-	if [ $list -eq 1 ] ; then 
-	    module_avail $x $y
-	else
+	if [ -z "${list}" ] ; then 
 	    module load $x/$y
 	    echo " .. loading"
 	    if [ $? -ne 0 ] ; then echo "Could not load $x" && exit 1 ; fi
