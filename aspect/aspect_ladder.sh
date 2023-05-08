@@ -6,7 +6,7 @@ list=
 packages=0
 
 ladder="\
-    zlib,1.14 \
+    zlib,1.2.13 \
     petsc,3.19.0 \
     p4est,2.8 \
     boost,1.81.0 \
@@ -14,10 +14,13 @@ ladder="\
     swig,4.1.1 \
     hdf5,1.14 \
     netcdf,4.9.2 \
-    trilinos,13.4.1 \
+    metis,5.1.0.3 \
+    trilinos,14.0.0 \
     dealii,9.4.1 \
     aspect,2.4.0 \
     "
+
+##     trilinos,13.4.1 
 
 ## where do the spaces in this come from?
 ladder="\
@@ -50,7 +53,8 @@ fi
 
 function module_avail {
     module avail $1/$2 2>&1 \
-    | awk 'BEGIN {skip=0} /Where/ {skip=1} /No module/ {skip=1 } skip==0 {print}'
+    | awk 'BEGIN {skip=0} /Where/ {skip=1} /No module/ {skip=1 } skip==0 {print}' \
+    | sed -e 's/-//g'
 }
 
 while [ $# -gt 0 ] ; do
