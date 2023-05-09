@@ -32,7 +32,8 @@ version=${TACC_FAMILY_COMPILER_VERSION}
 version=${version%%.*}
 
 function usage() {
-    echo "Usage: $0 [ -h ] [ -x ] [ -j nnn (default: ${jcount}) ] [ -l ] "
+    echo "Usage: $0 [ -h ] [ -x ] [ -l ] "
+    echo "    [ -j nnn (default: ${jcount}) ] "
     echo "    [ -c compiler (default ${TACC_FAMILY_COMPILER} ] "
     echo "    [ -v compiler_version (default ${TACC_FAMILY_COMPILER_VERSION} ] "
     echo "    nnn"
