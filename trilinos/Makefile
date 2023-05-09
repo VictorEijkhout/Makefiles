@@ -10,7 +10,7 @@ PACKAGE = trilinos
 PACKAGEVERSION = 14.0.0
 PACKAGEVERSION_DOWNLOAD = 14-0-0
 MODE = mpi
-MODULES = boost
+MODULES = boost hdf5 netcdf
 #boost swig
 
 include ${MAKEINCLUDES}/Make.info
