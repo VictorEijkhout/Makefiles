@@ -7,7 +7,7 @@
 ################################################################
 
 PACKAGE = fmtlib
-PACKAGEVERSION = 6.1.2
+PACKAGEVERSION = 10.0.0
 MODE = seq
 
 include ${MAKEINCLUDES}/Make.info
