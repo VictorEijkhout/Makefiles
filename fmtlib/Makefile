@@ -12,8 +12,6 @@ MODE = seq
 
 include ${MAKEINCLUDES}/Make.info
 
-# intel compiler considers missing proto as fatal
-CMAKEFLAGS = --compile-no-warning-as-error
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
 
