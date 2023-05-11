@@ -1,5 +1,5 @@
 module reset
-module unload intel impi python3
+module unload intel gcc impi python2 python3
 
 module use /scratch/projects/compilers/modulefiles
 

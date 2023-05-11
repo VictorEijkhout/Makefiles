@@ -15,7 +15,6 @@ ladder="\
     7,dealii,9.4.1 \
     8,aspect,2.4.0 \
     "
-
 function usage() {
     echo "Usage: $0 [ -h ] [ -x ] [ -j nnn ] [ -l ] nnn"
     echo "where nnn:"
@@ -28,7 +27,7 @@ function usage() {
     done
 }
 
-source ../env_frontera_classic23.sh >/dev/null 2>&1
+source ../env_stampede2_classic22.sh >/dev/null 2>&1
 
 if [ $# -eq 0 ] ; then 
     module list
@@ -90,3 +89,4 @@ for m in $( echo ${packages} | tr , ' ' ) ; do
 	fi
     done 
 done
+
