@@ -9,7 +9,7 @@
 PACKAGE = gklib
 PACKAGEVERSION = git
 MODE = mpi
-MODULES = gklib metis
+MODULES = 
 
 include ${MAKEINCLUDES}/Make.info
 
@@ -57,6 +57,7 @@ build ::
 	    ) 2>&1 | tee $${installlog}
 	 @make varsmodule
 include ${MAKEINCLUDES}/Make.vars
+include ${MAKEINCLUDES}/Make.public
 
 clean ::
 	@source ${MAKEINCLUDES}/names.sh \
