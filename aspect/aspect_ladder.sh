@@ -115,7 +115,9 @@ for m in $( echo ${packages} | tr , ' ' ) ; do
 	    module_avail $x $y
 	elif [ $m -eq $n ] ; then 
 	    echo "Installing" && echo
-	    ( cd ../$x && make configure build public JCOUNT=${jcount} PACKAGEVERSION=$y )
+	    ( cd ../$x \
+	       && make configure build public JCOUNT=${jcount} PACKAGEVERSION=$y \
+	     )
 	    break
 	fi
 	if [ -z "${list}" ] ; then 
