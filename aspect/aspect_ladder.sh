@@ -81,8 +81,8 @@ done
 
 export TACC_FAMILY_COMPILER=${compiler}
 export TACC_FAMILY_COMPILER_VERSION=${version}
-settings=../env_frontera_${TACC_FAMILY_COMPILER}${TACC_FAMILY_COMPILER_VERSION}.sh
-if [ !- f "${settings}" ] ; then 
+settings=../env_${TACC_SYSTEM}_${TACC_FAMILY_COMPILER}${TACC_FAMILY_COMPILER_VERSION}.sh
+if [ ! -f "${settings}" ] ; then 
     echo "Error: no such settings file <<${settings}>>" && exit 1 ; fi
 source ${settings} >/dev/null 2>&1
 
