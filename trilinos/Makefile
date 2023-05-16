@@ -58,6 +58,7 @@ configure ::
 	     && export TACC_MKL_LIB=${MKLROOT}/lib/intel64 \
 	     \
 	     && export HAS_PYTHON=${PYTHON} \
+	     && export HAS_NETCDF=ON \
 	     \
 	     && set -x \
 	     && if [ -f $${scriptdir}/trilinos_cmake_${TACC_SYSTEM}.sh ] ; then \

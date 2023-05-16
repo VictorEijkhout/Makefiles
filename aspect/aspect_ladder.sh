@@ -14,13 +14,15 @@ ladder="\
     swig,4.1.1 \
     hdf5,1.14 \
     netcdf,4.9.2 \
+    gklib,git \
     metis,5.1.0.3 \
-    trilinos,14.0.0 \
+    trilinos,13.4.1 
     dealii,9.4.1 \
     aspect,2.4.0 \
     "
 
-##     trilinos,13.4.1 
+##     trilinos,14.0.0 \
+## 
 
 ## where do the spaces in this come from?
 ladder="\
@@ -79,7 +81,10 @@ done
 
 export TACC_FAMILY_COMPILER=${compiler}
 export TACC_FAMILY_COMPILER_VERSION=${version}
-source ../env_frontera_${TACC_FAMILY_COMPILER}${TACC_FAMILY_COMPILER_VERSION}.sh >/dev/null 2>&1
+settings=../env_${TACC_SYSTEM}_${TACC_FAMILY_COMPILER}${TACC_FAMILY_COMPILER_VERSION}.sh
+if [ ! -f "${settings}" ] ; then 
+    echo "Error: no such settings file <<${settings}>>" && exit 1 ; fi
+source ${settings} >/dev/null 2>&1
 
 if [ $setx -gt 0 ] ; then 
     set -x
@@ -110,7 +115,9 @@ for m in $( echo ${packages} | tr , ' ' ) ; do
 	    module_avail $x $y
 	elif [ $m -eq $n ] ; then 
 	    echo "Installing" && echo
-	    ( cd ../$x && make configure build public JCOUNT=${jcount} PACKAGEVERSION=$y )
+	    ( cd ../$x \
+	       && make configure build public JCOUNT=${jcount} PACKAGEVERSION=$y \
+	     )
 	    break
 	fi
 	if [ -z "${list}" ] ; then 

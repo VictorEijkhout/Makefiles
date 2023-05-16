@@ -1,19 +1,21 @@
 ################################################################
 ####
-#### Makefile for GKlib installation
+#### Makefile for Metis installation
 ####
-#### https://github.com/KarypisLab/Gklib
+#### https://github.com/KarypisLab/METIS
+#### THIS IS PROBABLY BROKEN AND NO LONGER MAINTAINED
 ####
 ################################################################
 
-PACKAGE = gklib
-PACKAGEVERSION = git
+PACKAGE = metis
+PACKAGEVERSION = 5.2.1
+#PACKAGEVERSION = git
 MODE = mpi
-MODULES = 
+MODULES = gklib
 
 include ${MAKEINCLUDES}/Make.info
 
-configure :: 
+configure :: modules
 	@source ${MAKEINCLUDES}/names.sh \
 	 && export MODE=${MODE} \
 	 && setnames ${PACKAGEROOT} ${PACKAGE} ${PACKAGEVERSION} "" ${PACKAGEBASENAME} \
@@ -22,29 +24,28 @@ configure ::
 	 \
 	 && source ${MAKEINCLUDES}/compilers.sh \
 	 && setmpicompilers \
-	 && reportcompilers \
 	 \
-	 && rm -rf $${builddir} $${installdir} \
-	 && cp Makefile.gklib $${srcdir}/Makefile \
-	 && if [ "${TACC_SYSTEM}" = "macbookair" ] ; then \
-	        nox86="-D NO_X86" ; fi \
+	 && requirenonzero builddir \
+	 && rm -rf $${builddir} && mkdir -p $${builddir} \
+	 && echo "cp Makefile.metis   $${srcdir}/Makefile "\
+	 && echo "cp CMakeLists.metis $${srcdir}/CMakeLists.txt "\
 	 && ( cd $${srcdir} \
-	     && make BUILDDIR=$${builddir} \
-	          CONFIG_FLAGS="\
+	     && requirenonzero installdir \
+	     && reportcompilers \
+	     && echo "\
+	            BUILDDIR=$${srcdir}/build \
+	        "\
+	     && make \
+	            CONFIG_FLAGS="\
 	                -DCMAKE_VERBOSE_MAKEFILE=1 \
 	                -D CMAKE_INSTALL_PREFIX=$${installdir} \
 	                -D CMAKE_C_COMPILER=$${CC} \
-	                -D OPENMP=$${ompflag} \
-	                -D CMAKE_C_FLAGS=\"-D_POSIX_C_SOURCE=200809L $${nox86}\" \
+	                -D OPENMP=$${ompflag} -D SHARED=1 \
 	                -D CMAKE_POSITION_INDEPENDENT_CODE=ON \
 	                " \
 	            config \
 	    ) 2>&1 | tee $${configurelog}
-## NO_X86 for mac
-## posix 200809L for getline
-## posix 199309L for ???
-
-## 	          CONFIG_FLAGS=" -D CMAKE_INSTALL_PREFIX=$${installdir} -D SHARED=1 -D OPENMP=1 -D CMAKE_C_FLAGS=\"-DHAVE_GETLINE -D_POSIX_C_SOURCE=199309L\" "
+## not quite working BUILDDIR=$${builddir}, see distclean below
 build ::
 	@source ${MAKEINCLUDES}/names.sh \
 	 && export MODE=${MODE} \
@@ -52,12 +53,15 @@ build ::
 	 && setmodulenames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" \
 	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" \
 	 && ( cd $${srcdir} \
-	    && make V=1 BUILDDIR=$${builddir} \
-	    && make BUILDDIR=$${builddir} install \
-	    ) 2>&1 | tee $${installlog}
-	 @make varsmodule
+	    && echo "\
+	        BUILDDIR=$${srcdir}/build \
+	        "\
+	    && make V=1 \
+	    && echo "not doing make     BUILDDIR=$${srcdir}/build install" \
+	    ) 2>&1 | tee $${installlog} \
+	 && make varsmodule \
+	 && ( cd $${srcdir} && make distclean )
 include ${MAKEINCLUDES}/Make.vars
-include ${MAKEINCLUDES}/Make.public
 
 clean ::
 	@source ${MAKEINCLUDES}/names.sh \
@@ -67,6 +71,8 @@ clean ::
 	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" \
 	 && cd $${srcdir} && make distclean
 
-GITREPO = git@github.com:KarypisLab/GKlib.git
+GITREPO = git@github.com:KarypisLab/Metis.git
 include ${MAKEINCLUDES}/Make.git
 
+TGZURL = https://github.com/KarypisLab/METIS/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
+include ${MAKEINCLUDES}/Make.download
