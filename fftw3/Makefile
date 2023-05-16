@@ -12,16 +12,20 @@ MODULES =
 include ${MAKEINCLUDES}/Make.info
 
 include ${MAKEINCLUDES}/Make.configure
-CONFIGUREFLAGS =  --with-pic \
-            --enable-shared \
-            --enable-openmp \
-            --enable-threads \
-            --disable-dependency-tracking \
-            --enable-mpi \
-            --enable-sse2 \
-            --enable-avx \
-            --enable-avx2 \
-            --enable-avx512 
+CONFIGUREFLAGS = \
+	--with-pic \
+        --enable-shared \
+        --enable-openmp \
+        --enable-threads \
+        --disable-dependency-tracking \
+        --enable-mpi
+ifeq "${TACC_FAMILY_COMPILER}" "intel"
+CONFIGUREFLAGS += 
+        --enable-sse2 \
+        --enable-avx \
+        --enable-avx2 \
+        --enable-avx512 
+endif
 
 include ${MAKEINCLUDES}/Make.install
 
