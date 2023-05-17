@@ -67,6 +67,7 @@ clean ::
 	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" \
 	 && cd $${srcdir} && make distclean
 
-GITREPO = git@github.com:KarypisLab/GKlib.git
+GITREPO = https://github.com/KarypisLab/GKlib.git
+## git@github.com:KarypisLab/GKlib.git
 include ${MAKEINCLUDES}/Make.git
 
