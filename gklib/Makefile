@@ -14,11 +14,10 @@ MODULES =
 include ${MAKEINCLUDES}/Make.info
 
 configure :: 
-	@source ${MAKEINCLUDES}/names.sh \
+	@if [ ! -z "${SETX}" ] ; then set -x ; fi \
+	 && source ${MAKEINCLUDES}/names.sh \
 	 && export MODE=${MODE} \
-	 && setnames ${PACKAGEROOT} ${PACKAGE} ${PACKAGEVERSION} "" ${PACKAGEBASENAME} \
-	 && setmodulenames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" \
-	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" \
+	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" \
 	 \
 	 && source ${MAKEINCLUDES}/compilers.sh \
 	 && setmpicompilers \
@@ -46,10 +45,9 @@ configure ::
 
 ## 	          CONFIG_FLAGS=" -D CMAKE_INSTALL_PREFIX=$${installdir} -D SHARED=1 -D OPENMP=1 -D CMAKE_C_FLAGS=\"-DHAVE_GETLINE -D_POSIX_C_SOURCE=199309L\" "
 build ::
-	@source ${MAKEINCLUDES}/names.sh \
+	@if [ ! -z "${SETX}" ] ; then set -x ; fi \
+	 && source ${MAKEINCLUDES}/names.sh \
 	 && export MODE=${MODE} \
-	 && setnames ${PACKAGEROOT} ${PACKAGE} ${PACKAGEVERSION} "" ${PACKAGEBASENAME} \
-	 && setmodulenames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" \
 	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" \
 	 && ( cd $${srcdir} \
 	    && make V=1 BUILDDIR=$${builddir} \
