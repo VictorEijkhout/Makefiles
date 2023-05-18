@@ -42,7 +42,6 @@ configure ::
 	    cd $${builddir} \
 	     && reportnames && echo \
 	     && reportcompilers && echo \
-	     && module list && echo \
 	     \
 	     && export HAS_MUMPS=0 \
 	     && export HAS_STK=0 \
@@ -81,8 +80,8 @@ build ::
 	 && setnames ${PACKAGEROOT} ${PACKAGE} ${PACKAGEVERSION} "" ${PACKAGEBASENAME} \
 	 && setmodulenames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" \
 	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" \
-	 && module load netcdf trilinos/${PACKAGEVERSION} \
-	 && cp $${TACC_NETCDF_INC}/netcdf*.h $${TACC_TRILINOS_INC}/
+	 && echo "not: module load netcdf trilinos/${PACKAGEVERSION}" \
+	 && cp ${TACC_NETCDF_INC}/netcdf*.h ${TACC_TRILINOS_INC}/
 
 TGZURL = https://github.com/trilinos/Trilinos/archive/refs/tags/trilinos-release-${PACKAGEVERSION_DOWNLOAD}.tar.gz
 include ${MAKEINCLUDES}/Make.download
