@@ -23,7 +23,7 @@ configure ::
 	 && setmpicompilers \
 	 && reportcompilers \
 	 \
-	 && rm -rf $${builddir} $${installdir} \
+	 && rm -rf $${builddir} \
 	 && mkdir -p $${builddir} \
 	 && cp Makefile.gklib $${srcdir}/Makefile \
 	 && if [ "${TACC_SYSTEM}" = "macbookair" ] ; then \
