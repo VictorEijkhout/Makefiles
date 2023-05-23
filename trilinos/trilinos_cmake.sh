@@ -105,10 +105,10 @@ cmake \
   -D Trilinos_ENABLE_Piro:BOOL=ON \
   -D Trilinos_ENABLE_Rythmos:BOOL=ON \
   -D Trilinos_ENABLE_Sacado:Bool=ON \
-  -D Trilinos_ENABLE_SEACAS:BOOL=ON \
+  -D Trilinos_ENABLE_SEACAS:BOOL=${HAS_NETCDF} \
       -D Trilinos_ENABLE_SEACASIoss:BOOL=ON \
       -D Trilinos_ENABLE_SEACASBlot:BOOL=ON \
-      -D Trilinos_ENABLE_SEACASExodus:BOOL=ON \
+      -D Trilinos_ENABLE_SEACASExodus:BOOL=${HAS_NETCDF} \
   -D Trilinos_ENABLE_SECONDARY_STABLE_CODE:BOOL=ON \
   -D Trilinos_ENABLE_Shards:BOOL=ON \
   -D Trilinos_ENABLE_ShyLU:BOOL=OFF \

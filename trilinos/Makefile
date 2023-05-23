@@ -25,6 +25,7 @@ PYTHON = OFF
 
 LIBDIR = lib64
 CMAKE_PREFIXPATH_SET = lib/cmake
+HAS_NETCDF = ON
 .PHONY: configure
 configure :: 
 	@source ${MAKEINCLUDES}/names.sh \
@@ -57,7 +58,7 @@ configure ::
 	     && export TACC_MKL_LIB=${MKLROOT}/lib/intel64 \
 	     \
 	     && export HAS_PYTHON=${PYTHON} \
-	     && export HAS_NETCDF=ON \
+	     && export HAS_NETCDF=${HAS_NETCDF} \
 	     \
 	     && set -x \
 	     && if [ -f $${scriptdir}/trilinos_cmake_${TACC_SYSTEM}.sh ] ; then \
