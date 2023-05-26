@@ -40,7 +40,7 @@ cmake \
   -D TPL_ENABLE_HDF5:BOOL=ON \
   -D HDF5_INCLUDE_DIRS:PATH=${TACC_HDF5_INC}    \
   -D HDF5_LIBRARY_DIRS:PATH=${TACC_HDF5_LIB}    \
-  -D TPL_ENABLE_Netcdf:BOOL=ON \
+  -D TPL_ENABLE_Netcdf:BOOL=${HAS_NETCDF} \
   -D Netcdf_INCLUDE_DIRS:PATH=${TACC_NETCDF_INC}    \
   -D Netcdf_LIBRARY_DIRS:PATH=${TACC_NETCDF_LIB}    \
   \
@@ -105,10 +105,10 @@ cmake \
   -D Trilinos_ENABLE_Piro:BOOL=ON \
   -D Trilinos_ENABLE_Rythmos:BOOL=ON \
   -D Trilinos_ENABLE_Sacado:Bool=ON \
-  -D Trilinos_ENABLE_SEACAS:BOOL=ON \
+  -D Trilinos_ENABLE_SEACAS:BOOL=${HAS_NETCDF} \
       -D Trilinos_ENABLE_SEACASIoss:BOOL=ON \
       -D Trilinos_ENABLE_SEACASBlot:BOOL=ON \
-      -D Trilinos_ENABLE_SEACASExodus:BOOL=ON \
+      -D Trilinos_ENABLE_SEACASExodus:BOOL=${HAS_NETCDF} \
   -D Trilinos_ENABLE_SECONDARY_STABLE_CODE:BOOL=ON \
   -D Trilinos_ENABLE_Shards:BOOL=ON \
   -D Trilinos_ENABLE_ShyLU:BOOL=OFF \

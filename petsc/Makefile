@@ -67,7 +67,7 @@ info ::
 CUDA = 0
 info ::
 	@echo "     [CUDA=0/1 (default: ${CUDA})]"
-CUDA_OPTIONS = --with-cuda=1 --with-cuda-dir=${LMOD_CUDA_DIR} --with-cuda-gencodearch=70
+CUDA_OPTIONS = --with-cuda=1 --with-cuda-dir=${TACC_CUDA_DIR} --with-cuda-gencodearch=70
 
 DEBUG = 0
 info ::
@@ -112,7 +112,7 @@ petscarch :
 	 && if [ ! -z "${CUSTOMEXT}" ] ; then \
 	    export PETSC_EXT=${CUSTOMEXT} ; fi \
 	  \
-	 && petscarch=$${taccsystemcode}-${LMOD_FAMILY_COMPILER}-${LMOD_FAMILY_MPI} \
+	 && petscarch=$${taccsystemcode}-$${compilercode}$${compilershortversion}-$${mpicode} \
 	  && if [ -z $${PETSC_EXT} ] ; then \
 	      echo $${petscarch} ; \
 	    else \
@@ -137,14 +137,12 @@ configure :
 include ${MAKEINCLUDES}/Make.vars
 NOINSTALL = 1
 build ::
-	@if [ ${CUDA} -eq 1 -a -z "${LMOD_CUDA_DIR}" ] ; then \
+	@if [ ${CUDA} -eq 1 -a -z "${TACC_CUDA_DIR}" ] ; then \
 	    echo && echo "Please load cuda module" && echo && exit 1 \
 	    ; fi
 	@source ${MAKEINCLUDES}/names.sh \
 	 && export MODE=${MODE} && export INSTALLROOT=${INSTALLROOT} \
-	 && setnames ${PACKAGEROOT} ${PACKAGE} ${PACKAGEVERSION} \
-	 && setmodulenames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" \
-	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" \
+	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" \
 	 \
 	 && export petscarch=`make --no-print-directory \
 	                SCALAR=${SCALAR} PRECISION=${PRECISION} INT=${INT} \
@@ -187,32 +185,6 @@ build ::
 
 public ::
 	@echo "public rule disabled"
-nopublic :
-	@source ${MAKEINCLUDES}/names.sh \
-	 && setnames ${PACKAGEROOT} ${PACKAGE} ${PACKAGEVERSION} ${INSTALLEXT} \
-	 && setmodulenames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" \
-	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" \
-	 && export MODE=${MODE} && export MODULEROOT=${MODULEROOT} \
-	 && export INSTALLPATH=${PACKAGEROOT}/petsc/petsc-${PACKAGEVERSION}/$$petscarch \
-	 && setnames ${PACKAGEROOT} ${PACKAGE} ${PACKAGEVERSION} ${INSTALLEXT} \
-	 && chmod -R g+rX,o+rX $$installdir
-info ::
-	@echo "make petsc_varsfile"
-.PHONY: petsc_varsfile
-petsc_varsfile :
-	@source ${MAKEINCLUDES}/names.sh \
-	 && export MODE=${MODE} && export MODULEROOT=${MODULEROOT} \
-	 && export INSTALLPATH=${PACKAGEROOT}/petsc/petsc-${PACKAGEVERSION}/$$petscarch \
-	 && setnames ${PACKAGEROOT} ${PACKAGE} ${PACKAGEVERSION} ${INSTALLEXT} \
-	 && setmodulenames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" \
-	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" \
-	 && make --no-print-directory varsmodule \
-	 && modulefile=$$( make --no-print-directory varsmodulename ) \
-	 && echo " .. adding petsc vars to: $${modulefile}" \
-	 && ( \
-	    echo "setenv( \"PETSC_DIR\",  \"${PACKAGEROOT}/petsc/petsc-${PACKAGEVERSION}\" )" ; \
-	    echo "setenv( \"PETSC_ARCH\", \"$${petscarch}\" )" \
-	    ) >>$${modulefile}
 
 info ::
 	@echo "make config-help config-view"

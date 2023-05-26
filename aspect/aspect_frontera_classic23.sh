@@ -56,12 +56,9 @@ while [ $# -gt 0 ] ; do
     fi
 done
 
-
 if [ $setx -gt 0 ] ; then 
     set -x
 fi
-
-## LMOD_SH_DBG_ON=1
 
 echo "================ Starting installation with modules:"
 module list
@@ -93,4 +90,3 @@ for m in $( echo ${packages} | tr , ' ' ) ; do
 	fi
     done 
 done
-

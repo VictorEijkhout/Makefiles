@@ -10,7 +10,7 @@ PACKAGE = trilinos
 PACKAGEVERSION = 14.0.0
 PACKAGEVERSION_DOWNLOAD = 14-0-0
 MODE = mpi
-MODULES = boost
+MODULES = boost hdf5 netcdf
 #boost swig
 
 include ${MAKEINCLUDES}/Make.info
@@ -25,6 +25,7 @@ PYTHON = OFF
 
 LIBDIR = lib64
 CMAKE_PREFIXPATH_SET = lib/cmake
+HAS_NETCDF = ON
 .PHONY: configure
 configure :: 
 	@source ${MAKEINCLUDES}/names.sh \
@@ -42,7 +43,6 @@ configure ::
 	    cd $${builddir} \
 	     && reportnames && echo \
 	     && reportcompilers && echo \
-	     && module list && echo \
 	     \
 	     && export HAS_MUMPS=0 \
 	     && export HAS_STK=0 \
@@ -58,6 +58,7 @@ configure ::
 	     && export TACC_MKL_LIB=${MKLROOT}/lib/intel64 \
 	     \
 	     && export HAS_PYTHON=${PYTHON} \
+	     && export HAS_NETCDF=${HAS_NETCDF} \
 	     \
 	     && set -x \
 	     && if [ -f $${scriptdir}/trilinos_cmake_${TACC_SYSTEM}.sh ] ; then \
@@ -80,8 +81,8 @@ build ::
 	 && setnames ${PACKAGEROOT} ${PACKAGE} ${PACKAGEVERSION} "" ${PACKAGEBASENAME} \
 	 && setmodulenames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" \
 	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" \
-	 && module load netcdf trilinos/${PACKAGEVERSION} \
-	 && cp $${TACC_NETCDF_INC}/netcdf*.h $${TACC_TRILINOS_INC}/
+	 && echo "not: module load netcdf trilinos/${PACKAGEVERSION}" \
+	 && cp ${TACC_NETCDF_INC}/netcdf*.h ${TACC_TRILINOS_INC}/
 
 TGZURL = https://github.com/trilinos/Trilinos/archive/refs/tags/trilinos-release-${PACKAGEVERSION_DOWNLOAD}.tar.gz
 include ${MAKEINCLUDES}/Make.download

@@ -1,22 +1,18 @@
 ################################################################
 ####
-#### Makefile for swig
-####
-#### https://www.swig.org/
+#### Makefile for MPFR installation
 ####
 ################################################################
 
-PACKAGE = swig
-PACKAGEVERSION = 4.1.1
+PACKAGE = MPFR
+PACKAGEVERSION = 4.2.0
 MODE = seq
-MODULES = pcre2
 
-CONFIGUREFLAGS=--with-pcre2-prefix=${TACC_PCRE2_DIR}
 include ${MAKEINCLUDES}/Make.info
 
+PKGCONFIGSET = lib/pkgconfig
 include ${MAKEINCLUDES}/Make.configure
-HASBIN = 1
 include ${MAKEINCLUDES}/Make.install
 
-TGZURL = http://prdownloads.sourceforge.net/swig/swig-${PACKAGEVERSION}.tar.gz
+TGZURL = https://www.mpfr.org/mpfr-current/mpfr-${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download

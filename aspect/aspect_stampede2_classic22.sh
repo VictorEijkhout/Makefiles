@@ -1,7 +1,7 @@
 #!/bin/bash
 
 setx=0
-jcount=4
+jcount=24
 list=0
 packages=100
 
@@ -15,7 +15,6 @@ ladder="\
     7,dealii,9.4.1 \
     8,aspect,2.4.0 \
     "
-
 function usage() {
     echo "Usage: $0 [ -h ] [ -x ] [ -j nnn ] [ -l ] nnn"
     echo "where nnn:"
@@ -28,9 +27,10 @@ function usage() {
     done
 }
 
-source ../env_frontera_oneapi.sh >/dev/null 2>&1
+source ../env_stampede2_classic22.sh >/dev/null 2>&1
 
 if [ $# -eq 0 ] ; then 
+    module list
     usage
     exit 0
 fi
