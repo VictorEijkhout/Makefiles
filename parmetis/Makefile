@@ -2,7 +2,8 @@
 ####
 #### Makefile for Parmetis installation
 ####
-#### https://github.com/KarypisLab/ParMETIS
+#### this is the 4.0.3 version from
+#### https://github.com/scibuilder/parmetis
 ####
 ################################################################
 
@@ -12,40 +13,14 @@ MODE = mpi
 MODULES = gklib metis
 
 include ${MAKEINCLUDES}/Make.info
+CMAKEFLAGS=\
+    -DCMAKE_C_FLAGS=\"-O2 -qopenmp\" 
 
-configure :: 
-	@source ${MAKEINCLUDES}/names.sh \
-	 && export MODE=${MODE} \
-	 && setnames ${PACKAGEROOT} ${PACKAGE} ${PACKAGEVERSION} "" ${PACKAGEBASENAME} \
-	 && setmodulenames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" \
-	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" \
-	 \
-	 && rm -rf $${builddir} $${installdir} \
-	 && echo cp Makefile.parmetis $${srcdir} \
-	 && ( cd $${srcdir} \
-	     && make BUILDDIR=$${builddir} prefix=$${installdir} \
-	            config shared=1 openmp=ON \
-	            cc-flags=-fPIC cxx-flags=-fPIC \
-	    ) 2>&1 | tee $${configurelog}
-build ::
-	@source ${MAKEINCLUDES}/names.sh \
-	 && export MODE=${MODE} \
-	 && setnames ${PACKAGEROOT} ${PACKAGE} ${PACKAGEVERSION} "" ${PACKAGEBASENAME} \
-	 && setmodulenames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" \
-	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" \
-	 && ( cd $${srcdir} \
-	    && make BUILDDIR=$${builddir} \
-	    && make BUILDDIR=$${builddir} install \
-	    ) 2>&1 | tee $${installlog}
+include ${MAKEINCLUDES}/Make.cmake
+include ${MAKEINCLUDES}/Make.cbuild
 
-clean ::
-	@source ${MAKEINCLUDES}/names.sh \
-	 && export MODE=${MODE} \
-	 && setnames ${PACKAGEROOT} ${PACKAGE} ${PACKAGEVERSION} "" ${PACKAGEBASENAME} \
-	 && setmodulenames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" \
-	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" \
-	 && cd $${srcdir} && make distclean
+include ${MAKEINCLUDES}/Make.clean
 
-GITREPO = git@github.com:KarypisLab/ParMETIS.git
+GITREPO = https://github.com/scibuilder/parmetis.git
 include ${MAKEINCLUDES}/Make.git
 
