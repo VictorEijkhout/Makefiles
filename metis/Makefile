@@ -3,6 +3,8 @@
 #### Makefile for Metis as patched by scivision installation
 ####
 #### https://github.com/scivision/METIS
+#### this the 5.1.0.3 version only
+#### there are big problems with the Karypis 5.2 version
 ####
 ################################################################
 
