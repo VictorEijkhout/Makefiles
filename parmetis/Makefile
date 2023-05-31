@@ -4,13 +4,15 @@
 ####
 #### this is the 4.0.3 version from
 #### https://github.com/scibuilder/parmetis
+#### this builds gklib & metis too 
 ####
 ################################################################
 
 PACKAGE = parmetis
 PACKAGEVERSION = git
 MODE = mpi
-MODULES = gklib metis
+MODULES = 
+#gklib metis
 
 include ${MAKEINCLUDES}/Make.info
 CMAKEFLAGS=\
