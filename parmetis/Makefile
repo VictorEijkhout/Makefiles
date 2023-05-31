@@ -9,7 +9,7 @@
 ################################################################
 
 PACKAGE = parmetis
-PACKAGEVERSION = git
+PACKAGEVERSION = 4.0.3
 MODE = mpi
 MODULES = 
 #gklib metis
@@ -25,4 +25,5 @@ include ${MAKEINCLUDES}/Make.clean
 
 GITREPO = https://github.com/scibuilder/parmetis.git
 include ${MAKEINCLUDES}/Make.git
-
+ZIPURL = https://github.com/scibuilder/parmetis/archive/refs/heads/master.zip
+include ${MAKEINCLUDES}/Make.download
