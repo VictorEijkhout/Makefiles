@@ -1,0 +1,15 @@
+diff --git a/packages/common/auxiliarySoftware/SuiteSparse/src/KLU/Include/trilinos_klu_internal.h b/packages/common/auxiliarySoftware/SuiteSparse/src/KLU/Include/trilinos_klu_internal.h
+index 49d25004330..5d26db1f549 100644
+--- a/packages/common/auxiliarySoftware/SuiteSparse/src/KLU/Include/trilinos_klu_internal.h
++++ b/packages/common/auxiliarySoftware/SuiteSparse/src/KLU/Include/trilinos_klu_internal.h
+@@ -37,6 +37,10 @@
+ #include <stdlib.h>
+ #include <math.h>
+ 
++#ifdef TRILINOSSS_HAVE_OMP
++#include <omp.h>
++#endif
++
+ #undef ASSERT
+ #ifndef NDEBUG
+ #define ASSERT(a) assert(a)
