@@ -14,7 +14,7 @@ include ${MAKEINCLUDES}/Make.info
 
 JCOUNT = 12
 .PHONY: configure build
-PKGCONFIGSET = lib/pkgconfig
+PKGCONFIG = lib/pkgconfig
 configure ::
 	@echo "there is no separate configure rule"
 build :: modules

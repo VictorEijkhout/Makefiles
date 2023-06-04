@@ -13,7 +13,7 @@ NOMODULES = intel/19
 
 include ${MAKEINCLUDES}/Make.info
 
-PKGCONFIGSET = lib/pkgconfig
+PKGCONFIG = lib/pkgconfig
 include ${MAKEINCLUDES}/Make.configure
 HASBIN =
 include ${MAKEINCLUDES}/Make.install

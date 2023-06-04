@@ -13,7 +13,7 @@ include ${MAKEINCLUDES}/Make.info
 
 CONFIGUREFLAGS=--enable-mpi
 ## CMAKEFLAGS=--enable-mpi
-PKGCONFIGSET = lib/pkgconfig
+PKGCONFIG = lib/pkgconfig
 
 ##
 ## configure version

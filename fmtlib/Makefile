@@ -12,6 +12,7 @@ MODE = seq
 
 include ${MAKEINCLUDES}/Make.info
 
+PKGCONFIG = lib64/pkgconfig
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
 

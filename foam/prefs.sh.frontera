@@ -88,11 +88,11 @@ export METIS_LIB_DIR=${METIS_DIR}/lib
 export METIS_INCLUDE_DIR=${METIS_DIR}/include
 
 # System installed ParMetis
-#export PARMETIS_SYSTEM=1
-#export PARMETIS_DIR=path_to_system_installed_parmetis
-#export PARMETIS_BIN_DIR=$PARMETIS_DIR/bin
-#export PARMETIS_LIB_DIR=$PARMETIS_DIR/lib
-#export PARMETIS_INCLUDE_DIR=$PARMETIS_DIR/include
+export PARMETIS_SYSTEM=0
+export PARMETIS_DIR=${TACC_PARMETIS_DIR}
+export PARMETIS_BIN_DIR=$PARMETIS_DIR/bin
+export PARMETIS_LIB_DIR=$PARMETIS_DIR/lib
+export PARMETIS_INCLUDE_DIR=$PARMETIS_DIR/include
 
 # System installed ParMGridgen
 #export PARMGRIDGEN_SYSTEM=1

@@ -13,7 +13,7 @@ NOMODULES =
 
 include ${MAKEINCLUDES}/Make.info
 
-PKGCONFIGSET = lib/pkgconfig
+PKGCONFIG = lib/pkgconfig
 include ${MAKEINCLUDES}/Make.configure
 include ${MAKEINCLUDES}/Make.install
 

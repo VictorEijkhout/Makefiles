@@ -25,13 +25,15 @@ configure : modules
 	 && export MODE=${MODE} && export INSTALLROOT=${INSTALLROOT} \
 	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" \
 	 \
-	 && if [ ! -f "bashrc_${TACC_SYSTEM}" ] ; then \
+	 && ( \
+	    if [ ! -f "bashrc_${TACC_SYSTEM}" ] ; then \
 	        echo "No bashrc for system ${TACC_SYSTEM}" && exit 1 ; fi \
-	 && cp bashrc_${TACC_SYSTEM}   $${srcdir}/etc/bashrc \
-	 && if [ ! -f "prefs.sh.${TACC_SYSTEM}" ] ; then \
-	        echo "No prefs.sh for system ${TACC_SYSTEM}" && exit 1 ; fi \
-	 && cp prefs.sh.${TACC_SYSTEM} $${srcdir}/etc/prefs.sh \
-	 && echo " .. set up files copied .. "
+	     && cp bashrc_${TACC_SYSTEM}   $${srcdir}/etc/bashrc \
+	     && if [ ! -f "prefs.sh.${TACC_SYSTEM}" ] ; then \
+	          echo "No prefs.sh for system ${TACC_SYSTEM}" && exit 1 ; fi \
+	     && cp prefs.sh.${TACC_SYSTEM} $${srcdir}/etc/prefs.sh \
+	     && echo " .. set up files copied .. " \
+	    ) 2>&1 | tee $$configurelog
 
 build : modules
 	@source ${MAKEINCLUDES}/names.sh \
@@ -43,10 +45,15 @@ build : modules
 	 && export WM_PROJECT_DIR=$${srcdir} \
 	 && ( \
 	    cd $${srcdir} \
+	     && ( \
+	        cd wmake/rules/linux64Icc/ \
+	         && sed -i -e '/icpc/s/icpc/mpicxx/' c++ \
+	         && sed -i -e '/icc/s/icc/mpicc/'    c \
+	        ) \
 	     && set -x \
 	     && source etc/bashrc \
 	     && ./Allwmake.firstInstall \
-	    ) 2>&1 | tee $${scriptdir}/install.log
+	    ) 2>&1 | tee $$installlog
 
 ####
 ####

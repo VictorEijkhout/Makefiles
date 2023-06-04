@@ -25,7 +25,7 @@ CMAKEFLAGS = \
 
 include ${MAKEINCLUDES}/Make.cmake
 HASBIN=1
-PKGCONFIGSET = lib/pkgconfig
+PKGCONFIG = lib/pkgconfig
 include ${MAKEINCLUDES}/Make.cbuild
 
 TGZURL = https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-${PACKAGEVERSION}/hdf5-${PACKAGEVERSION}.0/src/hdf5-${PACKAGEVERSION}.0.tar.gz
