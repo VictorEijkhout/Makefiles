@@ -33,10 +33,13 @@ PKGCONFIG = lib/pkgconfig
 include ${MAKEINCLUDES}/Make.cbuild
 
 info ::
+	@echo "make par : parallel installation"
 	@echo "make seq : sequential installation"
-.PHONY: seq
+.PHONY: seq par
 seq :
 	make configure build VARIANT=seq HDF5PARALLEL=OFF
+par :
+	make configure build VARIANT=par HDF5PARALLEL=ON
 
 TGZURL = https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-${PACKAGESHORTVERSION}/hdf5-${PACKAGEVERSION}/src/hdf5-${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
