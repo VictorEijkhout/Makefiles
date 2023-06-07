@@ -22,7 +22,7 @@ CMAKEFLAGS = \
     -D DEAL_II_WITH_TRILINOS=ON -D TRILINOS_DIR=${TACC_TRILINOS_DIR}
 CPPSTANDARD = 17
 # -D DEAL_II_WITH_SLEPC=ON
-PKGCONFIGSET = lib/pkgconfig
+PKGCONFIG = lib/pkgconfig
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
 .PHONY: complex

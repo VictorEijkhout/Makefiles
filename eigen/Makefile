@@ -11,7 +11,7 @@ MODE = seq
 
 include ${MAKEINCLUDES}/Make.info
 
-PKGCONFIGSET = share/pkgconfig
+PKGCONFIG = share/pkgconfig
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
 

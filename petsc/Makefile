@@ -178,7 +178,7 @@ build ::
 	     && popd \
 	         && make --no-print-directory varsmodule \
 	            MODULEVERSIONEXTRA=$${petscarch} \
-	            PKGCONFIGSET=$${petscarch}/lib/pkgconfig \
+	            PKGCONFIG=$${petscarch}/lib/pkgconfig \
 	            EXTRAVARS="PETSC_DIR=$${srcdir} PETSC_ARCH=$${petscarch}" \
 	  ) 2>&1 | tee $${scriptdir}/install-$${petscarch}.log
 ## $${installlog}

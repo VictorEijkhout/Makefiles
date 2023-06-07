@@ -14,7 +14,7 @@ CMAKFLAGS=\
   -D CMAKE_C_FLAGS=-fPIC \
   -D CMAKE_CXX_FLAGS=-fPIC
 include ${MAKEINCLUDES}/Make.cmake
-PKGCONFIGSET = share/pkgconfig
+PKGCONFIG = share/pkgconfig
 include ${MAKEINCLUDES}/Make.cbuild
 
 TGZURL = https://github.com/madler/zlib/releases/download/v${PACKAGEVERSION}/zlib-${PACKAGEVERSION}.tar.gz

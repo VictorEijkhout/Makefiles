@@ -1,23 +1,21 @@
 ################################################################
 ####
-#### Makefile for Libisl installation
+#### Makefile for Cfitsio installation
 ####
-#### https://libisl.sourceforge.io/
+#### https://heasarc.gsfc.nasa.gov/fitsio/
 ####
 ################################################################
 
-PACKAGE = libisl
-PACKAGEVERSION = 0.25
+PACKAGE = cfitsio
+PACKAGEVERSION = 4.2.0
 MODE = seq
-NOMODULES = intel/19
+NOMODULES = 
 
 include ${MAKEINCLUDES}/Make.info
 
 PKGCONFIG = lib/pkgconfig
 include ${MAKEINCLUDES}/Make.configure
-HASBIN =
 include ${MAKEINCLUDES}/Make.install
 
-TGZURL = https://libisl.sourceforge.io/isl-${PACKAGEVERSION}.tar.gz
+TGZURL = https://heasarc.gsfc.nasa.gov/FTP/software/fitsio/c/cfitsio-${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
-

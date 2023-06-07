@@ -10,7 +10,7 @@ MODE = seq
 
 include ${MAKEINCLUDES}/Make.info
 
-# PKGCONFIGSET = lib64/pkgconfig
+# PKGCONFIG = lib64/pkgconfig
 # include ${MAKEINCLUDES}/Make.cmake
 # include ${MAKEINCLUDES}/Make.cbuild
 
