@@ -20,7 +20,7 @@ cmake \
   -D CMAKE_Fortran_COMPILER=${FC} \
   -D CMAKE_CXX_STANDARD:STRING=17 \
   \
-  -D Trilinos_ENABLE_OpenMP:BOOL=ON \
+  -D Trilinos_ENABLE_OpenMP:BOOL=${HAS_OPENMP} \
   \
   -D TPL_ENABLE_MPI:BOOL=ON \
   -D MPI_BASE_DIR=${TACC_IMPI_DIR}/intel64 \
@@ -126,11 +126,13 @@ cmake \
   -D KOKKOS_IS_REQUIRED_FOR_SEVERAL_PACKAGES=off \
   -D Trilinos_ENABLE_Kokkos:BOOL=ON \
   -D Trilinos_ENABLE_KokkosCore:BOOL=ON \
-  -D Phalanx_KOKKOS_DEVICE_TYPE:STRING=OPENMP \
+  $( if [ "${HAS_OPENMP}" = "ON" ] ; then \
+	 echo "-D Phalanx_KOKKOS_DEVICE_TYPE:STRING=OPENMP" \
+     ; fi ) \
   -D Phalanx_INDEX_SIZE_TYPE:STRING="INT" \
   -D Phalanx_SHOW_DEPRECATED_WARNINGS:BOOL=OFF \
   -D Kokkos_ENABLE_Serial:BOOL=ON \
-  -D Kokkos_ENABLE_OpenMP:BOOL=ON \
+  -D Kokkos_ENABLE_OpenMP:BOOL=${HAS_OPENMP} \
   -D Kokkos_ENABLE_Pthread:BOOL=OFF \
   \
   -D Trilinos_ENABLE_STK:BOOL=${HAS_STK} \

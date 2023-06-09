@@ -26,6 +26,7 @@ PYTHON = OFF
 LIBDIR = lib64
 CMAKE_PREFIXPATH_SET = lib/cmake
 HAS_NETCDF = ON
+HAS_OPENMP = ON
 .PHONY: configure
 configure :: 
 	@source ${MAKEINCLUDES}/names.sh \
@@ -58,6 +59,7 @@ configure ::
 	     && export TACC_MKL_LIB=${MKLROOT}/lib/intel64 \
 	     \
 	     && export HAS_PYTHON=${PYTHON} \
+	     && export HAS_OPENMP=${HAS_OPENMP} \
 	     && export HAS_NETCDF=${HAS_NETCDF} \
 	     \
 	     && set -x \
@@ -78,11 +80,9 @@ include ${MAKEINCLUDES}/Make.cbuild
 build ::
 	@source ${MAKEINCLUDES}/names.sh \
 	 && export MODE=${MODE} \
-	 && setnames ${PACKAGEROOT} ${PACKAGE} ${PACKAGEVERSION} "" ${PACKAGEBASENAME} \
-	 && setmodulenames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" \
 	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" \
-	 && echo "not: module load netcdf trilinos/${PACKAGEVERSION}" \
-	 && cp ${TACC_NETCDF_INC}/netcdf*.h ${TACC_TRILINOS_INC}/
+	 && requirenonzero TACC_NETCDF_INC \
+	 && cp ${TACC_NETCDF_INC}/netcdf*.h $${installdir}/include
 
 TGZURL = https://github.com/trilinos/Trilinos/archive/refs/tags/trilinos-release-${PACKAGEVERSION_DOWNLOAD}.tar.gz
 include ${MAKEINCLUDES}/Make.download

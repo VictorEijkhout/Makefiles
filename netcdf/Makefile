@@ -5,6 +5,9 @@
 #### https://netcdf.geodynamics.org/
 #### https://github.com/geodynamics/netcdf
 ####
+#### IS THIS STILL VALID?
+#### SUPERSEDE WITH PNETCDF?
+####
 ################################################################
 
 PACKAGE = NETCDF

@@ -37,7 +37,7 @@ info ::
 	@echo "make seq : sequential installation"
 .PHONY: seq par
 seq :
-	make configure build VARIANT=seq HDF5PARALLEL=OFF
+	make configure build VARIANT=seq HDF5PARALLEL=OFF MODE=seq
 par :
 	make configure build VARIANT=par HDF5PARALLEL=ON
 
