@@ -2,7 +2,7 @@
 ####
 #### Makefile for rangev3
 ####
-#### https://github.com/rangev3
+#### https://github.com/ericniebler/range-v3
 ####
 ################################################################
 
