@@ -1,21 +1,21 @@
 ################################################################
 ####
-#### Makefile for JSON installation
+#### Makefile for json-c installation
 ####
-#### https://github.com/nlohmann/json
+#### https://github.com/json-c/json-c
 ####
 ################################################################
 
-PACKAGE = json
-PACKAGEVERSION = 3.11.2
+PACKAGE = jsonc
+PACKAGEVERSION = git
 MODE = seq
 
 include ${MAKEINCLUDES}/Make.info
 
-PKGCONFIG = share/pkgconfig
+PKGCONFIG = lib64/pkgconfig
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
 
-TGZURL = https://github.com/nlohmann/json/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
-include ${MAKEINCLUDES}/Make.download
+GITREPO = https://github.com/json-c/json-c.git
+include ${MAKEINCLUDES}/Make.git
 
