@@ -20,6 +20,14 @@ nocmakeflag = \
     --compile-no-warning-as-error \
     -DCMAKE_CXX_FLAGS=-Wno-error
 include ${MAKEINCLUDES}/Make.cmake
+fix :
+	source ${MAKEINCLUDES}/names.sh \
+	 && export MODE=${MODE} && export INSTALLROOT=${INSTALLROOT} \
+	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${\PACKAGEBASENAME}" "${VARIANT}" \
+	 && LANG=C find $$builddir \
+	      -type f \
+	      -exec sed -i -e 's/Werror/Wno-error/g' {} \; 
+
 include ${MAKEINCLUDES}/Make.cbuild
 
 
