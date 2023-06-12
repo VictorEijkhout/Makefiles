@@ -36,8 +36,8 @@ version=${version%%.*}
 function usage() {
     echo "Usage: $0 [ -h ] [ -x ] [ -l ] "
     echo "    [ -j nnn (default: ${jcount}) ] "
-    echo "    [ -c compiler (default ${TACC_FAMILY_COMPILER} ] "
-    echo "    [ -v compiler_version (default ${TACC_FAMILY_COMPILER_VERSION} ] "
+    echo "    [ -c compiler (default ${TACC_FAMILY_COMPILER}) ] "
+    echo "    [ -v compiler_version (default ${version}) ] "
     echo "    nnn"
     echo "where nnn:"
     for ixy in ${ladder} ; do
@@ -116,7 +116,9 @@ for m in $( echo ${packages} | tr , ' ' ) ; do
 	elif [ $m -eq $n ] ; then 
 	    echo "Installing" && echo
 	    ( cd ../$x \
+	       && start=$(date) \
 	       && make configure build public JCOUNT=${jcount} PACKAGEVERSION=$y \
+	       && echo "Start: $start End: $(date)" \
 	     )
 	    break
 	fi

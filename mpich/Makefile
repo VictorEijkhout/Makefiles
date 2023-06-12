@@ -7,7 +7,7 @@
 ################################################################
 
 PACKAGE = MPICH
-PACKAGEVERSION = 4.1
+PACKAGEVERSION = 4.1.2
 MODE = seq
 FAMILY = mpi
 NOMODULE = 1
