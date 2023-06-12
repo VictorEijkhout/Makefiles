@@ -11,6 +11,7 @@ ladder="\
     sqlite,3.43.0 \
     proj,9.2.1 \
     jsonc,git \
+    zlib,1.2.13 \
     gdal,3.7.0 \
     "
 
