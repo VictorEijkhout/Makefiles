@@ -13,6 +13,9 @@ MODE = seq
 include ${MAKEINCLUDES}/Make.info
 
 PKGCONFIG = lib64/pkgconfig
+ifeq "${TACC_FAMILY_COMPILER}" "intel"
+  CMAKECOMPILERFLAGS = -Wno-implicit-function-declaration
+endif
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
 
