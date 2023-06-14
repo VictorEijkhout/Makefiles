@@ -14,6 +14,6 @@ module use ${MY_MODULEPATH_ROOT}/Core
 
 gnuversion=9.1.0
 echo "loading gnu ${gnuversion}"
-module load gcc/${gnuversion} impi/21.9.0
+module load gcc/${gnuversion} impi/19.0.9
 #module load python3
 module list
