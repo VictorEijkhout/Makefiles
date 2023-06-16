@@ -9,8 +9,7 @@ module reset
 module load TACC
 
 echo "module unload intel and others"
-module unload intel oneapi gcc impi mvapich2 python3 python2
-# module list
+module unload intel oneapi gcc impi mvapich2 python3 python2 2>/dev/null
 
 echo "adding experimental and my own module paths"
 ## ONEAPI IS OFFICIAL as INTEL module use /scratch1/projects/compilers/modulefiles

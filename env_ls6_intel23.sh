@@ -9,7 +9,7 @@ module reset
 module load TACC
 
 echo "module unload intel and others"
-module unload intel oneapi gcc impi mvapich2 python3 python2
+module unload intel oneapi gcc impi mvapich2 python3 python2 2>/dev/null
 # module list
 
 echo "adding experimental and my own module paths"

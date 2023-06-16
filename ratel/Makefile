@@ -4,6 +4,7 @@
 ####
 ################################################################
 
+URL = https://gitlab.com/micromorph/ratel
 PACKAGE = RATEL
 PACKAGEVERSION = git
 CHMODR = 1
@@ -21,15 +22,12 @@ configure ::
 build :: modules
 	@( \
 	source ${MAKEINCLUDES}/names.sh \
-	 && setnames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" \
-	 && setmodulenames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" \
 	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" \
 	 \
 	 && source ${MAKEINCLUDES}/compilers.sh \
 	 && setcompilers && reportcompilers \
 	 \
-	 && export CEED_DIR=[path to libCEED] PETSC_DIR=[path to PETSc] PETSC_ARCH=[PETSc arch] ENZYME_LIB=[path to Enzyme] \
-	 && make -j ${JCOUNT}
+	 && echo "export CEED_DIR=[path to libCEED] PETSC_DIR=[path to PETSc] PETSC_ARCH=[PETSc arch] ENZYME_LIB=[path to Enzyme]" \
 	 && export CEED_DIR=$${PETSC_DIR}/$${PETSC_ARCH} \
 	 && echo "make with PETSC_DIR=$${PETSC_DIR}, PETSC_ARCH=$${PETSC_ARCH}, CEED_DIR=$${CEED_DIR}" \
 	 && echo "into builddir: $${builddir}" \

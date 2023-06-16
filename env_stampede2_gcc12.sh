@@ -1,6 +1,6 @@
 module purge
 module reset
-module unload intel oneapi gcc impi python2 python3
+module unload intel oneapi gcc impi python2 python3 2>/dev/null
 
 ## module use /scratch/projects/compilers/modulefiles
 
