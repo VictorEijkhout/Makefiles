@@ -9,8 +9,8 @@ module list
 
 echo "adding experimental and my own module paths"
 export MODULEROOT=${WORK}/modulefiles
-export MY_MODULEPATH_ROOT=${MODULEROOT}
-module use ${MY_MODULEPATH_ROOT}/Core
+export VICTOR_MODULEPATH_ROOT=${MODULEROOT}
+module use ${VICTOR_MODULEPATH_ROOT}/Core
 
 intelversion=23.0.0
 echo "loading intel ${intelversion}"

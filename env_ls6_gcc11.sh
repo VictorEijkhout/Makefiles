@@ -15,8 +15,8 @@ module unload intel oneapi gcc impi mvapich2 python3 python2 2>/dev/null
 echo "adding experimental and my own module paths"
 ## module use /scratch/projects/compilers/modulefiles
 export MODULEROOT=${WORK}/modulefiles
-export MY_MODULEPATH_ROOT=${MODULEROOT}
-module use ${MY_MODULEPATH_ROOT}/Core
+export VICTOR_MODULEPATH_ROOT=${MODULEROOT}
+module use ${VICTOR_MODULEPATH_ROOT}/Core
 
 gccversion=11.2.0
 echo "loading gcc ${gccversion}"
