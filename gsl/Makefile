@@ -2,12 +2,11 @@
 ####
 #### Makefile for gsl
 ####
-#### https://github.com/gsl
-####
 ################################################################
 
 PACKAGE = gsl
 PACKAGEVERSION = 4.0.0
+URL = https://github.com/microsoft/GSL
 MODE = seq
 
 include ${MAKEINCLUDES}/Make.info
