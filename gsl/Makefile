@@ -12,8 +12,8 @@ MODE = seq
 include ${MAKEINCLUDES}/Make.info
 
 include ${MAKEINCLUDES}/Make.cmake
+NOLIB = 1
 include ${MAKEINCLUDES}/Make.cbuild
-
 
 TGZURL = https://github.com/microsoft/GSL/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
