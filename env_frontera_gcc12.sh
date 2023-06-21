@@ -1,11 +1,11 @@
 echo "module reset"
 module purge
 module reset
-module list
+## module list
 
 echo "module unload intel and others"
 module unload intel oneapi impi python3 2>/dev/null
-module list
+## module list
 
 echo "adding experimental and my own module paths"
 export MODULEROOT=${WORK}/modulefiles
