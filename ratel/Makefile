@@ -28,7 +28,8 @@ build :: modules
 	 && setcompilers && reportcompilers \
 	 \
 	 && echo "export CEED_DIR=[path to libCEED] PETSC_DIR=[path to PETSc] PETSC_ARCH=[PETSc arch] ENZYME_LIB=[path to Enzyme]" \
-	 && export CEED_DIR=$${PETSC_DIR}/$${PETSC_ARCH} \
+	 && export CEED_DIR=${TACC_LIBCEED_DIR} \
+	 && export PETSC_DIR=${TACC_PETSC_DIR} && export PETSC_ARCH=${PETSC_ARCH} \
 	 && echo "make with PETSC_DIR=$${PETSC_DIR}, PETSC_ARCH=$${PETSC_ARCH}, CEED_DIR=$${CEED_DIR}" \
 	 && echo "into builddir: $${builddir}" \
 	 && requirenonzero srcdir \
