@@ -2,11 +2,10 @@
 ####
 #### Makefile for json-c installation
 ####
-#### https://github.com/json-c/json-c
-####
 ################################################################
 
 PACKAGE = jsonc
+URL = https://github.com/json-c/json-c
 PACKAGEVERSION = git
 MODE = seq
 

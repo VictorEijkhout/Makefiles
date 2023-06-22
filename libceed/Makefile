@@ -5,6 +5,7 @@
 ################################################################
 
 PACKAGE = LIBCEED
+URL = https://github.com/ceed/libceed
 PACKAGEVERSION = git
 CHMODR = 1
 MODULES = petsc
@@ -18,25 +19,25 @@ PKGCONFIG = lib/pkgconfig
 configure ::
 	@echo "there is no separate configure rule"
 build :: modules
-	@( \
+	@\
 	source ${MAKEINCLUDES}/names.sh \
-	 && setnames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" \
-	 && setmodulenames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" \
-	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" \
+	 && export MODE=${MODE} \
+	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" "${VARIANT}" \
 	 \
-	 && source ${MAKEINCLUDES}/compilers.sh \
-	 && reportcompilers \
-	 \
-	 && requirenonzero srcdir \
-	 && pushd $$srcdir \
-	 && make --no-print-directory \
-	        -B OPT=-g -j ${JCOUNT} V=1 \
-	        BUILDDIR=$$builddir/ \
-	        prefix=$$installdir \
-	        all install \
-	 && popd && make varsmodule \
-	 ) 2>&1 | tee install.log \
-	 && echo "See install.log"
+	 && ( \
+	    source ${MAKEINCLUDES}/compilers.sh \
+	     && reportcompilers \
+	     && requirenonzero srcdir \
+	     && pushd $$srcdir \
+	     && cmdline="make --no-print-directory \
+	            -B OPT=-g -j ${JCOUNT} V=1 \
+	            BUILDDIR=$$builddir/ \
+	            prefix=$$installdir \
+	            install "\
+	     && echo "making: $$cmdline" && eval $$cmdline \
+	     && popd && make module \
+	     ) 2>&1 | tee $$installlog \
+	 && echo "See $$installlog"
 include ${MAKEINCLUDES}/Make.vars
 
 # ####

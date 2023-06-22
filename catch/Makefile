@@ -5,6 +5,7 @@
 ################################################################
 
 PACKAGE = CATCH2
+URL = https://github.com/catchorg/Catch2
 PACKAGEVERSION = 3.1.1
 MODE = seq
 MODULES = 
@@ -13,9 +14,6 @@ include ${MAKEINCLUDES}/Make.info
 
 PKGCONFIG = share/pkgconfig
 include ${MAKEINCLUDES}/Make.cmake
-ifeq "${TACC_FAMILY_COMPILER}" "intel"
-LIBDIR = lib64
-endif
 include ${MAKEINCLUDES}/Make.cbuild
 
 TGZURL = https://github.com/catchorg/Catch2/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
