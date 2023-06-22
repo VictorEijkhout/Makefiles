@@ -19,3 +19,5 @@ include ${MAKEINCLUDES}/Make.cbuild
 
 TGZURL = https://github.com/SFML/SFML/archive/refs/tags/${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
+GITREPO = https://github.com/SFML/SFML.git
+include ${MAKEINCLUDES}/Make.git
