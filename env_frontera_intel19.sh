@@ -2,7 +2,7 @@ echo "module reset"
 module reset
 
 echo "module unload intel and others"
-module unload intel oneapi gcc impi python3 2>/dev/null
+module unload intel oneapi gcc impi python2 python3 2>/dev/null
 
 echo "adding experimental and my own module paths"
 export MODULEROOT=${WORK}/modulefiles
