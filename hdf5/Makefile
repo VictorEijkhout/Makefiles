@@ -3,11 +3,11 @@
 #### Makefile for Hdf5 installation
 ####
 #### note: also comes in C++ and Fortran download
-#### https://portal.hdfgroup.org/display/HDF5/Parallel+HDF5
-####
+#### 
 ################################################################
 
 PACKAGE = HDF5
+URL = https://portal.hdfgroup.org/display/HDF5/Parallel+HDF5
 # there is a micro version but we ignore that for now.
 PACKAGESHORTVERSION = 1.14
 PACKAGEVERSION = 1.14.0
@@ -18,7 +18,7 @@ MODULES = zlib
 include ${MAKEINCLUDES}/Make.info
 
 HDF5PARALLEL = ON
-VARIANT = par
+VARIANT =
 CMAKEFLAGS = \
   -D HDF5_ENABLE_Z_LIB_SUPPORT:BOOL=ON \
   -D ZLIB_DIR:PATH=${TACC_ZLIB_DIR} \
@@ -37,9 +37,11 @@ info ::
 	@echo "make seq : sequential installation"
 .PHONY: seq par
 seq :
-	make configure build VARIANT=seq HDF5PARALLEL=OFF MODE=seq
+	make configure build JCOUNT=${JCOUNT} \
+	    HDF5PARALLEL=OFF MODE=seq
 par :
-	make configure build VARIANT=par HDF5PARALLEL=ON
+	make configure build JCOUNT=${JCOUNT} \
+	    HDF5PARALLEL=ON  MODE=mpi MODULENAME=phdf5
 
 TGZURL = https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-${PACKAGESHORTVERSION}/hdf5-${PACKAGEVERSION}/src/hdf5-${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
