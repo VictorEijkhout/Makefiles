@@ -1,21 +1,21 @@
 ################################################################
 ####
-#### Makefile for JSON installation
-####
-#### https://github.com/nlohmann/json
+#### Makefile for PROJ installation
+#### https://proj.org/index.html
 ####
 ################################################################
 
-PACKAGE = json
-PACKAGEVERSION = 3.11.2
+PACKAGE = PROJ
+PACKAGEVERSION = 9.2.1
 MODE = seq
+MODULES = sqlite
 
 include ${MAKEINCLUDES}/Make.info
 
-PKGCONFIG = share/pkgconfig
+CMAKEFLAGS = -D BUILD_TESTING=OFF
 include ${MAKEINCLUDES}/Make.cmake
+
 include ${MAKEINCLUDES}/Make.cbuild
 
-TGZURL = https://github.com/nlohmann/json/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
+TGZURL = https://download.osgeo.org/proj/proj-${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
-

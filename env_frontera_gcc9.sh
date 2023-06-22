@@ -12,8 +12,8 @@ export MODULEROOT=${WORK}/modulefiles
 export VICTOR_MODULEPATH_ROOT=${MODULEROOT}
 module use ${VICTOR_MODULEPATH_ROOT}/Core
 
-gnuversion=12.2.0
+gnuversion=9.1.0
 echo "loading gnu ${gnuversion}"
-module load gcc/${gnuversion} impi/21.9.0
+module load gcc/${gnuversion} impi/19.0.9
 #module load python3
 module list

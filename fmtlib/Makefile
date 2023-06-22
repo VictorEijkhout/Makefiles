@@ -2,23 +2,17 @@
 ####
 #### Makefile for fmtlib
 ####
-#### https://github.com/fmtlib
-####
 ################################################################
 
 PACKAGE = fmtlib
+URL = https://github.com/fmtlib/fmt
 PACKAGEVERSION = 10.0.0
 MODE = seq
 
 include ${MAKEINCLUDES}/Make.info
 
 include ${MAKEINCLUDES}/Make.cmake
-ifeq "${TACC_FAMILY_COMPILER}" "intel"
-  LIBDIR = lib64
-  PKGCONFIG = lib64/pkgconfig
-else
-  PKGCONFIG = lib/pkgconfig
-endif
+PKGCONFIGLIB = pkgconfig
 include ${MAKEINCLUDES}/Make.cbuild
 
 info ::
