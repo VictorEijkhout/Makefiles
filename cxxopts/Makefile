@@ -10,13 +10,7 @@ MODE = seq
 
 include ${MAKEINCLUDES}/Make.info
 
-ifeq "${TACC_FAMILY_COMPILER}" "intel"
-  LIBDIR = lib64
-  PKGCONFIG = lib64/pkgconfig
-else
-  LIBDIR = lib
-  PKGCONFIG = lib/pkgconfig
-endif
+PKGCONFIGLIB = pkgconfig
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
 
