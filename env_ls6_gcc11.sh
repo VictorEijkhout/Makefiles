@@ -22,5 +22,6 @@ gccversion=11.2.0
 echo "loading gcc ${gccversion}"
 module load gcc/${gccversion}
 module load impi/19.0.9
+module load python3
 
 module list
