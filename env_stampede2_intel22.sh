@@ -3,7 +3,7 @@ module unload intel oneapi gcc impi python2 python3 2>/dev/null
 
 module use /scratch/projects/compilers/modulefiles
 
-VICTOR_WORK=/work2/00434/eijkhout/stampede2
+export VICTOR_WORK=/work2/00434/eijkhout/stampede2
 export MODULEROOT=${VICTOR_WORK}/modulefiles
 export VICTOR_MODULEPATH_ROOT=${MODULEROOT}
 
