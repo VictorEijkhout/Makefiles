@@ -35,6 +35,7 @@ version=${version%%.*}
 
 function usage() {
     echo "Usage: $0 [ -h ] [ -x ] [ -l ] "
+    echo "    [ -l : list available modules ]"
     echo "    [ -j nnn (default: ${jcount}) ] "
     echo "    [ -c compiler (default ${TACC_FAMILY_COMPILER}) ] "
     echo "    [ -v compiler_version (default ${version}) ] "
@@ -112,7 +113,8 @@ for m in $( echo ${packages} | tr , ' ' ) ; do
 	echo "================"
 	echo "Package $n: $x version $y"
 	if [ ! -z "${list}" ] ; then 
-	    module_avail $x $y
+	    module_avail $x $y \
+		| awk 'BEGIN {p=1} /too long/ {p=0} p==1 {print}'
 	elif [ $m -eq $n ] ; then 
 	    echo "Installing" && echo
 	    ( cd ../$x \
