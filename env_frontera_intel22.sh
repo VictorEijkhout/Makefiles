@@ -12,5 +12,7 @@ module use ${VICTOR_MODULEPATH_ROOT}/Core
 
 echo "loading intel 22.3"
 module load intel/22.3.0 impi/22.3.0
-#module load oneapi21/python3
+
+module load oneapi21/python3
+
 module list
