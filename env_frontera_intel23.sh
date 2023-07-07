@@ -23,3 +23,7 @@ module load intel/${intelversion}
 module load impi/21.9.0
 
 module list
+
+echo "add python3 from intel21"
+export PATH=/scratch1/projects/compilers/oneapi_2021.4.0.3422/intelpython/python3.7/bin/:$PATH
+export PYTHONPATH=/opt/apps/intel19/impi19_0/python3/3.7.0/lib/python3.7/site-packages:$PYTHONPATH
