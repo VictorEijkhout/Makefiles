@@ -2,6 +2,8 @@
 ####
 #### Makefile for SFML installation
 ####
+#### NOTE on MacOS only clang support
+####
 ################################################################
 
 PACKAGE = SFML
@@ -10,6 +12,10 @@ PACKAGEVERSION = 2.6.0
 MODE = seq
 
 include ${MAKEINCLUDES}/Make.info
+info ::
+	@echo "================" \
+	 && echo "NOTE: on MacOS only clang supported" \
+	 && echo "================"
 
 PKGCONFIGLIB = pkgconfig
 include ${MAKEINCLUDES}/Make.cmake
