@@ -44,5 +44,7 @@ par :
 
 TGZURL = https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-${PACKAGESHORTVERSION}/hdf5-${PACKAGEVERSION}/src/hdf5-${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
+GITREPO = https://github.com/HDFGroup/hdf5.git
+include ${MAKEINCLUDES}/Make.git
 include ${MAKEINCLUDES}/Make.clean
 
