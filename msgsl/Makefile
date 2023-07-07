@@ -1,10 +1,10 @@
 ################################################################
 ####
-#### Makefile for gsl
+#### Makefile for Microsoft Guideline Suport Library
 ####
 ################################################################
 
-PACKAGE = gsl
+PACKAGE = msgsl
 PACKAGEVERSION = 4.0.0
 URL = https://github.com/microsoft/GSL
 MODE = seq
