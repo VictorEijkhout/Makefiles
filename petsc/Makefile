@@ -181,6 +181,8 @@ build ::
 	            PKGCONFIG=$${petscarch}/lib/pkgconfig \
 	            EXTRAVARS="PETSC_DIR=$${srcdir} PETSC_ARCH=$${petscarch}" \
 	  ) 2>&1 | tee $${scriptdir}/install-$${petscarch}.log
+# petsc lib dir is elsewhere
+NOLIB = 1
 ## $${installlog}
 
 public ::
