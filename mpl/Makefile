@@ -11,7 +11,16 @@ MODE = mpi
 include ${MAKEINCLUDES}/Make.info
 
 include ${MAKEINCLUDES}/Make.cmake
-# EXTRABUILDTARGETS=documentation
+MODULE_HELP = 1
+module_help :
+	@for line in \
+	    "Usage:" \
+	    "  import mpl" \
+	    "and use" \
+	    "   #include <mpl/mpl.hpp>" \
+	    "in your code" \
+	; do echo "$$line" ; done >>${MODULEFILE}
+
 include ${MAKEINCLUDES}/Make.cbuild
 info ::
 	@echo "================ docs rules"
