@@ -14,9 +14,9 @@ include ${MAKEINCLUDES}/Make.cmake
 # EXTRABUILDTARGETS=documentation
 include ${MAKEINCLUDES}/Make.cbuild
 info ::
+	@echo "================ docs rules"
 	@echo "make docs : doxygen html & latex docs"
 	@echo "    [ LATEXDOC=0/1 (default=${LATEXDOC}) ]"
-	@echo "make opendocs"
 .PHONY: docs opendocs
 LATEXDOC=0
 docs :
@@ -43,15 +43,25 @@ docs :
 	         && cp -r $$t $${doctarget}/ \
 	      ; fi \
 	    ; done
+info ::
+	@echo "make opendocs"
 opendocs :
 	@source ${MAKEINCLUDES}/names.sh \
 	 && export MODE=${MODE} && export INSTALLROOT=${INSTALLROOT} \
-	 && setnames ${PACKAGEROOT} ${PACKAGE} ${PACKAGEVERSION} ${INSTALLEXT} \
-	 && setmodulenames ${PACKAGEROOT} ${PACKAGE} ${PACKAGEVERSION} ${INSTALLEXT} \
 	 && setdirlognames ${PACKAGEROOT} ${PACKAGE} ${PACKAGEVERSION} ${INSTALLEXT} \
 	 && doctarget=$${installdir}/../docs-${PACKAGEVERSION} \
 	 && ls $$doctarget \
 	 && open $$doctarget/html/index.html
+info ::
+	@echo "make findexample ROUTINE=...."
+	@echo "    [ FLAGS= ]"
+ROUTINE = allreduce
+.PHONY: findexample
+findexample :
+	@source ${MAKEINCLUDES}/names.sh \
+	 && export MODE=${MODE} && export INSTALLROOT=${INSTALLROOT} \
+	 && setdirlognames ${PACKAGEROOT} ${PACKAGE} ${PACKAGEVERSION} ${INSTALLEXT} \
+	 && grep ${FLAGS} "${ROUTINE}" $$srcdir/examples/*.cc
 
 GITREPO = git@github.com:rabauke/mpl.git
 include ${MAKEINCLUDES}/Make.git
