@@ -6,6 +6,7 @@
 
 PACKAGE = blis
 PACKAGEVERSION = git
+URL = https://github.com/flame/blis
 MODE = seq
 
 include ${MAKEINCLUDES}/Make.info
