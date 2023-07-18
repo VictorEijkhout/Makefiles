@@ -25,10 +25,13 @@ CPPSTANDARD = 17
 PKGCONFIG = lib/pkgconfig
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
-.PHONY: complex
+.PHONY: real complex
 info ::
 	@echo "================"
+	@echo "make real : default setup"
 	@echo "make complex: configure build with complex. Make sure to load complex petsc!"
+real :
+	@make --no-print-directory configure build PACKAGEVERSION=${PACKAGEVERSION}
 complex :
 	@make --no-print-directory configure build PACKAGEVERSION=${PACKAGEVERSION} \
 	    INSTALLEXT="complex" CMAKEFLAGS="${CMAKEFLAGS} -DDEAL_II_WITH_PETSC_COMPLEX=ON"
