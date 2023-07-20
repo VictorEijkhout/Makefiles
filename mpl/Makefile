@@ -6,6 +6,7 @@
 
 PACKAGE = MPL
 PACKAGEVERSION = 0.3.0
+URL = https://github.com/rabauke/mpl
 MODE = mpi
 
 include ${MAKEINCLUDES}/Make.info
