@@ -21,9 +21,7 @@ configure ::
 build ::
 	@source ${MAKEINCLUDES}/names.sh \
 	     && export MODE=${MODE} && export INSTALLROOT=${INSTALLROOT} \
-	     && setnames ${PACKAGEROOT} ${PACKAGE} ${PACKAGEVERSION} ${INSTALLEXT} \
-	     && setmodulenames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" \
-	     && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" \
+	     && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" \
 	 && ( \
 	    rm -rf $$builddir && mkdir -p $$builddir \
 	     && rm -rf $$installdir && mkdir -p $$installdir \
@@ -36,5 +34,5 @@ build ::
 include ${MAKEINCLUDES}/Make.vars
 include ${MAKEINCLUDES}/Make.public
 
-TGZURL = https://boostorg.jfrog.io/artifactory/main/release/1.81.0/source/boost_${PACKAGEVERSION_DOWNLOAD}.tar.gz
+TGZURL = https://boostorg.jfrog.io/artifactory/main/release/${PACKAGEVERSION}/source/boost_${PACKAGEVERSION_DOWNLOAD}.tar.gz
 include ${MAKEINCLUDES}/Make.download
