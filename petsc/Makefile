@@ -175,12 +175,27 @@ build ::
 	        "${BLAS_FLAGS}" \
 	        ${PACKAGES} \
 	     && ${TIME} make MAKE_NP=${JCOUNT} \
-	     && popd \
-	         && make --no-print-directory varsmodule \
-	            MODULEVERSIONEXTRA=$${petscarch} \
-	            PKGCONFIG=$${petscarch}/lib/pkgconfig \
-	            EXTRAVARS="PETSC_DIR=$${srcdir} PETSC_ARCH=$${petscarch}" \
 	  ) 2>&1 | tee $${scriptdir}/install-$${petscarch}.log
+build :: makemodule
+.PHONY: makemodule
+info ::
+	@echo "make makemodule"
+makemodule :
+	@source ${MAKEINCLUDES}/names.sh \
+	 && export MODE=${MODE} && export INSTALLROOT=${INSTALLROOT} \
+	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" \
+	 \
+	 && export petscarch=`make --no-print-directory \
+	                SCALAR=${SCALAR} PRECISION=${PRECISION} INT=${INT} \
+	                ALIGN=${ALIGN} \
+	                CUDA=${CUDA} DEBUG=${DEBUG} CUSTOMEXT=${CUSTOMEXT} \
+	                petscarch` \
+	 && ( make --no-print-directory varsmodule \
+	        MODULEVERSIONEXTRA=$${petscarch} \
+	        PKGCONFIGABSOLUTE=$${srcdir}/$${petscarch}/lib/pkgconfig \
+	        EXTRAVARS="PETSC_DIR=$${srcdir} PETSC_ARCH=$${petscarch}" \
+	  ) 2>&1 | tee -a $${scriptdir}/install-$${petscarch}.log
+
 # petsc lib dir is elsewhere
 NOLIB = 1
 ## $${installlog}
