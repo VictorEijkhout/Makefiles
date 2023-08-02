@@ -37,13 +37,22 @@ info ::
 .PHONY: seq par
 seq :
 	make configure build JCOUNT=${JCOUNT} \
+	    PACKAGEVERSION=${PACKAGEVERSION} \
 	    HDF5PARALLEL=OFF MODE=seq
 par :
 	make configure build JCOUNT=${JCOUNT} \
+	    PACKAGEVERSION=${PACKAGEVERSION} \
 	    HDF5PARALLEL=ON  MODE=mpi MODULENAME=phdf5
 
+##
+## download
+##
 TGZURL = https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-${PACKAGESHORTVERSION}/hdf5-${PACKAGEVERSION}/src/hdf5-${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
+
+##
+## git clone
+##
 GITREPO = https://github.com/HDFGroup/hdf5.git
 include ${MAKEINCLUDES}/Make.git
 include ${MAKEINCLUDES}/Make.clean
