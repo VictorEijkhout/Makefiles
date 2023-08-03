@@ -38,11 +38,11 @@ info ::
 seq :
 	make configure build JCOUNT=${JCOUNT} \
 	    PACKAGEVERSION=${PACKAGEVERSION} \
-	    HDF5PARALLEL=OFF MODE=seq
+	    HDF5PARALLEL=OFF MODE=seq MODULENAME=hdf5
 par :
 	make configure build JCOUNT=${JCOUNT} \
 	    PACKAGEVERSION=${PACKAGEVERSION} \
-	    HDF5PARALLEL=ON  MODE=mpi MODULENAME=phdf5
+	    HDF5PARALLEL=ON  MODE=mpi MODULENAME=phdf5 MODULENAMEALT=hdf5
 
 ##
 ## download
