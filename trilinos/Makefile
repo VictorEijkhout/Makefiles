@@ -29,7 +29,7 @@ CMAKE_PREFIXPATH_SET = lib/cmake
 HAS_NETCDF = ON
 HAS_OPENMP = ON
 .PHONY: configure
-configure :: 
+configure :: modules
 	@source ${MAKEINCLUDES}/names.sh \
 	 && export MODE=${MODE} \
 	 && setnames ${PACKAGEROOT} ${PACKAGE} ${PACKAGEVERSION} "" ${PACKAGEBASENAME} \
