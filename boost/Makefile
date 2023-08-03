@@ -32,6 +32,7 @@ build ::
 	    ) 2>&1 | tee $@.log \
 	 && make --no-print-directory varsmodule
 include ${MAKEINCLUDES}/Make.vars
+NOLIB = 1
 include ${MAKEINCLUDES}/Make.public
 
 TGZURL = https://boostorg.jfrog.io/artifactory/main/release/${PACKAGEVERSION}/source/boost_${PACKAGEVERSION_DOWNLOAD}.tar.gz
