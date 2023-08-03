@@ -11,6 +11,7 @@ PACKAGEVERSION = 14.0.0
 PACKAGEVERSION_DOWNLOAD = 14-0-0
 MODE = mpi
 MODULES = boost hdf5 netcdf
+MODULE_MINIMUM_VERSION_intel = 20
 #boost swig
 
 include ${MAKEINCLUDES}/Make.info
