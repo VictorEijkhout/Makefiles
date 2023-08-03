@@ -8,7 +8,8 @@ PACKAGE = highfive
 PACKAGEVERSION = 2.7.1
 URL = https://github.com/BlueBrain/HighFive
 MODE = mpi
-MODULES = boost eigen phdf5
+## note: modules needs hdf5 or phdf5 depending
+MODULES = boost eigen 
 
 include ${MAKEINCLUDES}/Make.info
 
@@ -23,6 +24,8 @@ CMAKEFLAGS = \
     -D HIGHFIVE_USE_XTENSOR=OFF \
     -D HIGHFIVE_USE_HALF_FLOAT=OFF
 include ${MAKEINCLUDES}/Make.cmake
+## .cmake files in share/HighFive/CMake/
+NOLIB = 1
 include ${MAKEINCLUDES}/Make.cbuild
 
 info ::
@@ -31,10 +34,12 @@ info ::
 .PHONY: seq par
 seq :
 	make configure build JCOUNT=${JCOUNT} \
-	    HDF5PARALLEL=OFF MODE=seq
+	    PACKAGEVERSION=${PACKAGEVERSION} \
+	    HDF5PARALLEL=OFF MODE=seq MODULES="${MODULES} hdf5" MODULENAME=highfive
 par :
 	make configure build JCOUNT=${JCOUNT} \
-	    HDF5PARALLEL=ON  MODE=mpi MODULENAME=phighfive
+	    PACKAGEVERSION=${PACKAGEVERSION} \
+	    HDF5PARALLEL=ON  MODE=mpi MODULES="${MODULES} phdf5" MODULENAME=phighfive
 
 TGZURL = https://github.com/BlueBrain/HighFive/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
