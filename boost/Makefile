@@ -7,6 +7,7 @@
 PACKAGE = boost
 PACKAGEVERSION = 1.81.0
 PACKAGEVERSION_DOWNLOAD = 1_81_0
+URL = https://www.boost.org/
 MODE = seq
 MODULES = 
 
@@ -21,7 +22,7 @@ configure :: modules
 build ::
 	@source ${MAKEINCLUDES}/names.sh \
 	     && export MODE=${MODE} && export INSTALLROOT=${INSTALLROOT} \
-	     && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" \
+	     && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" "" "" \
 	 && ( \
 	    rm -rf $$builddir && mkdir -p $$builddir \
 	     && rm -rf $$installdir && mkdir -p $$installdir \
