@@ -16,7 +16,7 @@ info ::
 	@echo "================ bootstrap install"
 	@echo "make build"
 .PHONY: configure build
-configure ::
+configure :: modules
 	@echo "there is no configure rule"
 build ::
 	@source ${MAKEINCLUDES}/names.sh \
