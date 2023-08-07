@@ -5,7 +5,7 @@
 ################################################################
 
 PACKAGE = DEALII
-PACKAGEVERSION = 9.4.1
+PACKAGEVERSION = 9.5.1
 MODE = mpi
 MODULES = p4est petsc trilinos
 
@@ -14,7 +14,7 @@ include ${MAKEINCLUDES}/Make.info
 
 CMAKEFLAGS = \
     -D DEAL_II_WITH_MPI=ON \
-    -D DEAL_II_CXX_FLAGS=\"-march=native -qoverride-limits\" \
+    -D DEAL_II_CXX_FLAGS=\"-qoverride-limits -save-temps -v\" \
     -D DEAL_II_LINKER_FLAGS=-fuse-ld=bfd \
     -D DEAL_II_COMPONENT_EXAMPLES=OFF \
     -D DEAL_II_WITH_P4EST=ON    -D P4EST_DIR=${TACC_P4EST_DIR} \
