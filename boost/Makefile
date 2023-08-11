@@ -7,6 +7,7 @@
 PACKAGE = boost
 PACKAGEVERSION = 1.81.0
 PACKAGEVERSION_DOWNLOAD = 1_81_0
+URL = https://www.boost.org/
 MODE = seq
 MODULES = 
 
@@ -16,12 +17,12 @@ info ::
 	@echo "================ bootstrap install"
 	@echo "make build"
 .PHONY: configure build
-configure ::
+configure :: modules
 	@echo "there is no configure rule"
 build ::
 	@source ${MAKEINCLUDES}/names.sh \
 	     && export MODE=${MODE} && export INSTALLROOT=${INSTALLROOT} \
-	     && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" \
+	     && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" "" "" \
 	 && ( \
 	    rm -rf $$builddir && mkdir -p $$builddir \
 	     && rm -rf $$installdir && mkdir -p $$installdir \
@@ -32,6 +33,7 @@ build ::
 	    ) 2>&1 | tee $@.log \
 	 && make --no-print-directory varsmodule
 include ${MAKEINCLUDES}/Make.vars
+NOLIB = 1
 include ${MAKEINCLUDES}/Make.public
 
 TGZURL = https://boostorg.jfrog.io/artifactory/main/release/${PACKAGEVERSION}/source/boost_${PACKAGEVERSION_DOWNLOAD}.tar.gz

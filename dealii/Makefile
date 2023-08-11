@@ -5,7 +5,7 @@
 ################################################################
 
 PACKAGE = DEALII
-PACKAGEVERSION = 9.4.1
+PACKAGEVERSION = 9.5.1
 MODE = mpi
 MODULES = p4est petsc trilinos
 
