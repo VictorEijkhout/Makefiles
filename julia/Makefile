@@ -15,6 +15,10 @@ MODE = seq
 include ${MAKEINCLUDES}/Make.info
 
 ## JULIA_INSTALL = ${STOCKYARD}/julia/installation-${TACC_SYSTEM}-${TACC_FAMILY_COMPILER}
+info ::
+	@echo "================ custom build"
+	@echo "make configure : not needed"
+	@echo "make build : custom installation"
 .PHONY: configure build
 configure ::
 	@echo "there is no configure rule"
