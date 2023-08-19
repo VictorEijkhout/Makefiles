@@ -7,6 +7,7 @@
 URL = https://github.com/ericniebler/range-v3
 PACKAGE = rangev3
 PACKAGEVERSION = 0.12.0
+NONMODULES = clang
 MODE = seq
 
 include ${MAKEINCLUDES}/Make.info
