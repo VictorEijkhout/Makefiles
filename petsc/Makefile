@@ -31,7 +31,8 @@ ifeq "${TACC_SYSTEM}" "nvarm"
   MPI_FLAGS = --with-mpi-compilers=1 --with-cc=`which mpicc` --with-cxx=`which mpicxx` 
 else ifeq "${TACC_SYSTEM}" "macbookair"
   BLAS_FLAGS=
-  MPI_FLAGS = --with-mpi-compilers=1 --with-cc=`which mpicc` --with-cxx=`which mpicxx` 
+  MPI_FLAGS = --with-mpi-compilers=1 --with-mpi-dir=${TACC_MPICH_DIR} 
+##    --with-cc=`which mpicc` --with-cxx=`which mpicxx` 
 else
   BLAS_FLAGS=--with-blas-lapack-dir=${MKLROOT}
   MPI_FLAGS = --with-mpi-compilers=1 --with-cc=`which mpicc` --with-cxx=`which mpicxx` 
@@ -43,40 +44,12 @@ info ::
 installed :
 	@ls -d ${PETSC_SRC_DIR}/${PETSCARCH}*
 
-PRECISION = double
-info ::
-	@echo "    [ PRECISION=single/double/quad (default: ${PRECISION})]"
-.PHONY: precstring
-precstring :
-	@if [ "${PRECISION}" = "quad" ] ; then \
-	    echo "__float128 --download-f2cblaslapack" \
-	; else echo ${PRECISION} ; fi
-
-SCALAR = real
-info ::
-	@echo "    [ SCALAR=real/complex (default: ${SCALAR})]"
-
-INT = 32
-info ::
-	@echo "    [ INT=32/64 (default: ${INT}) ]"
-
-ALIGN = 16
-info ::
-	@echo "    [ ALIGN=nn (default: ${ALIGN})]"
-
 CUDA = 0
 info ::
 	@echo "     [CUDA=0/1 (default: ${CUDA})]"
 CUDA_OPTIONS = --with-cuda=1 --with-cuda-dir=${TACC_CUDA_DIR} --with-cuda-gencodearch=70
 
-DEBUG = 0
-info ::
-	@echo "     [DEBUG=0/1, default=${DEBUG}]"
 TIME =
-
-TRIANGLE = 0
-info ::
-	@echo "    [ TRIANGLE=0/1 (default=${TRIANGLE}) ]"
 
 ##
 ## Petsc Architecture
@@ -85,22 +58,23 @@ info ::
 .PHONY: petscarch
 petscarch :
 	@source ${MAKEINCLUDES}/names.sh \
+	 && systemnames && compilernames \
 	 && MODE=mpi setnames ${PACKAGEROOT} ${PACKAGE} ${PACKAGEVERSION} ${INSTALLEXT} \
 	 && export PETSC_EXT="" \
 	  \
 	 && if [ "${SCALAR}" = "complex" ] ; then \
 	    export PETSC_EXT=$${PETSC_EXT}complex ; fi \
 	  \
-	 && if [ ${PRECISION} = "single" ] ; then \
+	 && if [ "${PRECISION}" = "single" ] ; then \
 	    export PETSC_EXT=$${PETSC_EXT}single ; fi \
 	  \
-	 && if [ ${PRECISION} = "quad" ] ; then \
+	 && if [ "${PRECISION}" = "quad" ] ; then \
 	    export PETSC_EXT=$${PETSC_EXT}single ; fi \
 	  \
-	 && if [ ${INT} = "64" ] ; then \
+	 && if [ "${INT}" = "64" ] ; then \
 	    export PETSC_EXT=$${PETSC_EXT}i64 ; fi \
 	 \
-	 && if [ ${ALIGN} -ne 16 ] ; then \
+	 && if [ ! -z "${ALIGN}" ] ; then \
 	    export PETSC_EXT=$${PETSC_EXT}a${ALIGN} ; fi \
 	  \
 	 && if [ "${CUDA}" -eq 1 ] ; then \
@@ -112,6 +86,7 @@ petscarch :
 	 && if [ ! -z "${CUSTOMEXT}" ] ; then \
 	    export PETSC_EXT=${CUSTOMEXT} ; fi \
 	  \
+	 && requirenonzero compilercode && requirenonzero mpicode \
 	 && petscarch=$${taccsystemcode}-$${compilercode}$${compilershortversion}-$${mpicode} \
 	  && if [ -z $${PETSC_EXT} ] ; then \
 	      echo $${petscarch} ; \
@@ -123,8 +98,6 @@ petscarch :
 #### Packages
 ####
 
-PACKAGES = 
-PACKAGEINFO =
 include Makefile.packages
 
 X = 0
@@ -149,33 +122,33 @@ build ::
 	                ALIGN=${ALIGN} \
 	                CUDA=${CUDA} DEBUG=${DEBUG} CUSTOMEXT=${CUSTOMEXT} \
 	                petscarch` \
+	 && export package_options="$$( make --no-print-directory package_options )" \
+	 && export param_settings="$$( make --no-print-directory param_settings )" \
 	 && ( \
-	    pushd $$srcdir \
+	    if [ ! -d $$srcdir ] ; then \
+	        echo && echo "SRCDIR does not exist: $$srcdir" && echo && exit 1 ; fi \
+	     && cd $$srcdir \
 	     && echo "Configuring version=${PACKAGEVERSION} with arch=$${petscarch} in `pwd`" \
+	     && echo "Installing with packages: $${package_options}" \
+	     && echo "Installing with parameters: $${param_settings}" \
 	     && echo \
 	     && rm -rf $${petscarch} \
 	     && export PETSC_DIR=`pwd` \
 	     && export I_MPI_FABRICS=shm:tmi \
-	     && date && pwd \
-	     && echo "Installing with packages: ${PACKAGEINFO}" \
 	     && export PETSC_ARCH=$${petscarch} \
-	     && ${TIME} python3 ./configure \
+	     && cmdline="${TIME} python3 ./configure \
 	        ${MPI_FLAGS} \
-	        --useThreads=0 --download-triangle=${TRIANGLE} \
-	        --with-scalar-type=${SCALAR} \
-	        $$( if [ "${INT}" = "64" ] ; then echo --with-64-bit-indices=1 ; fi ) \
-	        --with-precision=$$( cd $$scriptdir \
-	                && make --no-print-directory precstring PRECISION=${PRECISION} ) \
-	        --with-memalign=${ALIGN} \
+	        --useThreads=0 \
 	        --with-np=${JCOUNT} \
-	        CFLAGS="${OPTFLAGS}" CXXFLAGS="${OPTFLAGS}" FFLAGS="${OPTFLAGS}" \
+	        CFLAGS=\"${OPTFLAGS}\" CXXFLAGS=\"${OPTFLAGS}\" FFLAGS=\"${OPTFLAGS}\" \
 	        `if [ ${X} -eq 1 ]    ; then echo ${WITH_X} ; fi ` \
 	        `if [ ${CUDA} -eq 1 ] ; then echo ${CUDA_OPTIONS} ; fi ` \
-	        --with-debugging=${DEBUG} \
 	        "${BLAS_FLAGS}" \
-	        ${PACKAGES} \
+	        $${package_options} $${param_settings} \
+	        " \
+	     && echo cmdline=$$cmdline && eval $$cmdline \
 	     && ${TIME} make MAKE_NP=${JCOUNT} \
-	  ) 2>&1 | tee $${scriptdir}/install-$${petscarch}.log
+	  ) 2>&1 | tee $${installlog}
 build :: makemodule
 .PHONY: makemodule
 info ::
@@ -230,4 +203,4 @@ include ${MAKEINCLUDES}/Make.download
 TGZURL = https://ftp.mcs.anl.gov/pub/petsc/release-snapshots/petsc-${PACKAGEVERSION}.tar.gz
 
 clean ::
-	/bin/rm -f *~
+	@/bin/rm -f *~
