@@ -79,3 +79,11 @@ include ${MAKEINCLUDES}/Make.git
 
 include ${MAKEINCLUDES}/Make.clean
 
+.PHONY: completely_clean
+info ::
+	@echo "make completely_clean : include .julia and such"
+completely_clean : clean
+	@/bin/rm -rf ${HOME}/.julia
+	@source ${MAKEINCLUDES}/names.sh \
+	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" \
+	 && rm -rf $$srcdir $$builddir $$installdir

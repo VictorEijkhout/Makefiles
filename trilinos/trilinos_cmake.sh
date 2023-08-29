@@ -80,7 +80,7 @@ cmake \
   -D Trilinos_ENABLE_Epetra:Bool=ON \
   -D Trilinos_ENABLE_EpetraExt:Bool=ON \
   -D                 Epetra_ENABLE_TESTS:BOOL=ON \
-  -D Trilinos_ENABLE_ExodusII:Bool=ON \
+  -D Trilinos_ENABLE_ExodusII:Bool=OFF \
   -D Trilinos_ENABLE_FEI:Bool=ON \
   -D Trilinos_ENABLE_Ifpack:Bool=ON \
       -D Trilinos_ENABLE_Ifpack2:BOOL=ON \
