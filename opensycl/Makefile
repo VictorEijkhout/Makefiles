@@ -10,10 +10,12 @@ PACKAGE = opensycl
 URL = https://github.com/OpenSYCL/OpenSYCL
 PACKAGEVERSION = 0.9.4
 MODULES = gcc boost
+MODE = seq
 
 include ${MAKEINCLUDES}/Make.info
 
 include ${MAKEINCLUDES}/Make.cmake
+HASBIN = 1
 include ${MAKEINCLUDES}/Make.cbuild
 CMAKEFLAGS = \
     -D BOOST_ROOT=${TACC_BOOST_DIR} -D Boost_NO_SYSTEM_PATHS=On \
