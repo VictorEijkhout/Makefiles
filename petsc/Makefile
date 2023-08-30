@@ -5,7 +5,7 @@
 ################################################################
 
 PACKAGE = PETSC
-PACKAGEVERSION = 3.19.3
+PACKAGEVERSION = 3.19.4
 MODE = mpi
 
 include ${MAKEINCLUDES}/Make.info
@@ -140,7 +140,8 @@ build ::
 	        ${MPI_FLAGS} \
 	        --useThreads=0 \
 	        --with-np=${JCOUNT} \
-	        CFLAGS=\"${OPTFLAGS}\" CXXFLAGS=\"${OPTFLAGS}\" FFLAGS=\"${OPTFLAGS}\" \
+	        CFLAGS=\"${OPTFLAGS}\" CXXFLAGS=\"${OPTFLAGS}\" \
+	        `if [ \"$FORTRAN}\" = 1 ] ; then echo FFLAGS=\"${OPTFLAGS}\" ; fi `\
 	        `if [ ${X} -eq 1 ]    ; then echo ${WITH_X} ; fi ` \
 	        `if [ ${CUDA} -eq 1 ] ; then echo ${CUDA_OPTIONS} ; fi ` \
 	        "${BLAS_FLAGS}" \
@@ -167,7 +168,7 @@ makemodule :
 	        MODULEVERSIONEXTRA=$${petscarch} \
 	        PKGCONFIGABSOLUTE=$${srcdir}/$${petscarch}/lib/pkgconfig \
 	        EXTRAVARS="PETSC_DIR=$${srcdir} PETSC_ARCH=$${petscarch}" \
-	  ) 2>&1 | tee -a $${scriptdir}/install-$${petscarch}.log
+	  ) 2>&1 | tee -a $${installlog}
 
 # petsc lib dir is elsewhere
 NOLIB = 1
