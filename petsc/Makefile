@@ -15,6 +15,9 @@ list_installations ::
 	 && setmodulenames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" \
 	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" \
 	 && echo "installations in $${srcdir}: $$( cd $$srcdir && for d in * ; do if [ -d $${d} ] ; then echo $${d} ; fi ; done )"
+modules ::
+	@if [ "${TACC_FAMILY_COMPILER}" = "gcc" ] ; then \
+	    make --no-print-directory modules MODULES=mkl ; fi
 
 info ::
 	@echo "make build "
