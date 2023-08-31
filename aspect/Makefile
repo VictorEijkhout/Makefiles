@@ -2,13 +2,13 @@
 ####
 #### Makefile for Aspect installation
 ####
-#### https://aspect.geodynamics.org/
 #### https://github.com/geodynamics/aspect
 ####
 ################################################################
 
 PACKAGE = ASPECT
-PACKAGEVERSION = 2.4.0
+URL = https://aspect.geodynamics.org/
+PACKAGEVERSION = 2.5.0
 MODE = mpi
 MODULES = dealii
 # dealii newer than 9.3
