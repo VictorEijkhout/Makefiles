@@ -11,6 +11,7 @@ MODE = seq
 include ${MAKEINCLUDES}/Make.info
 
 PKGCONFIGLIB = pkgconfig
+NOLIB = 1
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
 
