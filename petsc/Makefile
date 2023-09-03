@@ -26,16 +26,16 @@ PETSC_SRC_DIR = ${PACKAGEROOT}/petsc/petsc-${PACKAGEVERSION}
 OPTFLAGS=-O2 -fPIC
 LOPTFLAGS=-O1 -fPIC
 
+MPI_FLAGS = --with-mpi-compilers=1
+## --with-mpi-dir=${TACC_IMPI_DIR} 
 ifeq "${TACC_SYSTEM}" "nvarm"
   BLAS_FLAGS = --download-fblaslapack=yes
   MPI_FLAGS = --with-mpi-compilers=1 --with-cc=`which mpicc` --with-cxx=`which mpicxx` 
 else ifeq "${TACC_SYSTEM}" "macbookair"
   BLAS_FLAGS=
-  MPI_FLAGS = --with-mpi-compilers=1 --with-mpi-dir=${TACC_MPICH_DIR} 
 ##    --with-cc=`which mpicc` --with-cxx=`which mpicxx` 
 else
   BLAS_FLAGS=--with-blas-lapack-dir=${MKLROOT}
-  MPI_FLAGS = --with-mpi-compilers=1 --with-cc=`which mpicc` --with-cxx=`which mpicxx` 
 endif
 
 info ::
