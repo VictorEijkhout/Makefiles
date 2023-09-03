@@ -5,9 +5,11 @@ jcount=4
 list=
 packages=0
 
+#trilinosversion=13.4.1
+trilinosversion=14.4.0
 ladder="\
     zlib,1.2.13 \
-    petsc,3.19.0 \
+    petsc,3.19.4 \
     p4est,2.8 \
     boost,1.81.0 \
     pcre2,git \
@@ -16,9 +18,9 @@ ladder="\
     netcdf,4.9.2 \
     gklib,git \
     metis,5.1.0.3 \
-    trilinos,13.4.1 
-    dealii,9.4.1 \
-    aspect,2.4.0 \
+    trilinos,${trilinosversion} \
+    dealii,9.5.1 \
+    aspect,2.5.0 \
     "
 
 ##     trilinos,14.0.0 \
