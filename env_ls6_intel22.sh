@@ -22,6 +22,7 @@ module use ${MY_MODULEPATH_ROOT}/Core
 intelversion=22.2.0
 echo "loading intel ${intelversion}"
 module load intel/${intelversion}
-module load impi/21.9.0
+module unload intel22/impi
+module load impi/22.2.0
 
 module list
