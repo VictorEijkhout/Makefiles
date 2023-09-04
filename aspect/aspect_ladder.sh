@@ -10,7 +10,7 @@ trilinosversion=14.4.0
 ladder="\
     zlib,1.2.13 \
     petsc,3.19.4 \
-    p4est,2.8 \
+    p4est,2.8.5 \
     boost,1.81.0 \
     pcre2,git \
     swig,4.1.1 \
