@@ -15,6 +15,12 @@ module use ${VICTOR_MODULEPATH_ROOT}/Core
 gnuversion=13.2.0
 echo "loading gnu ${gnuversion}"
 module load gcc/${gnuversion} 
-## module load impi/21.9.0
+
+module load impi/21.9.0
+
+echo "hardwiring MKL; wait for Amit to make a module"
+export MKLROOT=/opt/intel/oneapi/mkl/2023.1.0
+## module load mkl
+
 #module load python3
 module list
