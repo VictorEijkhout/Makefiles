@@ -21,7 +21,6 @@ intelversion=23.1.0
 echo "loading intel ${intelversion}"
 module load intel/${intelversion}
 module load impi/21.9.0
-module load mkl
 
 module list
 
