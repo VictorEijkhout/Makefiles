@@ -18,9 +18,7 @@ module load gcc/${gnuversion}
 
 module load impi/21.9.0
 
-echo "hardwiring MKL; wait for Amit to make a module"
-export MKLROOT=/opt/intel/oneapi/mkl/2023.1.0
-## module load mkl
+module load mkl
 
 #module load python3
 module list
