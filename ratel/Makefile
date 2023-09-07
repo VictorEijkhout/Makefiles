@@ -35,8 +35,11 @@ build :: modules
 	 && requirenonzero srcdir \
 	 && cd $$srcdir \
 	 && make --no-print-directory -j ${JCOUNT} V=1 \
+	        prefix==$${installdir} pkgconfig=$${installdir}/pkgconfig\
+	 && make install \
 	 ) 2>&1 | tee $$installlog \
 	 && echo "See $$installlog"
+PKGCONFIG = pkgconfig
 
 opt :
 	foo \

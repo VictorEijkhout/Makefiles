@@ -2,11 +2,10 @@
 ####
 #### Makefile for swig
 ####
-#### https://www.swig.org/
-####
 ################################################################
 
 PACKAGE = swig
+URL = https://www.swig.org/
 PACKAGEVERSION = 4.1.1
 MODE = seq
 MODULES = pcre2
@@ -16,6 +15,7 @@ include ${MAKEINCLUDES}/Make.info
 
 include ${MAKEINCLUDES}/Make.configure
 HASBIN = 1
+NOLIB = 1
 include ${MAKEINCLUDES}/Make.install
 
 TGZURL = http://prdownloads.sourceforge.net/swig/swig-${PACKAGEVERSION}.tar.gz

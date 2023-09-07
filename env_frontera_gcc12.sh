@@ -15,5 +15,6 @@ module use ${VICTOR_MODULEPATH_ROOT}/Core
 gnuversion=12.2.0
 echo "loading gnu ${gnuversion}"
 module load gcc/${gnuversion} impi/21.9.0
+module load mkl
 #module load python3
 module list
