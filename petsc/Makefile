@@ -5,7 +5,7 @@
 ################################################################
 
 PACKAGE = PETSC
-PACKAGEVERSION = 3.19.3
+PACKAGEVERSION = 3.19.4
 MODE = mpi
 
 include ${MAKEINCLUDES}/Make.info
@@ -15,6 +15,9 @@ list_installations ::
 	 && setmodulenames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" \
 	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" \
 	 && echo "installations in $${srcdir}: $$( cd $$srcdir && for d in * ; do if [ -d $${d} ] ; then echo $${d} ; fi ; done )"
+modules ::
+	@if [ "${TACC_FAMILY_COMPILER}" = "gcc" ] ; then \
+	    make --no-print-directory modules MODULES=mkl ; fi
 
 info ::
 	@echo "make build "
@@ -140,7 +143,8 @@ build ::
 	        ${MPI_FLAGS} \
 	        --useThreads=0 \
 	        --with-np=${JCOUNT} \
-	        CFLAGS=\"${OPTFLAGS}\" CXXFLAGS=\"${OPTFLAGS}\" FFLAGS=\"${OPTFLAGS}\" \
+	        CFLAGS=\"${OPTFLAGS}\" CXXFLAGS=\"${OPTFLAGS}\" \
+	        `if [ \"$FORTRAN}\" = 1 ] ; then echo FFLAGS=\"${OPTFLAGS}\" ; fi `\
 	        `if [ ${X} -eq 1 ]    ; then echo ${WITH_X} ; fi ` \
 	        `if [ ${CUDA} -eq 1 ] ; then echo ${CUDA_OPTIONS} ; fi ` \
 	        "${BLAS_FLAGS}" \
@@ -167,7 +171,7 @@ makemodule :
 	        MODULEVERSIONEXTRA=$${petscarch} \
 	        PKGCONFIGABSOLUTE=$${srcdir}/$${petscarch}/lib/pkgconfig \
 	        EXTRAVARS="PETSC_DIR=$${srcdir} PETSC_ARCH=$${petscarch}" \
-	  ) 2>&1 | tee -a $${scriptdir}/install-$${petscarch}.log
+	  ) 2>&1 | tee -a $${installlog}
 
 # petsc lib dir is elsewhere
 NOLIB = 1

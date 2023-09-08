@@ -4,7 +4,7 @@
 ####
 ################################################################
 
-PACKAGE = test
+PACKAGE = test 
 PACKAGEVERSION = 0.0.1
 MODE = seq
 

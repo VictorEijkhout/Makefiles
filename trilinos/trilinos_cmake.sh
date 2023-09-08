@@ -80,7 +80,7 @@ cmake \
   -D Trilinos_ENABLE_Epetra:Bool=ON \
   -D Trilinos_ENABLE_EpetraExt:Bool=ON \
   -D                 Epetra_ENABLE_TESTS:BOOL=ON \
-  -D Trilinos_ENABLE_ExodusII:Bool=ON \
+  -D Trilinos_ENABLE_ExodusII:Bool=OFF \
   -D Trilinos_ENABLE_FEI:Bool=ON \
   -D Trilinos_ENABLE_Ifpack:Bool=ON \
       -D Trilinos_ENABLE_Ifpack2:BOOL=ON \
@@ -132,7 +132,7 @@ cmake \
   -D Phalanx_INDEX_SIZE_TYPE:STRING="INT" \
   -D Phalanx_SHOW_DEPRECATED_WARNINGS:BOOL=OFF \
   -D Kokkos_ENABLE_Serial:BOOL=ON \
-  -D Kokkos_ENABLE_OpenMP:BOOL=${HAS_OPENMP} \
+  -D Kokkos_ENABLE_OPENMP:BOOL=${HAS_OPENMP} \
   -D Kokkos_ENABLE_Pthread:BOOL=OFF \
   \
   -D Trilinos_ENABLE_STK:BOOL=${HAS_STK} \

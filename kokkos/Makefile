@@ -2,12 +2,11 @@
 ####
 #### Makefile for Kokkos installation
 ####
-#### https://github.com/kokkos
-####
 ################################################################
 
 PACKAGE = KOKKOS
-PACKAGEVERSION = git
+URL = https://github.com/kokkos/kokkos
+PACKAGEVERSION = 4.1.00
 MODE = seq
 
 include ${MAKEINCLUDES}/Make.info
@@ -21,9 +20,12 @@ include ${MAKEINCLUDES}/Make.cbuild
 LIBDIR = lib64
 
 info ::
-	@echo "make configure_cuda build_cuda : cuda version in separate install dir"
-.PHONY: configure_cuda build_cuda
+	@echo "make cpu ( configure build )"
+	@echo "make cuda ( configure_cuda build_cuda ) : cuda version in separate install dir"
+.PHONY: cpu cuda configure_cuda build_cuda
+cpu : configure build
 # VOLTA70 ?
+cuda : configure_cuda build_cuda
 configure_cuda :
 	make --no-print-directory configure \
 	    CMAKEFLAGS="-D Kokkos_ENABLE_SERIAL=ON -D Kokkos_ENABLE_CUDA=ON -D Kokkos_ARCH_TURING75=ON -D Kokkos_ENABLE_CUDA_LAMBDA=ON" \
@@ -32,6 +34,9 @@ build_cuda :
 	make --no-print-directory build \
 	    INSTALLEXT=cuda
 
-GITREPO = git@github.com:kokkos/kokkos.git
+TGZURL = https://github.com/kokkos/kokkos/archive/refs/tags/4.1.00.tar.gz
+include ${MAKEINCLUDES}/Make.download
+
+GITREPO = https://github.com/kokkos/kokkos.git
 include ${MAKEINCLUDES}/Make.git
 

@@ -14,6 +14,7 @@ include ${MAKEINCLUDES}/Make.info
 
 PKGCONFIG = share/pkgconfig
 include ${MAKEINCLUDES}/Make.cmake
+NOLIB = 1
 include ${MAKEINCLUDES}/Make.cbuild
 
 TGZURL = https://github.com/nlohmann/json/archive/refs/tags/v${PACKAGEVERSION}.tar.gz

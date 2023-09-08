@@ -2,6 +2,9 @@
 ####
 #### Makefile for Boost installation
 ####
+#### boost uses b2:
+#### ~https://www.boost.org/doc/libs/1_83_0/tools/build/doc/html/index.html
+####
 ################################################################
 
 PACKAGE = boost
@@ -29,8 +32,12 @@ build ::
 	     && cd $$srcdir \
 	     && ./bootstrap.sh --prefix=$$installdir \
 	        --with-libraries=atomic,chrono,container,context,contract,coroutine,date_time,exception,fiber,filesystem,graph,graph_parallel,headers,iostreams,json,locale,log,math,mpi,nowide,program_options,python,random,regex,serialization,stacktrace,system,test,thread,timer,type_erasure,url,wave \
-	     && ./b2 install --prefix=$$installdir --build-dir=$$builddir --toolset=intel \
-	    ) 2>&1 | tee $@.log \
+	     && ./b2 --help \
+	     && ./b2 install \
+	            --prefix=$$installdir --build-dir=$$builddir \
+	            toolset=gcc \
+	     && echo "inoperative option: link=shared" >/dev/null \
+	    ) 2>&1 | tee $$installlog \
 	 && make --no-print-directory varsmodule
 include ${MAKEINCLUDES}/Make.vars
 NOLIB = 1

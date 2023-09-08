@@ -61,7 +61,6 @@ configure :: modules
 	     && export HAS_OPENMP=${HAS_OPENMP} \
 	     && export HAS_NETCDF=${HAS_NETCDF} \
 	     \
-	     && set -x \
 	     && if [ -f $${scriptdir}/trilinos_cmake_${TACC_SYSTEM}.sh ] ; then \
 	            source $${scriptdir}/trilinos_cmake_${TACC_SYSTEM}.sh \
 	        ; else \

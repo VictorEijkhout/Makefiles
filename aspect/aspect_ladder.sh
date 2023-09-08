@@ -5,10 +5,13 @@ jcount=4
 list=
 packages=0
 
+#trilinosversion=13.4.1
+trilinosversion=14.4.0
+PACKAGEOPTIONS_hdf5="HDFFORTRAN=OFF"
 ladder="\
     zlib,1.2.13 \
-    petsc,3.19.0 \
-    p4est,2.8 \
+    petsc,3.19.4 \
+    p4est,2.8.5 \
     boost,1.81.0 \
     pcre2,git \
     swig,4.1.1 \
@@ -16,9 +19,9 @@ ladder="\
     netcdf,4.9.2 \
     gklib,git \
     metis,5.1.0.3 \
-    trilinos,13.4.1 
-    dealii,9.4.1 \
-    aspect,2.4.0 \
+    trilinos,${trilinosversion} \
+    dealii,9.5.1 \
+    aspect,2.5.0 \
     "
 
 ##     trilinos,14.0.0 \
@@ -117,9 +120,13 @@ for m in $( echo ${packages} | tr , ' ' ) ; do
 		| awk 'BEGIN {p=1} /too long/ {p=0} p==1 {print}'
 	elif [ $m -eq $n ] ; then 
 	    echo "Installing" && echo
+	    optionsname=PACKAGEOPTIONS_${x}
+	    eval options=\${${optionsname}}
+	    echo "package options=$options"
 	    ( cd ../$x \
 	       && start=$(date) \
 	       && make configure build public JCOUNT=${jcount} PACKAGEVERSION=$y \
+		    $options \
 	       && echo "Start: $start End: $(date)" \
 	     )
 	    break

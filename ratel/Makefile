@@ -8,7 +8,7 @@ URL = https://gitlab.com/micromorph/ratel
 PACKAGE = RATEL
 PACKAGEVERSION = git
 CHMODR = 1
-MODULES = petsc libceed
+MODULES = libceed petsc
 MODE = mpi
 
 include ${MAKEINCLUDES}/Make.info
@@ -16,29 +16,41 @@ include ${MAKEINCLUDES}/Make.info
 JCOUNT = 12
 .PHONY: configure build
 info ::
-	echo "make configure build"
+	@echo "make configure build"
 configure ::
 	@echo "there is no separate configure rule"
 build :: modules
-	@( \
-	source ${MAKEINCLUDES}/names.sh \
+	@source ${MAKEINCLUDES}/names.sh \
 	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" \
 	 \
 	 && source ${MAKEINCLUDES}/compilers.sh \
 	 && setcompilers && reportcompilers \
 	 \
-	 && echo "export CEED_DIR=[path to libCEED] PETSC_DIR=[path to PETSc] PETSC_ARCH=[PETSc arch] ENZYME_LIB=[path to Enzyme]" \
+	 && ( \
+	    echo "export CEED_DIR=[path to libCEED] PETSC_DIR=[path to PETSc] PETSC_ARCH=[PETSc arch] ENZYME_LIB=[path to Enzyme]" \
 	 && export CEED_DIR=${TACC_LIBCEED_DIR} \
 	 && export PETSC_DIR=${TACC_PETSC_DIR} && export PETSC_ARCH=${PETSC_ARCH} \
 	 && echo "make with PETSC_DIR=$${PETSC_DIR}, PETSC_ARCH=$${PETSC_ARCH}, CEED_DIR=$${CEED_DIR}" \
 	 && echo "into builddir: $${builddir}" \
 	 && requirenonzero srcdir \
 	 && cd $$srcdir \
-	 && make --no-print-directory \
-	        -B OPT=-g $${CCEXTRA} -j ${JCOUNT} V=1 \
+	 && make --no-print-directory -j ${JCOUNT} V=1 \
+	        prefix==$${installdir} pkgconfig=$${installdir}/pkgconfig\
+	 && make install \
+	 ) 2>&1 | tee $$installlog \
+	 && echo "See $$installlog"
+PKGCONFIG = pkgconfig
+
+opt :
+	foo \
+	        -B OPT=-g $${CCEXTRA} \
 	        BUILDDIR=$$builddir/ \
 	        prefix=$$installdir \
 	        lib install \
+	bar
+
+pc :
+	@echo \
 	 && ratelpc=$${installdir}/lib/pkgconfig/ratel.pc \
 	 && if [ ! -f $$ratelpc ] ; then \
 	        echo "was expecting to find ratel.pc at $$ratelpc" \
@@ -50,17 +62,14 @@ build :: modules
 	            $${ratelpc} \
 	         && cat $${ratelpc} \
 	    ; fi \
-	 && if [ "${CHMODR}" = "1" ] ; then \
-	    echo "setting permissions open" \
-	     && chmod -R g+rX,o+rX $${builddir} \
-	; fi \
-	 ) 2>&1 | tee install.log \
-	 && echo "See install.log"
+	 && echo 
 
 info ::
+	@echo "================ ratel examples"
 	@echo "make examples : copy and build examples"
+	@echo "----------------"
 .PHONY: examples
-examples : petsc-installation
+examples : modules 
 	@examples=examples-${PETSC_ARCH} \
 	 && if [ "${TAU}" = "1" ] ; then \
 	     examples=$${examples}-tau \
@@ -100,8 +109,8 @@ examples : petsc-installation
 
 SIZE = 44
 .PHONY: submit
-info :: 
-	@echo "make submit [ SIZE=... from 44 3030 ] [ TAU= 0/1 ]"
+# info :: 
+# 	@echo "make submit [ SIZE=... from 44 3030 ] [ TAU= 0/1 ]"
 submit :
 	@echo "Submitting example run" \
 	 && if [ "${TAU}" = "1" ] ; then \
@@ -126,8 +135,8 @@ submit :
 #### TAU
 ####
 
-info ::
-	@echo "make tau_process TAUDIR=..."
+# info ::
+# 	@echo "make tau_process TAUDIR=..."
 .PHONY: tau_process
 TAUDIR = 
 tau_process :
@@ -145,7 +154,7 @@ tau_process :
 
 include ${MAKEINCLUDES}/Make.clean
 info ::
-	@echo "================"
+	@echo "----------------"
 	@echo "make traceclean : remove logs and traces"
 	@echo "make installclean : remove installations"
 	@echo "make totalclean : everything clean"

@@ -45,6 +45,7 @@ package_options :
 ##  PACKAGES += --with-fortran-bindings=0 --with-fc=0
 
 HDF5 = 0
+FORTRAN = 0
 info ::
 	@echo "    [ HDF5=0/1 (default: ${HDF5})]"
 ifeq "${HDF5}" "1"
@@ -61,6 +62,7 @@ param_settings :
 	 && export debug=${DEBUG} \
 	 && export fortran=${FORTRAN} \
 	     && export fortran_option_1="--with-fortran-bindings=1" \
+	     && export fortran_option_0="--with-fortran-bindings=0 --with-fc=0" \
 	 && export int=${INT} \
 	     && export int_option_64="--with-64-bit-indices=1" \
 	 && export precision=${PRECISION} \
