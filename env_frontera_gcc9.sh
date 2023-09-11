@@ -14,6 +14,8 @@ module use ${VICTOR_MODULEPATH_ROOT}/Core
 
 gnuversion=9.1.0
 echo "loading gnu ${gnuversion}"
-module load gcc/${gnuversion} impi/19.0.9
+module --ignore-cache load gcc/${gnuversion} 
+module --ignore-cache avail impi
+module --ignore-cache load impi/19.0.9
 #module load python3
 module list

@@ -38,7 +38,10 @@ else ifeq "${TACC_SYSTEM}" "macbookair"
 ##    --with-cc=`which mpicc` --with-cxx=`which mpicxx` 
 else
   BLAS_FLAGS=--with-blas-lapack-dir=${MKLROOT}
-  MPI_FLAGS = --with-mpi-compilers=1 --with-cc=`which mpicc` --with-cxx=`which mpicxx` 
+  MPI_FLAGS = --with-mpi-compilers=1 --with-cc=`which mpicc` --with-cxx=`which mpicxx`
+endif
+ifeq "${FORTRAN}" "1"
+  MPI_FLAGS += --with-fc=`which mpif90`
 endif
 
 info ::
@@ -116,7 +119,7 @@ build ::
 	@if [ ${CUDA} -eq 1 -a -z "${TACC_CUDA_DIR}" ] ; then \
 	    echo && echo "Please load cuda module" && echo && exit 1 \
 	    ; fi
-	@source ${MAKEINCLUDES}/names.sh \
+	@source ${MAKEINCLUDES}/names.sh && set -x \
 	 && export MODE=${MODE} && export INSTALLROOT=${INSTALLROOT} \
 	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" \
 	 \
