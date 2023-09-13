@@ -180,6 +180,14 @@ makemodule :
 NOLIB = 1
 ## $${installlog}
 
+info ::
+	@echo "make biginstall : lots of packages"
+.PHONY: biginstall
+biginstall :
+	@make --no-print-directory configure build public \
+	    PACKAGEVERSION=${PACKAGEVERSION} \
+	    FORTRAN=1 HDF5=1
+
 public ::
 	@echo "public rule disabled"
 
