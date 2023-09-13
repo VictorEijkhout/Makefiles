@@ -40,6 +40,9 @@ else ifeq "${TACC_SYSTEM}" "macbookair"
 else
   BLAS_FLAGS=--with-blas-lapack-dir=${MKLROOT}
 endif
+ifeq "${FORTRAN}" "1"
+  MPI_FLAGS += --with-fc=`which mpif90`
+endif
 
 info ::
 	@echo "make installed : list installations"
@@ -116,7 +119,7 @@ build ::
 	@if [ ${CUDA} -eq 1 -a -z "${TACC_CUDA_DIR}" ] ; then \
 	    echo && echo "Please load cuda module" && echo && exit 1 \
 	    ; fi
-	@source ${MAKEINCLUDES}/names.sh \
+	@source ${MAKEINCLUDES}/names.sh && set -x \
 	 && export MODE=${MODE} && export INSTALLROOT=${INSTALLROOT} \
 	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" \
 	 \
@@ -176,6 +179,14 @@ makemodule :
 # petsc lib dir is elsewhere
 NOLIB = 1
 ## $${installlog}
+
+info ::
+	@echo "make biginstall : lots of packages"
+.PHONY: biginstall
+biginstall :
+	@make --no-print-directory configure build public \
+	    PACKAGEVERSION=${PACKAGEVERSION} \
+	    FORTRAN=1 HDF5=1
 
 public ::
 	@echo "public rule disabled"

@@ -8,11 +8,12 @@
 info ::
 	@echo "    set nonzero for packages: ${PACKAGELIST}"
 .PHONY: package_options
-PACKAGELIST = LIBCEED CHACO EIGEN FFTW HYPRE KOKKOS MPE MUMPS \
+PACKAGELIST = LIBCEED CHACO EIGEN FFTW HDF5 HYPRE KOKKOS MPE MUMPS \
     PETSC4PY PTSCOTCH SLEPC SUPERLU TRIANGLE ZOLTAN
 package_options :
 	@export chaco=${CHACO} \
 	 && export eigen=${EIGEN} && export fftw=${FFTW} \
+	 && export hdf5=${HDF5} \
 	 && export hypre=${HYPRE} && export kokkos=${KOKKOS} \
 	 && export libceed=${LIBCEED} \
 	     && export libceed_extra="--download-libceed-commit=origin/main" \
@@ -39,17 +40,20 @@ package_options :
 	             && downloads="$$downloads --with-$${p}=1 --download-$${p}=1 $${extra}" \
 	          ; fi \
 	    ; done \
-	 && echo $${downloads}
+	 && echo $${downloads} ${PACKAGES}
 
 ##  PACKAGES += --with-fortran-bindings=1 --with-fc=`which mpif90`
 ##  PACKAGES += --with-fortran-bindings=0 --with-fc=0
 
-HDF5 = 0
 FORTRAN = 0
 info ::
 	@echo "    [ HDF5=0/1 (default: ${HDF5})]"
 ifeq "${HDF5}" "1"
-  PACKAGES += --with-hdf5=1 --download-hdf5=1 --download-hdf5-configure-arguments="--with-zlib=yes" --download-hdf5-fortran-bindings=1
+  ifdef TACC_PHDF5_DIR
+    PACKAGES += --with-hdf5=1 --with-hdf5-dir=${TACC_PHDF5_DIR}
+  else
+    PACKAGES += --with-hdf5=1 --download-hdf5=1 --download-hdf5-configure-arguments="--with-zlib=yes" --download-hdf5-fortran-bindings=1
+  endif
 endif
 
 info ::

@@ -6,7 +6,7 @@
 
 PACKAGE = KOKKOS
 URL = https://github.com/kokkos/kokkos
-PACKAGEVERSION = git
+PACKAGEVERSION = 4.1.00
 MODE = seq
 
 include ${MAKEINCLUDES}/Make.info
@@ -34,6 +34,9 @@ build_cuda :
 	make --no-print-directory build \
 	    INSTALLEXT=cuda
 
-GITREPO = git@github.com:kokkos/kokkos.git
+TGZURL = https://github.com/kokkos/kokkos/archive/refs/tags/4.1.00.tar.gz
+include ${MAKEINCLUDES}/Make.download
+
+GITREPO = https://github.com/kokkos/kokkos.git
 include ${MAKEINCLUDES}/Make.git
 
