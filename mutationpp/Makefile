@@ -2,6 +2,8 @@
 ####
 #### Makefile for Mutationpp installation
 ####
+#### only needed for the CHyPS CSA project
+####
 ################################################################
 
 PACKAGE = mutationpp
@@ -12,8 +14,6 @@ MODE = mpi
 MODULES = 
 
 include ${MAKEINCLUDES}/Make.info
-
-## PKGCONFIGLIB = pkgconfig
 
 ##
 ## cmake 
