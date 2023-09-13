@@ -16,26 +16,27 @@ include ${MAKEINCLUDES}/Make.info
 .PHONY: small big
 small :
 	@make --no-print-directory configure build \
-	    MODULENAME=hypre32 MODULENAMEALT=hypre
+	    MODULENAME=hypre32 MODULENAMEALT=HYPRE
 big :
 	@make --no-print-directory configure build \
 	    CONFIGUREFLAGS=--enable-bigint \
-	    MODULENAME=hypre64 MODULENAMEALT=hypre
+	    MODULENAME=hypre64 MODULENAMEALT=HYPRE
 
-CONFIGURESUBDIR = src
-MAKESUBDIR = src
-PKGCONFIGLIB = pkgconfig
 
 ##
 ## configure version
 ##
-include ${MAKEINCLUDES}/Make.configure
-include ${MAKEINCLUDES}/Make.install
+CONFIGURESUBDIR = src
+MAKESUBDIR = src
+#include ${MAKEINCLUDES}/Make.configure
+#include ${MAKEINCLUDES}/Make.install
+
 ##
 ## cmake version
 ##
-# include ${MAKEINCLUDES}/Make.cmake
-# include ${MAKEINCLUDES}/Make.cbuild
+CMAKESUBDIR = src
+include ${MAKEINCLUDES}/Make.cmake
+include ${MAKEINCLUDES}/Make.cbuild
 
 TGZURL = https://github.com/hypre-space/hypre/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
