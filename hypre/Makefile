@@ -35,6 +35,7 @@ MAKESUBDIR = src
 ## cmake version
 ##
 CMAKESUBDIR = src
+CMAKEFLAGS = -D HYPRE_ENABLE_SHARED=ON
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
 

@@ -18,13 +18,16 @@ JCOUNT = 12
 info ::
 	@echo "make configure build"
 configure ::
-	@echo "there is no separate configure rule"
+	@source ${MAKEINCLUDES}/names.sh \
+	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" "${VARIANT}" "${MODULENAME}" "${MODE}" \
+	 && ( echo "there is no separate configure rule" ) \
+	| tee $${configurelog}
 build :: modules
 	@source ${MAKEINCLUDES}/names.sh \
-	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" \
+	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" "${VARIANT}" "${MODULENAME}" "${MODE}" \
 	 \
 	 && source ${MAKEINCLUDES}/compilers.sh \
-	 && setcompilers && reportcompilers \
+	 && setmpicompilers && reportcompilers \
 	 \
 	 && ( \
 	    echo "export CEED_DIR=[path to libCEED] PETSC_DIR=[path to PETSc] PETSC_ARCH=[PETSc arch] ENZYME_LIB=[path to Enzyme]" \
@@ -34,20 +37,18 @@ build :: modules
 	 && echo "into builddir: $${builddir}" \
 	 && requirenonzero srcdir \
 	 && cd $$srcdir \
-	 && make --no-print-directory -j ${JCOUNT} V=1 \
-	        prefix==$${installdir} pkgconfig=$${installdir}/pkgconfig\
-	 && make install \
+	 && cmdline="make --no-print-directory -j ${JCOUNT} V=1 install \
+	        prefix=$${installdir} BUILDDIR=$${builddir}/ " \
+	 && echo "make cmdline: $$cmdline" \
+	 && eval $$cmdline \
 	 ) 2>&1 | tee $$installlog \
 	 && echo "See $$installlog"
+## pkgconfig=$${installdir}/pkgconfig" 
 PKGCONFIG = pkgconfig
-
-opt :
-	foo \
-	        -B OPT=-g $${CCEXTRA} \
-	        BUILDDIR=$$builddir/ \
-	        prefix=$$installdir \
-	        lib install \
-	bar
+include ${MAKEINCLUDES}/Make.vars
+HASBIN = 1
+build ::
+	@make --no-print-directory varsmodule
 
 pc :
 	@echo \
