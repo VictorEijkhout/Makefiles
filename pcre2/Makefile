@@ -7,13 +7,17 @@
 ################################################################
 
 PACKAGE = pcre2
-PACKAGEVERSION = git 
+URL = https://github.com/PCRE2Project/pcre2
+PACKAGEVERSION = 10.42
 MODE = seq
 
 include ${MAKEINCLUDES}/Make.info
 
-include ${MAKEINCLUDES}/Make.configure
-include ${MAKEINCLUDES}/Make.install
+include ${MAKEINCLUDES}/Make.cmake
+include ${MAKEINCLUDES}/Make.cbuild
+
+TGZURL = https://github.com/PCRE2Project/pcre2/releases/download/pcre2-10.42/pcre2-${PACKAGEVERSION}.tar.gz
+include ${MAKEINCLUDES}/Make.download
 
 GITREPO = https://github.com/PhilipHazel/pcre2.git
 include ${MAKEINCLUDES}/Make.git
