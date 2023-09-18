@@ -11,13 +11,11 @@ MODE = mpi
 include ${MAKEINCLUDES}/Make.info
 list_installations ::
 	@source ${MAKEINCLUDES}/names.sh \
-	 && setnames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" \
-	 && setmodulenames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" \
-	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" \
+	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" "${VARIANT}" "${MODULENAME}" "${MODE}" \
 	 && echo "installations in $${srcdir}: $$( cd $$srcdir && for d in * ; do if [ -d $${d} ] ; then echo $${d} ; fi ; done )"
 modules ::
 	@if [ "${TACC_FAMILY_COMPILER}" = "gcc" ] ; then \
-	    make --no-print-directory modules MODULES=mkl ; fi
+	    make --no-print-directory moduletest MODULE=mkl ; fi
 
 info ::
 	@echo "make build "
@@ -30,7 +28,6 @@ OPTFLAGS=-O2 -fPIC
 LOPTFLAGS=-O1 -fPIC
 
 MPI_FLAGS = --with-mpi-compilers=1
-## --with-mpi-dir=${TACC_IMPI_DIR} 
 ifeq "${TACC_SYSTEM}" "nvarm"
   BLAS_FLAGS = --download-fblaslapack=yes
   MPI_FLAGS = --with-mpi-compilers=1 --with-cc=`which mpicc` --with-cxx=`which mpicxx` 
@@ -40,9 +37,9 @@ else ifeq "${TACC_SYSTEM}" "macbookair"
 else
   BLAS_FLAGS=--with-blas-lapack-dir=${MKLROOT}
 endif
-ifeq "${FORTRAN}" "1"
-  MPI_FLAGS += --with-fc=`which mpif90`
-endif
+# ifeq "${FORTRAN}" "1"
+#   MPI_FLAGS += --with-fc=`which mpif90`
+# endif
 
 info ::
 	@echo "make installed : list installations"
@@ -65,7 +62,7 @@ TIME =
 petscarch :
 	@source ${MAKEINCLUDES}/names.sh \
 	 && systemnames && compilernames \
-	 && MODE=mpi setnames ${PACKAGEROOT} ${PACKAGE} ${PACKAGEVERSION} ${INSTALLEXT} \
+	 && setnames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" "${VARIANT}" "${MODULENAME}" "${MODE}" \
 	 && export PETSC_EXT="" \
 	  \
 	 && if [ "${SCALAR}" = "complex" ] ; then \
@@ -83,10 +80,10 @@ petscarch :
 	 && if [ ! -z "${ALIGN}" ] ; then \
 	    export PETSC_EXT=$${PETSC_EXT}a${ALIGN} ; fi \
 	  \
-	 && if [ "${CUDA}" -eq 1 ] ; then \
+	 && if [ "${CUDA}" = "1" ] ; then \
 	    export PETSC_EXT=$${PETSC_EXT}cuda ; fi \
 	  \
-	 && if [ "${DEBUG}" -eq 1 ] ; then \
+	 && if [ "${DEBUG}" = "1" ] ; then \
 	    export PETSC_EXT=$${PETSC_EXT}debug ; fi \
 	  \
 	 && if [ ! -z "${CUSTOMEXT}" ] ; then \
@@ -115,13 +112,13 @@ configure :
 	@echo && echo "there is no configure rule" && echo
 include ${MAKEINCLUDES}/Make.vars
 NOINSTALL = 1
-build ::
+build :: modules
 	@if [ ${CUDA} -eq 1 -a -z "${TACC_CUDA_DIR}" ] ; then \
 	    echo && echo "Please load cuda module" && echo && exit 1 \
 	    ; fi
-	@source ${MAKEINCLUDES}/names.sh && set -x \
-	 && export MODE=${MODE} && export INSTALLROOT=${INSTALLROOT} \
-	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" \
+	@source ${MAKEINCLUDES}/names.sh \
+	 && export INSTALLROOT=${INSTALLROOT} \
+	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" "${VARIANT}" "${MODULENAME}" "${MODE}" \
 	 \
 	 && export petscarch=`make --no-print-directory \
 	                SCALAR=${SCALAR} PRECISION=${PRECISION} INT=${INT} \
@@ -133,6 +130,7 @@ build ::
 	 && ( \
 	    if [ ! -d $$srcdir ] ; then \
 	        echo && echo "SRCDIR does not exist: $$srcdir" && echo && exit 1 ; fi \
+	     && reportnames \
 	     && cd $$srcdir \
 	     && echo "Configuring version=${PACKAGEVERSION} with arch=$${petscarch} in `pwd`" \
 	     && echo "Installing with packages: $${package_options}" \
@@ -142,12 +140,12 @@ build ::
 	     && export PETSC_DIR=`pwd` \
 	     && export I_MPI_FABRICS=shm:tmi \
 	     && export PETSC_ARCH=$${petscarch} \
-	     && cmdline="${TIME} python3 ./configure \
+	     && cmdline="${TIME} python3 ./configure --prefix=$${installdir} \
 	        ${MPI_FLAGS} \
 	        --useThreads=0 \
 	        --with-np=${JCOUNT} \
 	        CFLAGS=\"${OPTFLAGS}\" CXXFLAGS=\"${OPTFLAGS}\" \
-	        `if [ \"$FORTRAN}\" = 1 ] ; then echo FFLAGS=\"${OPTFLAGS}\" ; fi `\
+	        `if [ \"${FORTRAN}\" = 1 ] ; then echo FFLAGS=\"${OPTFLAGS}\" ; fi `\
 	        `if [ ${X} -eq 1 ]    ; then echo ${WITH_X} ; fi ` \
 	        `if [ ${CUDA} -eq 1 ] ; then echo ${CUDA_OPTIONS} ; fi ` \
 	        "${BLAS_FLAGS}" \
@@ -155,6 +153,7 @@ build ::
 	        " \
 	     && echo cmdline=$$cmdline && eval $$cmdline \
 	     && ${TIME} make MAKE_NP=${JCOUNT} \
+	     && make install \
 	  ) 2>&1 | tee $${installlog}
 build :: makemodule
 .PHONY: makemodule
@@ -162,8 +161,8 @@ info ::
 	@echo "make makemodule"
 makemodule :
 	@source ${MAKEINCLUDES}/names.sh \
-	 && export MODE=${MODE} && export INSTALLROOT=${INSTALLROOT} \
-	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" \
+	 && export INSTALLROOT=${INSTALLROOT} \
+	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" "${VARIANT}" "${MODULENAME}" "${MODE}" \
 	 \
 	 && export petscarch=`make --no-print-directory \
 	                SCALAR=${SCALAR} PRECISION=${PRECISION} INT=${INT} \
@@ -172,13 +171,9 @@ makemodule :
 	                petscarch` \
 	 && ( make --no-print-directory varsmodule \
 	        MODULEVERSIONEXTRA=$${petscarch} \
-	        PKGCONFIGABSOLUTE=$${srcdir}/$${petscarch}/lib/pkgconfig \
-	        EXTRAVARS="PETSC_DIR=$${srcdir} PETSC_ARCH=$${petscarch}" \
+	        PKGCONFIGLIB=pkgconfig \
+	        EXTRAVARS="PETSC_DIR=$${installdir} PETSC_ARCH=$${petscarch}" \
 	  ) 2>&1 | tee -a $${installlog}
-
-# petsc lib dir is elsewhere
-NOLIB = 1
-## $${installlog}
 
 info ::
 	@echo "make biginstall : lots of packages"
