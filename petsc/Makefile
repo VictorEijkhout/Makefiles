@@ -58,12 +58,9 @@ TIME =
 ## Petsc Architecture
 ##
 
-.PHONY: petscarch
-petscarch :
-	@source ${MAKEINCLUDES}/names.sh \
-	 && systemnames && compilernames \
-	 && setnames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" "${VARIANT}" "${MODULENAME}" "${MODE}" \
-	 && export PETSC_EXT="" \
+.PHONY: petscarch petscshortarch
+petscshortarch :
+	@export PETSC_EXT="" \
 	  \
 	 && if [ "${SCALAR}" = "complex" ] ; then \
 	    export PETSC_EXT=$${PETSC_EXT}complex ; fi \
@@ -88,13 +85,18 @@ petscarch :
 	  \
 	 && if [ ! -z "${CUSTOMEXT}" ] ; then \
 	    export PETSC_EXT=${CUSTOMEXT} ; fi \
-	  \
+	 && echo $${PETSC_EXT}
+petscarch :
+	@source ${MAKEINCLUDES}/names.sh \
+	 && systemnames && compilernames \
+	 && setnames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" "${VARIANT}" "${MODULENAME}" "${MODE}" \
 	 && requirenonzero compilercode && requirenonzero mpicode \
 	 && petscarch=$${taccsystemcode}-$${compilercode}$${compilershortversion}-$${mpicode} \
-	  && if [ -z $${PETSC_EXT} ] ; then \
+	 && petscext=$$( make --no-print-directory petscshortarch ) \
+	 && if [ -z $${petscext} ] ; then \
 	      echo $${petscarch} ; \
 	    else \
-	      echo $${petscarch}-$${PETSC_EXT} ; \
+	      echo $${petscarch}-$${petscext} ; \
 	    fi
 
 ####
@@ -169,8 +171,13 @@ makemodule :
 	                ALIGN=${ALIGN} \
 	                CUDA=${CUDA} DEBUG=${DEBUG} CUSTOMEXT=${CUSTOMEXT} \
 	                petscarch` \
+	 && shortversion=${PACKAGEVERSION} && shortversion=$${shortversion%.*} \
+	 && petscshortarch=$$( make --no-print-directory petscshortarch ) \
+	 && echo "making module with version=$${shortversion} extra=<<$${petscshortarch}>>" \
 	 && ( make --no-print-directory varsmodule \
-	        MODULEVERSIONEXTRA=$${petscarch} \
+	        PACKAGEVERSION=${PACKAGEVERSION} \
+	        PACKAGEMODULEVERSION=$${shortversion} \
+	        MODULEVERSIONEXTRA=$${petscshortarch} \
 	        PKGCONFIGLIB=pkgconfig \
 	        EXTRAVARS="PETSC_DIR=$${installdir} PETSC_ARCH=$${petscarch}" \
 	  ) 2>&1 | tee -a $${installlog}

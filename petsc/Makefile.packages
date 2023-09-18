@@ -49,7 +49,7 @@ HDF5 =
 info ::
 	@echo "    [ HDF5=0/1 (default: ${HDF5})]"
 ifeq "${HDF5}" "1"
-  ifdef TACC_PHDF5_DIR
+  ifdef TACC_HDF5_DIR
     PACKAGES += --with-hdf5=1 --with-hdf5-dir=${TACC_PHDF5_DIR}
   else
     PACKAGES += --with-hdf5=1 --download-hdf5=1 --download-hdf5-configure-arguments="--with-zlib=yes" --download-hdf5-fortran-bindings=1
