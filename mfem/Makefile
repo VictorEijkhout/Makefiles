@@ -11,7 +11,7 @@ URL = https://github.com/mfem/mfem
 PACKAGEVERSION = 4.5.2
 
 MODE = mpi
-MODULES = hypre6
+MODULES = hypre64
 
 include ${MAKEINCLUDES}/Make.info
 
