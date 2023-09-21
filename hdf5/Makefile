@@ -35,7 +35,7 @@ CMAKEFLAGS = \
 
 include ${MAKEINCLUDES}/Make.cmake
 HASBIN=1
-PKGCONFIG = lib/pkgconfig
+PKGCONFIGLIB = pkgconfig
 include ${MAKEINCLUDES}/Make.cbuild
 
 info ::

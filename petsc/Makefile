@@ -157,6 +157,13 @@ build :: modules
 	     && ${TIME} make MAKE_NP=${JCOUNT} \
 	     && make install \
 	  ) 2>&1 | tee $${installlog}
+info ::
+	@echo "make default_install : with 0 & 1 debug"
+.PHONY: default_install
+default_install :
+	@for d in 0 1 ; do \
+	    make configure build DEBUG=$d JCOUNT=${JCOUNT} \
+	; done 
 build :: makemodule
 .PHONY: makemodule
 info ::
