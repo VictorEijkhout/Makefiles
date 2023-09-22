@@ -10,51 +10,40 @@ info ::
 .PHONY: package_options
 PACKAGELIST = LIBCEED CHACO EIGEN FFTW HDF5 HYPRE KOKKOS MPE MUMPS \
     PETSC4PY PTSCOTCH SLEPC SUPERLU TRIANGLE ZOLTAN
+packagelist = libceed chaco eigen fftw hdf5 hypre kokkos mpe mumps \
+    petsc4py ptscotch slepc superlu triangle zoltan
+package_values :
+	for p in ${packagelist} ; do \
+	    P=$$( echo $${p} | tr a-z A-Z ) \
+	     && eval export $${p}=\$${$${P}} \
+	     && echo "$$p / $$P / $${hdf5} / ${HDF5}" \
+	; done
 package_options :
-	@export chaco=${CHACO} \
-	 && export eigen=${EIGEN} && export fftw=${FFTW} \
-	 && export hdf5=${HDF5} \
-	 && export hypre=${HYPRE} && export kokkos=${KOKKOS} \
-	 && export libceed=${LIBCEED} \
-	     && export libceed_extra="--download-libceed-commit=origin/main" \
-	 && export mpe=${MPE} \
-	 && export mumps=${MUMPS} \
-	     && export mumps_extra="--download-scalapack=yes --download-blacs=yes --download-parmetis=yes --download-metis=yes" \
-	 && export petsc4py=${PETSC4PY} \
-	     && export petsc4py_extra="--with-python=1 --with-python-exec=python3" \
-	 && export ptscotch=${PTSCOTCH} && export slepc=${SLEPC} \
-	 && export superlu=${SUPERLU} \
-	     && export superlu_extra="--with-superlu_dist=1 --download-superlu_dist=1 --with-cxx-dialect=C++11 --with-openmp=1" \
-	 && export triangle=${TRIANGLE} \
-	 && export zoltan=${ZOLTAN} \
-	 \
-	 && downloads="" \
-	 && for p in \
-	        libceed chaco eigen fftw hypre kokkos mpe mumps \
-	        petsc4py ptscotch slepc superlu triangle zoltan \
-	        ; do \
-	      eval optval=\$${$$p} \
+	@downloads="" \
+	 && for p in ${packagelist} ; do \
+	      export P=$$( echo $$p | tr a-z A-Z ) && eval optval=\$${$${P}} \
 	       && echo "p=$$p optval=$$optval" >/dev/null \
-	       && if [ ! -z "$$optval" ] ; then \
-	            eval extra=\$${$${p}_extra} \
-	             && downloads="$$downloads --with-$${p}=1 --download-$${p}=1 $${extra}" \
+	       && if [ "$$optval" = "1" ] ; then \
+	            plocation=$$( make --no-print-directory plocation PACKAGE=$${p} ) \
+	             && eval extra=\$${$${p}_extra} \
+	             && downloads="$$downloads --with-$${p}=1 $${plocation}" \
 	          ; fi \
 	    ; done \
 	 && echo $${downloads} ${PACKAGES}
-
-##  PACKAGES += --with-fortran-bindings=1 --with-fc=`which mpif90`
-##  PACKAGES += --with-fortran-bindings=0 --with-fc=0
-
-HDF5 = 
-info ::
-	@echo "    [ HDF5=0/1 (default: ${HDF5})]"
-ifeq "${HDF5}" "1"
-  ifdef TACC_HDF5_DIR
-    PACKAGES += --with-hdf5=1 --with-hdf5-dir=${TACC_PHDF5_DIR}
-  else
-    PACKAGES += --with-hdf5=1 --download-hdf5=1 --download-hdf5-configure-arguments="--with-zlib=yes" --download-hdf5-fortran-bindings=1
-  endif
-endif
+.PHONY : plocation
+plocation :
+	@p=${PACKAGE} && P=$$( echo $$p | tr a-z A-Z ) \
+	     && export hdf5_extra="--download-hdf5-configure-arguments=\"--with-zlib=yes\" --download-hdf5-fortran-bindings=1" \
+	     && export libceed_extra="--download-libceed-commit=origin/main" \
+	     && export mumps_extra="--download-scalapack=yes --download-blacs=yes --download-parmetis=yes --download-metis=yes" \
+	     && export petsc4py_extra="--with-python=1 --with-python-exec=python3" \
+	     && export superlu_extra="--with-superlu_dist=1 --download-superlu_dist=1 --with-cxx-dialect=C++11 --with-openmp=1" \
+	 && taccvar=TACC_$${P}_DIR \
+	 && eval taccvar=\$${$${taccvar}} \
+	 && if [ ! -z "$${taccvar}" ] ; then \
+	      echo "--with-$${p}-dir=$${taccvar}" \
+	    ; else eval echo "--download-$${p}=1 \$${$${p}_extra}" \
+	    ; fi
 
 FORTRAN = 0
 info ::

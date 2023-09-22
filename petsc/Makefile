@@ -127,8 +127,14 @@ build :: modules
 	                ALIGN=${ALIGN} \
 	                CUDA=${CUDA} DEBUG=${DEBUG} CUSTOMEXT=${CUSTOMEXT} \
 	                petscarch` \
-	 && export package_options="$$( make --no-print-directory package_options )" \
-	 && export param_settings="$$( make --no-print-directory param_settings )" \
+	 && export package_options="$$( make --no-print-directory package_options \
+	        CHACO=${CHACO} EIGEN=${EIGEN} FFTW=${FFTW} HDF5=${HDF5} \
+	        HYPRE=${HYPRE} KOKKOS=${KOKKOS} LIBCEED=${LIBCEED} MPE=${MPE} \
+	        MUMPS=${MUMPS} PETSC4PY=${PETSC4PY} PTSCOTCH=${PTSCOTCH} SLEPC=${SLEPC} \
+	        SUPERLU=${SUPERLU} TRIANGLE=${TRIANGLE} ZOLTAN=${ZOLTAN} \
+	        )" \
+	 && export param_settings="$$( make --no-print-directory param_settings \
+	        )" \
 	 && ( \
 	    if [ ! -d $$srcdir ] ; then \
 	        echo && echo "SRCDIR does not exist: $$srcdir" && echo && exit 1 ; fi \
@@ -193,9 +199,23 @@ info ::
 	@echo "make biginstall : lots of packages"
 .PHONY: biginstall
 biginstall :
-	@make --no-print-directory configure build public \
-	    PACKAGEVERSION=${PACKAGEVERSION} \
-	    FORTRAN=1 HDF5=1
+	@for ext in "" debug i64 i64-debug single single-debug ; do \
+	  case $${ext} in ( *i64* ) INT=64 ;; ( * ) INT=32 ;; esac \
+	   && case $${ext} in ( *single* ) PRECISION=single ;; ( * ) PRECISION=double ;; esac \
+	   && case $${ext} in ( *complex* ) SCALAR=complex ;; ( * ) SCALAR=real ;; esac \
+	   \
+	   && case $${ext} in ( *single* ) HDF5= ;; ( * ) HDF5=1 ;; esac \
+	   \
+	   && case ${TACC_FAMILY_COMPILER} in ( gcc ) FORTRAN= ;; ( * ) FORTRAN=1 ;; esac \
+	   \
+	   && cmdline="make --no-print-directory configure build public \
+	      PACKAGEVERSION=${PACKAGEVERSION} JCOUNT=${JCOUNT} \
+	      INT=$${INT} PRECISION=$${PRECISION} SCALAR=$${SCALAR} \
+	      FORTRAN=$${FORTRAN} \
+	      HDF5=$${HDF5} \
+	      " \
+	   && echo "With ext=<<$$ext>> big install: $$cmdline" && eval $$cmdline \
+	; done
 
 public ::
 	@echo "public rule disabled"
