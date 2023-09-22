@@ -11,7 +11,7 @@ URL = https://github.com/precice/precice
 PACKAGEVERSION = 2.5.0
 
 MODE = seq
-MODULES = eigen
+MODULES = boost eigen
 
 include ${MAKEINCLUDES}/Make.info
 
@@ -21,7 +21,7 @@ include ${MAKEINCLUDES}/Make.info
 CMAKEFLAGS = -DBUILD_SHARED_LIBS=ON \
     -D PRECICE_PythonActions=OFF \
     -D CMAKE_BUILD_TYPE=Release \
-    -DPRECICE_PETScMapping=OFF ..
+    -D PRECICE_PETScMapping=OFF
 
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
