@@ -1,7 +1,10 @@
 #!/bin/bash
 
-if [ $# -lt 1 ] ; then 
-    echo "Usage: $0 [ -j 123 ] [ -m \"m1 m2 m3\" ] [ -t target ] package" && exit 1
+if [ $# -lt 1 -o "$1" = "-h" ] ; then 
+    echo "Usage: $0 [ -j 123 ] [ -m \"m1 m2 m3\" ] [ -t target ] package"
+    echo "    -m : modules to be loaded"
+    echo "    -t : make target or default_install"
+    exit 1
 fi
 
 jcount=4
@@ -18,6 +21,7 @@ while [ $# -gt 1 ] ; do
 done
 package=$1
 
+cd ${HOME}/Software
 for compiler in intel19 intel23 gcc9 gcc13 ; do
     ( \
 	echo "================================================================" \
