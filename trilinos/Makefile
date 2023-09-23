@@ -32,7 +32,7 @@ HAS_OPENMP = ON
 configure :: modules
 	@source ${MAKEINCLUDES}/names.sh \
 	 && export MODE=${MODE} \
-	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "" "" "" \
+	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "" "" "" "${MODE}" \
 	 \
 	 && source ${MAKEINCLUDES}/compilers.sh \
 	 && setmpicompilers \
@@ -78,7 +78,7 @@ include ${MAKEINCLUDES}/Make.cbuild
 build ::
 	@source ${MAKEINCLUDES}/names.sh \
 	 && export MODE=${MODE} \
-	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" \
+	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "" "" "" "${MODE}" \
 	 && requirenonzero TACC_NETCDF_INC \
 	 && cp ${TACC_NETCDF_INC}/netcdf*.h $${installdir}/include
 
