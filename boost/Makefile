@@ -32,15 +32,17 @@ build ::
 	     && cd $$srcdir \
 	     && ./bootstrap.sh --prefix=$$installdir \
 	        --with-libraries=atomic,chrono,container,context,contract,coroutine,date_time,exception,fiber,filesystem,graph,graph_parallel,headers,iostreams,json,locale,log,math,mpi,nowide,program_options,python,random,regex,serialization,stacktrace,system,test,thread,timer,type_erasure,url,wave \
-	     && ./b2 --help \
+	     && ./b2 --with-fiber --with-context --with-filesystem --with-atomic --with-test \
 	     && ./b2 install \
 	            --prefix=$$installdir --build-dir=$$builddir \
 	            toolset=gcc \
 	     && echo "inoperative option: link=shared" >/dev/null \
 	    ) 2>&1 | tee $$installlog \
-	 && make --no-print-directory varsmodule
+	 && make --no-print-directory varsmodule \
+	      CMAKEPREFIXLIB=cmake
+
 include ${MAKEINCLUDES}/Make.vars
-NOLIB = 1
+## NOLIB = 1
 include ${MAKEINCLUDES}/Make.public
 
 TGZURL = https://boostorg.jfrog.io/artifactory/main/release/${PACKAGEVERSION}/source/boost_${PACKAGEVERSION_DOWNLOAD}.tar.gz
