@@ -8,10 +8,11 @@
 
 PACKAGE = mfem
 URL = https://github.com/mfem/mfem
-PACKAGEVERSION = 4.5.2
+PACKAGEVERSION = 4.4
+## 4.5.2 has breaking changes for CHyPS.
 
 MODE = mpi
-MODULES = hypre64
+MODULES = hypre64 metis
 
 include ${MAKEINCLUDES}/Make.info
 

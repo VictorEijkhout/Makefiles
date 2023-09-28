@@ -7,11 +7,11 @@
 ################################################################
 
 PACKAGE = chyps
-URL = https://github.com/chyps/chyps
+URL = 
 PACKAGEVERSION = git
 
 MODE = mpi
-MODULES = adios2 hypre metis mutationpp precice petsc
+MODULES = adios2 hypre metis mfem mutationpp precice petsc
 
 include ${MAKEINCLUDES}/Make.info
 
