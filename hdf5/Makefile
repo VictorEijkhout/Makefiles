@@ -43,11 +43,11 @@ info ::
 	@echo "make seq : sequential installation"
 .PHONY: seq par
 seq :
-	make configure build JCOUNT=${JCOUNT} \
+	@make configure build JCOUNT=${JCOUNT} \
 	    PACKAGEVERSION=${PACKAGEVERSION} \
 	    HDF5PARALLEL=OFF MODE=seq MODULENAME=hdf5
 par :
-	make configure build JCOUNT=${JCOUNT} \
+	@make configure build JCOUNT=${JCOUNT} \
 	    PACKAGEVERSION=${PACKAGEVERSION} \
 	    HDF5PARALLEL=ON  MODE=mpi MODULENAME=phdf5 MODULENAMEALT=hdf5
 

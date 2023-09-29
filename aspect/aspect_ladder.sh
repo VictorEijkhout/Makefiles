@@ -10,7 +10,7 @@ trilinosversion=14.4.0
 PACKAGEOPTIONS_hdf5="HDFFORTRAN=OFF"
 ladder="\
     zlib,1.2.13 \
-    petsc,3.19.4 \
+    petsc,3.19 \
     p4est,2.8.5 \
     boost,1.81.0 \
     pcre2,git \
