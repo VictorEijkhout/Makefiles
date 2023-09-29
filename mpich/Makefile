@@ -18,6 +18,8 @@ info ::
 include ${MAKEINCLUDES}/Make.configure
 include ${MAKEINCLUDES}/Make.install
 PKGCONFIG = lib/pkgconfig
+MODULENAMEALT = MPI
+HASBIN = 1
 
 TGZURL = http://www.mpich.org/static/downloads/${PACKAGEVERSION}/mpich-${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
