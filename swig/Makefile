@@ -14,9 +14,6 @@ include ${MAKEINCLUDES}/Make.info
 
 HASBIN = 1
 NOLIB = 1
-# CONFIGUREFLAGS=--with-pcre2-prefix=${TACC_PCRE2_DIR}
-# include ${MAKEINCLUDES}/Make.configure
-# include ${MAKEINCLUDES}/Make.install
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
 
