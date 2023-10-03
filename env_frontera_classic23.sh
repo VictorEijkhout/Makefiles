@@ -8,7 +8,8 @@ module unload intel oneapi gcc impi python3 2>/dev/null
 module list
 
 echo "adding experimental and my own module paths"
-export MODULEROOT=${WORK}/modulefiles
+export VICTOR_WORK=/work2/00434/eijkhout/frontera
+export MODULEROOT=${VICTOR_WORK}/modulefiles
 export VICTOR_MODULEPATH_ROOT=${MODULEROOT}
 module use ${VICTOR_MODULEPATH_ROOT}/Core
 
