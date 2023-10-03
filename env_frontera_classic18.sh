@@ -9,7 +9,8 @@ module list
 
 echo "adding experimental and my own module paths"
 ## THIS CONTAINS CRAP module use /scratch1/projects/compilers/modulefiles
-export MODULEROOT=${WORK}/modulefiles
+export VICTOR_WORK=/work2/00434/eijkhout/frontera
+export MODULEROOT=${VICTOR_WORK}/modulefiles
 export VICTOR_MODULEPATH_ROOT=${MODULEROOT}
 module use ${VICTOR_MODULEPATH_ROOT}/Core
 

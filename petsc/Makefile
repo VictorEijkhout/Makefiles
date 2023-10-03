@@ -130,8 +130,10 @@ build :: modules
 	 && export package_options="$$( make --no-print-directory package_options \
 	        CHACO=${CHACO} EIGEN=${EIGEN} FFTW=${FFTW} HDF5=${HDF5} \
 	        HYPRE=${HYPRE} KOKKOS=${KOKKOS} LIBCEED=${LIBCEED} MPE=${MPE} \
-	        MUMPS=${MUMPS} PETSC4PY=${PETSC4PY} PTSCOTCH=${PTSCOTCH} SLEPC=${SLEPC} \
+	        MUMPS=${MUMPS} PTSCOTCH=${PTSCOTCH} SLEPC=${SLEPC} \
 	        SUPERLU=${SUPERLU} TRIANGLE=${TRIANGLE} ZOLTAN=${ZOLTAN} \
+	        \
+	        PETSC4PY=${PETSC4PY} SLEPC4PY=${SLEPC4PY} \
 	        )" \
 	 && export param_settings="$$( make --no-print-directory param_settings \
 	        )" \
@@ -206,6 +208,7 @@ allinstall :
 	; do \
 	    echo "Installing for extension <<$${ext}>>" \
 	     && make --no-print-directory biginstall EXT=$${ext} \
+	        JCOUNT=${JCOUNT} PACKAGEVERSION=${PACKAGEVERSION} \
 	; done
 biginstall :
 	@ext=${EXT} \
@@ -222,9 +225,10 @@ biginstall :
 	      PACKAGEVERSION=${PACKAGEVERSION} JCOUNT=${JCOUNT} \
 	      DEBUG=$${DEBUG} INT=$${INT} PRECISION=$${PRECISION} SCALAR=$${SCALAR} \
 	      FORTRAN=$${FORTRAN} \
-	      HDF5=$${HDF5} \
+	      HDF5=$${HDF5} PETSC4PY=1 SLEPC4PY=1 \
 	      " \
-	   && echo "Big install: $$cmdline" && eval $$cmdline \
+	   && echo "Big install: $$cmdline" && eval $$cmdline 2>&1 | tee big.log \
+	   && echo && echo "See: big.log" && echo
 
 public ::
 	@echo "public rule disabled"
