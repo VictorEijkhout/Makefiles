@@ -193,6 +193,7 @@ makemodule :
 	        MODULEVERSIONEXTRA=$${petscshortarch} \
 	        PKGCONFIGLIB=pkgconfig \
 	        EXTRAVARS="PETSC_DIR=$${installdir} PETSC_ARCH=$${petscarch}" \
+	        EXTRAINSTALLPATHS="PYTHONPATH=lib" \
 	  ) 2>&1 | tee -a $${installlog}
 
 info ::
