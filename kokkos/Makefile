@@ -23,18 +23,18 @@ LIBDIR = lib64
 info ::
 	@echo "make cpu ( configure build )"
 	@echo "make cuda ( configure_cuda build_cuda ) : cuda version in separate install dir"
-.PHONY: cpu cuda configure_cuda build_cuda
+.PHONY: cpu gpu configure_cuda build_cuda
 CMAKEFLAGS = \
     ${CMAKE_BASIC_FLAGS} \
     -D Kokkos_ENABLE_SERIAL=ON -D Kokkos_ENABLE_OPENMP=ON 
 cpu : configure build
 # VOLTA70 ?
-cuda : configure_cuda build_cuda
+gpu : configure_cuda build_cuda
 configure_cuda :
 	make --no-print-directory configure \
 	    CMAKEFLAGS="${CMAKE_BASIC_FLAGS} \
 	      -D Kokkos_ENABLE_SERIAL=ON -D Kokkos_ENABLE_CUDA=ON -D Kokkos_ARCH_TURING75=ON -D Kokkos_ENABLE_CUDA_LAMBDA=ON \
-	      -D KOKKOS_CUDA_OPTIONS=--allow-unsupported-compiler \
+	      -D KOKKOS_CUDA_OPTIONS=-allow-unsupported-compiler \
 	      " \
 	    INSTALLEXT=cuda MODULES=cuda
 build_cuda :
