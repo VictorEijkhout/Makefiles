@@ -34,6 +34,8 @@ ifeq "${TACC_SYSTEM}" "nvarm"
 else ifeq "${TACC_SYSTEM}" "macbookair"
   BLAS_FLAGS=
 ##    --with-cc=`which mpicc` --with-cxx=`which mpicxx` 
+else ifeq "${TACC_SYSTEM}" "grace"
+  BLAS_FLAGS = --download-fblaslapack=yes
 else
   BLAS_FLAGS=--with-blas-lapack-dir=${MKLROOT}
 endif

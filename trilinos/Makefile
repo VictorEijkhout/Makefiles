@@ -22,7 +22,7 @@ info ::
 	@echo "    [ PACKAGEVERSION=... (default=${PACKAGEVERSION}) ]"
 	@echo "    [ PYTHON=ON/OFF (default: ${PYTHON} ) ]"
 	@echo "    [ TEUCHOS=ON/OFF (default: ${TEUCHOS} ) ]"
-PYTHON = OFF
+PYTHON = ON
 
 LIBDIR = lib64
 CMAKE_PREFIXPATH_SET = lib/cmake
