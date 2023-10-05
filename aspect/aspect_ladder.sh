@@ -24,9 +24,6 @@ ladder="\
     aspect,2.5.0 \
     "
 
-##     trilinos,14.0.0 \
-## 
-
 ## where do the spaces in this come from?
 ladder="\
     $( i=1 && for l in ${ladder} ; do echo $i,$l && i=$(( i+1 )) ; done ) \
@@ -119,10 +116,11 @@ for m in $( echo ${packages} | tr , ' ' ) ; do
 	    module_avail $x $y \
 		| awk 'BEGIN {p=1} /too long/ {p=0} p==1 {print}'
 	elif [ $m -eq $n ] ; then 
-	    echo "Installing" && echo
+	    echo "Installing $x/$y" 
 	    optionsname=PACKAGEOPTIONS_${x}
 	    eval options=\${${optionsname}}
-	    echo "package options=$options"
+	    echo "Using package options=$options"
+	    echo
 	    ( cd ../$x \
 	       && start=$(date) \
 	       && make configure build public JCOUNT=${jcount} PACKAGEVERSION=$y \
