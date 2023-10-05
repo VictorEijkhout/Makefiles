@@ -7,6 +7,8 @@
 ################################################################
 
 PACKAGE = trilinos
+URL = https://github.com/trilinos/Trilinos \
+    https://www.docs.trilinos.org/files/TrilinosBuildReference.html
 PACKAGEVERSION = 14.4.0
 PACKAGEVERSION_DOWNLOAD = 14-4-0
 MODE = mpi
