@@ -5,7 +5,8 @@
 ################################################################
 
 PACKAGE = KOKKOS
-URL = https://github.com/kokkos/kokkos
+URL = https://github.com/kokkos/kokkos \
+    https://kokkos.github.io/kokkos-core-wiki/building.html
 PACKAGEVERSION = 4.1.00
 MODE = seq
 
@@ -31,8 +32,13 @@ cpu : configure build
 # VOLTA70 ?
 gpu : configure_cuda build_cuda
 configure_cuda :
-	make --no-print-directory configure \
+	@if [ -z "${CXX}" ] ; then \
+	    echo "No CXX defined" && exit 1 ; fi 
+	@export NVCC_WRAPPER_DEFAULT_COMPILER=${CXX} \
+	 && make --no-print-directory configure \
 	    CMAKEFLAGS="${CMAKE_BASIC_FLAGS} \
+	      -D CMAKE_CXX_COMPILER=${PACKAGEROOT}/kokkos/kokkos-${PACKAGEVERSION}/bin/nvcc_wrapper \
+	      -D CMAKE_CXX_FLAGS=-allow-unsupported-compiler \
 	      -D Kokkos_ENABLE_SERIAL=ON -D Kokkos_ENABLE_CUDA=ON -D Kokkos_ARCH_TURING75=ON -D Kokkos_ENABLE_CUDA_LAMBDA=ON \
 	      -D KOKKOS_CUDA_OPTIONS=-allow-unsupported-compiler \
 	      " \

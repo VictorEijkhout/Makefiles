@@ -31,7 +31,7 @@ cmake \
   \
   -D TPL_ENABLE_BLAS=ON \
   -D BLAS_LIBRARY_DIRS:PATH="${TACC_MKL_LIB}" \
-  -D BLAS_LIBRARY_NAMES:STRING="mkl_intel_lp64;mkl_intel_thread;mkl_core;iomp5;pthread" \
+  -D BLAS_LIBRARY_NAMES:STRING="mkl_intel_lp64;mkl_core;iomp5;pthread" \
   -D BLAS_INCLUDE_DIRS:PATH="${TACC_MKL_INC}" \
   -D LAPACK_INCLUDE_DIRS:PATH="${TACC_MKL_INC}" \
   -D LAPACK_LIBRARY_DIRS:PATH="${TACC_MKL_LIB}" \
