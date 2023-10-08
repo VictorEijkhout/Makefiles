@@ -15,7 +15,7 @@ ladder="\
     boost,1.81.0 \
     pcre2,git \
     swig,4.1.1 \
-    hdf5,1.14 \
+    phdf5,1.14 \
     netcdf,4.9.2 \
     gklib,git \
     metis,5.1.0.3 \
