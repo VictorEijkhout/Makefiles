@@ -12,7 +12,7 @@ PACKAGEVERSION = 4.4
 ## 4.5.2 has breaking changes for CHyPS.
 
 MODE = mpi
-MODULES = hypre64 metis
+MODULES = adios2 hypre64 metis
 
 include ${MAKEINCLUDES}/Make.info
 
