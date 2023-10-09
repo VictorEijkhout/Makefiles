@@ -5,24 +5,21 @@ jcount=4
 list=
 packages=0
 
-#trilinosversion=13.4.1
-trilinosversion=14.4.0
-PACKAGEOPTIONS_hdf5="HDFFORTRAN=OFF"
 ladder="\
-    zlib,1.2.13 \
-    petsc,3.19 \
-    p4est,2.8.5 \
-    boost,1.81.0 \
-    pcre2,git \
-    swig,4.1.1 \
-    hdf5,1.14 \
-    netcdf,4.9.2 \
-    gklib,git \
+    eigen,3.4.0 \
     metis,5.1.0.3 \
-    trilinos,${trilinosversion} \
-    dealii,9.5.1 \
-    aspect,2.5.0 \
+    petsc,3.19 \
+    hypre64,2.29.0 \
+    mutationpp,git \
+    adios2,git \
+    mfem,4.4 \
+    precice,2.5.0 \
+    chyps,git \
     "
+
+# boost missing filesystem:
+# boost,1.81.0
+# see below for 1.72 hack
 
 ## where do the spaces in this come from?
 ladder="\
@@ -86,6 +83,8 @@ settings=../env_${TACC_SYSTEM}_${TACC_FAMILY_COMPILER}${TACC_FAMILY_COMPILER_VER
 if [ ! -f "${settings}" ] ; then 
     echo "Error: no such settings file <<${settings}>>" && exit 1 ; fi
 source ${settings} >/dev/null 2>&1
+# boost hack for 1.81 problem
+module use /opt/apps/intel19/python3_7/modulefiles/ && module load boost/1.72
 
 if [ $setx -gt 0 ] ; then 
     set -x
