@@ -12,6 +12,7 @@ ladder="\
     hypre64,2.29.0 \
     mutationpp,git \
     adios2,git \
+    boost,1.83.0 \
     mfem,4.4 \
     precice,2.5.0 \
     chyps,git \
@@ -84,14 +85,14 @@ if [ ! -f "${settings}" ] ; then
     echo "Error: no such settings file <<${settings}>>" && exit 1 ; fi
 source ${settings} >/dev/null 2>&1
 # boost hack for 1.81 problem
-module use /opt/apps/intel19/python3_7/modulefiles/ && module load boost/1.72
+#module use /opt/apps/intel19/python3_7/modulefiles/ && module load boost/1.72
 
 if [ $setx -gt 0 ] ; then 
     set -x
 fi
 
 echo "================ Starting installation with modules:"
-module list
+module list 2>&1
 
 if [ "${packages}" = "0" -a -z "${list}" ] ; then 
   exit 0
@@ -112,7 +113,7 @@ for m in $( echo ${packages} | tr , ' ' ) ; do
 	echo "================"
 	echo "Package $n: $x version $y"
 	if [ ! -z "${list}" ] ; then 
-	    module_avail $x $y \
+	    module_avail $x $y 2>&1 \
 		| awk 'BEGIN {p=1} /too long/ {p=0} p==1 {print}'
 	elif [ $m -eq $n ] ; then 
 	    echo "Installing $x/$y" 
@@ -129,7 +130,7 @@ for m in $( echo ${packages} | tr , ' ' ) ; do
 	    break
 	fi
 	if [ -z "${list}" ] ; then 
-	    module load $x/$y
+	    module load $x/$y 2>&1
 	    echo " .. loading"
 	    if [ $? -ne 0 ] ; then echo "Could not load $x" && exit 1 ; fi
 	fi
