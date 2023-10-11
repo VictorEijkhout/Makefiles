@@ -28,6 +28,8 @@ info ::
 CMAKEFLAGS = \
     ${CMAKE_BASIC_FLAGS} \
     -D Kokkos_ENABLE_SERIAL=ON -D Kokkos_ENABLE_OPENMP=ON 
+## we need this so that we can override it in jail
+SRCPATH = ${PACKAGEROOT}/kokkos/kokkos-${PACKAGEVERSION}
 cpu : configure build
 # VOLTA70 ?
 gpu : configure_cuda build_cuda
@@ -37,7 +39,7 @@ configure_cuda :
 	@export NVCC_WRAPPER_DEFAULT_COMPILER=${CXX} \
 	 && make --no-print-directory configure \
 	    CMAKEFLAGS="${CMAKE_BASIC_FLAGS} \
-	      -D CMAKE_CXX_COMPILER=${PACKAGEROOT}/kokkos/kokkos-${PACKAGEVERSION}/bin/nvcc_wrapper \
+	      -D CMAKE_CXX_COMPILER=${SRCPATH}/bin/nvcc_wrapper \
 	      -D CMAKE_CXX_FLAGS=-allow-unsupported-compiler \
 	      -D Kokkos_ENABLE_SERIAL=ON -D Kokkos_ENABLE_CUDA=ON -D Kokkos_ARCH_TURING75=ON -D Kokkos_ENABLE_CUDA_LAMBDA=ON \
 	      -D KOKKOS_CUDA_OPTIONS=-allow-unsupported-compiler \
@@ -47,7 +49,7 @@ build_cuda :
 	make --no-print-directory build \
 	    INSTALLEXT=cuda
 
-TGZURL = https://github.com/kokkos/kokkos/archive/refs/tags/4.1.00.tar.gz
+TGZURL = https://github.com/kokkos/kokkos/archive/refs/tags/${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 
 GITREPO = https://github.com/kokkos/kokkos.git
