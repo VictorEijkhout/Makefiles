@@ -12,6 +12,8 @@ MODE = mpi
 include ${MAKEINCLUDES}/Make.info
 
 include ${MAKEINCLUDES}/Make.cmake
+include ${MAKEINCLUDES}/Make.cbuild
+CMAKEPREFIXPATHSET = 1
 MODULE_HELP = 1
 module_help :
 	@for line in \
@@ -22,7 +24,7 @@ module_help :
 	    "in your code" \
 	; do echo "$$line" ; done >>${MODULEFILE}
 
-include ${MAKEINCLUDES}/Make.cbuild
+
 info ::
 	@echo "================ docs rules"
 	@echo "make docs : doxygen html & latex docs"
