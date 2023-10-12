@@ -28,6 +28,7 @@ fix :
 	      -type f \
 	      -exec sed -i -e 's/Werror/Wno-error/g' {} \; 
 
+CMAKEPREFIXLIB = cmake/range-v3
 include ${MAKEINCLUDES}/Make.cbuild
 
 TGZURL = https://github.com/ericniebler/range-v3/archive/refs/tags/${PACKAGEVERSION}.tar.gz
