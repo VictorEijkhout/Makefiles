@@ -1,13 +1,13 @@
 ################################################################
 ####
-#### Makefile for Opensycl installation
+#### Makefile for Adaptivecpp installation
 ####
 #### build with intel only through oneapi
 ####
 ################################################################
 
-PACKAGE = opensycl
-URL = https://github.com/OpenSYCL/OpenSYCL
+PACKAGE = adaptivecpp
+URL = https://github.com/AdaptiveCpp/AdaptiveCpp
 PACKAGEVERSION = 0.9.4
 MODULES = boost
 MODE = seq
@@ -28,11 +28,10 @@ cpu :
 	@make --no-print-directory HASCUDA=OFF \
 	    configure build
 gpu : 
-	@make --no-print-directory testmodule MODULE=cuda
 	@make --no-print-directory HASCUDA=ON  \
 	    configure build
 
-TGZURL = https://github.com/OpenSYCL/OpenSYCL/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
+TGZURL = https://github.com/Adaptivecpp/Adaptivecpp/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
-GITREPO = https://github.com/OpenSYCL/OpenSYCL.git
+GITREPO = https://github.com/Adaptivecpp/Adaptivecpp.git
 include ${MAKEINCLUDES}/Make.git
