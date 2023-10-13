@@ -13,6 +13,9 @@ module use ${VICTOR_MODULEPATH_ROOT}/Core
 intelversion=19.1.1
 echo "loading intel ${intelversion}"
 module load intel/${intelversion} impi/19.0.9
+export TACC_CC=icc
+export TACC_CXX=icpc
+export TACC_FC=ifort
 module load python3
 
 module list

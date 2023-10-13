@@ -22,6 +22,9 @@ module use ${VICTOR_MODULEPATH_ROOT}/Core
 gccversion=13.2.0
 echo "loading gcc ${gccversion}"
 module load gcc/${gccversion}
+export TACC_CC=gcc
+export TACC_CXX=g++
+export TACC_FC=gfortran
 echo "WARNING no impi available for this compiler"
 ##module load impi/19.0.9
 module load python3

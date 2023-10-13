@@ -15,6 +15,9 @@ module use ${VICTOR_MODULEPATH_ROOT}/Core
 gnuversion=13.2.0
 echo "loading gnu ${gnuversion}"
 module load gcc/${gnuversion} 
+export TACC_CC=gcc
+export TACC_CXX=g++
+export TACC_FC=gfortran
 
 module load impi/21.9.0
 

@@ -25,6 +25,9 @@ module use ${VICTOR_MODULEPATH_ROOT}/Core
 intelversion=23.1.0
 echo "loading intel ${intelversion}"
 module load intel/${intelversion}
+export TACC_CC=icx
+export TACC_CXX=icpx
+export TACC_FC=ifx
 module load impi/21.9.0
 
 module list

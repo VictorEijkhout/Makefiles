@@ -10,6 +10,9 @@ export VICTOR_MODULEPATH_ROOT=${MODULEROOT}
 module use ${VICTOR_MODULEPATH_ROOT}/Core
 
 module load intel/19.1.1
+export TACC_CC=icc
+export TACC_CXX=icpc
+export TACC_FC=ifort
 module load impi/19.0.9
 
 # module load intel22/python3

@@ -24,6 +24,9 @@ module use ${MY_MODULEPATH_ROOT}/Core
 intelversion=22.2.0
 echo "loading intel ${intelversion}"
 module load intel/${intelversion}
+export TACC_CC=icc
+export TACC_CXX=icpc
+export TACC_FC=ifort
 module unload intel22/impi
 module load impi/22.2.0
 
