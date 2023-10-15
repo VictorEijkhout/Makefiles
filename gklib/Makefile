@@ -32,14 +32,14 @@ configure ::
 	     && if [ ! -z "${NOX86}" -o "${TACC_SYSTEM}" = "macbookair" ] ; then \
 	          export nox86="-D NO_X86" ; fi \
 	     && cd $${builddir} \
-	     && cmdline='cmake \
+	     && cmdline="cmake \
 	            -DCMAKE_VERBOSE_MAKEFILE=1 \
 	            -D CMAKE_INSTALL_PREFIX=$${installdir} \
 	            -D CMAKE_C_COMPILER=$${CC} \
 	            -D OPENMP=$${ompflag} \
-	            -D CMAKE_C_FLAGS="-D_POSIX_C_SOURCE=200809L $${nox86}" \
+	            -D CMAKE_C_FLAGS=\"-D_POSIX_C_SOURCE=200809L $${nox86}\" \
 	            -D CMAKE_POSITION_INDEPENDENT_CODE=ON \
-	          $${srcdir} ' \
+	          $${srcdir}" \
 	     && echo "cmake cmdline: $$cmdline" \
 	     && echo "    where nox86=<<$${nox86}>> and ompflag=<<$${ompflag}>>" \
 	     && eval $$cmdline \
