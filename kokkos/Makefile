@@ -32,11 +32,11 @@ CMAKEFLAGS = \
 SRCPATH = ${PACKAGEROOT}/kokkos/kokkos-${PACKAGEVERSION}
 cpu :
 	@make --no-print-directory PACKAGE_VERSION=${PACKAGE_VERSION} \
-	    configure build \
+	    configure build public \
 	    INSTALLVARIANT=omp INSTALLEXT=omp
 gpu : 
 	@make --no-print-directory PACKAGE_VERSION=${PACKAGE_VERSION} \
-	    configure_cuda build \
+	    configure_cuda build public \
 	    INSTALLVARIANT=cuda INSTALLEXT=cuda
 # VOLTA70 ?
 configure_cuda :
