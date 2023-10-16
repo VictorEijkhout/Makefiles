@@ -9,6 +9,8 @@ URL = https://github.com/kokkos/kokkos \
     https://kokkos.github.io/kokkos-core-wiki/building.html
 PACKAGEVERSION = 4.1.00
 MODE = seq
+MODULES = cuda
+MODULE_MINIMUM_VERSION_cuda = 12
 
 include ${MAKEINCLUDES}/Make.info
 
@@ -20,6 +22,7 @@ CMAKE_BASIC_FLAGS = \
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
 LIBDIR = lib64
+DEPENDSON = cuda/12
 
 info ::
 	@echo "make cpu ( configure build )"
