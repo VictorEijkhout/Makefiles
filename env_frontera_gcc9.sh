@@ -14,6 +14,9 @@ module use ${VICTOR_MODULEPATH_ROOT}/Core
 gnuversion=9.1.0
 echo "loading gnu ${gnuversion}"
 module load gcc/${gnuversion} 
+export TACC_CC=gcc
+export TACC_CXX=g++
+export TACC_FC=gfortran
 module load impi/19.0.9
 
 #module load python3

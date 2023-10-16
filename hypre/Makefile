@@ -13,15 +13,17 @@ MODULES =
 
 include ${MAKEINCLUDES}/Make.info
 
+info ::
+	@echo "make small big ( 32/64 bit int versions)"
 .PHONY: small big
 small :
-	@make --no-print-directory configure build \
-	    MODULENAME=hypre32 MODULENAMEALT=HYPRE
+	@make --no-print-directory configure build public JCOUNT=${JCOUNT} \
+	    INSTALLVARIANT=i32 
 big :
-	@make --no-print-directory configure build \
+	@make --no-print-directory configure build public JCOUNT=${JCOUNT} \
 	    CONFIGUREFLAGS=--enable-bigint \
-	    MODULENAME=hypre64 MODULENAMEALT=HYPRE
-
+	    INSTALLVARIANT=i64 INSTALLEXT=i64
+default_install : small big
 
 ##
 ## configure version

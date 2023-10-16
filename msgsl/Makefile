@@ -11,6 +11,7 @@ MODE = seq
 
 include ${MAKEINCLUDES}/Make.info
 
+CMAKEFLAGS = -D GSL_TEST=OFF
 include ${MAKEINCLUDES}/Make.cmake
 NOLIB = 1
 include ${MAKEINCLUDES}/Make.cbuild

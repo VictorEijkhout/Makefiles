@@ -9,6 +9,8 @@ URL = https://github.com/kokkos/kokkos \
     https://kokkos.github.io/kokkos-core-wiki/building.html
 PACKAGEVERSION = 4.1.00
 MODE = seq
+MODULES = cuda
+MODULE_MINIMUM_VERSION_cuda = 12
 
 include ${MAKEINCLUDES}/Make.info
 
@@ -20,34 +22,41 @@ CMAKE_BASIC_FLAGS = \
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
 LIBDIR = lib64
+DEPENDSON = cuda/12
 
 info ::
 	@echo "make cpu ( configure build )"
 	@echo "make cuda ( configure_cuda build_cuda ) : cuda version in separate install dir"
-.PHONY: cpu gpu configure_cuda build_cuda
+.PHONY: cpu gpu configure_cuda
 CMAKEFLAGS = \
     ${CMAKE_BASIC_FLAGS} \
     -D Kokkos_ENABLE_SERIAL=ON -D Kokkos_ENABLE_OPENMP=ON 
-cpu : configure build
+## we need this so that we can override it in jail
+SRCPATH = ${PACKAGEROOT}/kokkos/kokkos-${PACKAGEVERSION}
+cpu :
+	@make --no-print-directory PACKAGE_VERSION=${PACKAGE_VERSION} \
+	    configure build public \
+	    INSTALLVARIANT=omp INSTALLEXT=omp
+gpu : 
+	@make --no-print-directory PACKAGE_VERSION=${PACKAGE_VERSION} \
+	    configure_cuda build public \
+	    INSTALLVARIANT=cuda INSTALLEXT=cuda
 # VOLTA70 ?
-gpu : configure_cuda build_cuda
 configure_cuda :
-	@if [ -z "${CXX}" ] ; then \
-	    echo "No CXX defined" && exit 1 ; fi 
-	@export NVCC_WRAPPER_DEFAULT_COMPILER=${CXX} \
+	@if [ -z "${TACC_CXX}" ] ; then \
+	    echo "No TACC_CXX defined" && exit 1 ; fi 
+	@export NVCC_WRAPPER_DEFAULT_COMPILER=${TACC_CXX} \
 	 && make --no-print-directory configure \
 	    CMAKEFLAGS="${CMAKE_BASIC_FLAGS} \
-	      -D CMAKE_CXX_COMPILER=${PACKAGEROOT}/kokkos/kokkos-${PACKAGEVERSION}/bin/nvcc_wrapper \
-	      -D CMAKE_CXX_FLAGS=-allow-unsupported-compiler \
-	      -D Kokkos_ENABLE_SERIAL=ON -D Kokkos_ENABLE_CUDA=ON -D Kokkos_ARCH_TURING75=ON -D Kokkos_ENABLE_CUDA_LAMBDA=ON \
+	      -D CMAKE_CXX_COMPILER=${SRCPATH}/bin/nvcc_wrapper \
+	      -D CMAKE_CXX_FLAGS='-std=c++17 -allow-unsupported-compiler' \
+	      -D Kokkos_ENABLE_SERIAL=ON -D Kokkos_ENABLE_CUDA=ON \
+	      -D Kokkos_ARCH_TURING75=ON -D Kokkos_ENABLE_CUDA_LAMBDA=ON \
 	      -D KOKKOS_CUDA_OPTIONS=-allow-unsupported-compiler \
 	      " \
-	    INSTALLEXT=cuda MODULES=cuda
-build_cuda :
-	make --no-print-directory build \
-	    INSTALLEXT=cuda
+	    MODULES=cuda  INSTALLVARIANT=cuda
 
-TGZURL = https://github.com/kokkos/kokkos/archive/refs/tags/4.1.00.tar.gz
+TGZURL = https://github.com/kokkos/kokkos/archive/refs/tags/${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 
 GITREPO = https://github.com/kokkos/kokkos.git
