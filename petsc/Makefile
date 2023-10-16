@@ -220,15 +220,18 @@ biginstall :
 	   && case $${ext} in ( *single* ) PRECISION=single ;; ( * ) PRECISION=double ;; esac \
 	   && case $${ext} in ( *complex* ) SCALAR=complex ;; ( * ) SCALAR=real ;; esac \
 	   \
-	   && case $${ext} in ( *nohdf5* ) HDF= ;; ( *single* ) HDF5= ;; ( * ) HDF5=1 ;; esac \
+	   && case $${ext} in ( *nohdf5* ) HDF= ;; ( *single* ) HDF5= ;; ( * ) HDF5=${HDF5} ;; esac \
 	   \
-	   && case ${TACC_FAMILY_COMPILER} in ( gcc ) FORTRAN= ;; ( * ) FORTRAN=1 ;; esac \
+	   && case ${TACC_FAMILY_COMPILER} in ( gcc ) FORTRAN= ;; ( * ) FORTRAN=${FORTRAN} ;; esac \
 	   \
 	   && cmdline="make --no-print-directory configure build public \
 	      PACKAGEVERSION=${PACKAGEVERSION} JCOUNT=${JCOUNT} \
 	      DEBUG=$${DEBUG} INT=$${INT} PRECISION=$${PRECISION} SCALAR=$${SCALAR} \
-	      FORTRAN=$${FORTRAN} \
-	      HDF5=$${HDF5} PETSC4PY=1 SLEPC4PY=1 \
+	      \
+	      EIGEN=${EIGEN} FFTW3=${FFTW3} HDF5=$${HDF5} HYPRE=$${HYPRE} \
+	      \
+	      CUDA=${CUDA} FORTRAN=$${FORTRAN} \
+	      PETSC4PY=${PETSC4PY} SLEPC4PY=${SLEPC4PY} \
 	      " \
 	   && echo "Big install: $$cmdline" && eval $$cmdline 2>&1 | tee big.log \
 	   && echo && echo "See: big.log" && echo
