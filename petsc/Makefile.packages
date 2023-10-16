@@ -6,7 +6,13 @@
 ################################################################
 
 info ::
-	@echo "    set nonzero for packages: ${PACKAGELIST}"
+	@echo "================ package handling"
+	@PACKAGELIST="$$( \
+	    for p in ${packagelist} ; do echo $$p | tr a-z A-Z ; done \
+	    | awk '{pp=pp FS $$0} END {print pp}' \
+	        )" \
+	 && echo "    set nonzero for packages: $${PACKAGELIST}"
+
 packagelist = libceed chaco eigen fftw hdf5 hypre kokkos mpe mumps \
     petsc4py ptscotch slepc slepc4py superlu triangle zoltan
 
