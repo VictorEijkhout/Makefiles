@@ -51,7 +51,8 @@ par :
 	    PACKAGEVERSION=${PACKAGEVERSION} \
 	    HDF5PARALLEL=ON  MODE=mpi MODULENAME=phdf5 MODULENAMEALT=hdf5
 default_install :: 
-	@make --no-print-directory seq par JCOUNT=${JCOUNT} PACKAGEVERSION=${PACKAGEVERSION}
+	@make --no-print-directory seq par JCOUNT=${JCOUNT} PACKAGEVERSION=${PACKAGEVERSION} \
+	    seq par
 
 ##
 ## download
