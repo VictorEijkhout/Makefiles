@@ -16,9 +16,12 @@ if [ "${TACC_FAMILY_COMPILER}" = "gcc" ] ; then
 fi
 module load eigen
 module load fftw3
+module load hypre
 ## module load libceed
 module load phdf5/1.14
 echo "hdf5 lib: $TACC_PHDF5_LIB"
 
-make --no-print-directory biginstall JCOUNT=${jcount} \
-     PETSC4PY=1 SLEPC4PY=1
+make --no-print-directory biginstall EXT= JCOUNT=${jcount} \
+    EIGEN=1 FFTW3=1 HDF5=1 HYPRE=0 \
+    CUDA=0 FORTRAN=0 \
+    PETSC4PY=1 SLEPC4PY=1
