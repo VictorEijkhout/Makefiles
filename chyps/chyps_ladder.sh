@@ -9,7 +9,7 @@ ladder="\
     eigen,3.4.0 \
     metis,5.1.0.3 \
     petsc,3.19 \
-    hypre64,2.29.0 \
+    hypre,2.29.0-i64 \
     mutationpp,git \
     adios2,git \
     boost,1.83.0 \
