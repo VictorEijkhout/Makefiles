@@ -192,14 +192,14 @@ makemodule :
 	 && shortversion=${PACKAGEVERSION} && shortversion=$${shortversion%.*} \
 	 && petscshortarch=$$( make --no-print-directory petscshortarch ) \
 	 && echo "making module with version=$${shortversion} extra=<<$${petscshortarch}>>" \
-	 && ( make --no-print-directory varsmodule \
+	 && ( make --no-print-directory varsmodule module_public \
 	        PACKAGEVERSION=${PACKAGEVERSION} \
 	        PACKAGEMODULEVERSION=$${shortversion} \
 	        MODULEVERSIONEXTRA=$${petscshortarch} \
 	        PKGCONFIGLIB=pkgconfig \
 	        EXTRAVARS="PETSC_DIR=$${installdir} PETSC_ARCH=$${petscarch}" \
 	        EXTRAINSTALLPATHS="PYTHONPATH=lib" \
-	  ) 2>&1 | tee -a $${installlog}
+	    ) 2>&1 | tee -a $${installlog}
 
 info ::
 	@echo "make biginstall : lots of packages"
