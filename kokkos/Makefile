@@ -14,8 +14,7 @@ MODULE_MINIMUM_VERSION_cuda = 12
 
 include ${MAKEINCLUDES}/Make.info
 
-CMAKE_BASIC_FLAGS = \
-    -D CMAKE_VERBOSE_MAKEFILE=ON 
+CMAKE_BASIC_FLAGS = 
 
 ## VARSPROCESS = | sed -e 's/lib/lib64/'
 ## incompatible with openmp -D Kokkos_ENABLE_THREADS=ON
@@ -29,7 +28,6 @@ info ::
 	@echo "make cuda ( configure_cuda build_cuda ) : cuda version in separate install dir"
 .PHONY: cpu gpu configure_cuda
 CMAKEFLAGS = \
-    ${CMAKE_BASIC_FLAGS} \
     -D Kokkos_ENABLE_SERIAL=ON -D Kokkos_ENABLE_OPENMP=ON 
 ## we need this so that we can override it in jail
 SRCPATH = ${PACKAGEROOT}/kokkos/kokkos-${PACKAGEVERSION}
@@ -47,7 +45,7 @@ configure_cuda :
 	    echo "No TACC_CXX defined" && exit 1 ; fi 
 	@export NVCC_WRAPPER_DEFAULT_COMPILER=${TACC_CXX} \
 	 && make --no-print-directory configure \
-	    CMAKEFLAGS="${CMAKE_BASIC_FLAGS} \
+	    CMAKEFLAGS=" \
 	      -D CMAKE_CXX_COMPILER=${SRCPATH}/bin/nvcc_wrapper \
 	      -D CMAKE_CXX_FLAGS='-std=c++17 -allow-unsupported-compiler' \
 	      -D Kokkos_ENABLE_SERIAL=ON -D Kokkos_ENABLE_CUDA=ON \
