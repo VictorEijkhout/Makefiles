@@ -51,7 +51,8 @@ installed :
 CUDA = 0
 info ::
 	@echo "     [CUDA=0/1 (default: ${CUDA})]"
-CUDA_OPTIONS = --with-cuda=1 --with-cuda-dir=${TACC_CUDA_DIR} --with-cuda-gencodearch=70
+CUDA_OPTIONS = --with-cuda=1 --with-cuda-dir=${TACC_CUDA_DIR} \
+	--with-cudac=nvcc --with-cuda-gencodearch=70
 
 TIME =
 
@@ -121,13 +122,14 @@ build :: modules
 	    ; fi
 	@source ${MAKEINCLUDES}/names.sh \
 	 && export INSTALLROOT=${INSTALLROOT} \
-	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" "${VARIANT}" "${MODULENAME}" "${MODE}" \
-	 \
 	 && export petscarch=`make --no-print-directory \
 	                SCALAR=${SCALAR} PRECISION=${PRECISION} INT=${INT} \
 	                ALIGN=${ALIGN} \
 	                CUDA=${CUDA} DEBUG=${DEBUG} CUSTOMEXT=${CUSTOMEXT} \
 	                petscarch` \
+	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" \
+	    "$${petscarch}" "${PACKAGEBASENAME}" "${VARIANT}" "${MODULENAME}" "${MODE}" \
+	 \
 	 && export package_options="$$( make --no-print-directory package_options \
 	        CHACO=${CHACO} EIGEN=${EIGEN} FFTW=${FFTW} HDF5=${HDF5} \
 	        HYPRE=${HYPRE} KOKKOS=${KOKKOS} LIBCEED=${LIBCEED} MPE=${MPE} \
@@ -190,14 +192,14 @@ makemodule :
 	 && shortversion=${PACKAGEVERSION} && shortversion=$${shortversion%.*} \
 	 && petscshortarch=$$( make --no-print-directory petscshortarch ) \
 	 && echo "making module with version=$${shortversion} extra=<<$${petscshortarch}>>" \
-	 && ( make --no-print-directory varsmodule \
+	 && ( make --no-print-directory varsmodule module_public \
 	        PACKAGEVERSION=${PACKAGEVERSION} \
 	        PACKAGEMODULEVERSION=$${shortversion} \
 	        MODULEVERSIONEXTRA=$${petscshortarch} \
 	        PKGCONFIGLIB=pkgconfig \
 	        EXTRAVARS="PETSC_DIR=$${installdir} PETSC_ARCH=$${petscarch}" \
 	        EXTRAINSTALLPATHS="PYTHONPATH=lib" \
-	  ) 2>&1 | tee -a $${installlog}
+	    ) 2>&1 | tee -a $${installlog}
 
 info ::
 	@echo "make biginstall : lots of packages"

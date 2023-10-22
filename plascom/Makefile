@@ -11,7 +11,7 @@ URL =
 PACKAGEVERSION = git
 
 MODE = mpi
-MODULES =
+MODULES = phdf5
 # adios2 hypre metis mfem mutationpp precice petsc
 
 include ${MAKEINCLUDES}/Make.info
@@ -25,7 +25,7 @@ include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
 
 GITREPO = git@github.com:chess-uiuc/plascom2.git
-## SUBMODULE = 1
+SUBMODULE = 1
 include ${MAKEINCLUDES}/Make.git
 
 include ${MAKEINCLUDES}/Make.clean
