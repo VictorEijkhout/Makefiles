@@ -92,10 +92,16 @@ petscshortarch :
 petscarch :
 	@source ${MAKEINCLUDES}/names.sh \
 	 && systemnames && compilernames \
-	 && setnames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" "${VARIANT}" "${MODULENAME}" "${MODE}" \
+	 && setnames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" "" "${MODULENAME}" "${MODE}" \
 	 && requirenonzero compilercode && requirenonzero mpicode \
 	 && petscarch=$${taccsystemcode}-$${compilercode}$${compilershortversion}-$${mpicode} \
 	 && petscext=$$( make --no-print-directory petscshortarch ) \
+	 && if [ -z $${petscext} ] ; then \
+	      echo ${PACKAGEVERSION}; \
+	    else \
+	      echo ${PACKAGEVERSION}-$${petscext} ; \
+	    fi
+oldarch :
 	 && if [ -z $${petscext} ] ; then \
 	      echo $${petscarch} ; \
 	    else \
@@ -128,8 +134,10 @@ build :: modules
 	                ALIGN=${ALIGN} \
 	                CUDA=${CUDA} DEBUG=${DEBUG} CUSTOMEXT=${CUSTOMEXT} \
 	                petscarch` \
+	 && echo "deduce petc arch <<$$petscarch>>" \
 	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" \
-	    "$${petscarch}" "${PACKAGEBASENAME}" "${VARIANT}" "${MODULENAME}" "${MODE}" \
+	    "" "${PACKAGEBASENAME}" "$${petscarch}" "${MODULENAME}" "${MODE}" \
+	 && echo "deduce install dir <<$$installdir>>" \
 	 \
 	 && export package_options="$$( make --no-print-directory package_options \
 	        CHACO=${CHACO} EIGEN=${EIGEN} FFTW=${FFTW} HDF5=${HDF5} \
@@ -173,9 +181,7 @@ info ::
 	@echo "make default_install : with 0 & 1 debug"
 .PHONY: default_install
 default_install :
-	@for d in 0 1 ; do \
-	    make configure build DEBUG=$d JCOUNT=${JCOUNT} \
-	; done 
+	@make configure build PACKAGEVERSION=${PACKAGEVERSION} JCOUNT=${JCOUNT}
 build :: makemodule
 .PHONY: makemodule
 info ::
@@ -183,18 +189,21 @@ info ::
 makemodule :
 	@source ${MAKEINCLUDES}/names.sh \
 	 && export INSTALLROOT=${INSTALLROOT} \
-	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" "${VARIANT}" "${MODULENAME}" "${MODE}" \
-	 \
 	 && export petscarch=`make --no-print-directory \
 	                SCALAR=${SCALAR} PRECISION=${PRECISION} INT=${INT} \
 	                ALIGN=${ALIGN} \
 	                CUDA=${CUDA} DEBUG=${DEBUG} CUSTOMEXT=${CUSTOMEXT} \
 	                petscarch` \
+	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" \
+	    "" "${PACKAGEBASENAME}" "$${petscarch}" "${MODULENAME}" "${MODE}" \
+	 && echo "deduce install dir <<$$installdir>>" \
+	 \
 	 && shortversion=${PACKAGEVERSION} && shortversion=$${shortversion%.*} \
 	 && petscshortarch=$$( make --no-print-directory petscshortarch ) \
 	 && echo "making module with version=$${shortversion} extra=<<$${petscshortarch}>>" \
 	 && ( make --no-print-directory varsmodule module_public \
 	        PACKAGEVERSION=${PACKAGEVERSION} \
+	        VARIANT=$${petscarch} \
 	        PACKAGEMODULEVERSION=$${shortversion} \
 	        MODULEVERSIONEXTRA=$${petscshortarch} \
 	        PKGCONFIGLIB=pkgconfig \
@@ -203,14 +212,15 @@ makemodule :
 	    ) 2>&1 | tee -a $${installlog}
 
 info ::
-	@echo "make biginstall : lots of packages"
+	@echo "make biginstall [ EXT=i64debug and such ]"
+	@echo "    build with lots of packages, specific configuration"
 .PHONY: biginstall allinstall
+EXTENSIONS = \
+    "" debug i64 i64-debug single single-debug \
+    complex complex-debug complexi64 complexi64-debug \
+    nohdf5 i64nohdf5
 allinstall :
-	@for ext in \
-	        "" debug i64 i64-debug single single-debug \
-	        complex complex-debug complexi64 complexi64-debug \
-	        nohdf5 i64nohdf5 \
-	; do \
+	@for ext in ${EXTENSIONS} ; do \
 	    echo "Installing for extension <<$${ext}>>" \
 	     && make --no-print-directory biginstall EXT=$${ext} \
 	        JCOUNT=${JCOUNT} PACKAGEVERSION=${PACKAGEVERSION} \
