@@ -161,6 +161,8 @@ build :: modules
 	     && export PETSC_DIR=`pwd` \
 	     && export I_MPI_FABRICS=shm:tmi \
 	     && export PETSC_ARCH=$${petscarch} \
+	     && echo "Kludge: adding <<$${installdir}/lib>> to python path" \
+	     && export PYTHONPATH=${PYTHONPATH}:$${installdir}/lib \
 	     && cmdline="${TIME} python3 ./configure --prefix=$${installdir} \
 	        ${MPI_FLAGS} \
 	        --useThreads=0 \
@@ -212,12 +214,16 @@ makemodule :
 
 info ::
 	@echo "make biginstall [ EXT=i64debug and such ]"
-	@echo "    build with lots of packages, specific configuration"
+	@echo "    build specific configuration"
+	@echo "    packages specified by HDF5=1 and such"
 .PHONY: biginstall allinstall
 EXTENSIONS = \
     "" debug i64 i64-debug single single-debug \
     complex complex-debug complexi64 complexi64-debug \
     nohdf5 i64nohdf5
+info ::
+	@echo "make allinstall [ JCOUNT= PACKAGEVERSION= ]"
+	@echo "    biginstall for all extensions except cuda"
 allinstall :
 	@for ext in ${EXTENSIONS} ; do \
 	    echo "Installing for extension <<$${ext}>>" \

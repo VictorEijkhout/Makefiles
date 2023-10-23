@@ -7,7 +7,7 @@
 ################################################################
 
 PACKAGE = plascom2
-URL = 
+URL = https://github.com/chess-uiuc/plascom2
 PACKAGEVERSION = git
 
 MODE = mpi
