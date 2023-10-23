@@ -14,7 +14,7 @@ list_installations ::
 	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" "${VARIANT}" "${MODULENAME}" "${MODE}" \
 	 && echo "installations in $${srcdir}: $$( cd $$srcdir && for d in * ; do if [ -d $${d} ] ; then echo $${d} ; fi ; done )"
 modules ::
-	@if [ "${TACC_FAMILY_COMPILER}" = "gcc" ] ; then \
+	@if [ "${TACC_FAMILY_COMPILER}" = "gcc" -a "${TACC_SYSTEM}" != "macbookair" ] ; then \
 	    make --no-print-directory moduletest MODULE=mkl ; fi
 
 info ::
@@ -32,8 +32,7 @@ ifeq "${TACC_SYSTEM}" "nvarm"
   BLAS_FLAGS = --download-fblaslapack=yes
   MPI_FLAGS = --with-mpi-compilers=1 --with-cc=`which mpicc` --with-cxx=`which mpicxx` 
 else ifeq "${TACC_SYSTEM}" "macbookair"
-  BLAS_FLAGS=
-##    --with-cc=`which mpicc` --with-cxx=`which mpicxx` 
+  BLAS_FLAGS= --download-fblaslapack=yes
 else ifeq "${TACC_SYSTEM}" "grace"
   BLAS_FLAGS = --download-fblaslapack=yes
 else

@@ -33,7 +33,6 @@ configure ::
 	          export nox86="-D NO_X86" ; fi \
 	     && cd $${builddir} \
 	     && cmdline="cmake \
-	            -DCMAKE_VERBOSE_MAKEFILE=1 \
 	            -D CMAKE_INSTALL_PREFIX=$${installdir} \
 	            -D CMAKE_C_COMPILER=$${CC} \
 	            -D OPENMP=$${ompflag} \

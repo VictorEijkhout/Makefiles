@@ -37,7 +37,6 @@ configure :: modules
 	        "\
 	     && make \
 	            CONFIG_FLAGS="\
-	                -DCMAKE_VERBOSE_MAKEFILE=1 \
 	                -D CMAKE_INSTALL_PREFIX=$${installdir} \
 	                -D CMAKE_C_COMPILER=$${CC} \
 	                -D OPENMP=$${ompflag} -D SHARED=1 \
