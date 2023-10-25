@@ -9,7 +9,7 @@ URL = https://github.com/kokkos/kokkos \
     https://kokkos.github.io/kokkos-core-wiki/building.html
 PACKAGEVERSION = 4.1.00
 MODE = seq
-MODULES = cuda
+MODULES = 
 MODULE_MINIMUM_VERSION_cuda = 12
 
 include ${MAKEINCLUDES}/Make.info
@@ -21,7 +21,7 @@ CMAKE_BASIC_FLAGS =
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
 LIBDIR = lib64
-DEPENDSON = cuda/12
+DEPENDSON = 
 
 info ::
 	@echo "make cpu ( configure build )"
@@ -38,6 +38,7 @@ cpu :
 gpu : 
 	@make --no-print-directory PACKAGE_VERSION=${PACKAGE_VERSION} \
 	    configure_cuda build public \
+	    MODULES=cuda DEPENDSON=cuda/12 \
 	    INSTALLVARIANT=cuda INSTALLEXT=cuda
 # VOLTA70 ?
 configure_cuda :
