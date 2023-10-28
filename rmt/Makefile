@@ -21,6 +21,7 @@ include ${MAKEINCLUDES}/Make.info
 # CMAKEFLAGS=--enable-mpi
 include ${MAKEINCLUDES}/Make.cmake
 CMAKESUBDIR = source
+NOINSTALL = 1
 include ${MAKEINCLUDES}/Make.cbuild
 
 GITREPO = https://gitlab.com/Uk-amor/RMT/rmt.git
