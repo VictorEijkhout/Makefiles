@@ -5,7 +5,7 @@
 ################################################################
 
 PACKAGE = PETSC
-PACKAGEVERSION = 3.19.5
+PACKAGEVERSION = 3.20.0
 MODE = mpi
 
 include ${MAKEINCLUDES}/Make.info
@@ -161,8 +161,9 @@ build :: modules
 	     && export PETSC_DIR=`pwd` \
 	     && export I_MPI_FABRICS=shm:tmi \
 	     && export PETSC_ARCH=$${petscarch} \
-	     && echo "Kludge: adding <<$${installdir}/lib>> to python path" \
+	     && echo "Kludge: adding <<$${installdir}/lib>> to pythonpath" \
 	     && export PYTHONPATH=${PYTHONPATH}:$${installdir}/lib \
+	     && echo "PYTHONPATH=$${PYTHONPATH}" \
 	     && cmdline="${TIME} python3 ./configure --prefix=$${installdir} \
 	        ${MPI_FLAGS} \
 	        --useThreads=0 \
@@ -175,8 +176,9 @@ build :: modules
 	        $${package_options} $${param_settings} \
 	        " \
 	     && echo cmdline=$$cmdline && eval $$cmdline \
-	     && ${TIME} make MAKE_NP=${JCOUNT} \
-	     && make install \
+	     && echo "PYTHONPATH=$${PYTHONPATH}" \
+	     && make PETSC_DIR=`pwd` PETSC_ARCH=$${PETSC_ARCH} MAKE_NP=${JCOUNT} all \
+	     && make PETSC_DIR=`pwd` PETSC_ARCH=$${PETSC_ARCH} MAKE_NP=${JCOUNT} install \
 	  ) 2>&1 | tee $${installlog}
 info ::
 	@echo "make default_install : with 0 & 1 debug"
