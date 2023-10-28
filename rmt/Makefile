@@ -1,40 +1,27 @@
 ################################################################
 ####
-#### Makefile for P4est installation
+#### Makefile for Rmt installation
 ####
 ################################################################
 
-PACKAGE = p4est
-URL = http://p4est.org/ https://github.com/cburstedde/p4est
-PACKAGEVERSION = 2.8.5
-## PACKAGEVERSION = 2.8.5.5-9ddbb
+PACKAGE = rmt
+URL = https://gitlab.com/Uk-amor/RMT/rmt
+PACKAGEVERSION = git
 
 MODE = mpi
-MODULES = petsc
+MODULES = 
 
 include ${MAKEINCLUDES}/Make.info
 
-PKGCONFIGLIB = pkgconfig
-
-##
-## configure version
-##
-CONFIGUREFLAGS=--enable-mpi
-include ${MAKEINCLUDES}/Make.configure
-include ${MAKEINCLUDES}/Make.install
+## PKGCONFIGLIB = pkgconfig
 
 ##
 ## cmake version
 ##
 # CMAKEFLAGS=--enable-mpi
-# include ${MAKEINCLUDES}/Make.cmake
-# include ${MAKEINCLUDES}/Make.cbuild
+include ${MAKEINCLUDES}/Make.cmake
+CMAKESUBDIR = source
+include ${MAKEINCLUDES}/Make.cbuild
 
-TGZURL = https://p4est.github.io/release/p4est-${PACKAGEVERSION}.tar.gz
-include ${MAKEINCLUDES}/Make.download
-
-GITREPO = https://github.com/cburstedde/p4est.git
-BRANCH = master
-SUBMODULE = yes
-PULLAFTERACTIONS = ./bootstrap
+GITREPO = https://gitlab.com/Uk-amor/RMT/rmt.git
 include ${MAKEINCLUDES}/Make.git
