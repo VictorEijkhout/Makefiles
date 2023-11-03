@@ -65,6 +65,21 @@ pc :
 	    ; fi \
 	 && echo 
 
+default_install :
+	@make configure build PACKAGEVERSION=git JCOUNT=${JCOUNT}
+full_install :
+	@( \
+	    ( cd ../petsc  \
+	       && make PACKAGEVERSION=3.20.0 JCOUNT=${JCOUNT} \
+	             configure build CUSTOMEXT=ratel ) \
+	 && module load petsc/3.20-ratel \
+	 && ( cd ../libceed \
+	       && make PACKAGEVERSION=git JCOUNT=${JCOUNT} \
+	            pull default_install ) \
+	 && module load libceed/git \
+	 && make pull default_install PACKAGEVERSION=git JCOUNT=${JCOUNT} \
+	 ) 2>&1 | tee full.log
+
 info ::
 	@echo "================ ratel examples"
 	@echo "make examples : copy and build examples"
