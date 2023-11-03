@@ -121,7 +121,6 @@ WITH_X = "--with-x=1"
 configure :
 	@echo && echo "there is no configure rule" && echo
 include ${MAKEINCLUDES}/Make.vars
-NOINSTALL = 1
 build :: modules
 	@if [ ${CUDA} -eq 1 -a -z "${TACC_CUDA_DIR}" ] ; then \
 	    echo && echo "Please load cuda module" && echo && exit 1 \
@@ -199,14 +198,14 @@ makemodule :
 	                petscarch` \
 	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" \
 	    "" "${PACKAGEBASENAME}" "$${petscarch}" "${MODULENAME}" "${MODE}" \
-	 && echo "deduce install dir <<$$installdir>>" \
+	 && echo "makemodule: deduce install dir <<$$installdir>>" \
 	 \
 	 && shortversion=${PACKAGEVERSION} && shortversion=$${shortversion%.*} \
 	 && petscshortarch=$$( make --no-print-directory petscshortarch ) \
 	 && echo "making module with version=$${shortversion} extra=<<$${petscshortarch}>>" \
 	 && ( make --no-print-directory varsmodule module_public \
 	        PACKAGEVERSION=${PACKAGEVERSION} \
-	        VARIANT=$${petscarch} \
+	        INSTALLEXT= VARIANT=$${petscarch} \
 	        PACKAGEMODULEVERSION=$${shortversion} \
 	        MODULEVERSIONEXTRA=$${petscshortarch} \
 	        PKGCONFIGLIB=pkgconfig \
