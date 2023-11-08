@@ -12,8 +12,6 @@ MODULES =
 
 include ${MAKEINCLUDES}/Make.info
 
-HASBIN = 1
-NOLIB = 1
 # include ${MAKEINCLUDES}/Make.cmake
 # include ${MAKEINCLUDES}/Make.cbuild
 .PHONY: configure build
@@ -24,9 +22,9 @@ configure ::
 	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" "${VARIANT}" "${MODULENAME}" "${MODE}" \
 	 && ( \
 	    cd $$srcdir \
-	     && ./configure \
+	     && ./configure -prefix=$${installdir} \
 	            -bfd=download -dwarf=download -unwind=download -iowrapper \
-	            -pdt=pdtoolkit-3.25.1 \
+	            -pdt=${TACC_PDTOOLKIT_DIR} \
 	    ) \
 	    | tee $${configurelog}
 build :: modules
@@ -41,6 +39,13 @@ build :: modules
 	     && make install \
 	    ) 2>&1 | tee $$installlog \
 	 && echo "See $$installlog"
+## PKGCONFIGLIB = pkgconfig # seems only obscure packages somewhere deep down
+HASBIN = 1
+BINDIR = x86_64/bin
+NOLIB = 1
+include ${MAKEINCLUDES}/Make.vars
+build :: varsmodule
+default_install : configure build public
 
 TGZURL = http://tau.uoregon.edu/tau.tgz
 include ${MAKEINCLUDES}/Make.download
@@ -49,6 +54,4 @@ untar ::
 	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" "${VARIANT}" "${MODULENAME}" "${MODE}" \
 	 && cd $$srcdir \
 	 && echo " .. getting ext" \
-	 && wget http://tau.uoregon.edu/ext.tgz && tar fxz ext.tgz \
-	 && echo " .. getting pd5" \
-	 && wget http://tau.uoregon.edu/pdt.tgz && tar fxz pdt.tgz
+	 && wget http://tau.uoregon.edu/ext.tgz && tar fxz ext.tgz
