@@ -173,11 +173,12 @@ build :: modules
 	  ) 2>&1 | tee $${installlog}
 include ${MAKEINCLUDES}/Make.vars
 include ${MAKEINCLUDES}/Make.public
-build :: varsmodule installation_public
+build :: installation_public
 
 info ::
-	@make "installation_public : open installation (also done as part of build)"
+	@echo "make installation_public : open installation (also done as part of build)"
 .PHONY: installation_public
+build :: installation_public
 installation_public :
 	@ export petscarch=`make --no-print-directory \
 	         SCALAR=${SCALAR} PRECISION=${PRECISION} INT=${INT} \
@@ -186,13 +187,10 @@ installation_public :
 	         petscarch` \
 	 && make public INSTALLEXT="" VARIANT=$${petscarch}
 
-.PHONY: default_install
-default_install :
-	@make configure build PACKAGEVERSION=${PACKAGEVERSION} JCOUNT=${JCOUNT}
+info ::
+	@echo "make makemodule : custom rule for module"
 build :: makemodule
 .PHONY: makemodule
-info ::
-	@echo "make makemodule"
 makemodule :
 	@source ${MAKEINCLUDES}/names.sh \
 	 && export INSTALLROOT=${INSTALLROOT} \
@@ -217,6 +215,14 @@ makemodule :
 	        EXTRAVARS="PETSC_DIR=$${installdir} PETSC_ARCH=$${petscarch}" \
 	        EXTRAINSTALLPATHS="PYTHONPATH=lib" \
 	    ) 2>&1 | tee -a $${installlog}
+
+##
+## installation modes
+##
+
+.PHONY: default_install
+default_install :
+	@make configure build PACKAGEVERSION=${PACKAGEVERSION} JCOUNT=${JCOUNT}
 
 info ::
 	@echo "make biginstall [ EXT=i64debug and such ]"
