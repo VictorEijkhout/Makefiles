@@ -4,7 +4,7 @@
 ####
 ################################################################
 
-URL = https://gitlab.com/micromorph/ratel
+URL = https://gitlab.com/micromorph/ratel https://ratel.micromorph.org/examples/
 PACKAGE = RATEL
 PACKAGEVERSION = git
 CHMODR = 1
@@ -16,12 +16,14 @@ include ${MAKEINCLUDES}/Make.info
 JCOUNT = 12
 .PHONY: configure build
 info ::
-	@echo "make configure build"
+	@echo "make configure : does nothing"
 configure ::
 	@source ${MAKEINCLUDES}/names.sh \
 	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" "${VARIANT}" "${MODULENAME}" "${MODE}" \
 	 && ( echo "there is no separate configure rule" ) \
 	| tee $${configurelog}
+info :: 
+	@echo "make build : compile & examples"
 build :: modules
 	@source ${MAKEINCLUDES}/names.sh \
 	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" "${VARIANT}" "${MODULENAME}" "${MODE}" \
@@ -43,6 +45,7 @@ build :: modules
 	 && cmdline="make --no-print-directory -j ${JCOUNT} V=1  examples \
 	        prefix=$${installdir} BUILDDIR=$${builddir}" \
 	 && echo "examples cmdline: $$cmdline" && eval $$cmdline \
+	 && cp -r $${srcdir}/examples $${installdir} \
 	 ) 2>&1 | tee $$installlog \
 	 && echo "See $$installlog"
 ## pkgconfig=$${installdir}/pkgconfig" 
@@ -178,7 +181,7 @@ errorclean :: clean
 traceclean :: clean
 	@rm -rf tau_trace*
 clean ::
-	@rm -f *~ *.log rateljob*.o*
+	@rm -f *~ *.log rateljob*.o* *.yml
 totalclean :: traceclean installclean
 
 ####
