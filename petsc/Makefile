@@ -185,7 +185,10 @@ installation_public :
 	         ALIGN=${ALIGN} \
 	         CUDA=${CUDA} DEBUG=${DEBUG} CUSTOMEXT=${CUSTOMEXT} \
 	         petscarch` \
-	 && make public INSTALLEXT="" VARIANT=$${petscarch}
+	 && make public VARIANT=$${petscarch} \
+	    $$( if [ ! -z ${CUSTOMEXT} ] ; then \
+	                echo INSTALLEXT=${CUSTOMEXT} ; \
+	         ; else echo INSTALLEXT= ; fi )
 
 info ::
 	@echo "make makemodule : custom rule for module"
@@ -256,6 +259,7 @@ biginstall :
 	   && cmdline="make --no-print-directory configure build public \
 	      PACKAGEVERSION=${PACKAGEVERSION} JCOUNT=${JCOUNT} \
 	      DEBUG=$${DEBUG} INT=$${INT} PRECISION=$${PRECISION} SCALAR=$${SCALAR} \
+	      $$( if [ ! -z ${CUSTOMEXT} ] ; then echo CUSTOMEXT=${CUSTOMEXT} ; fi ) \
 	      \
 	      EIGEN=${EIGEN} FFTW3=${FFTW3} HDF5=$${HDF5} HYPRE=$${HYPRE} \
 	      \

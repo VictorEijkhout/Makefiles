@@ -4,6 +4,7 @@ if [ $# -lt 1 -o "$1" = "-h" ] ; then
     echo "Usage: $0 [ -j 123 ] [ -m \"m1 m2 m3\" ] [ -t target ] [ -v version ] package"
     echo "    -m : modules to be loaded"
     echo "    -t : make target or default_install"
+    echo "    -v : package version"
     exit 1
 fi
 
