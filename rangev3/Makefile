@@ -26,10 +26,13 @@ fix :
 	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${\PACKAGEBASENAME}" "${VARIANT}" \
 	 && LANG=C find $$builddir \
 	      -type f \
-	      -exec sed -i -e 's/Werror/Wno-error/g' {} \; 
+	      -exec sed -i -e 's/-Werror//gp' {} \; 
 
 CMAKEPREFIXLIB = cmake/range-v3
 include ${MAKEINCLUDES}/Make.cbuild
+
+.PHONY: default_install
+default_install : configure build
 
 TGZURL = https://github.com/ericniebler/range-v3/archive/refs/tags/${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
