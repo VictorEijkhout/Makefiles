@@ -6,7 +6,7 @@
 
 PACKAGE = fmtlib
 URL = https://github.com/fmtlib/fmt
-PACKAGEVERSION = 10.0.0
+PACKAGEVERSION = 10.1.1
 MODE = seq
 
 include ${MAKEINCLUDES}/Make.info
@@ -14,6 +14,7 @@ include ${MAKEINCLUDES}/Make.info
 include ${MAKEINCLUDES}/Make.cmake
 PKGCONFIGLIB = pkgconfig
 include ${MAKEINCLUDES}/Make.cbuild
+default_install : configure build
 
 info ::
 	@echo "make docs, docview (after configure)"
