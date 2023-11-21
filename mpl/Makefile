@@ -13,6 +13,8 @@ include ${MAKEINCLUDES}/Make.info
 
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
+.PHONY: default_install
+default_install : configure build
 CMAKEPREFIXPATHSET = 1
 MODULE_HELP = 1
 module_help :

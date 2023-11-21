@@ -4,7 +4,7 @@
 ####
 ################################################################
 
-URL = https://gitlab.com/micromorph/ratel
+URL = https://gitlab.com/micromorph/ratel https://ratel.micromorph.org/examples/
 PACKAGE = RATEL
 PACKAGEVERSION = git
 CHMODR = 1
@@ -16,12 +16,14 @@ include ${MAKEINCLUDES}/Make.info
 JCOUNT = 12
 .PHONY: configure build
 info ::
-	@echo "make configure build"
+	@echo "make configure : does nothing"
 configure ::
 	@source ${MAKEINCLUDES}/names.sh \
 	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" "${VARIANT}" "${MODULENAME}" "${MODE}" \
 	 && ( echo "there is no separate configure rule" ) \
 	| tee $${configurelog}
+info :: 
+	@echo "make build : compile & examples"
 build :: modules
 	@source ${MAKEINCLUDES}/names.sh \
 	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" "${VARIANT}" "${MODULENAME}" "${MODE}" \
@@ -37,40 +39,44 @@ build :: modules
 	 && echo "into builddir: $${builddir}" \
 	 && requirenonzero srcdir \
 	 && cd $$srcdir \
-	 && cmdline="make --no-print-directory -j ${JCOUNT} V=1 install \
+	 && cmdline="make --no-print-directory -j ${JCOUNT} V=1 install examples \
 	        prefix=$${installdir} BUILDDIR=$${builddir}/ " \
-	 && echo "make cmdline: $$cmdline" \
-	 && eval $$cmdline \
+	 && echo "make cmdline: $$cmdline" && eval $$cmdline \
+	 && cmdline="make --no-print-directory -j ${JCOUNT} V=1  examples \
+	        prefix=$${installdir} BUILDDIR=$${builddir}" \
+	 && echo "examples cmdline: $$cmdline" && eval $$cmdline \
+	 && cp -r $${srcdir}/examples $${installdir} \
 	 ) 2>&1 | tee $$installlog \
 	 && echo "See $$installlog"
 ## pkgconfig=$${installdir}/pkgconfig" 
-PKGCONFIG = pkgconfig
+PKGCONFIGLIB = pkgconfig
 include ${MAKEINCLUDES}/Make.vars
 HASBIN = 1
 build ::
 	@make --no-print-directory varsmodule
 
-pc :
-	@echo \
-	 && ratelpc=$${installdir}/lib/pkgconfig/ratel.pc \
-	 && if [ ! -f $$ratelpc ] ; then \
-	        echo "was expecting to find ratel.pc at $$ratelpc" \
-	    ; else \
-	        echo ".. fixing ratel.pc" \
-	         && [ 1 ] || sed -i \
-	            -e '/prefix=/s?=.*?='$${builddir}'?' \
-	            -e '/includedir=/s?=.*?='$${srcdir}/include'?' \
-	            $${ratelpc} \
-	         && cat $${ratelpc} \
-	    ; fi \
-	 && echo 
+default_install :
+	@make configure build PACKAGEVERSION=git JCOUNT=${JCOUNT}
+full_install :
+	@( \
+	    ( cd ../petsc  \
+	       && make PACKAGEVERSION=3.20.0 JCOUNT=${JCOUNT} \
+	             configure build CUSTOMEXT=ratel ) \
+	 && module load petsc/3.20-ratel \
+	 && ( cd ../libceed \
+	       && make PACKAGEVERSION=git JCOUNT=${JCOUNT} \
+	            pull default_install ) \
+	 && module load libceed/git \
+	 && make pull default_install PACKAGEVERSION=git JCOUNT=${JCOUNT} \
+	 ) 2>&1 | tee full.log
 
 info ::
 	@echo "================ ratel examples"
 	@echo "make examples : copy and build examples"
 	@echo "----------------"
-.PHONY: examples
-examples : modules 
+.PHONY: examples copied_examples
+examples : modules
+copied_examples : modules 
 	@examples=examples-${PETSC_ARCH} \
 	 && if [ "${TAU}" = "1" ] ; then \
 	     examples=$${examples}-tau \
@@ -78,7 +84,7 @@ examples : modules
 	 && rm -rf $${examples} \
 	 && ( \
 	    source ${MAKEINCLUDES}/names.sh \
-	     && setnames ${PACKAGEROOT} ${PACKAGE} ${PACKAGEVERSION} \
+	     && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" "${VARIANT}" "${MODULENAME}" "${MODE}" \
 	     && ( cp -r $${srcdir}/examples $${examples} \
 	         && cd $${examples} \
 	         && builddir=$${builddir}-$${PETSC_ARCH} \
@@ -90,7 +96,7 @@ examples : modules
 	         && pcloc=$${installdir}/lib/pkgconfig \
 	             && if [ -f $${pcloc}/ratel.pc ] ; then \
 	                  echo "using $${pcloc}/ratel.pc:" \
-	                   && cat $${pcloc}/ratel.pc \
+	                   && echo "cat $${pcloc}/ratel.pc" >/dev/null \
 	                ; else \
 	                  echo "Can not find ratel.pc at: $${pcloc}" && exit 1 \
 	                ; fi \
@@ -175,7 +181,7 @@ errorclean :: clean
 traceclean :: clean
 	@rm -rf tau_trace*
 clean ::
-	@rm -f *~ *.log rateljob*.o*
+	@rm -f *~ *.log rateljob*.o* *.yml
 totalclean :: traceclean installclean
 
 ####

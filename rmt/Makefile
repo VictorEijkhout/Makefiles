@@ -1,22 +1,28 @@
 ################################################################
 ####
-#### Makefile for Mdspan installation
+#### Makefile for Rmt installation
 ####
 ################################################################
 
-PACKAGE = MDSPAN
-URL = https://github.com/kokkos/mdspan
+PACKAGE = rmt
+URL = https://gitlab.com/Uk-amor/RMT/rmt
 PACKAGEVERSION = git
-MODE = seq
+
+MODE = mpi
+MODULES = 
 
 include ${MAKEINCLUDES}/Make.info
 
-## CMAKEFLAGS = 
+## PKGCONFIGLIB = pkgconfig
+
+##
+## cmake version
+##
+# CMAKEFLAGS=--enable-mpi
 include ${MAKEINCLUDES}/Make.cmake
+CMAKESUBDIR = source
+NOINSTALL = 1
 include ${MAKEINCLUDES}/Make.cbuild
-.PHONY: default_install
-default_install : configure build
 
-GITREPO = git@github.com:kokkos/mdspan.git
+GITREPO = https://gitlab.com/Uk-amor/RMT/rmt.git
 include ${MAKEINCLUDES}/Make.git
-

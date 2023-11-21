@@ -5,7 +5,7 @@
 ################################################################
 
 PACKAGE = PETSC
-PACKAGEVERSION = 3.19.5
+PACKAGEVERSION = 3.20.1
 MODE = mpi
 
 include ${MAKEINCLUDES}/Make.info
@@ -23,7 +23,6 @@ info ::
 
 JCOUNT = 4
 
-PETSC_SRC_DIR = ${PACKAGEROOT}/petsc/petsc-${PACKAGEVERSION}
 OPTFLAGS=-O2 -fPIC
 LOPTFLAGS=-O1 -fPIC
 
@@ -41,12 +40,6 @@ endif
 # ifeq "${FORTRAN}" "1"
 #   MPI_FLAGS += --with-fc=`which mpif90`
 # endif
-
-info ::
-	@echo "make installed : list installations"
-.PHONY: installed
-installed :
-	@ls -d ${PETSC_SRC_DIR}/${PETSCARCH}*
 
 CUDA = 0
 info ::
@@ -120,8 +113,6 @@ WITH_X = "--with-x=1"
 
 configure :
 	@echo && echo "there is no configure rule" && echo
-include ${MAKEINCLUDES}/Make.vars
-NOINSTALL = 1
 build :: modules
 	@if [ ${CUDA} -eq 1 -a -z "${TACC_CUDA_DIR}" ] ; then \
 	    echo && echo "Please load cuda module" && echo && exit 1 \
@@ -161,32 +152,48 @@ build :: modules
 	     && export PETSC_DIR=`pwd` \
 	     && export I_MPI_FABRICS=shm:tmi \
 	     && export PETSC_ARCH=$${petscarch} \
-	     && echo "Kludge: adding <<$${installdir}/lib>> to python path" \
+	     && echo "Kludge: adding <<$${installdir}/lib>> to pythonpath" \
 	     && export PYTHONPATH=${PYTHONPATH}:$${installdir}/lib \
+	     && echo "PYTHONPATH=$${PYTHONPATH}" \
 	     && cmdline="${TIME} python3 ./configure --prefix=$${installdir} \
 	        ${MPI_FLAGS} \
-	        --useThreads=0 \
+	        --useThreads=0 --with-tau-perfstubs=1 \
 	        --with-np=${JCOUNT} \
 	        CFLAGS=\"${OPTFLAGS}\" CXXFLAGS=\"${OPTFLAGS}\" \
 	        `if [ \"${FORTRAN}\" = 1 ] ; then echo FFLAGS=\"${OPTFLAGS}\" ; fi `\
 	        `if [ ${X} -eq 1 ]    ; then echo ${WITH_X} ; fi ` \
-	        `if [ ${CUDA} -eq 1 ] ; then echo ${CUDA_OPTIONS} ; fi ` \
+	        `if [ ${CUDA} -eq 1 ] ; then echo ${CUDA_OPTIONS} ; else echo --with-cudac=0 ; fi ` \
 	        "${BLAS_FLAGS}" \
 	        $${package_options} $${param_settings} \
 	        " \
 	     && echo cmdline=$$cmdline && eval $$cmdline \
-	     && ${TIME} make MAKE_NP=${JCOUNT} \
-	     && make install \
+	     && echo "PYTHONPATH=$${PYTHONPATH}" \
+	     && make PETSC_DIR=`pwd` PETSC_ARCH=$${PETSC_ARCH} MAKE_NP=${JCOUNT} all \
+	     && make PETSC_DIR=`pwd` PETSC_ARCH=$${PETSC_ARCH} MAKE_NP=${JCOUNT} install \
 	  ) 2>&1 | tee $${installlog}
+include ${MAKEINCLUDES}/Make.vars
+include ${MAKEINCLUDES}/Make.public
+build :: installation_public
+
 info ::
-	@echo "make default_install : with 0 & 1 debug"
-.PHONY: default_install
-default_install :
-	@make configure build PACKAGEVERSION=${PACKAGEVERSION} JCOUNT=${JCOUNT}
+	@echo "make installation_public : open installation (also done as part of build)"
+.PHONY: installation_public
+build :: installation_public
+installation_public :
+	@ export petscarch=`make --no-print-directory \
+	         SCALAR=${SCALAR} PRECISION=${PRECISION} INT=${INT} \
+	         ALIGN=${ALIGN} \
+	         CUDA=${CUDA} DEBUG=${DEBUG} CUSTOMEXT=${CUSTOMEXT} \
+	         petscarch` \
+	 && make public VARIANT=$${petscarch} \
+	    $$( if [ ! -z ${CUSTOMEXT} ] ; then \
+	                echo INSTALLEXT=${CUSTOMEXT} ; \
+	         ; else echo INSTALLEXT= ; fi )
+
+info ::
+	@echo "make makemodule : custom rule for module"
 build :: makemodule
 .PHONY: makemodule
-info ::
-	@echo "make makemodule"
 makemodule :
 	@source ${MAKEINCLUDES}/names.sh \
 	 && export INSTALLROOT=${INSTALLROOT} \
@@ -197,20 +204,28 @@ makemodule :
 	                petscarch` \
 	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" \
 	    "" "${PACKAGEBASENAME}" "$${petscarch}" "${MODULENAME}" "${MODE}" \
-	 && echo "deduce install dir <<$$installdir>>" \
+	 && echo "makemodule: deduce install dir <<$$installdir>>" \
 	 \
 	 && shortversion=${PACKAGEVERSION} && shortversion=$${shortversion%.*} \
 	 && petscshortarch=$$( make --no-print-directory petscshortarch ) \
 	 && echo "making module with version=$${shortversion} extra=<<$${petscshortarch}>>" \
 	 && ( make --no-print-directory varsmodule module_public \
 	        PACKAGEVERSION=${PACKAGEVERSION} \
-	        VARIANT=$${petscarch} \
+	        INSTALLEXT= VARIANT=$${petscarch} \
 	        PACKAGEMODULEVERSION=$${shortversion} \
 	        MODULEVERSIONEXTRA=$${petscshortarch} \
 	        PKGCONFIGLIB=pkgconfig \
 	        EXTRAVARS="PETSC_DIR=$${installdir} PETSC_ARCH=$${petscarch}" \
 	        EXTRAINSTALLPATHS="PYTHONPATH=lib" \
 	    ) 2>&1 | tee -a $${installlog}
+
+##
+## installation modes
+##
+
+.PHONY: default_install
+default_install :
+	@make configure build PACKAGEVERSION=${PACKAGEVERSION} JCOUNT=${JCOUNT}
 
 info ::
 	@echo "make biginstall [ EXT=i64debug and such ]"
@@ -244,6 +259,7 @@ biginstall :
 	   && cmdline="make --no-print-directory configure build public \
 	      PACKAGEVERSION=${PACKAGEVERSION} JCOUNT=${JCOUNT} \
 	      DEBUG=$${DEBUG} INT=$${INT} PRECISION=$${PRECISION} SCALAR=$${SCALAR} \
+	      $$( if [ ! -z ${CUSTOMEXT} ] ; then echo CUSTOMEXT=${CUSTOMEXT} ; fi ) \
 	      \
 	      EIGEN=${EIGEN} FFTW3=${FFTW3} HDF5=$${HDF5} HYPRE=$${HYPRE} \
 	      \
@@ -253,14 +269,11 @@ biginstall :
 	   && echo "Big install: $$cmdline" && eval $$cmdline 2>&1 | tee big.log \
 	   && echo && echo "See: big.log" && echo
 
-public ::
-	@echo "public rule disabled"
-
 info ::
 	@echo "make config-help config-view"
 	@echo "     [PACKAGEVERSION= (default=${PACKAGEVERSION})]"
 config-help :
-	@cd ${PETSC_SRC_DIR} \
+	@cd ${PACKAGEROOT}/petsc/petsc-${PACKAGEVERSION} \
 	 && ./configure -help
 config-view :
 	@source ${MAKEINCLUDES}/names.sh \
@@ -280,7 +293,6 @@ GITREPO = https://gitlab.com/petsc/petsc.git
 BRANCH = main
 
 include ${MAKEINCLUDES}/Make.download
-TGZURLold = https://ftp.mcs.anl.gov/pub/petsc/release-snapshots/petsc-${PACKAGEVERSION}.tar.gz
 TGZURL = https://web.cels.anl.gov/projects/petsc/download/release-snapshots/petsc-${PACKAGEVERSION}.tar.gz
 
 clean ::
