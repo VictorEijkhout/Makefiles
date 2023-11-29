@@ -28,6 +28,9 @@ cpu :
 	@make --no-print-directory HASCUDA=OFF \
 	    configure build
 gpu : 
+	@if [ "${TACC_SYSTEM}" = "frontera" ] ; then \
+	    echo && echo "Last time I looked Frtonera did not have LLVM" && echo \
+	     && exit 1 ; fi
 	@make --no-print-directory HASCUDA=ON  \
 	    configure build
 default_install : cpu
