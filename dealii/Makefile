@@ -9,6 +9,8 @@ URL = https://github.com/dealii/dealii https://dealii.org/developer/users/cmake_
 PACKAGEVERSION = 9.5.1
 MODE = mpi
 MODULES = p4est petsc trilinos
+# intel 23 problem solved in 24
+# support ticket 05936427
 
 CONFIGURATION = default
 include ${MAKEINCLUDES}/Make.info

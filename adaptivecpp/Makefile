@@ -23,16 +23,21 @@ CMAKEFLAGS = \
     -D WITH_CUDA_BACKEND=${HASCUDA} -DWITH_ROCM_BACKEND=OFF -DWITH_LEVEL_ZERO_BACKEND=OFF \
     -D WITH_ACCELERATED_CPU=OFF
 
-.PHONY: cpu gpu default_install
+.PHONY: cpu gpu
 cpu : 
 	@make --no-print-directory HASCUDA=OFF \
 	    configure build
 gpu : 
+	@if [ "${TACC_SYSTEM}" = "frontera" ] ; then \
+	    echo && echo "Last time I looked Frtonera did not have LLVM" && echo \
+	     && exit 1 ; fi
 	@make --no-print-directory HASCUDA=ON  \
 	    configure build
 .PHONY: default_install
 info ::
 	@echo "make default_install : cpu version"
+default_install : cpu
+	@echo && echo "==== cpu install done, not gpu ====" && echo
 
 TGZURL = https://github.com/AdaptiveCpp/AdaptiveCpp/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
