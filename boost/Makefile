@@ -38,6 +38,8 @@ build ::
 	    ) 2>&1 | tee $$installlog \
 	 && make --no-print-directory varsmodule \
 	      CMAKEPREFIXLIB=cmake
+.PHONY: default_install
+default_install : configure build
 
 include ${MAKEINCLUDES}/Make.vars
 ## NOLIB = 1

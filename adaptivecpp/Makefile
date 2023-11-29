@@ -8,7 +8,7 @@
 
 PACKAGE = adaptivecpp
 URL = https://github.com/AdaptiveCpp/AdaptiveCpp
-PACKAGEVERSION = 0.9.4
+PACKAGEVERSION = 23.10.0
 MODULES = boost
 MODE = seq
 
@@ -28,10 +28,18 @@ cpu :
 	@make --no-print-directory HASCUDA=OFF \
 	    configure build
 gpu : 
+	@if [ "${TACC_SYSTEM}" = "frontera" ] ; then \
+	    echo && echo "Last time I looked Frtonera did not have LLVM" && echo \
+	     && exit 1 ; fi
 	@make --no-print-directory HASCUDA=ON  \
 	    configure build
+.PHONY: default_install
+info ::
+	@echo "make default_install : cpu version"
+default_install : cpu
+	@echo && echo "==== cpu install done, not gpu ====" && echo
 
-TGZURL = https://github.com/Adaptivecpp/Adaptivecpp/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
+TGZURL = https://github.com/AdaptiveCpp/AdaptiveCpp/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 GITREPO = https://github.com/Adaptivecpp/Adaptivecpp.git
 include ${MAKEINCLUDES}/Make.git
