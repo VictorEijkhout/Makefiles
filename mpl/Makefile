@@ -36,9 +36,7 @@ LATEXDOC=0
 docs :
 	@source ${MAKEINCLUDES}/names.sh \
 	 && export MODE=${MODE} && export INSTALLROOT=${INSTALLROOT} \
-	 && setnames ${PACKAGEROOT} ${PACKAGE} ${PACKAGEVERSION} ${INSTALLEXT} \
-	 && setmodulenames ${PACKAGEROOT} ${PACKAGE} ${PACKAGEVERSION} ${INSTALLEXT} \
-	 && setdirlognames ${PACKAGEROOT} ${PACKAGE} ${PACKAGEVERSION} ${INSTALLEXT} \
+	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" "${VARIANT}" "${MODULENAME}" "${MODE}" \
 	 && cd $${builddir}/doc/doxygen \
 	 && doctarget=$${installdir}/../docs-${PACKAGEVERSION} \
 	 && if "${LATEXDOC}" = "1" ] ; then \
@@ -62,7 +60,7 @@ info ::
 opendocs :
 	@source ${MAKEINCLUDES}/names.sh \
 	 && export MODE=${MODE} && export INSTALLROOT=${INSTALLROOT} \
-	 && setdirlognames ${PACKAGEROOT} ${PACKAGE} ${PACKAGEVERSION} ${INSTALLEXT} \
+	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" "${VARIANT}" "${MODULENAME}" "${MODE}" \
 	 && doctarget=$${installdir}/../docs-${PACKAGEVERSION} \
 	 && ls $$doctarget \
 	 && open $$doctarget/html/index.html
