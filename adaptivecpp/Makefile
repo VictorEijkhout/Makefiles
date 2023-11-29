@@ -23,13 +23,15 @@ CMAKEFLAGS = \
     -D WITH_CUDA_BACKEND=${HASCUDA} -DWITH_ROCM_BACKEND=OFF -DWITH_LEVEL_ZERO_BACKEND=OFF \
     -D WITH_ACCELERATED_CPU=OFF
 
-.PHONY: cpu gpu
+.PHONY: cpu gpu default_install
 cpu : 
 	@make --no-print-directory HASCUDA=OFF \
 	    configure build
 gpu : 
 	@make --no-print-directory HASCUDA=ON  \
 	    configure build
+default_install : cpu
+	@echo && echo "==== cpu install done, not gpu ====" && echo
 
 TGZURL = https://github.com/Adaptivecpp/Adaptivecpp/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
