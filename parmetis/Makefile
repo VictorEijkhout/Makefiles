@@ -15,11 +15,18 @@ MODULES =
 #gklib metis
 
 include ${MAKEINCLUDES}/Make.info
-CMAKEFLAGS=\
+ifeq "${TACC_FAMILY_COMPILER}" "intel"
+  CMAKEFLAGS=\
     -DCMAKE_C_FLAGS=\"-O2 -qopenmp\" 
+else
+  CMAKEFLAGS=\
+    -DCMAKE_C_FLAGS=\"-O2 -fopenmp\" 
+endif
 
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
+.PHONY: default_install
+default_install : configure build
 
 include ${MAKEINCLUDES}/Make.clean
 
