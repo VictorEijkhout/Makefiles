@@ -1,0 +1,38 @@
+compilation fails:
+
+/work2/00434/eijkhout/gdal/gdal-3.7.0/ogr/ogrsf_frmts/gpkg/ogrgeopackagetablelayer.cpp: In member function ‘void OGRGeoPackageTableLayer::GetNextArrowArrayAsynchronousWorker()’:
+/work2/00434/eijkhout/gdal/gdal-3.7.0/ogr/ogrsf_frmts/gpkg/ogrgeopackagetablelayer.cpp:7538:23: error: ‘SQLITE_DETERMINISTIC’ was not declared in this scope
+ 7538 |         SQLITE_UTF8 | SQLITE_DETERMINISTIC, m_poFillArrowArray.get(), nullptr,
+
+search for that string:
+
+#ifndef SQLITE_DETERMINISTIC
+#define SQLITE_DETERMINISTIC 0
+                            SQLITE_UTF8 | SQLITE_DETERMINISTIC, nullptr,
+                            SQLITE_UTF8 | SQLITE_DETERMINISTIC, nullptr,
+                            SQLITE_UTF8 | SQLITE_DETERMINISTIC, nullptr,
+                            SQLITE_UTF8 | SQLITE_DETERMINISTIC, nullptr,
+                            SQLITE_UTF8 | SQLITE_DETERMINISTIC, nullptr,
+                            SQLITE_UTF8 | SQLITE_DETERMINISTIC, nullptr,
+                            SQLITE_UTF8 | SQLITE_DETERMINISTIC, nullptr,
+                            SQLITE_UTF8 | SQLITE_DETERMINISTIC, nullptr,
+                            SQLITE_UTF8 | SQLITE_DETERMINISTIC, nullptr,
+                            SQLITE_UTF8 | SQLITE_DETERMINISTIC, this,
+                            SQLITE_UTF8 | SQLITE_DETERMINISTIC, this,
+        hDB, "ST_EnvIntersects", 2, SQLITE_UTF8 | SQLITE_DETERMINISTIC, nullptr,
+        hDB, "ST_EnvelopesIntersects", 2, SQLITE_UTF8 | SQLITE_DETERMINISTIC,
+        hDB, "ST_EnvIntersects", 5, SQLITE_UTF8 | SQLITE_DETERMINISTIC, nullptr,
+        hDB, "ST_EnvelopesIntersects", 5, SQLITE_UTF8 | SQLITE_DETERMINISTIC,
+                            SQLITE_UTF8 | SQLITE_DETERMINISTIC, nullptr,
+                            SQLITE_UTF8 | SQLITE_DETERMINISTIC, this, nullptr,
+                                SQLITE_UTF8 | SQLITE_DETERMINISTIC, nullptr,
+                            SQLITE_UTF8 | SQLITE_DETERMINISTIC, nullptr,
+                                SQLITE_UTF8 | SQLITE_DETERMINISTIC, nullptr,
+                                SQLITE_UTF8 | SQLITE_DETERMINISTIC, nullptr,
+                                SQLITE_UTF8 | SQLITE_DETERMINISTIC, nullptr,
+/work2/00434/eijkhout/gdal/gdal-3.7.0/ogr/ogrsf_frmts/gpkg/ogrgeopackagedatasource.cpp
+        SQLITE_UTF8 | SQLITE_DETERMINISTIC, m_poFillArrowArray.get(), nullptr,
+                            -1, SQLITE_UTF8 | SQLITE_DETERMINISTIC, nullptr,
+        SQLITE_UTF8 | SQLITE_DETERMINISTIC, &sFillArrowArray, nullptr,
+                            -1, SQLITE_UTF8 | SQLITE_DETERMINISTIC, nullptr,
+/work2/00434/eijkhout/gdal/gdal-3.7.0/ogr/ogrsf_frmts/gpkg/ogrgeopackagetablelayer.cpp

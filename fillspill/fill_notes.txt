@@ -1,0 +1,6 @@
+have to add to the CMake config:
+
+install( FILES
+    ${CMAKE_CURRENT_BINARY_DIR}/fsm_paper_scaling_tests.exe
+    ${CMAKE_CURRENT_BINARY_DIR}/fsm_unittests.exe
+    DESTINATION bin )
