@@ -19,19 +19,23 @@ HASBIN = 1
 include ${MAKEINCLUDES}/Make.cbuild
 HASCUDA = OFF
 CMAKEFLAGS = \
+    $$( if [ ${PACKAGEVERSION} != "git" ] ; then echo '-D ACPP_VERSION_SUFFIX="-"' ; fi ) \
     -D BOOST_ROOT=${TACC_BOOST_DIR} -D Boost_NO_SYSTEM_PATHS=On \
     -D WITH_CUDA_BACKEND=${HASCUDA} -DWITH_ROCM_BACKEND=OFF -DWITH_LEVEL_ZERO_BACKEND=OFF \
+    \
+    -D BUILD_CLANG_PLUGIN=OFF \
+    -D CMAKE_CXX_COMPILER=${TACC_CXX} \
     -D WITH_ACCELERATED_CPU=OFF
 
 .PHONY: cpu gpu
 cpu : 
-	@make --no-print-directory HASCUDA=OFF \
+	@make --no-print-directory HASCUDA=OFF NONMODULES=cuda \
 	    configure build
 gpu : 
 	@if [ "${TACC_SYSTEM}" = "frontera" ] ; then \
 	    echo && echo "Last time I looked Frtonera did not have LLVM" && echo \
 	     && exit 1 ; fi
-	@make --no-print-directory HASCUDA=ON  \
+	@make --no-print-directory HASCUDA=ON \
 	    configure build
 .PHONY: default_install
 info ::
