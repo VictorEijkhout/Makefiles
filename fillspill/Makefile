@@ -16,6 +16,7 @@ include ${MAKEINCLUDES}/Make.info
 ## NOLIB = 1
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
+HASBIN = 1
 NOLIB = 1
 #NOINSTALL = 1
 default_install : configure build public
