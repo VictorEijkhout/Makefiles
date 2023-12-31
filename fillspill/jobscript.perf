@@ -6,7 +6,7 @@
 #SBATCH -p small      # Queue (partition) name
 #SBATCH -N 1               # Total # of nodes 
 #SBATCH -n 4              # Total # of mpi tasks
-#SBATCH -t 05:00:00        # Run time (hh:mm:ss)
+#SBATCH -t 12:00:00        # Run time (hh:mm:ss)
 ##SBATCH --mail-user=myname@myschool.edu
 ##SBATCH --mail-type=all    # Send email at begin and end of job
 #SBATCH -A A-ccsc       # Allocation name (req'd if you have more than 1)
@@ -14,7 +14,8 @@
 # Other commands must follow all #SBATCH directives...
 
 module load gdal fillspillmerge
-cd $TACC_FILLSPILLMERGE_BIN
+cd ${TACC_FILLSPILLMERGE_BIN}
+ls
 
 module list
 pwd

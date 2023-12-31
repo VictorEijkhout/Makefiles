@@ -26,17 +26,20 @@ done
 package=$1
 
 cd ${HOME}/Software
-for compiler in intel19 intel23 gcc9 gcc13 ; do
+for compiler in intel19 intel23 intel24 gcc9 gcc13 ; do
     ( \
-	echo "================================================================" \
-	&& echo "================ Compiler: ${compiler} ================" \
-	&& echo "================================================================" \
-	&& source env_${TACC_SYSTEM}_${compiler}.sh \
-	&& for m in ${modules} ; do module load $m ; done \
-	&& module list \
-	&& cd $package \
-	&& make JCOUNT=${jcount} ${target} \
-	    $( if [ ! -z ${version} ] ; then echo PACKAGEVERSION=${version} ; fi ) \
+       settings=env_${TACC_SYSTEM}_${compiler}.sh \
+	&& if [ -f ${settings} ] ; then \
+	    echo "================================================================" \
+	    && echo "================ Compiler: ${compiler} ================" \
+	    && echo "================================================================" \
+	    && source ${settings}  \
+	    && for m in ${modules} ; do module load $m ; done \
+	    && module list \
+	    && cd $package \
+	    && make JCOUNT=${jcount} ${target} \
+	        $( if [ ! -z ${version} ] ; then echo PACKAGEVERSION=${version} ; fi ) \
+	  ; fi \
     )
 done 2>&1 | tee all_${package}.log
 echo && echo "See: all_${package}.log" && echo
