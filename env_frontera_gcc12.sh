@@ -20,5 +20,8 @@ export TACC_CXX=g++
 export TACC_FC=gfortran
 module load impi/21.9.0
 module load mkl
-#module load python3
+
+module use /opt/apps/gcc9_1/modulefiles
+module load python3/3.9.2
+
 module list
