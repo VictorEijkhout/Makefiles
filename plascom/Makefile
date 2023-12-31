@@ -23,6 +23,8 @@ CMAKEFLAGS =
 
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
+.PHONY: default_install
+default_install : configure build
 
 GITREPO = git@github.com:chess-uiuc/plascom2.git
 SUBMODULE = 1
