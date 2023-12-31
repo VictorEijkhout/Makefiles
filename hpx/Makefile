@@ -13,12 +13,13 @@ MODULES = boost
 
 include ${MAKEINCLUDES}/Make.info
 
-# PKGCONFIGLIB = pkgconfig
 include ${MAKEINCLUDES}/Make.cmake
 CMAKEFLAGS = \
     -D Boost_ROOT=${TACC_BOOST_DIR} \
     -D HPX_WITH_MALLOC=system \
     -D HPX_WITH_FETCH_ASIO=ON
+HASBIN = 1
+PKGCONFIGLIB = pkgconfig
 include ${MAKEINCLUDES}/Make.cbuild
 default_install : configure build public
 
