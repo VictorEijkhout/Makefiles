@@ -1,12 +1,12 @@
 #!/bin/bash
 
 jcount=6
-pversion=3.20.1
+pversion=3.20.2
 function usage() {
     echo "Usage: $0 [ -h ] [ -v (default: ${pversion} ]"
     echo "    [ -j jpar (default: ${jcount}) ]"
     echo "    [ -c : cuda build ]"
-    echo "    [ -3 customext ]"
+    echo "    [ -e customext ]"
     echo "    [ -4 : skip petsc/slepc4py ]"
 }
 
@@ -31,6 +31,7 @@ while [ $# -gt 0 ] ; do
     fi
 done
 
+set -e
 if [ "${TACC_FAMILY_COMPILER}" = "gcc" ] ; then
     module load mkl
 fi
@@ -41,6 +42,11 @@ module load hypre/2.29.0
 module load phdf5/1.14
 
 if [ "${cuda}" = "1" ] ; then 
+    cversion=${TACC_FAMILY_COMPILER_VERSION}
+    cversion=${cversion%%.*}
+    if [ ${cversion} -gt 12 ] ; then 
+	echo "ERROR can not deal with gcc > 12" && exit 1
+    fi
     module load cuda/12
 fi
 
@@ -48,7 +54,7 @@ export biglog=big_install$( if [ ! -z "${customext}" ] ; then echo "-${customext
 rm -f $biglog
 make --no-print-directory biginstall JCOUNT=${jcount} PACKAGEVERSION=${pversion} \
     $( if [ ! -z "${customext}" ] ; then echo CUSTOMEXT=${customext} ; fi ) \
-    EIGEN=1 FFTW3=1 HDF5=1 HYPRE=1 \
+    AMGX=1 CHACO=1 EIGEN=1 FFTW3=1 HDF5=1 HYPRE=1 PARMETIS=1 \
     CUDA=${cuda} FORTRAN=1 \
     PETSC4PY=${p4p} SLEPC4PY=${p4p} \
     2>&1 | tee -a ${biglog}
