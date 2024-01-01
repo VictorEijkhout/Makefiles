@@ -5,7 +5,8 @@
 ################################################################
 
 PACKAGE = hypre
-URL = https://github.com/hypre-space/hypre
+URL = https://github.com/hypre-space/hypre \
+    https://hypre.readthedocs.io/en/latest/ch-misc.html#cmake-instructions
 PACKAGEVERSION = 2.29.0
 
 MODE = mpi
@@ -18,9 +19,11 @@ info ::
 .PHONY: small big
 small :
 	@make --no-print-directory configure build public JCOUNT=${JCOUNT} \
+	    CMAKEFLAGS="-D HYPRE_ENABLE_SHARED=ON" \
 	    INSTALLVARIANT=i32 
 big :
 	@make --no-print-directory configure build public JCOUNT=${JCOUNT} \
+	    CMAKEFLAGS="-D HYPRE_ENABLE_SHARED=ON -D HYPRE_ENABLE_BIGINT=ON" \
 	    CONFIGUREFLAGS=--enable-bigint \
 	    INSTALLVARIANT=i64 INSTALLEXT=i64
 default_install : small big
@@ -37,7 +40,6 @@ MAKESUBDIR = src
 ## cmake version
 ##
 CMAKESUBDIR = src
-CMAKEFLAGS = -D HYPRE_ENABLE_SHARED=ON
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
 
