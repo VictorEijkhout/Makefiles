@@ -1,7 +1,7 @@
 #!/bin/bash
 
 jcount=6
-pversion=3.20.2
+pversion=3.20.3
 function usage() {
     echo "Usage: $0 [ -h ] [ -v (default: ${pversion} ]"
     echo "    [ -j jpar (default: ${jcount}) ]"
