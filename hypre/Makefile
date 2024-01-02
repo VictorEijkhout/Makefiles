@@ -7,7 +7,7 @@
 PACKAGE = hypre
 URL = https://github.com/hypre-space/hypre \
     https://hypre.readthedocs.io/en/latest/ch-misc.html#cmake-instructions
-PACKAGEVERSION = 2.29.0
+PACKAGEVERSION = 2.30.0
 
 MODE = mpi
 MODULES = 
@@ -40,6 +40,7 @@ MAKESUBDIR = src
 ## cmake version
 ##
 CMAKESUBDIR = src
+CMAKEPREFIXPATHSET = 1
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
 
