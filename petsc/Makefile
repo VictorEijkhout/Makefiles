@@ -5,7 +5,7 @@
 ################################################################
 
 PACKAGE = PETSC
-PACKAGEVERSION = 3.20.2
+PACKAGEVERSION = 3.20.3
 MODE = mpi
 
 include ${MAKEINCLUDES}/Make.info
@@ -82,7 +82,7 @@ petscarch :
 	 && requirenonzero compilercode && requirenonzero mpicode \
 	 && petscarch=$${taccsystemcode}-$${compilercode}$${compilershortversion}-$${mpicode} \
 	 && petscext=$$( make --no-print-directory petscshortarch ) \
-	 && if [ -z $${petscext} ] ; then \
+	 && if [ -z "$${petscext}" -o "$${petscext}" = "vanilla" ] ; then \
 	      echo ${PACKAGEVERSION}; \
 	    else \
 	      echo ${PACKAGEVERSION}-$${petscext} ; \
@@ -123,7 +123,9 @@ build :: modules
 	        \
 	        PETSC4PY=${PETSC4PY} SLEPC4PY=${SLEPC4PY} \
 	        )" \
-	 && export param_settings="$$( make --no-print-directory param_settings )" \
+	 && export param_settings="$$( make --no-print-directory param_settings \
+	        DEBUG=${DEBUG} INT=${INT} PRECISION=${PRECISION} SCALAR=${SCALAR} \
+		)" \
 	 && ( \
 	    if [ ! -d $$srcdir ] ; then \
 	        echo && echo "SRCDIR does not exist: $$srcdir" && echo && exit 1 ; fi \
@@ -213,7 +215,7 @@ info ::
 	@echo "make biginstall [ EXT=i64debug and such ]"
 	@echo "    build specific configuration"
 	@echo "    packages specified by HDF5=1 and such"
-.PHONY: biginstall allinstall
+.PHONY: listextensions biginstall allinstall
 EXTENSIONS = \
     "" debug i64 i64-debug single single-debug \
     complex complex-debug complexi64 complexi64-debug \
@@ -221,6 +223,8 @@ EXTENSIONS = \
 info ::
 	@echo "make allinstall [ JCOUNT= PACKAGEVERSION= ]"
 	@echo "    biginstall for all extensions except cuda"
+listextensions :
+	@echo "vanilly ${EXTENSIONS}"
 allinstall :
 	@log=$$( pwd )/allinstall.log \
 	 && for ext in ${EXTENSIONS} ; do \
@@ -240,12 +244,17 @@ biginstall :
 	   && case $${ext} in ( *complex* ) SCALAR=complex ;; ( * ) SCALAR=real ;; esac \
 	   \
 	   && echo "Selecting packages" \
+	   && CHACO=${CHACO} && HDF5=${HDF5} && HYPRE=${HYPRE} && PARMETIS=${PARMETIS} \
 	   && if [ "${CUDA}" != "1" -a "${AMGX}" = "1" ] ; then \
 	        echo " .. disable AMGX because no CUDA" && AMGX=0 \
 	      ; else AMGX=${AMGX} ; fi \
-	   && case $${ext} in ( *nohdf5* ) HDF= ;; ( *single* ) HDF5= ;; ( * ) HDF5=${HDF5} ;; \
-	        esac \
 	   && if [ "${PARMETIS}" = "1" ] ; then MUMPS=1 ; else MUMPS=${MUMPS}; fi \
+	   && case $${ext} in \
+	        ( *nohdf5* ) HDF= ;; esac \
+	   && case $${ext} in \
+	        ( *single* ) HDF5= ; HYPRE= ;; esac \
+	   && case $${ext} in \
+	        ( *i64* ) CHACO= ; MUMPS= ; PARMETIS= ;; esac \
 	   \
 	   && echo "Compiler issues" \
 	   && case ${TACC_FAMILY_COMPILER} in \
@@ -257,8 +266,9 @@ biginstall :
 	      DEBUG=$${DEBUG} INT=$${INT} PRECISION=$${PRECISION} SCALAR=$${SCALAR} \
 	      $$( if [ ! -z ${CUSTOMEXT} ] ; then echo CUSTOMEXT=${CUSTOMEXT} ; fi ) \
 	      \
-	      AMGX=$${AMGX} EIGEN=${EIGEN} FFTW3=${FFTW3} HDF5=$${HDF5} HYPRE=${HYPRE} \
-	      MUMPS=$${MUMPS} PARMETIS=${PARMETIS} \
+	      AMGX=$${AMGX} CHACO=$${CHACO} EIGEN=${EIGEN} FFTW3=${FFTW3} \
+	      HDF5=$${HDF5} HYPRE=$${HYPRE} \
+	      MUMPS=$${MUMPS} PARMETIS=$${PARMETIS} \
 	      \
 	      CUDA=${CUDA} FORTRAN=$${FORTRAN} \
 	      PETSC4PY=${PETSC4PY} SLEPC4PY=${SLEPC4PY} \
