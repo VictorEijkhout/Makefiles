@@ -1,19 +1,20 @@
 ################################################################
 ####
-#### Makefile for gsl
+#### Makefile for OPENBLAS installation
 ####
 ################################################################
 
-PACKAGE = gsl
-PACKAGEVERSION = 4.0.0
-URL = https://github.com/microsoft/GSL
+PACKAGE = OPENBLAS
+URL = https://github.com/OpenMathLib/OpenBLAS
+PACKAGEVERSION = 0.3.24
 MODE = seq
 
 include ${MAKEINCLUDES}/Make.info
 
+## PKGCONFIGLIB = pkgconfig
+
 include ${MAKEINCLUDES}/Make.cmake
-NOLIB = 1
 include ${MAKEINCLUDES}/Make.cbuild
 
-TGZURL = https://github.com/microsoft/GSL/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
+TGZURL = https://github.com/OpenMathLib/OpenBLAS/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download

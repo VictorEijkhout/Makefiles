@@ -1,0 +1,3 @@
+#ifndef SQLITE_DETERMINISTIC
+#define SQLITE_DETERMINISTIC 0
+#endif

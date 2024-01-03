@@ -1,0 +1,42 @@
+#!/bin/bash
+
+#SBATCH -J myjob           # Job name
+#SBATCH -o rateljob44.o%j       # Name of stdout output file
+#SBATCH -e rateljob44.o%j       # Name of stderr error file
+#SBATCH -p normal      # Queue (partition) name
+#SBATCH -N 3
+#SBATCH -n 100              # Total # of mpi tasks
+#SBATCH -t 00:10:00        # Run time (hh:mm:ss)
+#SBATCH -A A-ccsc       # Allocation name (req'd if you have more than 1)
+
+PROGRAM=${EXAMPLESDIR}/ex02-quasistatic
+if [ ! -f "${PROGRAM}" ] ; then 
+  echo "No such executable: ${PROGRAM}"
+  exit 1
+fi
+
+set -x 
+ibrun \
+    ${PROGRAM} \
+    $( cat ratel444.options )
+
+## Jed 2022/07/18
+## bin/ratel-quasistatic 
+## -bc_clamp 1 -bc_traction 2 -bc_traction_2 .02,0,0 
+## -dm_plex_shape schwarz_p -dm_plex_tps_extent 4,4,4 -dm_plex_tps_layers 3 
+## -dm_plex_tps_refine 2 -dm_plex_tps_thickness .3 -dm_view 
+## -E 1 
+## -ksp_converged_reason -ksp_rtol 1e-3 
+## -log_view 
+## -model elasticity-neo-hookean-current -nu .3 -order 2 
+## -snes_converged_reason -snes_monitor 
+## -ts_adapt_monitor -ts_max_steps 1 
+## -use_gpu_aware_mpi 0 
+## -snes_linesearch_type basic -snes_linesearch_damping .1
+
+## ## Jed's original:
+## mpiexec -n 32 -bind-to core build/ex02-quasistatic-elasticity
+## -dm_plex_shape schwarz_p -dm_plex_tps_thickness .3 -dm_plex_tps_extent 4,4,4 -dm_plex_tps_layers 3 -dm_plex_tps_refine 2 -material fs-current-nh -E 1 -nu .3 -bc_clamp 1 -bc_traction 2 -bc_traction_2 .2,0,0 
+## -ts_dt .25 -order 2 -ts_adapt_monitor 
+## -snes_monitor -ksp_converged_reason -dm_view 
+## -ksp_rtol 1e-3 -snes_converged_reason -log_view

@@ -16,6 +16,8 @@ CMAKFLAGS=\
 include ${MAKEINCLUDES}/Make.cmake
 PKGCONFIG = share/pkgconfig
 include ${MAKEINCLUDES}/Make.cbuild
+.PHONY: default_install
+default_install : configure build
 
 TGZURL = https://github.com/madler/zlib/releases/download/v${PACKAGEVERSION}/zlib-${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download

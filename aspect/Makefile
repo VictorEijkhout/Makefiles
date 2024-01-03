@@ -2,13 +2,13 @@
 ####
 #### Makefile for Aspect installation
 ####
-#### https://aspect.geodynamics.org/
 #### https://github.com/geodynamics/aspect
 ####
 ################################################################
 
 PACKAGE = ASPECT
-PACKAGEVERSION = 2.4.0
+URL = https://aspect.geodynamics.org/
+PACKAGEVERSION = 2.5.0
 MODE = mpi
 MODULES = dealii
 # dealii newer than 9.3
@@ -22,7 +22,7 @@ CMAKEFLAGS = \
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
 
-ASPECT_BIN = ${ASPECT_INSTALLATION}/bin
+HASBIN = 1
 
 TGZURL = https://github.com/geodynamics/aspect/releases/download/v${PACKAGEVERSION}/aspect-${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download

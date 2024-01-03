@@ -5,25 +5,28 @@
 ################################################################
 
 PACKAGE = p4est
-PACKAGEVERSION = 2.8
+URL = http://p4est.org/ https://github.com/cburstedde/p4est
+PACKAGEVERSION = 2.8.5
+## PACKAGEVERSION = 2.8.5.5-9ddbb
+
 MODE = mpi
 MODULES = petsc
 
 include ${MAKEINCLUDES}/Make.info
 
-CONFIGUREFLAGS=--enable-mpi
-## CMAKEFLAGS=--enable-mpi
-PKGCONFIG = lib/pkgconfig
+PKGCONFIGLIB = pkgconfig
 
 ##
 ## configure version
 ##
-#LIBS = -lirc
+CONFIGUREFLAGS=--enable-mpi
 include ${MAKEINCLUDES}/Make.configure
 include ${MAKEINCLUDES}/Make.install
+
 ##
 ## cmake version
 ##
+# CMAKEFLAGS=--enable-mpi
 # include ${MAKEINCLUDES}/Make.cmake
 # include ${MAKEINCLUDES}/Make.cbuild
 
@@ -31,6 +34,7 @@ TGZURL = https://p4est.github.io/release/p4est-${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 
 GITREPO = https://github.com/cburstedde/p4est.git
+BRANCH = master
 SUBMODULE = yes
 PULLAFTERACTIONS = ./bootstrap
 include ${MAKEINCLUDES}/Make.git

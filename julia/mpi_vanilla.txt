@@ -1,0 +1,19 @@
+julia> MPIPreferences.use_system_binary()
+┌ Info: MPI implementation identified
+│   libmpi = "libmpi"
+│   version_string = "Intel(R) MPI Library 2019 Update 9 for Linux* OS\n"
+│   impl = "IntelMPI"
+│   version = v"2019.9.0"
+└   abi = "MPICH"
+┌ Info: MPIPreferences changed
+│   binary = "system"
+│   libmpi = "libmpi"
+│   abi = "MPICH"
+│   mpiexec = "mpiexec"
+│   preloads = Any[]
+└   preloads_env_switch = nothing
+
+
+MPIPreferences.use_system_binary()
+using MPIPreferences
+import Pkg; Pkg.add("MPIPreferences")

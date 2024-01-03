@@ -10,7 +10,7 @@ PACKAGE = HDF5
 URL = https://portal.hdfgroup.org/display/HDF5/Parallel+HDF5
 # there is a micro version but we ignore that for now.
 PACKAGESHORTVERSION = 1.14
-PACKAGEVERSION = 1.14.0
+PACKAGEVERSION = 1.14.3
 # 1.14.1 is out but uses weird-ass naming of the tgz
 MODE = mpi
 MODULES = zlib
@@ -18,17 +18,24 @@ MODULES = zlib
 include ${MAKEINCLUDES}/Make.info
 
 HDF5PARALLEL = ON
+ifeq "${TACC_FAMILY_COMPILER}" "gcc"
+  HDFFORTRAN = OFF
+else
+  HDFFORTRAN = ON
+endif
+
 CMAKEFLAGS = \
   -D HDF5_ENABLE_Z_LIB_SUPPORT:BOOL=ON \
   -D ZLIB_DIR:PATH=${TACC_ZLIB_DIR} \
   -D ZLIB_INCLUDE_DIR:PATH=${TACC_ZLIB_INC} \
   -D ZLIB_LIBRARY:PATH=${TACC_ZLIB_LIB}/libz.so \
   \
+  -D HDF5_BUILD_FORTRAN:BOOL=${HDFFORTRAN} \
   -D HDF5_ENABLE_PARALLEL:BOOL=${HDF5PARALLEL}
 
 include ${MAKEINCLUDES}/Make.cmake
 HASBIN=1
-PKGCONFIG = lib/pkgconfig
+PKGCONFIGLIB = pkgconfig
 include ${MAKEINCLUDES}/Make.cbuild
 
 info ::
@@ -36,13 +43,27 @@ info ::
 	@echo "make seq : sequential installation"
 .PHONY: seq par
 seq :
-	make configure build JCOUNT=${JCOUNT} \
-	    HDF5PARALLEL=OFF MODE=seq
+	@make configure build JCOUNT=${JCOUNT} \
+	    PACKAGEVERSION=${PACKAGEVERSION} \
+	    HDF5PARALLEL=OFF MODE=seq MODULENAME=hdf5
 par :
-	make configure build JCOUNT=${JCOUNT} \
-	    HDF5PARALLEL=ON  MODE=mpi MODULENAME=phdf5
+	@make configure build JCOUNT=${JCOUNT} \
+	    PACKAGEVERSION=${PACKAGEVERSION} \
+	    HDF5PARALLEL=ON  MODE=mpi MODULENAME=phdf5 MODULENAMEALT=hdf5
+default_install :: 
+	@make --no-print-directory seq par JCOUNT=${JCOUNT} PACKAGEVERSION=${PACKAGEVERSION} \
+	    seq par
 
+##
+## download
+##
 TGZURL = https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-${PACKAGESHORTVERSION}/hdf5-${PACKAGEVERSION}/src/hdf5-${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
+
+##
+## git clone
+##
+GITREPO = https://github.com/HDFGroup/hdf5.git
+include ${MAKEINCLUDES}/Make.git
 include ${MAKEINCLUDES}/Make.clean
 

@@ -5,8 +5,10 @@
 ################################################################
 
 PACKAGE = boost
-PACKAGEVERSION = 1.81.0
-PACKAGEVERSION_DOWNLOAD = 1_81_0
+PACKAGEVERSION = 1.83.0
+PACKAGEVERSION_DOWNLOAD = 1_83_0
+URL = https://www.boost.org/ \
+    https://www.boost.org/doc/libs/${PACKAGEVERSION_DOWNLOAD}/tools/build/doc/html/index.html
 MODE = seq
 MODULES = 
 
@@ -16,25 +18,34 @@ info ::
 	@echo "================ bootstrap install"
 	@echo "make build"
 .PHONY: configure build
-configure ::
+configure :: modules
 	@echo "there is no configure rule"
 build ::
 	@source ${MAKEINCLUDES}/names.sh \
 	     && export MODE=${MODE} && export INSTALLROOT=${INSTALLROOT} \
-	     && setnames ${PACKAGEROOT} ${PACKAGE} ${PACKAGEVERSION} ${INSTALLEXT} \
-	     && setmodulenames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" \
-	     && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" \
+	     && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" "" "" \
 	 && ( \
 	    rm -rf $$builddir && mkdir -p $$builddir \
 	     && rm -rf $$installdir && mkdir -p $$installdir \
 	     && cd $$srcdir \
 	     && ./bootstrap.sh --prefix=$$installdir \
 	        --with-libraries=atomic,chrono,container,context,contract,coroutine,date_time,exception,fiber,filesystem,graph,graph_parallel,headers,iostreams,json,locale,log,math,mpi,nowide,program_options,python,random,regex,serialization,stacktrace,system,test,thread,timer,type_erasure,url,wave \
-	     && ./b2 install --prefix=$$installdir --build-dir=$$builddir --toolset=intel \
-	    ) 2>&1 | tee $@.log \
-	 && make --no-print-directory varsmodule
+	     && ./b2 toolset=gcc \
+	          variant=release link=shard debug-symbols=off inlining=full \
+	          address-model=64  stage --with-fiber --with-context --with-test --with-atomic --with-filesystem --with-headers install \
+	          --prefix=$${installdir} --build-dir=$${builddir} \
+	     && echo "not /b2 --with-fiber --with-context --with-filesystem --with-atomic --with-test" \
+	     && echo "not ./b2 install --prefix=$$installdir --build-dir=$$builddir toolset=gcc" \
+	     && echo "inoperative option: link=shared" >/dev/null \
+	    ) 2>&1 | tee $$installlog \
+	 && make --no-print-directory varsmodule \
+	      CMAKEPREFIXLIB=cmake
+.PHONY: default_install
+default_install : configure build
+
 include ${MAKEINCLUDES}/Make.vars
+## NOLIB = 1
 include ${MAKEINCLUDES}/Make.public
 
-TGZURL = https://boostorg.jfrog.io/artifactory/main/release/1.81.0/source/boost_${PACKAGEVERSION_DOWNLOAD}.tar.gz
+TGZURL = https://boostorg.jfrog.io/artifactory/main/release/${PACKAGEVERSION}/source/boost_${PACKAGEVERSION_DOWNLOAD}.tar.gz
 include ${MAKEINCLUDES}/Make.download

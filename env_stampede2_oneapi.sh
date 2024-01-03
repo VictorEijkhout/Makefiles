@@ -12,6 +12,9 @@ module use ${VICTOR_MODULEPATH_ROOT}/Core
 
 intelversion=22.3.0
 module load oneapi/${intelversion}
+export TACC_CC=icx
+export TACC_CC=icpx
+export TACC_FC=ifx
 module load impi/21.4.0
 
 # module load intel22/python3

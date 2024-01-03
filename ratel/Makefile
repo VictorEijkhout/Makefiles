@@ -4,11 +4,11 @@
 ####
 ################################################################
 
-URL = https://gitlab.com/micromorph/ratel
+URL = https://gitlab.com/micromorph/ratel https://ratel.micromorph.org/examples/
 PACKAGE = RATEL
 PACKAGEVERSION = git
 CHMODR = 1
-MODULES = petsc libceed
+MODULES = libceed petsc
 MODE = mpi
 
 include ${MAKEINCLUDES}/Make.info
@@ -16,51 +16,67 @@ include ${MAKEINCLUDES}/Make.info
 JCOUNT = 12
 .PHONY: configure build
 info ::
-	echo "make configure build"
+	@echo "make configure : does nothing"
 configure ::
-	@echo "there is no separate configure rule"
+	@source ${MAKEINCLUDES}/names.sh \
+	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" "${VARIANT}" "${MODULENAME}" "${MODE}" \
+	 && ( echo "there is no separate configure rule" ) \
+	| tee $${configurelog}
+info :: 
+	@echo "make build : compile & examples"
 build :: modules
-	@( \
-	source ${MAKEINCLUDES}/names.sh \
-	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" \
+	@source ${MAKEINCLUDES}/names.sh \
+	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" "${VARIANT}" "${MODULENAME}" "${MODE}" \
 	 \
 	 && source ${MAKEINCLUDES}/compilers.sh \
-	 && setcompilers && reportcompilers \
+	 && setmpicompilers && reportcompilers \
 	 \
-	 && echo "export CEED_DIR=[path to libCEED] PETSC_DIR=[path to PETSc] PETSC_ARCH=[PETSc arch] ENZYME_LIB=[path to Enzyme]" \
+	 && ( \
+	    echo "export CEED_DIR=[path to libCEED] PETSC_DIR=[path to PETSc] PETSC_ARCH=[PETSc arch] ENZYME_LIB=[path to Enzyme]" \
 	 && export CEED_DIR=${TACC_LIBCEED_DIR} \
 	 && export PETSC_DIR=${TACC_PETSC_DIR} && export PETSC_ARCH=${PETSC_ARCH} \
 	 && echo "make with PETSC_DIR=$${PETSC_DIR}, PETSC_ARCH=$${PETSC_ARCH}, CEED_DIR=$${CEED_DIR}" \
 	 && echo "into builddir: $${builddir}" \
 	 && requirenonzero srcdir \
 	 && cd $$srcdir \
-	 && make --no-print-directory \
-	        -B OPT=-g $${CCEXTRA} -j ${JCOUNT} V=1 \
-	        BUILDDIR=$$builddir/ \
-	        prefix=$$installdir \
-	        lib install \
-	 && ratelpc=$${installdir}/lib/pkgconfig/ratel.pc \
-	 && if [ ! -f $$ratelpc ] ; then \
-	        echo "was expecting to find ratel.pc at $$ratelpc" \
-	    ; else \
-	        echo ".. fixing ratel.pc" \
-	         && [ 1 ] || sed -i \
-	            -e '/prefix=/s?=.*?='$${builddir}'?' \
-	            -e '/includedir=/s?=.*?='$${srcdir}/include'?' \
-	            $${ratelpc} \
-	         && cat $${ratelpc} \
-	    ; fi \
-	 && if [ "${CHMODR}" = "1" ] ; then \
-	    echo "setting permissions open" \
-	     && chmod -R g+rX,o+rX $${builddir} \
-	; fi \
-	 ) 2>&1 | tee install.log \
-	 && echo "See install.log"
+	 && cmdline="make --no-print-directory -j ${JCOUNT} V=1 install examples \
+	        prefix=$${installdir} BUILDDIR=$${builddir}/ " \
+	 && echo "make cmdline: $$cmdline" && eval $$cmdline \
+	 && cmdline="make --no-print-directory -j ${JCOUNT} V=1  examples \
+	        prefix=$${installdir} BUILDDIR=$${builddir}" \
+	 && echo "examples cmdline: $$cmdline" && eval $$cmdline \
+	 && cp -r $${srcdir}/examples $${installdir} \
+	 ) 2>&1 | tee $$installlog \
+	 && echo "See $$installlog"
+## pkgconfig=$${installdir}/pkgconfig" 
+PKGCONFIGLIB = pkgconfig
+include ${MAKEINCLUDES}/Make.vars
+HASBIN = 1
+build ::
+	@make --no-print-directory varsmodule
+
+default_install :
+	@make configure build PACKAGEVERSION=git JCOUNT=${JCOUNT}
+full_install :
+	@( \
+	    ( cd ../petsc  \
+	       && make PACKAGEVERSION=3.20.0 JCOUNT=${JCOUNT} \
+	             configure build CUSTOMEXT=ratel ) \
+	 && module load petsc/3.20-ratel \
+	 && ( cd ../libceed \
+	       && make PACKAGEVERSION=git JCOUNT=${JCOUNT} \
+	            pull default_install ) \
+	 && module load libceed/git \
+	 && make pull default_install PACKAGEVERSION=git JCOUNT=${JCOUNT} \
+	 ) 2>&1 | tee full.log
 
 info ::
+	@echo "================ ratel examples"
 	@echo "make examples : copy and build examples"
-.PHONY: examples
-examples : petsc-installation
+	@echo "----------------"
+.PHONY: examples copied_examples
+examples : modules
+copied_examples : modules 
 	@examples=examples-${PETSC_ARCH} \
 	 && if [ "${TAU}" = "1" ] ; then \
 	     examples=$${examples}-tau \
@@ -68,7 +84,7 @@ examples : petsc-installation
 	 && rm -rf $${examples} \
 	 && ( \
 	    source ${MAKEINCLUDES}/names.sh \
-	     && setnames ${PACKAGEROOT} ${PACKAGE} ${PACKAGEVERSION} \
+	     && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" "${VARIANT}" "${MODULENAME}" "${MODE}" \
 	     && ( cp -r $${srcdir}/examples $${examples} \
 	         && cd $${examples} \
 	         && builddir=$${builddir}-$${PETSC_ARCH} \
@@ -80,7 +96,7 @@ examples : petsc-installation
 	         && pcloc=$${installdir}/lib/pkgconfig \
 	             && if [ -f $${pcloc}/ratel.pc ] ; then \
 	                  echo "using $${pcloc}/ratel.pc:" \
-	                   && cat $${pcloc}/ratel.pc \
+	                   && echo "cat $${pcloc}/ratel.pc" >/dev/null \
 	                ; else \
 	                  echo "Can not find ratel.pc at: $${pcloc}" && exit 1 \
 	                ; fi \
@@ -100,8 +116,8 @@ examples : petsc-installation
 
 SIZE = 44
 .PHONY: submit
-info :: 
-	@echo "make submit [ SIZE=... from 44 3030 ] [ TAU= 0/1 ]"
+# info :: 
+# 	@echo "make submit [ SIZE=... from 44 3030 ] [ TAU= 0/1 ]"
 submit :
 	@echo "Submitting example run" \
 	 && if [ "${TAU}" = "1" ] ; then \
@@ -126,8 +142,8 @@ submit :
 #### TAU
 ####
 
-info ::
-	@echo "make tau_process TAUDIR=..."
+# info ::
+# 	@echo "make tau_process TAUDIR=..."
 .PHONY: tau_process
 TAUDIR = 
 tau_process :
@@ -145,7 +161,7 @@ tau_process :
 
 include ${MAKEINCLUDES}/Make.clean
 info ::
-	@echo "================"
+	@echo "----------------"
 	@echo "make traceclean : remove logs and traces"
 	@echo "make installclean : remove installations"
 	@echo "make totalclean : everything clean"
@@ -165,7 +181,7 @@ errorclean :: clean
 traceclean :: clean
 	@rm -rf tau_trace*
 clean ::
-	@rm -f *~ *.log rateljob*.o*
+	@rm -f *~ *.log rateljob*.o* *.yml
 totalclean :: traceclean installclean
 
 ####

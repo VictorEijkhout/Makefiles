@@ -15,6 +15,10 @@ MODE = seq
 include ${MAKEINCLUDES}/Make.info
 
 ## JULIA_INSTALL = ${STOCKYARD}/julia/installation-${TACC_SYSTEM}-${TACC_FAMILY_COMPILER}
+info ::
+	@echo "================ custom build"
+	@echo "make configure : not needed"
+	@echo "make build : custom installation"
 .PHONY: configure build
 configure ::
 	@echo "there is no configure rule"
@@ -34,11 +38,52 @@ build ::
 	     && make --no-print-directory install \
 	    ) 2>&1 | tee $$installlog
 ##  BUILDROOT=$$builddir
+
+.PHONY: projecttoml
+build :: 
+#projecttoml
+projecttoml :
+	@source ${MAKEINCLUDES}/names.sh \
+	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" \
+	 && cd $$installdir \
+	 && mkdir -p share/tacc \
+	 && for line in \
+	      "[extras]" \
+	      "MPIPreferences = \"3da0fdf6-3ccc-4f1b-acd9-58baa6c99267\"" \
+	      "" \
+	      "[preferences.MPIPreferences]" \
+	      "_format = \"1.0\"" \
+	      "binary = \"system\"" \
+	      "libmpi = \"libmpi\"" \
+	      "version_string = \"Intel(R) MPI Library 2019 Update 9 for Linux* OS\n\"" \
+	      "impl = \"IntelMPI\"" \
+	      "version = v\"2019.9.0\"" \
+	      "abi = \"MPICH\"" \
+	      "mpiexec = \"ibrun\"" \
+	    ; do \
+	      echo $$line \
+	    ; done > share/tacc/Project.toml
+
+include ${MAKEINCLUDES}/Make.vars
+HASBIN = 1
+EXTRAINSTALLPATHS="JULIA_LOAD_PATH=share/tacc"
+build ::
+	@make --no-print-directory module
+
 include ${MAKEINCLUDES}/Make.public
 build ::
 	@make public
 
 GITREPO = https://github.com/JuliaLang/julia.git
 include ${MAKEINCLUDES}/Make.git
+
 include ${MAKEINCLUDES}/Make.clean
 
+.PHONY: completely_clean
+info ::
+	@echo "make completely_clean : include .julia and such"
+completely_clean : clean
+	@/bin/rm -rf ${HOME}/.julia
+	@source ${MAKEINCLUDES}/names.sh \
+	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" \
+	 && rm -rf $$srcdir $$builddir $$installdir

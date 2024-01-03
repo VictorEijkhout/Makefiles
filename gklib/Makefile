@@ -2,54 +2,47 @@
 ####
 #### Makefile for GKlib installation
 ####
-#### https://github.com/KarypisLab/Gklib
-####
 ################################################################
 
 PACKAGE = gklib
+URL = https://github.com/KarypisLab/Gklib
 PACKAGEVERSION = git
 MODE = mpi
 MODULES = 
 
 include ${MAKEINCLUDES}/Make.info
 
+info ::
+	@echo "================ Configure"
+	@echo "note: custom configure rule"
+	@echo "    NOX86 nonzero for non-x86 archs"
+NOX86 =
 configure :: 
 	@if [ ! -z "${SETX}" ] ; then set -x ; fi \
 	 && source ${MAKEINCLUDES}/names.sh \
-	 && export MODE=${MODE} \
-	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" \
+	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" "${VARIANT}" "${MODULENAME}" "${MODE}" \
 	 \
 	 && source ${MAKEINCLUDES}/compilers.sh \
 	 && setmpicompilers \
-	 && reportcompilers \
+	 && ( reportnames \
 	 \
-	 && rm -rf $${builddir} \
-	 && mkdir -p $${builddir} \
-	 && cp Makefile.gklib $${srcdir}/Makefile \
-	 && if [ "${TACC_SYSTEM}" = "macbookair" ] ; then \
-	        nox86="-D NO_X86" ; fi \
-	 && ( cd $${builddir} \
-	     && cmake \
-	            -DCMAKE_VERBOSE_MAKEFILE=1 \
+	     && rm -rf $${builddir} \
+	     && mkdir -p $${builddir} \
+	     && cp Makefile.gklib $${srcdir}/Makefile \
+	     && if [ ! -z "${NOX86}" -o "${TACC_SYSTEM}" = "macbookair" ] ; then \
+	          export nox86="-D NO_X86" ; fi \
+	     && cd $${builddir} \
+	     && cmdline="cmake \
 	            -D CMAKE_INSTALL_PREFIX=$${installdir} \
 	            -D CMAKE_C_COMPILER=$${CC} \
 	            -D OPENMP=$${ompflag} \
-	            -D CMAKE_C_FLAGS="-D_POSIX_C_SOURCE=200809L $${nox86}" \
+	            -D CMAKE_C_FLAGS=\"-D_POSIX_C_SOURCE=200809L $${nox86}\" \
 	            -D CMAKE_POSITION_INDEPENDENT_CODE=ON \
-	          $${srcdir} \
+	          $${srcdir}" \
+	     && echo "cmake cmdline: $$cmdline" \
+	     && echo "    where nox86=<<$${nox86}>> and ompflag=<<$${ompflag}>>" \
+	     && eval $$cmdline \
 	    ) 2>&1 | tee $${configurelog}
-oldconfigure :
-	 && ( cd $${srcdir} \
-	     && make BUILDDIR=$${builddir} \
-	          CONFIG_FLAGS="\
-	                -DCMAKE_VERBOSE_MAKEFILE=1 \
-	                -D CMAKE_INSTALL_PREFIX=$${installdir} \
-	                -D CMAKE_C_COMPILER=$${CC} \
-	                -D OPENMP=$${ompflag} \
-	                -D CMAKE_C_FLAGS=\"-D_POSIX_C_SOURCE=200809L $${nox86}\" \
-	                -D CMAKE_POSITION_INDEPENDENT_CODE=ON \
-	                " \
-	            config
 
 ## NO_X86 for mac
 ## posix 200809L for getline
@@ -60,7 +53,7 @@ build ::
 	@if [ ! -z "${SETX}" ] ; then set -x ; fi \
 	 && source ${MAKEINCLUDES}/names.sh \
 	 && export MODE=${MODE} \
-	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" \
+	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" "${VARIANT}" "${MODULENAME}" "${MODE}" \
 	 && ( cd $${srcdir} \
 	    && make V=1 BUILDDIR=$${builddir} \
 	    && make BUILDDIR=$${builddir} install \

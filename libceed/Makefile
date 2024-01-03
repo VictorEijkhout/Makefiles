@@ -22,7 +22,7 @@ build :: modules
 	@\
 	source ${MAKEINCLUDES}/names.sh \
 	 && export MODE=${MODE} \
-	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" "${VARIANT}" \
+	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" "${VARIANT}" "${MODULENAME}" "${MODE}" \
 	 \
 	 && ( \
 	    source ${MAKEINCLUDES}/compilers.sh \
@@ -39,6 +39,8 @@ build :: modules
 	     ) 2>&1 | tee $$installlog \
 	 && echo "See $$installlog"
 include ${MAKEINCLUDES}/Make.vars
+default_install :
+	@make configure build PACKAGEVERSION=git JCOUNT=${JCOUNT}
 
 # ####
 # #### Examples
