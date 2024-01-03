@@ -21,7 +21,10 @@ export TACC_FC=gfortran
 module load impi/21.9.0
 module load mkl
 
-module use /opt/apps/gcc9_1/modulefiles
+# load an old python
+module use -a /opt/apps/gcc9_1/modulefiles
+# this prepends the gcc modules. Raaaahhhh!
 module load python3/3.9.2
+export MODULEPATH=$( splitpath MODULEPATH | sed -e '1d' | assemblepath )
 
 module list
