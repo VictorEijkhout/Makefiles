@@ -6,7 +6,7 @@
 
 PACKAGE = CATCH2
 URL = https://github.com/catchorg/Catch2
-PACKAGEVERSION = 3.1.1
+PACKAGEVERSION = 3.5.1
 MODE = seq
 MODULES = 
 
