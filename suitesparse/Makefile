@@ -7,7 +7,7 @@
 PACKAGE = SUITESPARSE
 PACKAGEVERSION = 7.0.1
 MODE = seq
-MODULES = 
+MODULES = mpfr
 
 include ${MAKEINCLUDES}/Make.info
 
@@ -27,6 +27,7 @@ build ::
 	    cd $$srcdir \
 	     && CMAKE_OPTIONS="\
 	        -D CMAKE_C_COMPILER=$${cc} -D CMAKE_CXX_COMPILER=$${cxx} \
+	        -D CMAKE_C_FLAGS=-diag-disable=10441 -D CMAKE_CXX_FLAGS=-diag-disable=10441 \
 	        -D CMAKE_INSTALL_PREFIX=$$installdir \
 	        -D BUILD_SHARED_LIBS=TRUE \
 	                      " \
