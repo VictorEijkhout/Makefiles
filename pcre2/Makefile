@@ -15,6 +15,7 @@ include ${MAKEINCLUDES}/Make.info
 
 include ${MAKEINCLUDES}/Make.cmake
 PKGCONFIGLIB = pkgconfig
+CMAKEPREFIXPATHSET=1
 include ${MAKEINCLUDES}/Make.cbuild
 .PHONY: default_install
 default_install : configure build
