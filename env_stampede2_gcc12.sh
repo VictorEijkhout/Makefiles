@@ -15,6 +15,6 @@ module load gcc/${gccversion}
 export TACC_CC=gcc
 export TACC_CXX=g++
 export TACC_FC=gfortran
-module load impi/19.0.5
+module load impi/19.0.9
 
 module list
