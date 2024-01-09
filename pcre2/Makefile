@@ -14,6 +14,7 @@ MODE = seq
 include ${MAKEINCLUDES}/Make.info
 
 include ${MAKEINCLUDES}/Make.cmake
+PKGCONFIGLIB = pkgconfig
 include ${MAKEINCLUDES}/Make.cbuild
 
 TGZURL = https://github.com/PCRE2Project/pcre2/releases/download/pcre2-10.42/pcre2-${PACKAGEVERSION}.tar.gz
