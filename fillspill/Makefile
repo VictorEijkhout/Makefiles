@@ -15,12 +15,13 @@ include ${MAKEINCLUDES}/Make.info
 
 PKGCONFIGLIB = pkgconfig
 CMAKEFLAGS = \
+    -D RICHDEM_NO_PROGRESS=ON \
     -D USE_GDAL=ON
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
 HASBIN = 1
 NOLIB = 1
-#NOINSTALL = 1
+
 .PHONY: default_install
 default_install : configure build public
 
