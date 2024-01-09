@@ -26,12 +26,12 @@ build ::
 	     && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" "" "" \
 	 && ( \
 	    rm -rf $$builddir && mkdir -p $$builddir \
-	     && rm -rf $$installdir && mkdir -p $$installdir \
+	     && mkdir -p $$installdir && rm -rf $$installdir/* \
 	     && cd $$srcdir \
 	     && ./bootstrap.sh --prefix=$$installdir \
 	        --with-libraries=atomic,chrono,container,context,contract,coroutine,date_time,exception,fiber,filesystem,graph,graph_parallel,headers,iostreams,json,locale,log,math,mpi,nowide,program_options,python,random,regex,serialization,stacktrace,system,test,thread,timer,type_erasure,url,wave \
 	     && ./b2 toolset=gcc \
-	          variant=release link=shard debug-symbols=off inlining=full \
+	          variant=release link=shared debug-symbols=off inlining=full \
 	          address-model=64  stage --with-fiber --with-context --with-test --with-atomic --with-filesystem --with-headers install \
 	          --prefix=$${installdir} --build-dir=$${builddir} \
 	     && echo "not /b2 --with-fiber --with-context --with-filesystem --with-atomic --with-test" \
