@@ -69,11 +69,16 @@ fi
 if [ "${DEBUG}" = "1" ] ; then
     EXTENSION=${EXTENSION}debug
 fi
+if [ "$TACC_FAMILY_COMPILER}" = "intel" ] ; then
+    CHACO=0
+else
+    CHACO=1
+fi
 cmdline="\
 make --no-print-directory biginstall JCOUNT=${jcount} PACKAGEVERSION=${pversion} \
     EXT=${EXTENSION} \
     $( if [ ! -z "${customext}" ] ; then echo CUSTOMEXT=${customext} ; fi ) \
-    AMGX=1 CHACO=1 EIGEN=1 FFTW3=1 HDF5=1 HYPRE=1 PARMETIS=1 \
+    AMGX=1 CHACO=${CHACO} EIGEN=1 FFTW3=1 HDF5=1 HYPRE=1 PARMETIS=1 \
     CUDA=${cuda} FORTRAN=1 \
     PETSC4PY=${p4p} SLEPC4PY=${p4p} \
 "
