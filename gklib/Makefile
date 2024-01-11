@@ -62,6 +62,9 @@ build ::
 include ${MAKEINCLUDES}/Make.vars
 include ${MAKEINCLUDES}/Make.public
 
+.PHONY: default_install
+default_install : configure build
+
 clean ::
 	@source ${MAKEINCLUDES}/names.sh \
 	 && export MODE=${MODE} \
