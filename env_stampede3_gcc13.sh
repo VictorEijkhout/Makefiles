@@ -18,12 +18,10 @@ export MODULEROOT=${VICTOR_WORK}/modulefiles
 export VICTOR_MODULEPATH_ROOT=${MODULEROOT}
 module use ${VICTOR_MODULEPATH_ROOT}/Core
 
-intelversion=24.0
-echo "loading intel ${intelversion}"
-module load intel/${intelversion}
-export TACC_CC=icx
-export TACC_CXX=icpx
-export TACC_FC=ifx
+gccversion=13.2.0
+echo "loading gcc ${gccversion}"
+module load gcc/${gccversion}
+export TACC_CC=
 module load impi/21.11
 
 module list
