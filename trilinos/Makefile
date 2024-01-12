@@ -84,6 +84,11 @@ build ::
 	 && requirenonzero TACC_NETCDF_INC \
 	 && cp ${TACC_NETCDF_INC}/netcdf*.h $${installdir}/include
 
+.PHONY: default_install
+info ::
+	@echo "make default_install : configure build"
+default_install : configure build
+
 TGZURL = https://github.com/trilinos/Trilinos/archive/refs/tags/trilinos-release-${PACKAGEVERSION_DOWNLOAD}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 
