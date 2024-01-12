@@ -9,13 +9,13 @@ export VICTOR_MODULEPATH_ROOT=${MODULEROOT}
 
 module use ${VICTOR_MODULEPATH_ROOT}/Core
 
-module load intel/23.1.0
-export TACC_FAMILY_COMPILER=intel
-export TACC_FAMILY_COMPILER_VERSION=23
+module load intel/24.0
+#export TACC_FAMILY_COMPILER=intel
+#export TACC_FAMILY_COMPILER_VERSION=23
 export TACC_CC=icx
 export TACC_CXX=icpx
 export TACC_FC=ifx
-module load impi/21.9.0
+module load impi/21.11
 
 # module load intel22/python3
 
