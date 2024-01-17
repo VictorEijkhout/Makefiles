@@ -46,6 +46,10 @@ BINDIR = x86_64/bin
 NOLIB = 1
 include ${MAKEINCLUDES}/Make.vars
 build :: varsmodule
+
+info ::
+	@echo "make default_install : configure build"
+.PHONY: default_install
 default_install : configure build public
 
 TGZURL = http://tau.uoregon.edu/tau.tgz
