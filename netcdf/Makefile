@@ -2,8 +2,7 @@
 ####
 #### Makefile for Netcdf installation
 ####
-#### IS THIS STILL VALID?
-#### SUPERSEDE WITH PNETCDF?
+#### this is the C version
 ####
 ################################################################
 
@@ -19,6 +18,7 @@ include ${MAKEINCLUDES}/Make.info
 
 include ${MAKEINCLUDES}/Make.cmake
 HASBIN=1
+CMAKEPREFIXPATHSET = 1
 PKGCONFIGLIB = pkgconfig
 NETCDF_PARALLEL = ON
 CMAKEFLAGS = \
@@ -27,6 +27,8 @@ CMAKEFLAGS = \
     -D ENABLE_DAP=OFF
 include ${MAKEINCLUDES}/Make.cbuild
 .PHONY: seq par
+info ::
+	@echo "make seq par : separate versions"
 seq :
 	@make --no-print-directory configure build JCOUNT=${JCOUNT} \
 	    MODE=seq MODULES=hdf5 NETCDF_PARALLEL=OFF \
@@ -36,6 +38,8 @@ par :
 	    MODE=mpi MODULES=phdf5 NETCDF_PARALLEL=ON \
 	    MODULENAME=pnetcdf MODULENAMEALT=netcdf
 .PHONY: default_install
+info ::
+	@echo "make default_install: parallel version"
 default_install : par
 
 TGZURL = https://downloads.unidata.ucar.edu/netcdf-c/${PACKAGEVERSION}/netcdf-c-${PACKAGEVERSION}.tar.gz
