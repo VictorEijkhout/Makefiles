@@ -8,7 +8,7 @@ PACKAGE = tau
 URL = https://www.cs.uoregon.edu/research/tau/home.php
 PACKAGEVERSION = 2.33
 MODE = mpi
-MODULES = 
+MODULES = pdtoolkit
 
 include ${MAKEINCLUDES}/Make.info
 
@@ -24,7 +24,7 @@ configure ::
 	    cd $$srcdir \
 	     && ./configure -prefix=$${installdir} \
 	            -bfd=download -dwarf=download -unwind=download -iowrapper \
-	            -mpi -c++=icpx \
+	            -mpi -c++=${TACC_CXX} \
 	            -pdt=${TACC_PDTOOLKIT_DIR} \
 	    ) \
 	    | tee $${configurelog}
