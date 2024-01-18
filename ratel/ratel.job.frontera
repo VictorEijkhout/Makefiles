@@ -48,7 +48,7 @@ if [ -z "${SLURM_NPROCS}" ] ; then
     echo "Please run this only in an idev session" && exit 1 
 fi
 echo "Using max ${SLURM_NPROCS} cores"
-set -x
+profiledir=${WORK}/tau-${TACC_SYSTEM}
 while [ ${np} -lt ${SLURM_NPROCS} ] ; do
     echo "==============================================================="
     echo "==============================================================="
@@ -57,7 +57,7 @@ while [ ${np} -lt ${SLURM_NPROCS} ] ; do
 	| sed -e 's/4,4,4/'${box}','${box}','${box}'/' \
 	> ${optionsfile}
     cat ${optionsfile}
-    profdir=${WORK}/tau/profile${np}.dir && rm -rf $profdir && mkdir -p $profdir 
+    profdir=${profiledir}/profile${np}.dir && rm -rf $profdir && mkdir -p $profdir 
     export PROFILEDIR=${profdir}
     # export TAU_CALLSITE=1 ## 
     export TAU_EBS_UNWIND=1
@@ -79,6 +79,8 @@ while [ ${np} -lt ${SLURM_NPROCS} ] ; do
     box=$(( 3 * box / 2 ))
     np=$(( 6 * np ))
 done
-ls ${WORK}/tau
-chmod g+rX,o+rX ${WORK}/tau
+
+echo && echo "See TAU profiles in ${profiledir}" && echo
+ls ${pfofiledir}
+chmod g+rX,o+rX ${profiledir}
 
