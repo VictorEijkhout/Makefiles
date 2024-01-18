@@ -4,7 +4,7 @@
 ################################################################
 
 cd ~/Software/petsc
-make pull 
+make pull PACKAGEVERSION=git
 make biginstall PACKAGEVERSION=git CUSTOMEXT=ratel JCOUNT=8
 if [ $? -gt 0 ] ; then exit 1; fi
 module load petsc/git-ratel
