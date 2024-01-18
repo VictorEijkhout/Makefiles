@@ -23,5 +23,11 @@ module load impi/21.9.0
 
 module load mkl
 
-#module load python3
+# get /opt/apps/gcc9_1/python3/3.8.2/bin/python3
+pv=3.8
+pvv=3.8.2
+export PATH=/opt/apps/gcc9_1/python3/${pvv}/bin:${PATH}
+export LD_LIBRARY_PATH=/opt/apps/gcc9_1/python3/${pvv}/lib:${LD_LIBRARY_PATH}
+export PYTHONPATH=/opt/apps/gcc9_1/impi19_0/python3/${pvv}/lib/python${pv}/site-packages:${PYTHONPATH}
+
 module list

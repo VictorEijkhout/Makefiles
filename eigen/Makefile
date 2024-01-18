@@ -16,6 +16,8 @@ PKGCONFIG = share/pkgconfig
 include ${MAKEINCLUDES}/Make.cmake
 NOLIB = 1
 include ${MAKEINCLUDES}/Make.cbuild
+.PHONY: default_install
+default_install : configure build
 
 TGZURL = https://gitlab.com/libeigen/eigen/-/archive/${PACKAGEVERSION}/eigen-${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download

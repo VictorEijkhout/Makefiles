@@ -1,12 +1,12 @@
 #!/bin/bash
 
 jcount=6
-pversion=3.20.1
+pversion=3.20.3
 function usage() {
     echo "Usage: $0 [ -h ] [ -v (default: ${pversion} ]"
     echo "    [ -j jpar (default: ${jcount}) ]"
     echo "    [ -c : cuda build ]"
-    echo "    [ -3 customext ]"
+    echo "    [ -e customext ]"
     echo "    [ -4 : skip petsc/slepc4py ]"
 }
 
@@ -31,27 +31,59 @@ while [ $# -gt 0 ] ; do
     fi
 done
 
+set -e
 if [ "${TACC_FAMILY_COMPILER}" = "gcc" ] ; then
     module load mkl
 fi
 
 module load eigen
 module load fftw3
-module load hypre/2.29.0
+if [ "${INT}" = "64" ] ; then 
+    module load hypre/2.30.0-i64
+else
+    module load hypre/2.30.0
+fi
 module load phdf5/1.14
 
 if [ "${cuda}" = "1" ] ; then 
+    cversion=${TACC_FAMILY_COMPILER_VERSION}
+    cversion=${cversion%%.*}
+    if [ ${cversion} -gt 12 ] ; then 
+	echo "ERROR can not deal with gcc > 12" && exit 1
+    fi
     module load cuda/12
 fi
 
-export biglog=big_install$( if [ ! -z "${customext}" ] ; then echo "-${customext}" ; fi ).log
+export biglog=install_big$( if [ ! -z "${customext}" ] ; then echo "-${customext}" ; fi ).log
 rm -f $biglog
+EXTENSION=
+if [ "${SCALAR}" = "complex" ] ; then 
+    EXTENSION=${EXTENSION}complex
+fi
+if [ "${PRECISION}" = "single" ] ; then 
+    EXTENSION=${EXTENSION}single
+fi
+if [ "${INT}" = "64" ] ; then 
+    EXTENSION=${EXTENSION}i64
+fi
+if [ "${DEBUG}" = "1" ] ; then
+    EXTENSION=${EXTENSION}debug
+fi
+if [ "$TACC_FAMILY_COMPILER}" = "intel" ] ; then
+    CHACO=0
+else
+    CHACO=1
+fi
+cmdline="\
 make --no-print-directory biginstall JCOUNT=${jcount} PACKAGEVERSION=${pversion} \
+    EXT=${EXTENSION} \
     $( if [ ! -z "${customext}" ] ; then echo CUSTOMEXT=${customext} ; fi ) \
-    EIGEN=1 FFTW3=1 HDF5=1 HYPRE=1 \
+    AMGX=1 CHACO=${CHACO} EIGEN=1 FFTW3=1 HDF5=1 HYPRE=1 PARMETIS=1 \
     CUDA=${cuda} FORTRAN=1 \
     PETSC4PY=${p4p} SLEPC4PY=${p4p} \
-    2>&1 | tee -a ${biglog}
+"
+echo "cmdline: $cmdline" | tee -a ${biglog}
+eval $cmdline  2>&1 | tee -a ${biglog}
 
 echo && echo "See: ${biglog}" && echo
     

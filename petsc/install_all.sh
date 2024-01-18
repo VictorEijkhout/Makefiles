@@ -1,22 +1,24 @@
 #!/bin/bash
 
-jcount=6
-pversion=3.20.0
 function usage() {
-    echo "Usage: $0 [ -h ] [ -j 123 ] [ -v (default: ${pversion} ]"
+    echo "Usage: $0 [ -h ] "
+    echo "    [ -v (default: ${pversion} ]"
+    echo "    [ -j jpar (default: ${jcount}) ]"
+    echo "    [ -c : cuda build ]"
     echo "    [ -4 : skip petsc/slepc4py ]"
-    echo "    [ -f : skip fortran ]"
 }
 
+cuda=0
+jcount=6
 p4p=1
-fort=1
+pversion=3.20.3
 while [ $# -gt 0 ] ; do
     if [ $1 = "-h" ] ; then
 	usage && exit 0
     elif [ $1 = "-4" ] ; then 
 	p4p=0 && shift
-    elif [ $1 = "-f" ] ; then 
-	fort=0 && shift
+    elif [ $1 = "-c" ] ; then 
+	cuda=1 && shift
     elif [ $1 = "-j" ] ; then
 	shift && jcount=$1 && shift
     elif [ $1  = "-v" ] ; then 
@@ -26,15 +28,20 @@ while [ $# -gt 0 ] ; do
     fi
 done
 
-if [ "${TACC_FAMILY_COMPILER}" = "gcc" ] ; then
-    module load mkl
-fi
-module load eigen
-module load fftw3
-#module load libceed
-module load phdf5/1.14
-
-make --no-print-directory allinstall \
-     PACKAGEVERSION=${pversion} JCOUNT=${jcount} \
-     FORTRAN=${fort} PETSC4PY=${p4p} SLEPC4PY=${p4p}
+set -e
+for debug in 0 1 ; do 
+    for int in 32 64 ; do 
+	for precision in single double ; do
+	    for scalar in real complex ; do 
+		export DEBUG=${debug}
+		export INT=${int}
+		export PRECISION=${precision}
+		export SCALAR=${scalar} 
+		./install_big.sh -j ${jcount} \
+		    $( if [ ${p4p} -eq 0 ] ; then echo "-4" ; fi ) \
+		    $( if [ ${cuda} -eq 1 ] ; then echo "-c" ; fi )
+	    done
+	done
+    done
+done
 

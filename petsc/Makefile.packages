@@ -13,8 +13,9 @@ info ::
 	        )" \
 	 && echo "    set nonzero for packages: $${PACKAGELIST}"
 
-packagelist = libceed chaco eigen fftw hdf5 hypre kokkos mpe mumps \
+packagelist = amgx chaco eigen fftw hdf5 hypre kokkos mpe mumps \
     petsc4py ptscotch slepc slepc4py superlu triangle zoltan
+# libceed
 
 ##
 ## generate the line with all package options
@@ -49,11 +50,10 @@ package_location :
 	 && eval taccvar=\$${$${taccvarname}} \
 	 && echo "tacc var $${taccvarname} = $${taccvar}" >/dev/null \
 	 && if [ ! -z "$${taccvar}" ] ; then \
-	      echo "--with-$${p}-dir=$${taccvar}" \
-	    ; else eval echo "--download-$${p}=1 \$${$${p}_extra}" \
+	        echo "--with-$${p}-dir=$${taccvar}" \
+	    ; else \
+	        eval echo "--download-$${p}=1 \$${$${p}_extra}" \
 	    ; fi
-# --download-slepc-commit=HEAD
-# slepc may need: 
 
 ##
 ## debug rule: not used in production
@@ -69,6 +69,17 @@ package_values :
 FORTRAN = 0
 info ::
 	@echo "    [ FORTRAN=0/1 (default: ${FORTRAN}) ]"
+
+MPI_FLAGS = --with-mpi-compilers=1
+ifeq "${TACC_SYSTEM}" "nvarm"
+  MPI_FLAGS = --with-mpi-compilers=1 --with-cc=`which mpicc` --with-cxx=`which mpicxx` 
+endif
+
+X = 0
+info ::
+	@echo "    [ X=0/1, default=${X}]"
+WITH_X = "--with-x=1"
+
 info ::
 	@echo "parameter_settings"
 .PHONY: param_settings
@@ -84,7 +95,10 @@ param_settings :
 	     && export int_option_64="--with-64-bit-indices=1" \
 	 && export precision=${PRECISION} \
 	 && export scalar=${SCALAR} \
-	 && parameters= && dev=1 \
+	 \
+	 && parameters="useThreads=0 --with-perfstubs-tau=1 ${MPI_FLAGS} -with-np=${JCOUNT}" \
+	 && if [ ${X} -eq 1 ] ; then parameters="$${parameters} ${WITH_X}" ; fi \
+	 && echo "what is this" >/dev/null && dev=1 \
 	 && for p in ${parameterlist} ; do \
 	      eval optval=\$${$$p} \
 	       && if [ ! -z "$$optval" ] ; then \

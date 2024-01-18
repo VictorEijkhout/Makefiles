@@ -19,7 +19,13 @@ CONFIGUREFLAGS = --disable-tcl
 include ${MAKEINCLUDES}/Make.configure
 
 EXTRABUILDTARGETS = all sqlite3.pc
+PKGCONFIGLIB = pkgconfig
 include ${MAKEINCLUDES}/Make.install
+
+.PHONY: default_install
+info ::
+	@echo "make default_install"
+default_install : configure build public 
 
 TGZURL = https://www.sqlite.org/src/tarball/sqlite.tar.gz
 ## ?r=release

@@ -5,22 +5,17 @@
 #SBATCH -e myjob.e%j       # Name of stderr error file
 #SBATCH -p small      # Queue (partition) name
 #SBATCH -N 1               # Total # of nodes 
-#SBATCH -n 4              # Total # of mpi tasks
-#SBATCH -t 12:00:00        # Run time (hh:mm:ss)
+#SBATCH -n 1              # Total # of mpi tasks
+#SBATCH -t 08:0:0        # Run time (hh:mm:ss)
 ##SBATCH --mail-user=myname@myschool.edu
 ##SBATCH --mail-type=all    # Send email at begin and end of job
 #SBATCH -A A-ccsc       # Allocation name (req'd if you have more than 1)
 
 # Other commands must follow all #SBATCH directives...
 
-module load gdal fillspillmerge
-cd ${TACC_FILLSPILLMERGE_BIN}
-ls
-
 module list
 pwd
 date
 
-# Launch MPI code... 
-perf record --call-graph fp ./fsm_paper_scaling_tests.exe
+./install_all.sh -j 50
 

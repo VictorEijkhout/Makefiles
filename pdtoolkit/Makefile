@@ -17,6 +17,10 @@ NOLIB = 1
 PREFIXOPTION = -prefix
 include ${MAKEINCLUDES}/Make.configure
 include ${MAKEINCLUDES}/Make.install
+
+info ::
+	@echo "make default_install : configure build"
+.PHONY: default_install
 default_install : configure build public
 
 TGZURL = http://tau.uoregon.edu/pdt.tgz

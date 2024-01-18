@@ -33,6 +33,8 @@ CONFIGUREFLAGS = ${CONFIGUREFLAGS_STD}
 PKGCONFIGLIB = pkgconfig
 include ${MAKEINCLUDES}/Make.install
 .PHONY: default_install
+info ::
+	@echo "make default_install : double precision version"
 default_install : double
 .PHONY: single double
 single :

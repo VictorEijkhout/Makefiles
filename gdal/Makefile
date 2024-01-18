@@ -12,7 +12,9 @@ MODULES = jsonc proj swig zlib
 
 include ${MAKEINCLUDES}/Make.info
 
+# weird: there is a lib/python & lib64/pkgconfig
 PKGCONFIGLIB = pkgconfig
+CMAKEPREFIXPATHSET = 1
 HASBIN = 1
 # the following solves:
 # libsqlite3.so lacks the RTree extension!

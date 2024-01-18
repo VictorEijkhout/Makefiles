@@ -32,10 +32,11 @@ module load impi/21.11
 # export PATH=/scratch1/projects/compilers/oneapi_2021.4.0.3422/intelpython/python3.7/bin/:$PATH
 # export PYTHONPATH=/opt/apps/intel19/impi19_0/python3/3.7.0/lib/python3.7/site-packages:$PYTHONPATH
 
-pv=3.9
-pvv=3.9.2
-export PATH=/opt/apps/intel19/python3/${pvv}/bin:${PATH}
-export LD_LIBRARY_PATH=/opt/apps/intel19/python3/${pvv}/lib:${LD_LIBRARY_PATH}
-export PYTHONPATH=/opt/apps/intel19/impi19_0/python3/${pvv}/lib/python${pv}/site-packages:${PYTHONPATH}
+module load python3/3.9.2
+# pv=3.9
+# pvv=3.9.2
+# export PATH=/opt/apps/intel19/python3/${pvv}/bin:${PATH}
+# export LD_LIBRARY_PATH=/opt/apps/intel19/python3/${pvv}/lib:${LD_LIBRARY_PATH}
+# export PYTHONPATH=/opt/apps/intel19/impi19_0/python3/${pvv}/lib/python${pv}/site-packages:${PYTHONPATH}
 
 module list
