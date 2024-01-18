@@ -21,6 +21,11 @@ make default_install JCOUNT=8
 if [ $? -gt 0 ] ; then exit 1; fi
 module load ratel
 
+cd ../pdtoolkit
+make configure build JCOUNT=8
+if [ $? -gt 0 ] ; then exit 1; fi
+module load pdtoolkit
+
 cd ../tau
 make configure build JCOUNT=8
 if [ $? -gt 0 ] ; then exit 1; fi
