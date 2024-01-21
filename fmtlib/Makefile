@@ -12,6 +12,8 @@ MODE = seq
 include ${MAKEINCLUDES}/Make.info
 
 include ${MAKEINCLUDES}/Make.cmake
+CMAKEFLAGS = \
+    -D FMT_TEST=OFF
 PKGCONFIGLIB = pkgconfig
 include ${MAKEINCLUDES}/Make.cbuild
 default_install : configure build
