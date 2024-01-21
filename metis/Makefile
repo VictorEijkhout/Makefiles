@@ -17,6 +17,11 @@ include ${MAKEINCLUDES}/Make.info
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
 
+.PHONY: default_install
+info ::
+	@echo "make default_install : configure build"
+default_install : configure build
+
 TGZURL = https://github.com/scivision/METIS/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 

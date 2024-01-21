@@ -42,6 +42,11 @@ complex :
 	@make --no-print-directory configure build PACKAGEVERSION=${PACKAGEVERSION} \
 	    INSTALLEXT="complex" CMAKEFLAGS="${CMAKEFLAGS} -DDEAL_II_WITH_PETSC_COMPLEX=ON"
 
+.PHONY: default_install
+info ::
+	@echo "make default_install : real version, there is also complex"
+default_install : real
+
 GITREPO = https://github.com/dealii/dealii/archive/v${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.git
 
