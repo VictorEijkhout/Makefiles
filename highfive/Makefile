@@ -40,6 +40,11 @@ par :
 	make configure build JCOUNT=${JCOUNT} \
 	    PACKAGEVERSION=${PACKAGEVERSION} \
 	    HDF5PARALLEL=ON  MODE=mpi MODULES="${MODULES} phdf5" MODULENAME=phighfive
+info ::
+	@echo "make default_install : sequential version"
+default_install :: 
+	@make --no-print-directory seq par JCOUNT=${JCOUNT} PACKAGEVERSION=${PACKAGEVERSION} \
+	    seq 
 
 TGZURL = https://github.com/BlueBrain/HighFive/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
