@@ -24,6 +24,7 @@ else
 endif
 
 CMAKEFLAGS = \
+  -D BUILD_SHARED_LIBS=TRUE \
   -D HDF5_ENABLE_Z_LIB_SUPPORT:BOOL=ON \
   -D ZLIB_DIR:PATH=${TACC_ZLIB_DIR} \
   -D ZLIB_INCLUDE_DIR:PATH=${TACC_ZLIB_INC} \
@@ -67,4 +68,3 @@ include ${MAKEINCLUDES}/Make.download
 GITREPO = https://github.com/HDFGroup/hdf5.git
 include ${MAKEINCLUDES}/Make.git
 include ${MAKEINCLUDES}/Make.clean
-
