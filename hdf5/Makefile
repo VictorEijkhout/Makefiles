@@ -7,11 +7,10 @@
 ################################################################
 
 PACKAGE = HDF5
-URL = https://portal.hdfgroup.org/display/HDF5/Parallel+HDF5
+URL = https://portal.hdfgroup.org/downloads/index.html
 # there is a micro version but we ignore that for now.
 PACKAGESHORTVERSION = 1.14
 PACKAGEVERSION = 1.14.3
-# 1.14.1 is out but uses weird-ass naming of the tgz
 MODE = mpi
 MODULES = zlib
 
