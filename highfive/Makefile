@@ -5,7 +5,7 @@
 ################################################################
 
 PACKAGE = highfive
-PACKAGEVERSION = 2.7.1
+PACKAGEVERSION = 2.8.0
 URL = https://github.com/BlueBrain/HighFive
 DOCURL = https://bluebrain.github.io/HighFive/
 MODE = mpi
