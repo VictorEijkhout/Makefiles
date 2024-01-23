@@ -24,6 +24,7 @@ CMAKEFLAGS = \
     -D HIGHFIVE_USE_EIGEN=ON \
     -D HIGHFIVE_USE_XTENSOR=OFF \
     -D HIGHFIVE_USE_HALF_FLOAT=OFF
+CMAKEPREFIXPATHSET = 1
 include ${MAKEINCLUDES}/Make.cmake
 ## .cmake files in share/HighFive/CMake/
 NOLIB = 1
