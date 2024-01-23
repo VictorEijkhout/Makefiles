@@ -11,10 +11,9 @@ MODE = seq
 
 include ${MAKEINCLUDES}/Make.info
 
-PKGCONFIGLIB = pkgconfig
-NOLIB = 1
-include ${MAKEINCLUDES}/Make.cmake
-include ${MAKEINCLUDES}/Make.cbuild
+HASBIN = 1
+include ${MAKEINCLUDES}/Make.configure
+include ${MAKEINCLUDES}/Make.install
 default_install : configure build public
 
 TGZURL = https://downloads.unidata.ucar.edu/udunits/${PACKAGEVERSION}/udunits-${PACKAGEVERSION}.tar.gz
