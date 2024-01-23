@@ -7,6 +7,7 @@
 PACKAGE = highfive
 PACKAGEVERSION = 2.7.1
 URL = https://github.com/BlueBrain/HighFive
+DOCURL = https://bluebrain.github.io/HighFive/
 MODE = mpi
 ## note: modules needs hdf5 or phdf5 depending
 MODULES = boost eigen 
