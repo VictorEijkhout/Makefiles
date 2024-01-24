@@ -12,9 +12,9 @@ MODULES = netcdf
  
 include ${MAKEINCLUDES}/Make.info
 
-HASBIN = 1
 include ${MAKEINCLUDES}/Make.configure
 include ${MAKEINCLUDES}/Make.install
+HASBIN = 1
 NOLIB = 1
 CONFIGUREFLAGS = \
     --with-nc-config=${TACC_NETCDF_BIN}/nc-config
