@@ -33,6 +33,10 @@ CMAKEFLAGS = -DBUILD_SHARED_LIBS=ON \
 
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
+info ::
+	@echo "make default_install : configure build"
+.PHONY: default_install
+default_install : configure build
 
 GITREPO = git@github.com:chess-uiuc/chyps.git
 SUBMODULE = 1
