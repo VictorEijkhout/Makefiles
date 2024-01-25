@@ -10,9 +10,10 @@ PACKAGE = mfem
 URL = https://github.com/mfem/mfem
 PACKAGEVERSION = 4.4
 ## 4.5.2 has breaking changes for CHyPS.
+HYPREVERSION = 2.30.0
 
 MODE = mpi
-MODULES = adios2 hypre64 metis
+MODULES = adios2 hypre/${HYPREVERSION}-i64 metis
 
 include ${MAKEINCLUDES}/Make.info
 
