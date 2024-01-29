@@ -1,11 +1,11 @@
 ################################################################
 ####
-#### Makefile for ZLIB installation
+#### Makefile for SZLIB installation
 ####
 ################################################################
 
-PACKAGE = ZLIB
-PACKAGEVERSION = 1.2.13
+PACKAGE = SZLIB
+PACKAGEVERSION = 2.1.1
 MODE = seq
 
 include ${MAKEINCLUDES}/Make.info
@@ -14,9 +14,9 @@ CMAKFLAGS=\
   -D CMAKE_C_FLAGS=-fPIC \
   -D CMAKE_CXX_FLAGS=-fPIC
 include ${MAKEINCLUDES}/Make.cmake
-PKGCONFIG = share/pkgconfig
 include ${MAKEINCLUDES}/Make.cbuild
+default_install : configure build
 
-TGZURL = https://github.com/madler/zlib/releases/download/v${PACKAGEVERSION}/zlib-${PACKAGEVERSION}.tar.gz
+TGZURL = https://docs.hdfgroup.org/archive/support/ftp/lib-external/szip/${PACKAGEVERSION}/src/szip-${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 include ${MAKEINCLUDES}/Make.clean
