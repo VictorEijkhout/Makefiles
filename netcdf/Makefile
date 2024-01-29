@@ -21,6 +21,7 @@ HASBIN=1
 CMAKEPREFIXPATHSET = 1
 PKGCONFIGLIB = pkgconfig
 NETCDF_PARALLEL = ON
+DEPENDSON = phdf5
 CMAKEFLAGS = \
     -D ENABLE_PARALLEL4=${NETCDF_PARALLEL} \
     -D ENABLE_NETCDF_4=ON \
@@ -32,14 +33,14 @@ info ::
 seq :
 	@make --no-print-directory configure build JCOUNT=${JCOUNT} \
 	    MODE=seq MODULES=hdf5 NETCDF_PARALLEL=OFF \
-	    MODULENAME=netcdf
+	    MODULENAME=netcdf DEPENDSON=hdf5
 par :
 	@make --no-print-directory configure build JCOUNT=${JCOUNT} \
 	    MODE=mpi MODULES=phdf5 NETCDF_PARALLEL=ON \
-	    MODULENAME=pnetcdf MODULENAMEALT=netcdf
+	    MODULENAME=pnetcdf MODULENAMEALT=netcdf DEPENDSON=phdf5
 .PHONY: default_install
 info ::
-	@echo "make default_install: parallel version"
+	@echo "make default_install: parallel version, also available: seq"
 default_install : par
 
 TGZURL = https://downloads.unidata.ucar.edu/netcdf-c/${PACKAGEVERSION}/netcdf-c-${PACKAGEVERSION}.tar.gz
