@@ -28,11 +28,15 @@ CMAKEFLAGS = -DBUILD_SHARED_LIBS=ON \
     -D mutation++_DIR=${TACC_MUTATIONPP_DIR} \
     -D Eigen3_DIR=${TACC_EIGEN_DIR} \
     -D Precice_DIR=${TACC_PRECICE_DIR} \
-    -D Petsc_DIR=${PETSC_DIR} \
+    -D Petsc_DIR=${TACC_PETSC_DIR} \
     -D Petsc_LIBRARY=${TACC_PETSC_LIB}/libpetsc.so
 
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
+info ::
+	@echo "make default_install : configure build"
+.PHONY: default_install
+default_install : configure build
 
 GITREPO = git@github.com:chess-uiuc/chyps.git
 SUBMODULE = 1
