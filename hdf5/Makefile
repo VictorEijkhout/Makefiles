@@ -7,11 +7,10 @@
 ################################################################
 
 PACKAGE = HDF5
-URL = https://portal.hdfgroup.org/display/HDF5/Parallel+HDF5
+URL = https://portal.hdfgroup.org/downloads/index.html
 # there is a micro version but we ignore that for now.
 PACKAGESHORTVERSION = 1.14
 PACKAGEVERSION = 1.14.3
-# 1.14.1 is out but uses weird-ass naming of the tgz
 MODE = mpi
 MODULES = zlib
 
@@ -25,6 +24,7 @@ else
 endif
 
 CMAKEFLAGS = \
+  -D BUILD_SHARED_LIBS=TRUE \
   -D HDF5_ENABLE_Z_LIB_SUPPORT:BOOL=ON \
   -D ZLIB_DIR:PATH=${TACC_ZLIB_DIR} \
   -D ZLIB_INCLUDE_DIR:PATH=${TACC_ZLIB_INC} \
@@ -68,4 +68,3 @@ include ${MAKEINCLUDES}/Make.download
 GITREPO = https://github.com/HDFGroup/hdf5.git
 include ${MAKEINCLUDES}/Make.git
 include ${MAKEINCLUDES}/Make.clean
-
