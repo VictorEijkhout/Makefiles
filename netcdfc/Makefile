@@ -1,15 +1,12 @@
 ################################################################
 ####
 #### Makefile for Netcdf installation
-####
-#### IS THIS STILL VALID?
-#### SUPERSEDE WITH PNETCDF?
+#### C basis version
 ####
 ################################################################
 
-PACKAGE = NETCDF
-URL = https://netcdf.geodynamics.org/ \
-    https://github.com/geodynamics/netcdf
+PACKAGE = NETCDFC
+URL = https://github.com/Unidata/netcdf-c
 PACKAGEVERSION = 4.9.2
 MODE = mpi
 MODULES = phdf5
@@ -24,7 +21,8 @@ include ${MAKEINCLUDES}/Make.cbuild
 default_install :
 	@make configure build JCOUNT=${JCOUNT}
 
-TGZURL = https://downloads.unidata.ucar.edu/netcdf-c/${PACKAGEVERSION}/netcdf-c-${PACKAGEVERSION}.tar.gz
+TGZURL = https://github.com/Unidata/netcdf-c/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
+# https://downloads.unidata.ucar.edu/netcdf-c/${PACKAGEVERSION}/netcdf-c-${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 include ${MAKEINCLUDES}/Make.clean
 

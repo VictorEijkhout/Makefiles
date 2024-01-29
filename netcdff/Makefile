@@ -1,21 +1,21 @@
 ################################################################
 ####
 #### Makefile for Netcdf installation
-####
-#### IS THIS STILL VALID?
-#### SUPERSEDE WITH PNETCDF?
+#### Fortran interface
 ####
 ################################################################
 
-PACKAGE = NETCDF
-URL = https://netcdf.geodynamics.org/ \
-    https://github.com/geodynamics/netcdf
-PACKAGEVERSION = 4.9.2
+PACKAGE = NETCDFF
+URL = https://github.com/Unidata/netcdf-fortran \
+    https://docs.unidata.ucar.edu/netcdf-fortran/current \
+    https://docs.unidata.ucar.edu/netcdf-c/current/building_netcdf_fortran.html
+PACKAGEVERSION = 4.6.1
 MODE = mpi
-MODULES = phdf5
+MODULES = phdf5 netcdf
 
 include ${MAKEINCLUDES}/Make.info
 
+CMAKEFLAGS = -DNCDIR=${TACC_NETCDF_DIR}
 include ${MAKEINCLUDES}/Make.cmake
 HASBIN=1
 PKGCONFIGLIB = pkgconfig
@@ -24,7 +24,7 @@ include ${MAKEINCLUDES}/Make.cbuild
 default_install :
 	@make configure build JCOUNT=${JCOUNT}
 
-TGZURL = https://downloads.unidata.ucar.edu/netcdf-c/${PACKAGEVERSION}/netcdf-c-${PACKAGEVERSION}.tar.gz
+TGZURL = https://github.com/Unidata/netcdf-fortran/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 include ${MAKEINCLUDES}/Make.clean
 
