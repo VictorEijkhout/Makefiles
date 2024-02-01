@@ -2,8 +2,6 @@
 ####
 #### Makefile for Netcdf-fortran installation
 ####
-#### https://docs.unidata.ucar.edu/netcdf-c/current/building_netcdf_fortran.html
-####
 ################################################################
 
 PACKAGE = NETCDF-FORTRAN
@@ -18,6 +16,7 @@ include ${MAKEINCLUDES}/Make.info
 include ${MAKEINCLUDES}/Make.cmake
 HASBIN=1
 CMAKEPREFIXPATHSET = 1
+DEPENDSON = netcdf
 PKGCONFIGLIB = pkgconfig
 NETCDF_PARALLEL = ON
 CMAKEFLAGS = \
@@ -31,11 +30,11 @@ info ::
 seq :
 	@make --no-print-directory configure build JCOUNT=${JCOUNT} \
 	    MODE=seq MODULES="hdf5 netcdf" NETCDF_PARALLEL=OFF \
-	    MODULENAME=netcdf_fortran MODULENAMEALT=netcdf
+	    MODULENAME=netcdff MODULENAMEALT=netcdf
 par :
 	@make --no-print-directory configure build JCOUNT=${JCOUNT} \
 	    MODE=mpi MODULES="phdf5 pnetcdf" NETCDF_PARALLEL=ON \
-	    MODULENAME=pnetcdf_fortran MODULENAMEALT=netcdf
+	    MODULENAME=pnetcdff MODULENAMEALT=netcdf
 .PHONY: default_install
 info ::
 	@echo "make default_install: parallel version"
