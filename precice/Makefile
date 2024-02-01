@@ -25,6 +25,10 @@ CMAKEFLAGS = -DBUILD_SHARED_LIBS=ON \
 
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
+info ::
+	@echo "make default_install : configure build"
+.PHONY: default_install
+default_install : configure build
 
 TGZURL = https://github.com/precice/precice/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download

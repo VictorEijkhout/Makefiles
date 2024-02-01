@@ -44,6 +44,4 @@ for debug in 0 1 ; do
 	done
     done
 done
-# make --no-print-directory allinstall \
-#      PETSC4PY=${p4p} SLEPC4PY=${p4p}
 

@@ -28,6 +28,8 @@ CMAKEFLAGS = \
     -D WITH_ACCELERATED_CPU=OFF
 
 .PHONY: cpu gpu
+info ::
+	@echo "make cpu / gpu (load cuda or not)"
 cpu : 
 	@make --no-print-directory HASCUDA=OFF NONMODULES=cuda \
 	    configure build
