@@ -30,11 +30,11 @@ info ::
 seq :
 	@make --no-print-directory configure build JCOUNT=${JCOUNT} \
 	    MODE=seq MODULES="hdf5 netcdf" NETCDF_PARALLEL=OFF \
-	    MODULENAME=netcdff MODULENAMEALT=netcdf
+	    MODULENAME=netcdff MODULENAMEALT=netcdf DEPENDSON=netcdf
 par :
 	@make --no-print-directory configure build JCOUNT=${JCOUNT} \
 	    MODE=mpi MODULES="phdf5 pnetcdf" NETCDF_PARALLEL=ON \
-	    MODULENAME=pnetcdff MODULENAMEALT=netcdf
+	    MODULENAME=pnetcdff MODULENAMEALT=netcdf DEPENDSON=pnetcdf
 .PHONY: default_install
 info ::
 	@echo "make default_install: parallel version"
