@@ -1,13 +1,14 @@
 ################################################################
 ####
-#### Makefile for UDUNITS installation
+#### Makefile for CDO installation
 ####
 ################################################################
 
-PACKAGE = UDUNITS
-URL = https://www.unidata.ucar.edu/software/udunits/
-PACKAGEVERSION = 2.2.28
+PACKAGE = CDO
+URL = https://code.mpimet.mpg.de/projects/cdo/wiki/Cdo#Download-Compile-Install
+PACKAGEVERSION = 2.3.0
 MODE = seq
+MODULES = netcdff netcdf
 
 include ${MAKEINCLUDES}/Make.info
 
@@ -16,5 +17,5 @@ include ${MAKEINCLUDES}/Make.configure
 include ${MAKEINCLUDES}/Make.install
 default_install : configure build public
 
-TGZURL = https://downloads.unidata.ucar.edu/udunits/${PACKAGEVERSION}/udunits-${PACKAGEVERSION}.tar.gz
+TGZURL = https://code.mpimet.mpg.de/attachments/download/29019/cdo-${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
