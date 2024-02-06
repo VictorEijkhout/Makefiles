@@ -4,6 +4,8 @@
 ####
 #### note: also comes in C++ and Fortran download
 #### 
+#### see release_docs/INSTALL_CMake.txt
+#### 
 ################################################################
 
 PACKAGE = HDF5
