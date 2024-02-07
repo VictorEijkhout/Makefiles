@@ -5,12 +5,19 @@ jcount=4
 list=
 packages=0
 
+hdf5_target=par
+PACKAGEOPTIONS_hdf5="HDFFORTRAN=OFF"
+
+petsc_version=3.20
+petsc_full_version=3.20.3
+
+trilinosversion=14.4.0
 ladder="\
-    pcre2,git \
-    swig,4.1.1 \
-    sqlite,3.43.0 \
-    proj,9.2.1 \
     jsonc,git \
+    sqlite,3.43.0 \
+    proj,9.3.1 \
+    pcre2,10.42 \
+    swig,4,1,1 \
     zlib,1.2.13 \
     gdal,3.7.0 \
     "
@@ -26,6 +33,7 @@ version=${version%%.*}
 
 function usage() {
     echo "Usage: $0 [ -h ] [ -x ] [ -l ] "
+    echo "    [ -l : list available modules ]"
     echo "    [ -j nnn (default: ${jcount}) ] "
     echo "    [ -c compiler (default ${TACC_FAMILY_COMPILER}) ] "
     echo "    [ -v compiler_version (default ${version}) ] "
@@ -70,9 +78,9 @@ while [ $# -gt 0 ] ; do
     fi
 done
 
-export TACC_FAMILY_COMPILER=${compiler}
-export TACC_FAMILY_COMPILER_VERSION=${version}
-settings=../env_${TACC_SYSTEM}_${TACC_FAMILY_COMPILER}${TACC_FAMILY_COMPILER_VERSION}.sh
+compiler_major_version=${TACC_FAMILY_COMPILER_VERSION}
+compiler_major_version=${compiler_major_version%%.*}
+settings=../env_${TACC_SYSTEM}_${TACC_FAMILY_COMPILER}${compiler_major_version}.sh
 if [ ! -f "${settings}" ] ; then 
     echo "Error: no such settings file <<${settings}>>" && exit 1 ; fi
 source ${settings} >/dev/null 2>&1
@@ -98,25 +106,41 @@ for m in $( echo ${packages} | tr , ' ' ) ; do
 	       ; do \
 	n=${ixy%%,*}
 	xy=${ixy#*,}
-	x=${xy%,*}
-	y=${xy#*,}
+	package=${xy%,*}
+	version=${xy#*,}
 	echo "================"
-	echo "Package $n: $x version $y"
+	echo "Package $n: $package version $version"
 	if [ ! -z "${list}" ] ; then 
-	    module_avail $x $y
+	    module_avail $package $version \
+		| awk 'BEGIN {p=1} /too long/ {p=0} p==1 {print}'
 	elif [ $m -eq $n ] ; then 
-	    echo "Installing" && echo
-	    ( cd ../$x \
+	    eval full_version=\${${package}_full_version}
+	    if [ ! -z "${full_version}" ] ; then 
+		install_version=${full_version}
+	    else
+		install_version=${version} ; fi
+	    eval pkg_target=\${${package}_target}
+	    if [ ! -z "${pkg_target}" ] ; then 
+		target=${pkg_target}
+	    else
+		target=default_install ; fi
+	    echo "Installing $package/${install_version}, target: ${target}"
+	    optionsname=PACKAGEOPTIONS_${package}
+	    eval options=\${${optionsname}}
+	    echo "Using package options=$options"
+	    echo
+	    ( cd ../$package \
 	       && start=$(date) \
-	       && make configure build public JCOUNT=${jcount} PACKAGEVERSION=$y \
+	       && make ${target} JCOUNT=${jcount} PACKAGEVERSION=${install_version} \
+		    $options \
 	       && echo "Start: $start End: $(date)" \
 	     )
 	    break
 	fi
 	if [ -z "${list}" ] ; then 
-	    module load $x/$y
+	    module load $package/$version
 	    echo " .. loading"
-	    if [ $? -ne 0 ] ; then echo "Could not load $x" && exit 1 ; fi
+	    if [ $? -ne 0 ] ; then echo "Could not load $package" && exit 1 ; fi
 	fi
     done 
 done

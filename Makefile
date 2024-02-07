@@ -8,10 +8,10 @@ info ::
 	@echo "make clean : non-recursive"
 	@echo "make allclean : recursive"
 
-.PHONY: clean allclean
-clean ::
+.PHONY: clean localclean
+localclean : 
 	@rm -f *~ *.log
-allclean :: clean
+clean :: localclean
 	@for d in * ; do \
 	  if [ -d "$${d}" ] ; then \
 	    echo " .. cleaning $$d" \
