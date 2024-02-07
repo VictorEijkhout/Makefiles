@@ -6,7 +6,7 @@
 ####
 ################################################################
 
-PACKAGE = gftl-shared
+PACKAGE = fargparse
 URL = https://github.com/Goddard-Fortran-Ecosystem/fArgParse
 PACKAGEVERSION = 1.6.0
 PACKAGEVERSION_MAJORMINOR = 1.6
@@ -20,14 +20,14 @@ include ${MAKEINCLUDES}/Make.info
 ## cmake version
 ##
 include ${MAKEINCLUDES}/Make.cmake
-CMAKEPREFIXPATHSET = 1
-## INSTALLEXTRAPATH = GFTL_SHARED-${PACKAGEVERSION_MAJORMINOR}
+CMAKEPREFIXPATHSET =
+INSTALLEXTRAPATH = FARGPARSE-${PACKAGEVERSION_MAJORMINOR}
 include ${MAKEINCLUDES}/Make.cbuild
 
 .PHONY: default_install
 default_install : configure build
 
-TGZURL = https://github.com/Goddard-Fortran-Ecosystem/fArgParse/archive/refs/tags/v${PACKAGEVERSINO}.tar.gz
+TGZURL = https://github.com/Goddard-Fortran-Ecosystem/fArgParse/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 
 include ${MAKEINCLUDES}/Make.clean
