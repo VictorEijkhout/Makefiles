@@ -44,12 +44,13 @@ else
 fi
 
 np=4
-box=12
+box=8
 if [ -z "${SLURM_NPROCS}" ] ; then 
     echo "Please run this only in an idev session" && exit 1 
 fi
 echo "Using max ${SLURM_NPROCS} cores"
-profiledir=${WORK}/tau-${TACC_SYSTEM}
+profiledir=${STOCKYARD}/ratel-tau-${TACC_SYSTEM}
+mkdir -p ${profiledir} && rm -rf ${profiledir}/*
 while [ ${np} -lt ${SLURM_NPROCS} ] ; do
     echo "==============================================================="
     echo "==============================================================="
@@ -59,6 +60,8 @@ while [ ${np} -lt ${SLURM_NPROCS} ] ; do
 	> ${optionsfile}
     cat ${optionsfile}
     profdir=${profiledir}/profile${np}.dir && rm -rf $profdir && mkdir -p $profdir 
+    export TAU_TRACE=1
+    export TRACEDIR=${profdir}
     export PROFILEDIR=${profdir}
     # export TAU_CALLSITE=1 ## 
     export TAU_EBS_UNWIND=1
@@ -69,6 +72,7 @@ while [ ${np} -lt ${SLURM_NPROCS} ] ; do
     time ibrun -np ${np} \
 	$( if [ "${TAU}" = "1" ] ; then echo "${TACC_TAU_DIR}/x86_64/bin/tau_exec -ebs" ; fi ) \
 	${TACC_RATEL_BIN}/ratel-quasistatic \
+	-log_perfstubs \
         -options_file ${optionsfile} \
         -ksp_max_it 5 \
         -snes_max_it 4 -snes_monitor \
@@ -81,6 +85,6 @@ while [ ${np} -lt ${SLURM_NPROCS} ] ; do
     np=$(( 6 * np ))
 done
 echo && echo "See TAU profiles in ${profiledir}" && echo
-ls ${pfofiledir}
+ls ${profiledir}
 chmod g+rX,o+rX ${profiledir}
 
