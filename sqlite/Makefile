@@ -16,6 +16,7 @@ include ${MAKEINCLUDES}/Make.info
 
 # https://www.sqlite.org/howtocompile.html
 CONFIGUREFLAGS = --disable-tcl
+HASBIN = 1
 include ${MAKEINCLUDES}/Make.configure
 
 EXTRABUILDTARGETS = all sqlite3.pc
