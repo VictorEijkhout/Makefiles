@@ -12,6 +12,7 @@ MODE = seq
 include ${MAKEINCLUDES}/Make.info
 
 NOLIB = 1
+HASBIN = 1
 CMAKESOURCE = llvm
 CMAKEFLAGS = \
     -D LLVM_ENABLE_PROJECTS=clang \
