@@ -13,19 +13,13 @@ petsc_full_version=3.20.3
 
 trilinosversion=14.4.0
 ladder="\
+    jsonc,git \
+    sqlite,3.43.0 \
+    proj,9.3.1 \
+    pcre2,10.42 \
+    swig,4,1,1 \
     zlib,1.2.13 \
-    petsc,${petsc_version} \
-    p4est,2.8.5 \
-    boost,1.83.0 \
-    pcre2,git \
-    swig,4.1.1 \
-    hdf5,1.14 \
-    netcdf,4.9.2 \
-    gklib,git \
-    metis,5.1.0.3 \
-    trilinos,${trilinosversion} \
-    dealii,9.5.1 \
-    aspect,2.5.0 \
+    gdal,3.7.0 \
     "
 
 ## where do the spaces in this come from?
