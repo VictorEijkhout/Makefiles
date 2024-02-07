@@ -29,3 +29,6 @@ default_install : configure build public
 
 TGZURL = https://download.osgeo.org/proj/proj-${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
+
+GITREPO = https://github.com/OSGeo/PROJ.git
+include ${MAKEINCLUDES}/Make.git
