@@ -26,6 +26,7 @@ build :
 	 && ../bin/ecbuild --prefix=$${installdir} .. \
 	 && echo "no ctest" >/dev/null \
 	 && make install
+EXTRAINSTALLPATHS = CMAKE_MODULE_PATH=share/ecbuild/cmake
 include ${MAKEINCLUDES}/Make.vars
 
 .PHONY: default_install
