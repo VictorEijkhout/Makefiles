@@ -21,6 +21,10 @@ CMAKEFLAGS = \
 	-Wno-dev
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
+.PHONY: default_install
+info ::
+	@echo "make default_install : plain configure build"
+default_install : configure build
 
 HASBIN = 1
 
