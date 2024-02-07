@@ -2,14 +2,12 @@
 ####
 #### Makefile for Adaptivecpp installation
 ####
-#### build with intel only through oneapi
-####
 ################################################################
 
 PACKAGE = adaptivecpp
 URL = https://github.com/AdaptiveCpp/AdaptiveCpp
 PACKAGEVERSION = 23.10.0
-MODULES = boost
+MODULES = boost clang
 MODE = seq
 
 include ${MAKEINCLUDES}/Make.info
@@ -25,7 +23,12 @@ CMAKEFLAGS = \
     \
     -D BUILD_CLANG_PLUGIN=OFF \
     -D CMAKE_CXX_COMPILER=${TACC_CXX} \
-    -D WITH_ACCELERATED_CPU=OFF
+    -D WITH_ACCELERATED_CPU=OFF \
+    \
+    -D FIXES_FOR_MISSING_LIB_CLANG=ON \
+    -D WITH_SSCP_COMPILER=OFF \
+    -D WITH_OPENCL_BACKEND=OFF \
+    -D WITH_LEVEL_ZERO_BACKEND=OFF
 
 .PHONY: cpu gpu
 info ::
