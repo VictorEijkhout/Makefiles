@@ -24,7 +24,7 @@ DEPENDSON =
 
 info ::
 	@echo "make cpu ( configure build )"
-	@echo "make cuda ( configure_cuda build_cuda ) : cuda version in separate install dir"
+	@echo "make gpu ( configure_cuda build_cuda ) : cuda version in separate install dir"
 .PHONY: cpu gpu configure_cuda
 .PHONY: default_install
 info ::
@@ -43,7 +43,7 @@ gpu :
 	@make --no-print-directory PACKAGE_VERSION=${PACKAGE_VERSION} \
 	    configure_cuda build public \
 	    MODULES=cuda DEPENDSON=cuda/12 \
-	    INSTALLVARIANT=cuda INSTALLEXT=cuda
+	    VARIANT=cuda INSTALLEXT=cuda
 # VOLTA70 ?
 configure_cuda :
 	@if [ -z "${TACC_CXX}" ] ; then \
@@ -52,12 +52,24 @@ configure_cuda :
 	 && make --no-print-directory configure \
 	    CMAKEFLAGS=" \
 	      -D CMAKE_CXX_COMPILER=${SRCPATH}/bin/nvcc_wrapper \
-	      -D CMAKE_CXX_FLAGS='-std=c++20 -allow-unsupported-compiler' \
+	      -D CMAKE_CXX_FLAGS=-allow-unsupported-compiler \
 	      -D Kokkos_ENABLE_SERIAL=ON -D Kokkos_ENABLE_CUDA=ON \
 	      -D Kokkos_ARCH_TURING75=ON -D Kokkos_ENABLE_CUDA_LAMBDA=ON \
 	      -D KOKKOS_CUDA_OPTIONS=-allow-unsupported-compiler \
 	      " \
-	    MODULES=cuda  INSTALLVARIANT=cuda
+	    MODULES=cuda  VARIANT=cuda
+
+info ::
+	@echo "make kokkoscore INSTALLVARIANT=..."
+.PHONY: kokkoscore
+kokkoscore :
+	@source ${MAKEINCLUDES}/names.sh \
+	 && export INSTALLROOT=${INSTALLROOT} \
+	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" "${VARIANT}" "${MODULENAME}" "${MODE}" \
+	 && source ${MAKEINCLUDES}/compilers.sh \
+	 \
+	 && echo $${builddir} && ls $${builddir} \
+	 && cat $${builddir}/KokkosCore_config.h
 
 TGZURL = https://github.com/kokkos/kokkos/archive/refs/tags/${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
