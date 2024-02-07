@@ -2,6 +2,8 @@
 ####
 #### Makefile for Mapl installation
 ####
+#### https://stackoverflow.com/questions/45177196/how-to-use-cmake-module-path-correctly-on-windows
+####
 ################################################################
 
 PACKAGE = mapl
@@ -9,7 +11,8 @@ URL = https://github.com/GEOS-ESM/MAPL
 PACKAGEVERSION = 2.43.2
 
 MODE = mpi
-MODULES = gftl gftlshared
+MODULES = gftl gftlshared pflogger yafyaml \
+    ecbuild
 
 include ${MAKEINCLUDES}/Make.info
 
@@ -17,6 +20,7 @@ include ${MAKEINCLUDES}/Make.info
 ## cmake version
 ##
 include ${MAKEINCLUDES}/Make.cmake
+CMAKENAME = ecbuild
 include ${MAKEINCLUDES}/Make.cbuild
 
 .PHONY: default_install
