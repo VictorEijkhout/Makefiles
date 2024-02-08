@@ -34,6 +34,7 @@ CMAKEFLAGS = \
 info ::
 	@echo "make cpu / gpu (load cuda or not)"
 cpu : 
+	@make modules
 	@make --no-print-directory HASCUDA=OFF NONMODULES=cuda \
 	    configure build
 gpu : 
