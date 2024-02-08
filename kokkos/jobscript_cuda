@@ -7,7 +7,7 @@
 #SBATCH -n 1
 #SBATCH -t 0:30:00
 #SBATCH --mail-type=end
-#SBATCH -A ccsc
+#SBATCH -A A-ccsc
 #SBATCH --mail-user=eijkhout@tacc.utexas.edu
 
 source ${HOME}/Software/env_ls6_intel24.sh
