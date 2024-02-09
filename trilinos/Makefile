@@ -26,9 +26,10 @@ info ::
 	@echo "    [ TEUCHOS=ON/OFF (default: ${TEUCHOS} ) ]"
 PYTHON = ON
 
-LIBDIR = lib64
+## LIBDIR = lib64
 CMAKE_PREFIXPATH_SET = lib/cmake
-HAS_NETCDF = ON
+HAS_BOOST = OFF
+HAS_NETCDF = OFF
 HAS_OPENMP = ON
 .PHONY: configure
 configure :: modules
@@ -60,9 +61,11 @@ configure :: modules
 	     && export TACC_MKL_LIB=${MKLROOT}/lib/intel64 \
 	     \
 	     && export HAS_PYTHON=${PYTHON} \
-	     && export HAS_OPENMP=${HAS_OPENMP} \
+	     && export HAS_BOOST=${HAS_BOOST} \
 	     && export HAS_NETCDF=${HAS_NETCDF} \
+	     && export HAS_OPENMP=${HAS_OPENMP} \
 	     \
+	     && set -x \
 	     && if [ -f $${scriptdir}/trilinos_cmake_${TACC_SYSTEM}.sh ] ; then \
 	            source $${scriptdir}/trilinos_cmake_${TACC_SYSTEM}.sh \
 	        ; else \
