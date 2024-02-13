@@ -26,8 +26,7 @@ info ::
 	@echo "    [ TEUCHOS=ON/OFF (default: ${TEUCHOS} ) ]"
 PYTHON = ON
 
-## LIBDIR = lib64
-CMAKE_PREFIXPATH_SET = lib/cmake
+CMAKEPREFIXPATHSET = 1
 HAS_BOOST = OFF
 HAS_NETCDF = OFF
 HAS_HDF5 = OFF
