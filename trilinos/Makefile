@@ -30,6 +30,7 @@ PYTHON = ON
 CMAKE_PREFIXPATH_SET = lib/cmake
 HAS_BOOST = OFF
 HAS_NETCDF = OFF
+HAS_HDF5 = OFF
 HAS_OPENMP = ON
 .PHONY: configure
 configure :: modules
