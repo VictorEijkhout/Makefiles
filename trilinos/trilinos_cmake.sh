@@ -1,4 +1,4 @@
-cmake \
+cmdline="cmake \
   -B ${BUILDDIR} -S ${SRCDIR} \
   -D CMAKE_INSTALL_PREFIX:PATH=${installdir} \
   -D CMAKE_BUILD_TYPE:STRING=RELEASE \
@@ -25,24 +25,25 @@ cmake \
   -D TPL_ENABLE_MPI:BOOL=ON \
   -D MPI_BASE_DIR=${TACC_IMPI_DIR}/intel64 \
   -D MPI_INCLUDE_DIRS=${TACC_IMPI_INC} \
-  -D MPI_EXEC:FILEPATH="/opt/apps/xalt/0.6/bin/ibrun" \
+  -D MPI_EXEC:FILEPATH='/opt/apps/xalt/0.6/bin/ibrun' \
   -D TPL_ENABLE_GLM=OFF \
   -D TPL_ENABLE_Matio=OFF \
   \
   -D TPL_ENABLE_BLAS=ON \
-  -D BLAS_LIBRARY_DIRS:PATH="${TACC_MKL_LIB}" \
-  -D BLAS_LIBRARY_NAMES:STRING="mkl_intel_lp64;mkl_core;iomp5;pthread" \
-  -D BLAS_INCLUDE_DIRS:PATH="${TACC_MKL_INC}" \
-  -D LAPACK_INCLUDE_DIRS:PATH="${TACC_MKL_INC}" \
-  -D LAPACK_LIBRARY_DIRS:PATH="${TACC_MKL_LIB}" \
-  -D LAPACK_LIBRARY_NAMES:STRING="mkl_intel_lp64;mkl_sequential;mkl_core;iomp5;pthread" \
+  -D BLAS_LIBRARY_DIRS:PATH='${TACC_MKL_LIB}' \
+  -D BLAS_LIBRARY_NAMES:STRING='mkl_intel_lp64;mkl_core;iomp5;pthread' \
+  -D BLAS_INCLUDE_DIRS:PATH='${TACC_MKL_INC}' \
+  -D LAPACK_INCLUDE_DIRS:PATH='${TACC_MKL_INC}' \
+  -D LAPACK_LIBRARY_DIRS:PATH='${TACC_MKL_LIB}' \
+  -D LAPACK_LIBRARY_NAMES:STRING='mkl_intel_lp64;mkl_sequential;mkl_core;iomp5;pthread' \
   \
   -D TPL_ENABLE_HDF5:BOOL=ON \
   -D HDF5_INCLUDE_DIRS:PATH=${TACC_HDF5_INC}    \
   -D HDF5_LIBRARY_DIRS:PATH=${TACC_HDF5_LIB}    \
   -D TPL_ENABLE_Netcdf:BOOL=${HAS_NETCDF} \
   -D Netcdf_INCLUDE_DIRS:PATH=${TACC_NETCDF_INC}    \
-  -D Netcdf_LIBRARY_DIRS:PATH=${TACC_NETCDF_LIB}    \
+  -D DTPL_Netcdf_LIBRARIES=${TACC_NETCDF_LIB}/libnetcdf.so \
+  -D NOT_Netcdf_LIBRARY_DIRS:PATH=${TACC_NETCDF_LIB} \
   \
   -D Tpetra_INST_DOUBLE:BOOL=ON \
   -D Tpetra_INST_FLOAT:BOOL=OFF \
@@ -51,10 +52,10 @@ cmake \
   -D Tpetra_INST_INT_LONG:BOOL=OFF \
   -D Tpetra_INST_INT_UNSIGNED:BOOL=OFF \
   \
-  -D TPL_ENABLE_Boost:BOOL=ON \
+  -D TPL_ENABLE_Boost:BOOL=${HAS_BOOST} \
   -D Boost_INCLUDE_DIRS:PATH=$TACC_BOOST_INC      \
   -D Boost_LIBRARY_DIRS:PATH=$TACC_BOOST_LIB      \
-  -D TPL_ENABLE_BoostLib:BOOL=ON \
+  -D TPL_ENABLE_BoostLib:BOOL=${HAS_BOOST} \
   -D BoostLib_INCLUDE_DIRS:PATH=$TACC_BOOST_INC      \
   -D BoostLib_LIBRARY_DIRS:PATH=$TACC_BOOST_LIB      \
   \
@@ -63,7 +64,7 @@ cmake \
   -D MUMPS_LIBRARY_DIRS=${TACC_MUMPS_LIB} \
   -D MUMPS_LIBRARY_NAMES:STRING=${MUMPSLIBNAMES} \
   -D VLE_TPL_MUMPS_LIBRARIES:STRING=${MUMPSLIBS} \
-  -D TPL_ParMETIS_LIBRARIES="${PARMETISLIBS}" \
+  -D TPL_ParMETIS_LIBRARIES='${PARMETISLIBS}' \
   -D TPL_ParMETIS_INCLUDE_DIRS=${TACC_PARMETIS_INC} \
   \
   -D TPL_ENABLE_yaml-cpp:BOOL=${HAS_YAMLCPP} \
@@ -126,10 +127,10 @@ cmake \
   -D KOKKOS_IS_REQUIRED_FOR_SEVERAL_PACKAGES=off \
   -D Trilinos_ENABLE_Kokkos:BOOL=ON \
   -D Trilinos_ENABLE_KokkosCore:BOOL=ON \
-  $( if [ "${HAS_OPENMP}" = "ON" ] ; then \
-	 echo "-D Phalanx_KOKKOS_DEVICE_TYPE:STRING=OPENMP" \
+  $( if [ '${HAS_OPENMP}' = 'ON' ] ; then \
+	 echo '-D Phalanx_KOKKOS_DEVICE_TYPE:STRING=OPENMP' \
      ; fi ) \
-  -D Phalanx_INDEX_SIZE_TYPE:STRING="INT" \
+  -D Phalanx_INDEX_SIZE_TYPE:STRING='INT' \
   -D Phalanx_SHOW_DEPRECATED_WARNINGS:BOOL=OFF \
   -D Kokkos_ENABLE_Serial:BOOL=ON \
   -D Kokkos_ENABLE_OPENMP:BOOL=${HAS_OPENMP} \
@@ -140,6 +141,7 @@ cmake \
       -D Trilinos_ENABLE_STKMesh:BOOL=${HAS_STK} \
   \
   -D SWIG_EXECUTABLE:FILEPATH=${TACC_SWIG_BIN}/swig \
+"
 
 
 #  | tee /admin/build/admin/rpms/stampede2/SPECS/trilinos-${VERSION}-cmake.log 2>&1
@@ -164,6 +166,10 @@ export TEMPORARILY_REMOVED="\
       -D SuperLU_LIBRARY_NAMES:STRING="superlu" \
   \
   "
+if [ "${ECHO}" = "1" ] ; then
+    echo "cmdline=$cmdline" ; fi
+eval $cmdline
+
 export albany_extra="\
   -D CMAKE_CXX_FLAGS:STRING=${COPTFLAGS} ${MKLFLAG} -DMPICH_SKIP_MPICXX \
       -DHAVE_AMESOS_SUPERLU5_API -DHAVE_AMESOS2_SUPERLU5_API -DHAVE_IFPACK2_SUPERLU5_API \
