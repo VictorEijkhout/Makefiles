@@ -11,7 +11,7 @@ function usage() {
 cuda=0
 jcount=6
 p4p=1
-pversion=3.20.3
+pversion=3.20.4
 while [ $# -gt 0 ] ; do
     if [ $1 = "-h" ] ; then
 	usage && exit 0
@@ -29,6 +29,8 @@ while [ $# -gt 0 ] ; do
 done
 
 set -e
+archs=archs-${pversion}
+rm -f $archs && touch $archs
 for debug in 0 1 ; do 
     for int in 32 64 ; do 
 	for precision in single double ; do
@@ -37,6 +39,9 @@ for debug in 0 1 ; do
 		export INT=${int}
 		export PRECISION=${precision}
 		export SCALAR=${scalar} 
+		arch=$( make --no-print-directory petscshortarch )
+		echo && echo "Installing big for arch=${arch}" && echo
+		echo ${arch} >> ${archs}
 		./install_big.sh -j ${jcount} \
 		    $( if [ ${p4p} -eq 0 ] ; then echo "-4" ; fi ) \
 		    $( if [ ${cuda} -eq 1 ] ; then echo "-c" ; fi )
