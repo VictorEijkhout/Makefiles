@@ -76,11 +76,12 @@ configure :: modules
 	     && export PYTHON_VERSION=3 \
 	     && export PYTHON_VERSION=$${PYTHON_VERSION%.*} \
 	     && export PYTHON_LOAD_FLAG=${TACC_PYTHON_LIB}/libpython$${PYTHON_VERSION}.so \
-	    ) 2>&1 | tee $$configurelog \
-	 && make --no-print-directory varsmodule
+	    ) 2>&1 | tee $$configurelog
+	@echo && echo "CMake configuration ended: $$( date )" && echo 
+##	 && make --no-print-directory varsmodule
 
 include ${MAKEINCLUDES}/Make.cbuild
-build ::
+netcdfbuild ::
 	@source ${MAKEINCLUDES}/names.sh \
 	 && export MODE=${MODE} \
 	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "" "" "" "${MODE}" \
