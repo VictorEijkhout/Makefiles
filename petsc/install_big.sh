@@ -8,6 +8,7 @@ function usage() {
     echo "    [ -c : cuda build ]"
     echo "    [ -e customext ]"
     echo "    [ -4 : skip petsc/slepc4py ]"
+    echo "    environment: DEBUG INT PRECISION SCALAR"
 }
 
 p4p=1
@@ -43,7 +44,7 @@ if [ "${INT}" = "64" ] ; then
 else
     module load hypre/2.30.0
 fi
-module load phdf5/1.14
+module load phdf5
 
 if [ "${cuda}" = "1" ] ; then 
     cversion=${TACC_FAMILY_COMPILER_VERSION}
@@ -78,7 +79,7 @@ cmdline="\
 make --no-print-directory biginstall JCOUNT=${jcount} PACKAGEVERSION=${pversion} \
     EXT=${EXTENSION} \
     $( if [ ! -z "${customext}" ] ; then echo CUSTOMEXT=${customext} ; fi ) \
-    AMGX=1 CHACO=${CHACO} EIGEN=1 FFTW3=1 HDF5=1 HYPRE=1 PARMETIS=1 \
+    AMGX=1 CHACO=${CHACO} EIGEN=1 FFTW3=1 HDF5=1 HYPRE=1 MUMPS=1 PARMETIS=1 \
     CUDA=${cuda} FORTRAN=1 \
     PETSC4PY=${p4p} SLEPC4PY=${p4p} \
 "
