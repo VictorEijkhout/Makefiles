@@ -5,7 +5,7 @@
 ################################################################
 
 PACKAGE = PETSC
-PACKAGEVERSION = 3.20.3
+PACKAGEVERSION = 3.20.4
 MODE = mpi
 
 include ${MAKEINCLUDES}/Make.info
@@ -87,6 +87,18 @@ petscarch :
 	    else \
 	      echo ${PACKAGEVERSION}-$${petscext} ; \
 	    fi
+.PHONY: configurelog
+info ::
+	@echo "make configurelog : display current configure.log"
+configurelog :
+	@source ${MAKEINCLUDES}/names.sh \
+	 && systemnames && compilernames \
+	 && notetoself "TODO dir names are no needed?" \
+	 && setdirlognames \
+	      "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" \
+	      "${PACKAGEBASENAME}" "${VARIANT}" "${MODULENAME}" "${MODE}" \
+	 && cd $${srcdir} \
+	 && ( ls -l configure.log && cat configure.log )
 
 ####
 #### Packages

@@ -11,6 +11,9 @@ function usage() {
     echo "    environment: DEBUG INT PRECISION SCALAR"
 }
 
+echo && echo "Starting big installation"
+echo " .. compiler=${TACC_FAMILY_COMPILER}/${TACC_FAMILY_COMPILER_VERSION}"
+
 p4p=1
 cuda=0
 customext=
@@ -18,11 +21,14 @@ while [ $# -gt 0 ] ; do
     if [ $1 = "-h" ] ; then
 	usage && exit 0
     elif [ $1 = "-4" ] ; then 
+	echo " .. disabling petsc4py/slepc4py"
 	p4p=0 && shift
     elif [ $1 = "-c" ] ; then 
+	echo " .. using CUDA"
 	cuda=1 && shift
     elif [ $1 = "-e" ] ; then 
 	shift && customext=$1 && shift
+	echo " .. custom extension: $customext"
     elif [ $1 = "-j" ] ; then
 	shift && jcount=$1 && shift
     elif [ $1  = "-v" ] ; then 
@@ -31,6 +37,7 @@ while [ $# -gt 0 ] ; do
 	echo "Error: unknown option <<$1>>" && exit 1
     fi
 done
+echo " .. make thread count $jcount"
 
 set -e
 if [ "${TACC_FAMILY_COMPILER}" = "gcc" ] ; then
@@ -45,6 +52,7 @@ else
     module load hypre/2.30.0
 fi
 module load phdf5
+# /1.14
 
 if [ "${cuda}" = "1" ] ; then 
     cversion=${TACC_FAMILY_COMPILER_VERSION}
@@ -70,7 +78,8 @@ fi
 if [ "${DEBUG}" = "1" ] ; then
     EXTENSION=${EXTENSION}debug
 fi
-if [ "$TACC_FAMILY_COMPILER}" = "intel" ] ; then
+if [ "${TACC_FAMILY_COMPILER}" = "intel" ] ; then
+    echo " .. Note: Intel disabling CHACO"
     CHACO=0
 else
     CHACO=1
@@ -79,7 +88,7 @@ cmdline="\
 make --no-print-directory biginstall JCOUNT=${jcount} PACKAGEVERSION=${pversion} \
     EXT=${EXTENSION} \
     $( if [ ! -z "${customext}" ] ; then echo CUSTOMEXT=${customext} ; fi ) \
-    AMGX=1 CHACO=${CHACO} EIGEN=1 FFTW3=1 HDF5=1 HYPRE=1 MUMPS=1 PARMETIS=1 \
+    AMGX=1 CHACO=${CHACO} EIGEN=1 FFTW3=1 HDF5=1 HYPRE=1 MUMPS=1 METIS=1 PARMETIS=1 \
     CUDA=${cuda} FORTRAN=1 \
     PETSC4PY=${p4p} SLEPC4PY=${p4p} \
 "

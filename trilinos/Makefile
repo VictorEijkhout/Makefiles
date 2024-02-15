@@ -26,9 +26,10 @@ info ::
 	@echo "    [ TEUCHOS=ON/OFF (default: ${TEUCHOS} ) ]"
 PYTHON = ON
 
-LIBDIR = lib64
-CMAKE_PREFIXPATH_SET = lib/cmake
-HAS_NETCDF = ON
+CMAKEPREFIXPATHSET = 1
+HAS_BOOST = OFF
+HAS_NETCDF = OFF
+HAS_HDF5 = OFF
 HAS_OPENMP = ON
 .PHONY: configure
 configure :: modules
@@ -60,9 +61,11 @@ configure :: modules
 	     && export TACC_MKL_LIB=${MKLROOT}/lib/intel64 \
 	     \
 	     && export HAS_PYTHON=${PYTHON} \
-	     && export HAS_OPENMP=${HAS_OPENMP} \
+	     && export HAS_BOOST=${HAS_BOOST} \
 	     && export HAS_NETCDF=${HAS_NETCDF} \
+	     && export HAS_OPENMP=${HAS_OPENMP} \
 	     \
+	     && set -x \
 	     && if [ -f $${scriptdir}/trilinos_cmake_${TACC_SYSTEM}.sh ] ; then \
 	            source $${scriptdir}/trilinos_cmake_${TACC_SYSTEM}.sh \
 	        ; else \
@@ -73,11 +76,12 @@ configure :: modules
 	     && export PYTHON_VERSION=3 \
 	     && export PYTHON_VERSION=$${PYTHON_VERSION%.*} \
 	     && export PYTHON_LOAD_FLAG=${TACC_PYTHON_LIB}/libpython$${PYTHON_VERSION}.so \
-	    ) 2>&1 | tee $$configurelog \
-	 && make --no-print-directory varsmodule
+	    ) 2>&1 | tee $$configurelog
+	@echo && echo "CMake configuration ended: $$( date )" && echo 
+##	 && make --no-print-directory varsmodule
 
 include ${MAKEINCLUDES}/Make.cbuild
-build ::
+netcdfbuild ::
 	@source ${MAKEINCLUDES}/names.sh \
 	 && export MODE=${MODE} \
 	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "" "" "" "${MODE}" \
