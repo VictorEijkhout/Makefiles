@@ -256,7 +256,8 @@ biginstall :
 	   && case $${ext} in ( *complex* ) SCALAR=complex ;; ( * ) SCALAR=real ;; esac \
 	   \
 	   && echo "Selecting packages" \
-	   && CHACO=${CHACO} && HDF5=${HDF5} && HYPRE=${HYPRE} && PARMETIS=${PARMETIS} \
+	   && CHACO=${CHACO} && HDF5=${HDF5} && HYPRE=${HYPRE} \
+	   && MUMPS=${MUMPS} && PARMETIS=${PARMETIS} \
 	   && if [ "${CUDA}" != "1" -a "${AMGX}" = "1" ] ; then \
 	        echo " .. disable AMGX because no CUDA" && AMGX=0 \
 	      ; else AMGX=${AMGX} ; fi \
@@ -266,7 +267,7 @@ biginstall :
 	   && case $${ext} in \
 	        ( *single* ) HDF5= ; HYPRE= ;; esac \
 	   && case $${ext} in \
-	        ( *i64* ) CHACO= ; MUMPS= ; PARMETIS= ;; esac \
+	        ( *i64* ) CHACO= ; PARMETIS= ;; esac \
 	   \
 	   && echo "Compiler issues" \
 	   && case ${TACC_FAMILY_COMPILER} in \

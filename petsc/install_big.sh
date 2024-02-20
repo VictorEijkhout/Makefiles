@@ -8,6 +8,7 @@ function usage() {
     echo "    [ -c : cuda build ]"
     echo "    [ -e customext ]"
     echo "    [ -4 : skip petsc/slepc4py ]"
+    echo "    environment: DEBUG INT PRECISION SCALAR"
 }
 
 echo && echo "Starting big installation"
