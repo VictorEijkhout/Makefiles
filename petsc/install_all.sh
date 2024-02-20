@@ -41,7 +41,11 @@ for debug in 0 1 ; do
 		export SCALAR=${scalar} 
 		arch=$( make --no-print-directory petscshortarch )
 		echo && echo "Installing big for arch=${arch}" && echo
-		echo ${arch} >> ${archs}
+		if [ -z "${arch}" ] ; then 
+		    echo vanilla >> ${archs}
+		else
+		    echo ${arch} >> ${archs}
+		fi
 		./install_big.sh -j ${jcount} \
 		    $( if [ ${p4p} -eq 0 ] ; then echo "-4" ; fi ) \
 		    $( if [ ${cuda} -eq 1 ] ; then echo "-c" ; fi )
