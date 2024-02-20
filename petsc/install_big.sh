@@ -88,7 +88,8 @@ cmdline="\
 make --no-print-directory biginstall JCOUNT=${jcount} PACKAGEVERSION=${pversion} \
     EXT=${EXTENSION} \
     $( if [ ! -z "${customext}" ] ; then echo CUSTOMEXT=${customext} ; fi ) \
-    AMGX=1 CHACO=${CHACO} EIGEN=1 FFTW3=1 HDF5=1 HYPRE=1 MUMPS=1 METIS=1 PARMETIS=1 \
+    AMGX=1 CHACO=${CHACO} EIGEN=1 FFTW3=1 HDF5=1 HYPRE=1 MUMPS=1 METIS=1 \
+    PARMETIS=1 PTSCOTCH=1 \
     CUDA=${cuda} FORTRAN=1 \
     PETSC4PY=${p4p} SLEPC4PY=${p4p} \
 "
