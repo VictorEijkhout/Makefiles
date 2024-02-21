@@ -52,12 +52,13 @@ configure_cuda :
 	 && make --no-print-directory configure \
 	    CMAKEFLAGS=" \
 	      -D CMAKE_CXX_COMPILER=${SRCPATH}/bin/nvcc_wrapper \
-	      -D CMAKE_CXX_FLAGS=-allow-unsupported-compiler \
 	      -D Kokkos_ENABLE_SERIAL=ON -D Kokkos_ENABLE_CUDA=ON \
 	      -D Kokkos_ARCH_TURING75=ON -D Kokkos_ENABLE_CUDA_LAMBDA=ON \
 	      -D KOKKOS_CUDA_OPTIONS=-allow-unsupported-compiler \
 	      " \
 	    MODULES=cuda  VARIANT=cuda
+## CMAKE_CXX_FLAGS=-allow-unsupported-compiler
+##   -D CMAKE_CXX_FLAGS=--gcc-toolchain=/opt/apps/gcc/12.2.0
 
 info ::
 	@echo "make kokkoscore INSTALLVARIANT=..."

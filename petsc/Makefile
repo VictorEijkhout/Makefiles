@@ -5,7 +5,7 @@
 ################################################################
 
 PACKAGE = PETSC
-PACKAGEVERSION = 3.20.3
+PACKAGEVERSION = 3.20.4
 MODE = mpi
 
 include ${MAKEINCLUDES}/Make.info
@@ -87,6 +87,18 @@ petscarch :
 	    else \
 	      echo ${PACKAGEVERSION}-$${petscext} ; \
 	    fi
+.PHONY: configurelog
+info ::
+	@echo "make configurelog : display current configure.log"
+configurelog :
+	@source ${MAKEINCLUDES}/names.sh \
+	 && systemnames && compilernames \
+	 && notetoself "TODO dir names are no needed?" \
+	 && setdirlognames \
+	      "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" \
+	      "${PACKAGEBASENAME}" "${VARIANT}" "${MODULENAME}" "${MODE}" \
+	 && cd $${srcdir} \
+	 && ( ls -l configure.log && cat configure.log )
 
 ####
 #### Packages
@@ -244,7 +256,8 @@ biginstall :
 	   && case $${ext} in ( *complex* ) SCALAR=complex ;; ( * ) SCALAR=real ;; esac \
 	   \
 	   && echo "Selecting packages" \
-	   && CHACO=${CHACO} && HDF5=${HDF5} && HYPRE=${HYPRE} && PARMETIS=${PARMETIS} \
+	   && CHACO=${CHACO} && HDF5=${HDF5} && HYPRE=${HYPRE} \
+	   && MUMPS=${MUMPS} && PARMETIS=${PARMETIS} \
 	   && if [ "${CUDA}" != "1" -a "${AMGX}" = "1" ] ; then \
 	        echo " .. disable AMGX because no CUDA" && AMGX=0 \
 	      ; else AMGX=${AMGX} ; fi \
@@ -254,7 +267,7 @@ biginstall :
 	   && case $${ext} in \
 	        ( *single* ) HDF5= ; HYPRE= ;; esac \
 	   && case $${ext} in \
-	        ( *i64* ) CHACO= ; MUMPS= ; PARMETIS= ;; esac \
+	        ( *i64* ) CHACO= ; PARMETIS= ;; esac \
 	   \
 	   && echo "Compiler issues" \
 	   && case ${TACC_FAMILY_COMPILER} in \
