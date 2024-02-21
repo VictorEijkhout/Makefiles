@@ -7,13 +7,15 @@ function usage() {
     echo "    [ -j jpar (default: ${jcount}) ]"
     echo "    [ -c : cuda build ]"
     echo "    [ -e customext ]"
-    echo "    [ -4 : skip petsc/slepc4py ]"
+    echo "    [ -4 : skip petsc/slepc4py ] [ -5 : skip hdf5 ] [ -8 : f08 suupport ]"
     echo "    environment: DEBUG INT PRECISION SCALAR"
 }
 
 echo && echo "Starting big installation"
 echo " .. compiler=${TACC_FAMILY_COMPILER}/${TACC_FAMILY_COMPILER_VERSION}"
 
+fortran=90
+hdf5=1
 p4p=1
 cuda=0
 customext=
@@ -23,6 +25,12 @@ while [ $# -gt 0 ] ; do
     elif [ $1 = "-4" ] ; then 
 	echo " .. disabling petsc4py/slepc4py"
 	p4p=0 && shift
+    elif [ $1 = "-5" ] ; then 
+	echo " .. disabling hdf5"
+	hdf5=0 && shift
+    elif [ $1 = "-8" ] ; then 
+	echo " .. enable f08"
+	fortran=08 && shift
     elif [ $1 = "-c" ] ; then 
 	echo " .. using CUDA"
 	cuda=1 && shift
@@ -66,6 +74,9 @@ fi
 export biglog=install_big$( if [ ! -z "${customext}" ] ; then echo "-${customext}" ; fi ).log
 rm -f $biglog
 EXTENSION=
+if [ "${hdf5}" = "0" ] ; then
+    EXTENSION=${EXTENSION}nohdf5
+fi
 if [ "${SCALAR}" = "complex" ] ; then 
     EXTENSION=${EXTENSION}complex
 fi
@@ -74,6 +85,9 @@ if [ "${PRECISION}" = "single" ] ; then
 fi
 if [ "${INT}" = "64" ] ; then 
     EXTENSION=${EXTENSION}i64
+fi
+if [ "${fortran}" = "08" ] ; then 
+    EXTENSION=${EXTENSION}f08
 fi
 if [ "${DEBUG}" = "1" ] ; then
     EXTENSION=${EXTENSION}debug
@@ -88,9 +102,9 @@ cmdline="\
 make --no-print-directory biginstall JCOUNT=${jcount} PACKAGEVERSION=${pversion} \
     EXT=${EXTENSION} \
     $( if [ ! -z "${customext}" ] ; then echo CUSTOMEXT=${customext} ; fi ) \
-    AMGX=1 CHACO=${CHACO} EIGEN=1 FFTW3=1 HDF5=1 HYPRE=1 MUMPS=1 METIS=1 \
+    AMGX=1 CHACO=${CHACO} EIGEN=1 FFTW3=1 HDF5=${hdf5} HYPRE=1 MUMPS=1 METIS=1 \
     PARMETIS=1 PTSCOTCH=1 \
-    CUDA=${cuda} FORTRAN=1 \
+    CUDA=${cuda} FORTRAN=${fortran} \
     PETSC4PY=${p4p} SLEPC4PY=${p4p} \
 "
 echo "cmdline: $cmdline" | tee -a ${biglog}

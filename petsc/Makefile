@@ -54,6 +54,8 @@ TIME =
 petscshortarch :
 	@export PETSC_EXT="" \
 	 \
+	 && if [ "${NOHDF5}" = "1" ] ; then \
+	    export PETSC_EXT=$${PETSC_EXT}nohdf5 ; fi \
 	 && if [ "${SCALAR}" = "complex" ] ; then \
 	    export PETSC_EXT=$${PETSC_EXT}complex ; fi \
 	 && if [ "${PRECISION}" = "single" ] ; then \
