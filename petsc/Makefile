@@ -62,6 +62,8 @@ petscshortarch :
 	    export PETSC_EXT=$${PETSC_EXT}single ; fi \
 	 && if [ "${PRECISION}" = "quad" ] ; then \
 	    export PETSC_EXT=$${PETSC_EXT}single ; fi \
+	 && if [ "${FORTRAN}" = "08" ] ; then \
+	    export PETSC_EXT=$${PETSC_EXT}f08 ; fi \
 	 && if [ "${INT}" = "64" ] ; then \
 	    export PETSC_EXT=$${PETSC_EXT}i64 ; fi \
 	 && if [ ! -z "${ALIGN}" ] ; then \
@@ -158,7 +160,7 @@ build :: modules
 	     && echo "PYTHONPATH=$${PYTHONPATH}" \
 	     && cmdline="${TIME} python3 ./configure --prefix=$${installdir} \
 	        CFLAGS=\"${OPTFLAGS}\" CXXFLAGS=\"${OPTFLAGS}\" \
-	        `if [ \"${FORTRAN}\" = 1 ] ; then echo FFLAGS=\"${OPTFLAGS}\" ; fi `\
+	        `if [ \"${FORTRAN}\" != \"0\" ] ; then echo FFLAGS=\"${OPTFLAGS}\" ; fi `\
 	        `if [ ${CUDA} -eq 1 ] ; then echo ${CUDA_OPTIONS} ; else echo --with-cudac=0 ; fi ` \
 	        "${BLAS_FLAGS}" \
 	        $${package_options} $${param_settings} \
@@ -273,7 +275,7 @@ biginstall :
 	   \
 	   && echo "Compiler issues" \
 	   && case ${TACC_FAMILY_COMPILER} in \
-	        ( gcc ) echo " .. no FORTRAN for gcc" && FORTRAN= ;; \
+	        ( gcc ) echo " .. no FORTRAN for gcc" && FORTRAN=0 ;; \
 	        ( * ) FORTRAN=${FORTRAN} ;; esac \
 	   \
 	   && cmdline="make --no-print-directory configure build  \

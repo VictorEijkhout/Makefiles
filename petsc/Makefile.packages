@@ -69,7 +69,7 @@ package_values :
 
 FORTRAN = 0
 info ::
-	@echo "    [ FORTRAN=0/1 (default: ${FORTRAN}) ]"
+	@echo "    [ FORTRAN=0/90/08 (default: ${FORTRAN}) ]"
 
 MPI_FLAGS = --with-mpi-compilers=1
 ifeq "${TACC_SYSTEM}" "nvarm"
@@ -90,7 +90,8 @@ param_settings :
 	@export align=${ALIGN} \
 	 && export debug=${DEBUG} \
 	 && export fortran=${FORTRAN} \
-	     && export fortran_option_1="--with-fortran-bindings=1" \
+	     && export fortran_option_90="--with-fortran-bindings=1" \
+	     && export fortran_option_08="--with-fortran-bindings=1 --with-mpi-f90module-visibility=0" \
 	     && export fortran_option_0="--with-fortran-bindings=0 --with-fc=0" \
 	 && export int=${INT} \
 	     && export int_option_64="--with-64-bit-indices=1" \
