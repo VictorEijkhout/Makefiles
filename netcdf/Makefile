@@ -22,8 +22,12 @@ CMAKEPREFIXPATHSET = 1
 PKGCONFIGLIB = pkgconfig
 NETCDF_PARALLEL = ON
 DEPENDSON = phdf5
+
+##
+## NOTE the enable_pnetcdf flag is for parallel-netcdf 1.9
+##
 CMAKEFLAGS = \
-    -D ENABLE_PNETCDF=${NETCDF_PARALLEL} \
+    -D ENABLE_PNETCDF=OFF \
     -D ENABLE_PARALLEL4=${NETCDF_PARALLEL} \
     -D ENABLE_PARALLEL_TESTS=OFF \
     -D ENABLE_NETCDF_4=ON \
@@ -49,5 +53,6 @@ default_install : par
 
 TGZURL = https://downloads.unidata.ucar.edu/netcdf-c/${PACKAGEVERSION}/netcdf-c-${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
+GITREPO = http://github.com/Unidata/netcdf-c
+include ${MAKEINCLUDES}/Make.git
 include ${MAKEINCLUDES}/Make.clean
-
