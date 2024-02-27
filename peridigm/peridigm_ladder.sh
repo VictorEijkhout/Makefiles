@@ -10,7 +10,7 @@ ladder="\
     hdf5,1.14 \
     netcdf,4.9.2 \
     boost,1.81.0 \
-    trilinos,14.0.0 \
+    trilinos,15.0.0 \
     peridigm,git \
     "
 
