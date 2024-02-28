@@ -4,6 +4,8 @@
 ####
 #### https://www.docs.trilinos.org/files/TrilinosBuildReference.html
 ####
+#### ExodusII / Seacas issue: https://github.com/trilinos/Trilinos/issues/12022
+####
 ################################################################
 
 PACKAGE = trilinos
