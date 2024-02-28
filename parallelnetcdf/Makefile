@@ -1,8 +1,6 @@
 ################################################################
 ####
-#### Makefile for Netcdf installation
-####
-#### this is the C version
+#### Makefile for Parallel-Netcdf installation
 ####
 ################################################################
 
@@ -19,11 +17,9 @@ include ${MAKEINCLUDES}/Make.info
 BEFORECONFIGURECMDS = autoreconf -i
 include ${MAKEINCLUDES}/Make.configure
 
-# HASBIN=1
+HASBIN=1
 # CMAKEPREFIXPATHSET = 1
-# PKGCONFIGLIB = pkgconfig
-# NETCDF_PARALLEL = ON
-# DEPENDSON = phdf5
+PKGCONFIGLIB = pkgconfig
 
 ##
 ## NOTE the enable_pnetcdf flag is for parallel-netcdf 1.9
