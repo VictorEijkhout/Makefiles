@@ -25,6 +25,9 @@ module load gcc/${gccversion}
 export TACC_CC=gcc
 export TACC_CXX=g++
 export TACC_FC=gfortran
+
+# no native impi, so we steal from gcc/11
+module use /opt/apps/gcc11_2/modulefiles
 module load impi/19.0.9
 
 module list
