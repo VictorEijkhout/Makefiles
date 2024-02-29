@@ -44,7 +44,7 @@ seq :
 	    MODULENAME=netcdf DEPENDSON=hdf5
 par :
 	@make --no-print-directory configure build JCOUNT=${JCOUNT} \
-	    MODE=mpi MODULES=phdf5 NETCDF_PARALLEL=ON \
+	    MODE=mpi MODULES="phdf5 parallelnetcdf" NETCDF_PARALLEL=ON \
 	    MODULENAME=pnetcdf MODULENAMEALT=netcdf DEPENDSON=phdf5
 .PHONY: default_install
 info ::
