@@ -19,12 +19,8 @@ include ${MAKEINCLUDES}/Make.configure
 
 HASBIN=1
 CONFIGUREFLAGS="--enable-shared"
-# CMAKEPREFIXPATHSET = 1
 PKGCONFIGLIB = pkgconfig
 
-##
-## NOTE the enable_pnetcdf flag is for parallel-netcdf 1.9
-##
 include ${MAKEINCLUDES}/Make.install
 .PHONY: default_install
 info ::
