@@ -9,7 +9,8 @@ cmdline="cmake \
   \
   -D Trilinos_ENABLE_ALL_PACKAGES:BOOL=OFF \
   -D Trilinos_DUMP_PACKAGE_DEPENDENCIES=ON \
-  -D Trilinos_ASSERT_MISSING_PACKAGES=OFF \
+  -D Trilinos_ASSERT_DEFINED_DEPENDENCIES=OFF \
+  -D TRIBITS_HANDLE_TRIBITS_DEPRECATED_CODE=IGNORE \
   -D Trilinos_ENABLE_ALL_OPTIONAL_PACKAGES:BOOL=OFF \
   -D Trilinos_ENABLE_TESTS:BOOL=OFF \
   -D Trilinos_ENABLE_EXAMPLES:BOOL=ON \
@@ -42,9 +43,9 @@ cmdline="cmake \
   -D HDF5_INCLUDE_DIRS:PATH=${TACC_HDF5_INC}    \
   -D HDF5_LIBRARY_DIRS:PATH=${TACC_HDF5_LIB}    \
   -D TPL_ENABLE_Netcdf:BOOL=${HAS_NETCDF} \
-  -D NOT_Netcdf_INCLUDE_DIRS:PATH=${TACC_PNETCDF_INC};${TACC_PARALLELNETCDF_INC} \
-  -D NOT_Netcdf_LIBRARY_DIRS:PATH=${TACC_PNETCDF_LIB};${TACC_PARALLELNETCDF_LIB} \
-  -D TPL_Netcdf_LIBRARIES=${TACC_PNETCDF_LIB}/libnetcdf.so;${TACC_PARALLELNETCDF_LIB}/libpnetcdf.so \
+  -D NOT_Netcdf_INCLUDE_DIRS:PATH='${TACC_PNETCDF_INC};${TACC_PARALLELNETCDF_INC}' \
+  -D NOT_Netcdf_LIBRARY_DIRS:PATH='${TACC_PNETCDF_LIB};${TACC_PARALLELNETCDF_LIB}' \
+  -D TPL_Netcdf_LIBRARIES='${TACC_PNETCDF_LIB}/libnetcdf.so;${TACC_PARALLELNETCDF_LIB}/libpnetcdf.so' \
   \
   -D Tpetra_INST_DOUBLE:BOOL=ON \
   -D Tpetra_INST_FLOAT:BOOL=OFF \
@@ -82,7 +83,7 @@ cmdline="cmake \
   -D Trilinos_ENABLE_Epetra:Bool=ON \
   -D Trilinos_ENABLE_EpetraExt:Bool=ON \
   -D                 Epetra_ENABLE_TESTS:BOOL=ON \
-  -D Deprecated_Trilinos_ENABLE_ExodusII:Bool=ON \
+  -D Deprecated_maybe_Trilinos_ENABLE_ExodusII:Bool=ON \
   -D Trilinos_ENABLE_FEI:Bool=ON \
   -D Trilinos_ENABLE_Ifpack:Bool=ON \
       -D Trilinos_ENABLE_Ifpack2:BOOL=ON \
@@ -154,7 +155,7 @@ export TEMPORARILY_REMOVED="\
   -D CMAKE_PYTHON_LIBRARIES:STRING="${TACC_PYTHON_LIB}" \
   -D PyTrilinos_DOCSTRINGS:BOOL=OFF \
   -D PyTrilinos_ENABLE_Tpetra:BOOL=OFF \
-  -D Trilinos_EXTRA_LD_FLAGS=${PYTHON_LOAD_FLAG}
+  -D Trilinos_EXTRA_LD_FLAGS=${PYTHON_LOAD_FLAG} \
   \
   -D Trilinos_EXTRA_LINK_FLAGS=${PYTHON_LOAD_FLAG} \
   -D TPL_MPI_BASE_DIR=${TACC_IMPI_DIR}intel64 \
@@ -165,7 +166,6 @@ export TEMPORARILY_REMOVED="\
       -D SuperLU_INCLUDE_DIRS:PATH="${TACC_SUPERLUSEQ_DIR}/include" \
       -D SuperLU_LIBRARY_DIRS:PATH="${TACC_SUPERLUSEQ_LIB}" \
       -D SuperLU_LIBRARY_NAMES:STRING="superlu" \
-  \
   "
 if [ "${ECHO}" = "1" ] ; then
     echo "cmdline=$cmdline" ; fi
