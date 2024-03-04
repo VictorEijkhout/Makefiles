@@ -30,9 +30,9 @@ build ::
 	     && cd $$srcdir \
 	     && ./bootstrap.sh --prefix=$$installdir \
 	        --with-libraries=atomic,chrono,container,context,contract,coroutine,date_time,exception,fiber,filesystem,graph,graph_parallel,headers,iostreams,json,locale,log,math${MPI},nowide,program_options,python,random,regex,serialization,stacktrace,system,test,thread,timer,type_erasure,url,wave \
-	     && ./b2 toolset=gcc \
+	     && ./b2 toolset=${TACC_FAMILY_COMPILER} \
 	          variant=release link=shared debug-symbols=off inlining=full \
-	          address-model=64  stage --with-fiber --with-context --with-test --with-atomic --with-filesystem --with-headers --with-system install \
+	          address-model=64  stage --with-context --with-fiber --with-atomic --with-filesystem --with-headers --with-iostreams --with-system --with-test install \
 	          --prefix=$${installdir} --build-dir=$${builddir} \
 	     && echo "not /b2 --with-fiber --with-context  --with-atomic --with-test" \
 	     && echo "not ./b2 install --prefix=$$installdir --build-dir=$$builddir toolset=gcc" \
