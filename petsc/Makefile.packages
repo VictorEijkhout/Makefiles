@@ -13,9 +13,12 @@ info ::
 	        )" \
 	 && echo "    set nonzero for packages: $${PACKAGELIST}"
 
-packagelist = amgx chaco eigen fftw hdf5 hypre kokkos mpe \
-    metis mumps parmetis \
-    petsc4py ptscotch slepc slepc4py superlu triangle zoltan
+##
+## tacc module names or package names
+## 
+packagelist = amgx chaco eigen fftw phdf5 hypre kokkos mpe \
+    metis mumps parmetis petsc4py ptscotch \
+    scalapack slepc slepc4py superlu triangle zoltan
 # libceed
 
 ##
@@ -50,10 +53,13 @@ package_location :
 	 && taccvarname=TACC_$${P}_DIR \
 	 && eval taccvar=\$${$${taccvarname}} \
 	 && echo "tacc var $${taccvarname} = $${taccvar}" >/dev/null \
+	 && case $${p} in \
+	    ( phdf5 ) pp=hdf5 ;; \
+	    ( * ) pp=$${p} ;; esac \
 	 && if [ ! -z "$${taccvar}" ] ; then \
-	        echo "--with-$${p}-dir=$${taccvar}" \
+	        echo "--with-$${pp}-dir=$${taccvar}" \
 	    ; else \
-	        eval echo "--download-$${p}=1 \$${$${p}_extra}" \
+	        eval echo "--download-$${pp}=1 \$${$${pp}_extra}" \
 	    ; fi
 
 ##

@@ -4,6 +4,8 @@
 ####
 #### this is the C version
 ####
+#### pnetcdf handling: https://github.com/Unidata/netcdf-c/issues/2872
+####
 ################################################################
 
 PACKAGE = NETCDF
@@ -27,7 +29,7 @@ DEPENDSON = phdf5
 ## NOTE the enable_pnetcdf flag is for parallel-netcdf 1.9
 ##
 CMAKEFLAGS = \
-    -D ENABLE_PNETCDF=OFF \
+    -D ENABLE_PNETCDF=${NETCDF_PARALLEL} ${CMAKE_C_EXTRA_FLAGS} \
     -D ENABLE_PARALLEL4=${NETCDF_PARALLEL} \
     -D ENABLE_PARALLEL_TESTS=OFF \
     -D ENABLE_NETCDF_4=ON \
@@ -44,7 +46,8 @@ seq :
 	    MODULENAME=netcdf DEPENDSON=hdf5
 par :
 	@make --no-print-directory configure build JCOUNT=${JCOUNT} \
-	    MODE=mpi MODULES=phdf5 NETCDF_PARALLEL=ON \
+	    MODE=mpi MODULES="phdf5 parallelnetcdf" NETCDF_PARALLEL=ON \
+	    CMAKE_C_EXTRA_FLAGS="-D CMAKE_C_FLAGS='-I${TACC_PARALLELNETCDF_INC} -I${TACC_PHDF5_INC} -L${TACC_PARALLELNETCDF_LIB} -lpnetcdf'" \
 	    MODULENAME=pnetcdf MODULENAMEALT=netcdf DEPENDSON=phdf5
 .PHONY: default_install
 info ::

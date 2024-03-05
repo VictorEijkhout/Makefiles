@@ -4,6 +4,8 @@
 ####
 #### https://www.docs.trilinos.org/files/TrilinosBuildReference.html
 ####
+#### ExodusII / Seacas issue: https://github.com/trilinos/Trilinos/issues/12022
+####
 ################################################################
 
 PACKAGE = trilinos
@@ -12,7 +14,7 @@ URL = https://github.com/trilinos/Trilinos \
 PACKAGEVERSION = 15.0.0
 PACKAGEVERSION_DOWNLOAD = 15-0-0
 MODE = mpi
-MODULES = boost phdf5 pnetcdf
+MODULES = boost phdf5 pnetcdf parallelnetcdf
 MODULE_MINIMUM_VERSION_intel = 20
 #boost swig
 
@@ -81,12 +83,17 @@ configure :: modules
 ##	 && make --no-print-directory varsmodule
 
 include ${MAKEINCLUDES}/Make.cbuild
-netcdfbuild ::
+.PHONY: netcdfcopy
+build :: netcdfcopy
+netcdfcopy ::
 	@source ${MAKEINCLUDES}/names.sh \
 	 && export MODE=${MODE} \
 	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "" "" "" "${MODE}" \
-	 && requirenonzero TACC_NETCDF_INC \
-	 && cp ${TACC_NETCDF_INC}/netcdf*.h $${installdir}/include
+	 && requirenonzero TACC_PNETCDF_INC \
+	 && cmdline="cp ${TACC_NETCDF_INC}/netcdf*.h $${installdir}/include" \
+	 && echo "copy netcdf.h: " && echo $$cmdline \
+	 && eval $$cmdline \
+	 && if [ $$? -gt 0 ] ; then error "ERROR copy failed" ; fi
 
 .PHONY: default_install
 info ::
