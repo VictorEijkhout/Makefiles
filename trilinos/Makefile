@@ -83,12 +83,17 @@ configure :: modules
 ##	 && make --no-print-directory varsmodule
 
 include ${MAKEINCLUDES}/Make.cbuild
-netcdfbuild ::
+.PHONY: netcdfcopy
+build :: netcdfcopy
+netcdfcopy ::
 	@source ${MAKEINCLUDES}/names.sh \
 	 && export MODE=${MODE} \
 	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "" "" "" "${MODE}" \
-	 && requirenonzero TACC_NETCDF_INC \
-	 && cp ${TACC_NETCDF_INC}/netcdf*.h $${installdir}/include
+	 && requirenonzero TACC_PNETCDF_INC \
+	 && cmdline="cp ${TACC_NETCDF_INC}/netcdf*.h $${installdir}/include" \
+	 && echo "copy netcdf.h: " && echo $$cmdline \
+	 && eval $$cmdline \
+	 && if [ $$? -gt 0 ] ; then error "ERROR copy failed" ; fi
 
 .PHONY: default_install
 info ::
