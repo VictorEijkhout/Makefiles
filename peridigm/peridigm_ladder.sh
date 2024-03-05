@@ -7,10 +7,10 @@ packages=0
 
 ladder="\
     zlib,1.2.13 \
-    hdf5,1.14 \
-    netcdf,4.9.2 \
-    boost,1.81.0 \
+    phdf5,1.14.3,hdf5,par \
+    parallelnetcdf,git \
+    pnetcdf,4.9.2,netcdf,par \
+    boost,1.83.0 \
     trilinos,15.0.0 \
     peridigm,git \
     "
-
