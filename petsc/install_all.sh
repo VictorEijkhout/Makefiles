@@ -1,4 +1,9 @@
 #!/bin/bash
+################################################################
+####
+#### Install all variants of Petsc given loaded compiler/mpi
+####
+################################################################
 
 function usage() {
     echo "Usage: $0 [ -h ] "
@@ -27,6 +32,13 @@ while [ $# -gt 0 ] ; do
 	echo "Error: unknown option <<$1>>" && exit 1
     fi
 done
+
+echo "================================================================"
+echo ""
+echo "    Installation petsc variants for:"
+echo "    compiler=${TACC_FAMILY_COMPILER}/${TACC_FAMILY_COMPILER_VERSION} mpi=${TACC_FAMILY_MPI}/${TACC_FAMILY_MPI_VERSION}"
+echo ""
+echo "================================================================"
 
 set -e
 archs=archs-${pversion}

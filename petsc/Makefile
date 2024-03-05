@@ -267,9 +267,9 @@ biginstall :
 	      ; else AMGX=${AMGX} ; fi \
 	   && if [ "${PARMETIS}" = "1" ] ; then MUMPS=1 ; else MUMPS=${MUMPS}; fi \
 	   && case $${ext} in \
-	        ( *nohdf5* ) HDF= ;; esac \
+	        ( *nohdf5* ) HDF5= ; PHDF5= ;; esac \
 	   && case $${ext} in \
-	        ( *single* ) HDF5= ; HYPRE= ;; esac \
+	        ( *single* ) HDF5= ; PHDF5= ; HYPRE= ; MUMPS= ; SCALAPACK= ;; esac \
 	   && case $${ext} in \
 	        ( *i64* ) CHACO= ; PARMETIS= ;; esac \
 	   \
@@ -285,7 +285,7 @@ biginstall :
 	      \
 	      AMGX=$${AMGX} CHACO=$${CHACO} EIGEN=${EIGEN} FFTW3=${FFTW3} \
 	      HDF5=$${HDF5} HYPRE=$${HYPRE} \
-	      MUMPS=$${MUMPS} PARMETIS=$${PARMETIS} \
+	      MUMPS=$${MUMPS} PARMETIS=$${PARMETIS} SCALAPACK=${SCALAPACK} \
 	      \
 	      CUDA=${CUDA} FORTRAN=$${FORTRAN} \
 	      PETSC4PY=${PETSC4PY} SLEPC4PY=${SLEPC4PY} \
