@@ -68,17 +68,19 @@ done
 
 export NOHDF5=1
 for debug in 0 1 ; do 
-    export INT=32
-    export PRECISION=double
-    export SCALAR=real 
-    export DEBUG=${debug}
-    arch=$( make --no-print-directory petscshortarch )
-    echo && echo "Installing big for arch=${arch}" && echo
-    echo ${arch} >> ${archs}
-    ./install_big.sh -j ${jcount} \
-    	-5 \
-    	$( if [ ${p4p} -eq 0 ] ; then echo "-4" ; fi ) \
-    	$( if [ ${cuda} -eq 1 ] ; then echo "-c" ; fi )
+    for int in 32 64 ; do 
+	export INT=${int}
+	export PRECISION=double
+	export SCALAR=real 
+	export DEBUG=${debug}
+	arch=$( make --no-print-directory petscshortarch )
+	echo && echo "Installing big for arch=${arch}" && echo
+	echo ${arch} >> ${archs}
+	./install_big.sh -j ${jcount} \
+    			 -5 \
+    			 $( if [ ${p4p} -eq 0 ] ; then echo "-4" ; fi ) \
+    			 $( if [ ${cuda} -eq 1 ] ; then echo "-c" ; fi )
+    done
 done
 export NOHDF5=0
 

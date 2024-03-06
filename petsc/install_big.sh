@@ -107,7 +107,7 @@ make --no-print-directory biginstall JCOUNT=${jcount} PACKAGEVERSION=${pversion}
     CUDA=${cuda} FORTRAN=${fortran} \
     PETSC4PY=${p4p} SLEPC4PY=${p4p} \
 "
-echo "cmdline: $cmdline" | tee -a ${biglog}
+echo "At $(date) cmdline: $cmdline" | tee -a ${biglog}
 set -e
 set -o pipefail 
 eval $cmdline  2>&1 | tee -a ${biglog}
