@@ -59,7 +59,7 @@ if [ "${INT}" = "64" ] ; then
 else
     module load hypre/2.30.0
 fi
-module load phdf5
+## module load phdf5
 # /1.14
 
 if [ "${cuda}" = "1" ] ; then 
@@ -108,6 +108,8 @@ make --no-print-directory biginstall JCOUNT=${jcount} PACKAGEVERSION=${pversion}
     PETSC4PY=${p4p} SLEPC4PY=${p4p} \
 "
 echo "cmdline: $cmdline" | tee -a ${biglog}
+set -e
+set -o pipefail 
 eval $cmdline  2>&1 | tee -a ${biglog}
 
 echo && echo "See: ${biglog}" && echo
