@@ -253,7 +253,7 @@ allinstall :
 	 && echo && echo "See: $${log}" && echo
 biginstall :
 	@ext=${EXT} \
-	   && echo "Selecting basic options" \
+	   && echo "Selecting basic options for extension=$${ext}:" \
 	   && case $${ext} in ( *debug* ) DEBUG=1 ;; ( * ) DEBUG= ;; esac \
 	   && case $${ext} in ( *i64* ) INT=64 ;; ( * ) INT=32 ;; esac \
 	   && case $${ext} in ( *single* ) PRECISION=single ;; ( * ) PRECISION=double ;; esac \
@@ -278,6 +278,7 @@ biginstall :
 	        ( gcc ) echo " .. no FORTRAN for gcc" && FORTRAN=0 ;; \
 	        ( * ) FORTRAN=${FORTRAN} ;; esac \
 	   \
+	   && echo "Start configure/build at $$( date )" \
 	   && cmdline="make --no-print-directory configure build  \
 	      PACKAGEVERSION=${PACKAGEVERSION} JCOUNT=${JCOUNT} \
 	      DEBUG=$${DEBUG} INT=$${INT} PRECISION=$${PRECISION} SCALAR=$${SCALAR} \
