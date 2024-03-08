@@ -71,8 +71,6 @@ if [ "${cuda}" = "1" ] ; then
     module load cuda/12
 fi
 
-export biglog=install_big$( if [ ! -z "${customext}" ] ; then echo "-${customext}" ; fi ).log
-rm -f $biglog
 EXTENSION=
 if [ "${hdf5}" = "0" ] ; then
     EXTENSION=${EXTENSION}nohdf5
@@ -98,6 +96,9 @@ if [ "${TACC_FAMILY_COMPILER}" = "intel" ] ; then
 else
     CHACO=1
 fi
+
+export biglog=install_big$( if [ ! -z "${customext}" ] ; then echo "-${customext}" ; fi ).log
+rm -f $biglog
 cmdline="\
 make --no-print-directory biginstall JCOUNT=${jcount} PACKAGEVERSION=${pversion} \
     EXT=${EXTENSION} \

@@ -73,10 +73,6 @@ package_values :
 	     && echo "$$p / $$P / $${hdf5} / ${HDF5}" \
 	; done
 
-FORTRAN = 0
-info ::
-	@echo "    [ FORTRAN=0/90/08 (default: ${FORTRAN}) ]"
-
 MPI_FLAGS = --with-mpi-compilers=1
 ifeq "${TACC_SYSTEM}" "nvarm"
   MPI_FLAGS = --with-mpi-compilers=1 --with-cc=`which mpicc` --with-cxx=`which mpicxx` 

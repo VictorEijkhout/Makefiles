@@ -296,7 +296,7 @@ biginstall :
 	      ; else \
 	        echo "Big install: $$cmdline"\
 	      ; fi \
-	   && eval $$cmdline 2>&1 | tee big.log \
+	   && set -e && set -o pipefail && eval $$cmdline 2>&1 | tee big.log \
 	   && echo && echo "See: big.log" && echo
 
 info ::
@@ -326,4 +326,4 @@ include ${MAKEINCLUDES}/Make.download
 TGZURL = https://web.cels.anl.gov/projects/petsc/download/release-snapshots/petsc-${PACKAGEVERSION}.tar.gz
 
 clean ::
-	@/bin/rm -f *~
+	@/bin/rm -f install.o[0-9]*

@@ -33,12 +33,17 @@ while [ $# -gt 0 ] ; do
     fi
 done
 
-echo "================================================================"
-echo ""
-echo "    Installation petsc variants for:"
-echo "    compiler=${TACC_FAMILY_COMPILER}/${TACC_FAMILY_COMPILER_VERSION} mpi=${TACC_FAMILY_MPI}/${TACC_FAMILY_MPI_VERSION}"
-echo ""
-echo "================================================================"
+alllog=all.log
+rm -f ${alllog} && touch ${alllog}
+
+( \
+echo "================================================================" && \
+echo "" && \
+echo "    Installation petsc variants for:" && \
+echo "    compiler=${TACC_FAMILY_COMPILER}/${TACC_FAMILY_COMPILER_VERSION} mpi=${TACC_FAMILY_MPI}/${TACC_FAMILY_MPI_VERSION}" && \
+echo "" && \
+echo "================================================================" && \
+) | tee -a ${alllog}      
 
 set -e
 archs=archs-${pversion}
@@ -52,7 +57,7 @@ for debug in 0 1 ; do
 		export PRECISION=${precision}
 		export SCALAR=${scalar} 
 		arch=$( make --no-print-directory petscshortarch )
-		echo && echo "Installing big for arch=${arch}" && echo
+		( echo && echo "Installing big for arch=${arch}" && echo ) | tee -a ${alllog}
 		if [ -z "${arch}" ] ; then 
 		    echo vanilla >> ${archs}
 		else
@@ -60,7 +65,8 @@ for debug in 0 1 ; do
 		fi
 		./install_big.sh -j ${jcount} \
 		    $( if [ ${p4p} -eq 0 ] ; then echo "-4" ; fi ) \
-		    $( if [ ${cuda} -eq 1 ] ; then echo "-c" ; fi )
+		    $( if [ ${cuda} -eq 1 ] ; then echo "-c" ; fi ) \
+		    | tee -a ${alllog}
 	    done
 	done
     done
@@ -74,17 +80,19 @@ for debug in 0 1 ; do
 	export SCALAR=real 
 	export DEBUG=${debug}
 	arch=$( make --no-print-directory petscshortarch )
-	echo && echo "Installing big for arch=${arch}" && echo
+	( echo && echo "Installing big for arch=${arch}" && echo ) | tee -a ${alllog}
 	echo ${arch} >> ${archs}
 	./install_big.sh -j ${jcount} \
     			 -5 \
     			 $( if [ ${p4p} -eq 0 ] ; then echo "-4" ; fi ) \
-    			 $( if [ ${cuda} -eq 1 ] ; then echo "-c" ; fi )
+    			 $( if [ ${cuda} -eq 1 ] ; then echo "-c" ; fi ) \
+			 | tee -a ${alllog}
     done
 done
 export NOHDF5=0
 
 export FORTRAN=08
+# problem with hdf5, so skip
 for debug in 0 1 ; do 
     for scalar in real complex ; do 
 	export INT=32
@@ -92,13 +100,15 @@ for debug in 0 1 ; do
 	export SCALAR=${scalar}
 	export DEBUG=${debug}
 	arch=$( make --no-print-directory petscshortarch )
-	echo && echo "Installing big for arch=${arch}" && echo
+	( echo && echo "Installing big for arch=${arch}" && echo ) | tee -a ${alllog}
 	echo ${arch} >> ${archs}
 	./install_big.sh -j ${jcount} \
-	    -8 \
+	    -5 -8 \
 	    $( if [ ${p4p} -eq 0 ] ; then echo "-4" ; fi ) \
-	    $( if [ ${cuda} -eq 1 ] ; then echo "-c" ; fi )
+	    $( if [ ${cuda} -eq 1 ] ; then echo "-c" ; fi ) \
+	    | tee -a ${alllog}
+	if [ $? -gt 0 ] ; then exit 1 ; fi 
     done
 done
 
-echo && echo "done archs: $( cat ${archs} | tr '\n' ' ' )" && echo
+( echo && echo "done archs: $( cat ${archs} | tr '\n' ' ' )" && echo ) | tee -a ${alllog}
