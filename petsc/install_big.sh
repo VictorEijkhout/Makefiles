@@ -111,7 +111,12 @@ make --no-print-directory biginstall JCOUNT=${jcount} PACKAGEVERSION=${pversion}
 echo "At $(date) cmdline: $cmdline" | tee -a ${biglog}
 set -e
 set -o pipefail 
-eval $cmdline  2>&1 | tee -a ${biglog}
+eval $cmdline 2>&1 | tee -a ${biglog}
+# if [ $retcode -gt 0 ] ; then
+#     echo "Make failed for EXT=${EXTENSION}" 
+#     echo && echo "See: ${biglog}" && echo
+#     exit 1
+# else
+    echo && echo "See: ${biglog}" && echo
+##fi
 
-echo && echo "See: ${biglog}" && echo
-    
