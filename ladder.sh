@@ -1,5 +1,5 @@
 ## where do the spaces in this come from?
-ladder="\
+numladder="\
     $( i=1 && for l in ${ladder} ; do echo $i,$l && i=$(( i+1 )) ; done ) \
     "
 
@@ -14,7 +14,7 @@ function usage() {
     echo "    [ -v compiler_version (default ${TACC_FAMILY_COMPILER_VERSION} ] "
     echo "    nnn"
     echo "where nnn:"
-    for ixy in ${ladder} ; do
+    for ixy in ${numladder} ; do
 	n=${ixy%%,*}
 	xy=${ixy#*,}
 	x=${xy%,*}
@@ -76,29 +76,33 @@ if [ -z "${list}" ] ; then
 else
     echo "---------------- listing packages"
 fi
+ladderlog=ladder_${TACC_FAMILY_COMPILER}${TACC_FAMILY_COMPILER_VERSION}.log
 for m in $( echo ${packages} | tr , ' ' ) ; do
-    for ixy in ${ladder} \
+    for numpacver in ${numladder} \
 	       ; do \
-	n=${ixy%%,*}
-	xy=${ixy#*,}
-	x=${xy%,*}
-	y=${xy#*,}
+	num=${numpacver%%,*}
+	pacver=${numpacver#*,}
+	pac=${pacver%,*}
+	ver=${pacver#*,}
 	echo "================"
-	echo "Package $n: $x version $y"
+	echo "Package $num: $pac version $ver"
 	if [ ! -z "${list}" ] ; then 
-	    module_avail $x $y
-	elif [ $m -eq $n ] ; then 
+	    module_avail $pac $ver
+	elif [ $m -eq $num ] ; then 
 	    echo "Installing" && echo
-	    ( cd ../$x \
-	       && make configure build public JCOUNT=${jcount} PACKAGEVERSION=$y \
+	    ( cd ../$pac \
+	       && make configure build public JCOUNT=${jcount} PACKAGEVERSION=$ver \
 	     )
 	    break
 	fi
 	if [ -z "${list}" ] ; then 
-	    module load $x/$y
+	    module load $pac/$ver
 	    echo " .. loading"
-	    if [ $? -ne 0 ] ; then echo "Could not load $x" && exit 1 ; fi
+	    if [ $? -ne 0 ] ; then echo "Could not load $pac" && exit 1 ; fi
 	fi
     done 
-done
+done 2>&1 | tee ${ladderlog}
+
+echo && echo "See: ${ladderlog}" && echo
+
 
