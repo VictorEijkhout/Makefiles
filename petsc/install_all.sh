@@ -42,7 +42,7 @@ echo "" && \
 echo "    Installation petsc variants for:" && \
 echo "    compiler=${TACC_FAMILY_COMPILER}/${TACC_FAMILY_COMPILER_VERSION} mpi=${TACC_FAMILY_MPI}/${TACC_FAMILY_MPI_VERSION}" && \
 echo "" && \
-echo "================================================================" && \
+echo "================================================================" \
 ) | tee -a ${alllog}      
 
 set -e
@@ -50,7 +50,7 @@ archs=archs-${pversion}
 rm -f $archs && touch $archs
 for debug in 0 1 ; do 
     for int in 32 64 ; do 
-	for precision in single double ; do
+	for precision in double single ; do
 	    for scalar in real complex ; do 
 		export DEBUG=${debug}
 		export INT=${int}
