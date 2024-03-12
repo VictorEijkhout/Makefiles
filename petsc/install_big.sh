@@ -59,7 +59,7 @@ if [ "${INT}" = "64" ] ; then
 else
     module load hypre/2.30.0
 fi
-module load phdf5
+## module load phdf5
 # /1.14
 
 if [ "${cuda}" = "1" ] ; then 
@@ -71,8 +71,6 @@ if [ "${cuda}" = "1" ] ; then
     module load cuda/12
 fi
 
-export biglog=install_big$( if [ ! -z "${customext}" ] ; then echo "-${customext}" ; fi ).log
-rm -f $biglog
 EXTENSION=
 if [ "${hdf5}" = "0" ] ; then
     EXTENSION=${EXTENSION}nohdf5
@@ -98,6 +96,9 @@ if [ "${TACC_FAMILY_COMPILER}" = "intel" ] ; then
 else
     CHACO=1
 fi
+
+export biglog=install_big$( if [ ! -z "${customext}" ] ; then echo "-${customext}" ; fi ).log
+rm -f $biglog
 cmdline="\
 make --no-print-directory biginstall JCOUNT=${jcount} PACKAGEVERSION=${pversion} \
     EXT=${EXTENSION} \
@@ -107,8 +108,15 @@ make --no-print-directory biginstall JCOUNT=${jcount} PACKAGEVERSION=${pversion}
     CUDA=${cuda} FORTRAN=${fortran} \
     PETSC4PY=${p4p} SLEPC4PY=${p4p} \
 "
-echo "cmdline: $cmdline" | tee -a ${biglog}
-eval $cmdline  2>&1 | tee -a ${biglog}
+echo "At $(date) cmdline: $cmdline" | tee -a ${biglog}
+set -e
+set -o pipefail 
+eval $cmdline 2>&1 | tee -a ${biglog}
+# if [ $retcode -gt 0 ] ; then
+#     echo "Make failed for EXT=${EXTENSION}" 
+#     echo && echo "See: ${biglog}" && echo
+#     exit 1
+# else
+    echo && echo "See: ${biglog}" && echo
+##fi
 
-echo && echo "See: ${biglog}" && echo
-    

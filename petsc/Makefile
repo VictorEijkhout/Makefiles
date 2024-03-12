@@ -5,7 +5,7 @@
 ################################################################
 
 PACKAGE = PETSC
-PACKAGEVERSION = 3.20.4
+PACKAGEVERSION = 3.20.5
 MODE = mpi
 
 include ${MAKEINCLUDES}/Make.info
@@ -165,7 +165,9 @@ build :: modules
 	        "${BLAS_FLAGS}" \
 	        $${package_options} $${param_settings} \
 	        " \
-	     && echo "Cmdline=$$cmdline" && eval $$cmdline \
+	     && echo "Cmdline=$$cmdline" && eval $$cmdline || retcode=$$? \
+	     && if [ $${retcode} -gt 0 ] ; then \
+	        echo "Build failed for $${PETSC_ARCH}" && exit 1 ; fi \
 	     && echo "PYTHONPATH=$${PYTHONPATH}" \
 	     && make PETSC_DIR=`pwd` PETSC_ARCH=$${PETSC_ARCH} MAKE_NP=${JCOUNT} all \
 	     && make PETSC_DIR=`pwd` PETSC_ARCH=$${PETSC_ARCH} MAKE_NP=${JCOUNT} install \
@@ -253,7 +255,7 @@ allinstall :
 	 && echo && echo "See: $${log}" && echo
 biginstall :
 	@ext=${EXT} \
-	   && echo "Selecting basic options" \
+	   && echo "Selecting basic options for extension=$${ext}:" \
 	   && case $${ext} in ( *debug* ) DEBUG=1 ;; ( * ) DEBUG= ;; esac \
 	   && case $${ext} in ( *i64* ) INT=64 ;; ( * ) INT=32 ;; esac \
 	   && case $${ext} in ( *single* ) PRECISION=single ;; ( * ) PRECISION=double ;; esac \
@@ -267,9 +269,9 @@ biginstall :
 	      ; else AMGX=${AMGX} ; fi \
 	   && if [ "${PARMETIS}" = "1" ] ; then MUMPS=1 ; else MUMPS=${MUMPS}; fi \
 	   && case $${ext} in \
-	        ( *nohdf5* ) HDF= ;; esac \
+	        ( *nohdf5* ) HDF5= ; PHDF5= ;; esac \
 	   && case $${ext} in \
-	        ( *single* ) HDF5= ; HYPRE= ;; esac \
+	        ( *single* ) HDF5= ; PHDF5= ; HYPRE= ; MUMPS= ; SCALAPACK= ;; esac \
 	   && case $${ext} in \
 	        ( *i64* ) CHACO= ; PARMETIS= ;; esac \
 	   \
@@ -278,6 +280,7 @@ biginstall :
 	        ( gcc ) echo " .. no FORTRAN for gcc" && FORTRAN=0 ;; \
 	        ( * ) FORTRAN=${FORTRAN} ;; esac \
 	   \
+	   && echo "Start configure/build at $$( date )" \
 	   && cmdline="make --no-print-directory configure build  \
 	      PACKAGEVERSION=${PACKAGEVERSION} JCOUNT=${JCOUNT} \
 	      DEBUG=$${DEBUG} INT=$${INT} PRECISION=$${PRECISION} SCALAR=$${SCALAR} \
@@ -285,7 +288,7 @@ biginstall :
 	      \
 	      AMGX=$${AMGX} CHACO=$${CHACO} EIGEN=${EIGEN} FFTW3=${FFTW3} \
 	      HDF5=$${HDF5} HYPRE=$${HYPRE} \
-	      MUMPS=$${MUMPS} PARMETIS=$${PARMETIS} \
+	      MUMPS=$${MUMPS} PARMETIS=$${PARMETIS} SCALAPACK=${SCALAPACK} \
 	      \
 	      CUDA=${CUDA} FORTRAN=$${FORTRAN} \
 	      PETSC4PY=${PETSC4PY} SLEPC4PY=${SLEPC4PY} \
@@ -295,7 +298,7 @@ biginstall :
 	      ; else \
 	        echo "Big install: $$cmdline"\
 	      ; fi \
-	   && eval $$cmdline 2>&1 | tee big.log \
+	   && set -e && set -o pipefail && eval $$cmdline 2>&1 | tee big.log \
 	   && echo && echo "See: big.log" && echo
 
 info ::
@@ -325,4 +328,4 @@ include ${MAKEINCLUDES}/Make.download
 TGZURL = https://web.cels.anl.gov/projects/petsc/download/release-snapshots/petsc-${PACKAGEVERSION}.tar.gz
 
 clean ::
-	@/bin/rm -f *~
+	@/bin/rm -f install.o[0-9]*

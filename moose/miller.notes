@@ -1,0 +1,98 @@
+Going through your other recent posts, I would conclude you're a power user, which can take minimal instruction.
+So, here are the config lines (I compiled these based on our scripts in moose/scripts).
+
+I think I got em all. But you may wish to peruse these in the event of a failure! I am talking about the following relevant files:
+
+# petsc
+moose/scripts/update_and_rebuild_petsc.sh
+moose/scripts/configure_petsc.sh
+
+# libmesh
+moose/scripts/update_and_rebuild_libmesh.sh
+moose/scripts/configure_libmesh.sh
+
+# wasp
+moose/scripts/update_and_rebuild_wasp.sh
+moose/scripts/configure_wasp.sh
+Anyways, let's get started!
+
+PETSc
+
+./configure --prefix=/some/path/to/install/petsc \
+      --with-64-bit-indices \
+      --with-cxx-dialect=C++17 \
+      --with-debugging=no \
+      --with-fortran-bindings=0 \
+      --with-mpi=1 \
+      --with-openmp=1 \
+      --with-shared-libraries=1 \
+      --with-sowing=0 \
+      --download-fblaslapack=1 \
+      --download-hypre=1 \
+      --download-metis=1 \
+      --download-mumps=1 \
+      --download-ptscotch=1 \
+      --download-parmetis=1 \
+      --download-scalapack=1 \
+      --download-slepc=1 \
+      --download-strumpack=1 \
+      --download-superlu_dist=1
+You'll have to figure out the other switches on your own (dynamically generated based on machine you are on). As that is what our scripts are for (HDF5 location for example). See moose/scripts/configure_petsc.sh for more detail.
+
+Once configure completes, you'll be presented with instruction on screen, for what to do next.
+
+Once finished, you'll need to export where you installed PETSc. And you'll need to continue to provide this variable for any MOOSE related work:
+
+export PETSC_DIR=/some/path/you/installed/petsc/to/above
+libMesh
+
+./configure   --prefix=/some/path/to/install/libmesh \
+      --enable-silent-rules \
+      --enable-unique-id \
+      --disable-warnings \
+      --with-thread-model=openmp \
+      --disable-maintainer-mode \
+      --enable-hdf5 \
+      --enable-petsc-hypre-required \
+      --enable-metaphysicl-required \
+      --enable-xdr-required \
+      --with-cxx-std-min=2014 \
+      --without-gdb-command \
+      --with-methods="opt"
+
+make
+make install
+Once finished, you'll need to export where you installed libMesh. And you'll need to continue to provide this variable for any MOOSE related work:
+
+export LIBMESH_DIR=/some/path/you/installed/libmesh/to/above
+WASP
+
+cmake \
+      -DCMAKE_INSTALL_PREFIX:STRING=/some/path/to/install/wasp
+      -D CMAKE_BUILD_TYPE:STRING=RELEASE \
+      -D wasp_ENABLE_ALL_PACKAGES:BOOL=OFF \
+      -D wasp_ENABLE_wasphit:BOOL=ON \
+      -D wasp_ENABLE_wasplsp:BOOL=ON \
+      -D wasp_ENABLE_waspsiren:BOOL=ON \
+      -D wasp_ENABLE_testframework:BOOL=OFF \
+      -D wasp_ENABLE_TESTS:BOOL=OFF \
+      -D BUILD_SHARED_LIBS:BOOL=ON \
+      -D DISABLE_HIT_TYPE_PROMOTION:BOOL=ON
+
+make
+make install
+Once finished, you'll need to export where you installed WASP. And you'll need to continue to provide this variable for any MOOSE related work:
+
+export WASP_DIR=/some/path/you/installed/libmesh/to/above
+MOOSE
+
+MOOSE can also be installed, if that is something you are also interested in!
+
+cd moose
+./configure --prefix=/some/path
+cd mdules
+make
+make install
+—
+Reply to this email directly, view it on GitHub, or unsubscribe.
+You are receiving this because you authored the thread.

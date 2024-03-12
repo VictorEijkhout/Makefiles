@@ -31,5 +31,6 @@ module load impi/19.0.9
 export TACC_PYTHON_DIR=/opt/apps/gcc11_2/python3/3.9.7
 export TACC_PYTHON3_DIR=/opt/apps/gcc11_2/python3/3.9.7
 export PATH=${PATH}:${TACC_PYTHON_DIR}/bin
+export LD_LIBRARY_PATH=${TACC_PYTHON_DIR}/lib:${LD_LIBRARY_PATH}
 
 module list
