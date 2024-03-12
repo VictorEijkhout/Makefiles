@@ -165,7 +165,9 @@ build :: modules
 	        "${BLAS_FLAGS}" \
 	        $${package_options} $${param_settings} \
 	        " \
-	     && echo "Cmdline=$$cmdline" && eval $$cmdline \
+	     && echo "Cmdline=$$cmdline" && eval $$cmdline || retcode=$$? \
+	     && if [ $${retcode} -gt 0 ] ; then \
+	        echo "Build failed for $${PETSC_ARCH}" && exit 1 ; fi \
 	     && echo "PYTHONPATH=$${PYTHONPATH}" \
 	     && make PETSC_DIR=`pwd` PETSC_ARCH=$${PETSC_ARCH} MAKE_NP=${JCOUNT} all \
 	     && make PETSC_DIR=`pwd` PETSC_ARCH=$${PETSC_ARCH} MAKE_NP=${JCOUNT} install \
