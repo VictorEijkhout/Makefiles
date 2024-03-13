@@ -9,6 +9,7 @@
 ################################################################
 
 PACKAGE = parmetis
+URL = https://github.com/scibuilder/parmetis
 PACKAGEVERSION = 4.0.3
 MODE = mpi
 MODULES = 
