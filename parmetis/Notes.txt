@@ -1,0 +1,4 @@
+metis.h has METIS_EXPORT
+which should be blanked out on all but windows systems:
+https://github.com/search?q=repo%3Ascibuilder%2Fparmetis%20metis_export&type=code
+
