@@ -12,12 +12,12 @@ MODULES = eigen
 
 include ${MAKEINCLUDES}/Make.info
 
-CMAKEFLAGS = \
+CMAKEFLAGSBASIC = \
     -D EXAMPLES=ON -D ICB=ON -D EIGEN=ON
+CMAKEFLAGS = ${CMAKEFLAGSBASIC}
 
 include ${MAKEINCLUDES}/Make.cmake
-# HASBIN=1
-# PKGCONFIGLIB = pkgconfig
+PKGCONFIGLIB = pkgconfig
 include ${MAKEINCLUDES}/Make.cbuild
 
 info ::
@@ -26,18 +26,16 @@ info ::
 ARPACKPARALLEL = OFF
 .PHONY: seq par
 seq :
-	@make configure build JCOUNT=${JCOUNT} \
-	    PACKAGEVERSION=${PACKAGEVERSION} \
+	@make configure build JCOUNT=${JCOUNT} PACKAGEVERSION=${PACKAGEVERSION} \
+	    CMAKEFLAGS=${CMAKEFLAGSBASIC} \
 	    ARPACKPARALLEL=OFF MODE=seq MODULENAME=arpack
 par :
-	@make configure build JCOUNT=${JCOUNT} \
-	    PACKAGEVERSION=${PACKAGEVERSION} \
+	@make configure build JCOUNT=${JCOUNT} PACKAGEVERSION=${PACKAGEVERSION} \
+	    CMAKEFLAGS="${CMAKEFLAGSBASIC} -D MPI=ON" \
 	    ARPACKPARALLEL=ON  MODE=mpi MODULENAME=parpack MODULENAMEALT=arpack
 info ::
 	@echo "make default_install : sequential and parallel versions"
-default_install :: 
-	@make --no-print-directory seq par JCOUNT=${JCOUNT} PACKAGEVERSION=${PACKAGEVERSION} \
-	    seq par
+default_install :: seq par
 
 ##
 ## download
