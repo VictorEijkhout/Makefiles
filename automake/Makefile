@@ -1,33 +1,27 @@
 ################################################################
 ####
-#### Makefile for PROJ installation
-#### https://proj.org/index.html
+#### Makefile for AUTOMAKE installation
+#### https://automake.org/index.html
 ####
 ################################################################
 
-PACKAGE = PROJ
-URL = https://proj.org/en/9.3/download.html
-PACKAGEVERSION = 9.3.1
+PACKAGE = AUTOMAKE
+URL = https://ftp.gnu.org/gnu/automake/
+PACKAGEVERSION = 1.16.5
 MODE = seq
-MODULES = sqlite
+MODULES = 
 
 include ${MAKEINCLUDES}/Make.info
 
-CMAKEFLAGS = --trace \
-    -D BUILD_TESTING=OFF \
-    -D EXE_SQLITE3=${TACC_SQLITE_BIN}/sqlite3 \
-    -D SQLITE3_INCLUDE_DIR=${TACC_SQLITE_INC} \
-    -D SQLITE3_LIBRARY=${TACC_SQLITE_LIB}/libsqlite3.so
+include ${MAKEINCLUDES}/Make.configure
+NOLIB = 1
+HASBIN = 1
+include ${MAKEINCLUDES}/Make.install
 
-CMAKEPREFIXPATHSET = 1
-include ${MAKEINCLUDES}/Make.cmake
-PKGCONFIGLIB = pkgconfig
-include ${MAKEINCLUDES}/Make.cbuild
 .PHONY: default_install
-default_install : configure build public
+default_install : configure build 
 
-TGZURL = https://download.osgeo.org/proj/proj-${PACKAGEVERSION}.tar.gz
+TGZURL = https://ftp.gnu.org/gnu/automake/automake-${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 
-GITREPO = https://github.com/OSGeo/PROJ.git
-include ${MAKEINCLUDES}/Make.git
+include ${MAKEINCLUDES}/Make.clean
