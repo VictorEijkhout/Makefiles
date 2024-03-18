@@ -1,12 +1,12 @@
 ################################################################
 ####
-#### Makefile for AUTOMAKE installation
+#### Makefile for AUTOCONF installation
 ####
 ################################################################
 
-PACKAGE = AUTOMAKE
-URL = https://ftp.gnu.org/gnu/automake/
-PACKAGEVERSION = 1.16.5
+PACKAGE = AUTOCONF
+URL = https://ftp.gnu.org/gnu/autoconf/
+PACKAGEVERSION = 2.72
 MODE = seq
 MODULES = 
 
@@ -20,7 +20,7 @@ include ${MAKEINCLUDES}/Make.install
 .PHONY: default_install
 default_install : configure build 
 
-TGZURL = https://ftp.gnu.org/gnu/automake/automake-${PACKAGEVERSION}.tar.gz
+TGZURL = https://ftp.gnu.org/gnu/autoconf/autoconf-${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 
 include ${MAKEINCLUDES}/Make.clean
