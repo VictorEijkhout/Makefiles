@@ -54,11 +54,12 @@ fi
 
 module load eigen
 module load fftw3
-if [ "${INT}" = "64" ] ; then 
-    module load hypre/2.30.0-i64
-else
-    module load hypre/2.30.0
-fi
+# if [ "${INT}" = "64" ] ; then 
+#     module load hypre/2.30.0-i64
+# else
+#     module load hypre/2.30.0
+# fi
+
 ## module load phdf5
 # /1.14
 
