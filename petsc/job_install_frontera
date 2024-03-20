@@ -1,8 +1,8 @@
 #!/bin/bash
 
-#SBATCH -J myjob           # Job name
-#SBATCH -o myjob.o%j       # Name of stdout output file
-#SBATCH -e myjob.e%j       # Name of stderr error file
+#SBATCH -J petscinstalljob           # Job name
+#SBATCH -o petscinstalljob.o%j       # Name of stdout output file
+#SBATCH -e petscinstalljob.o%j       # Name of stderr error file
 #SBATCH -p small      # Queue (partition) name
 #SBATCH -N 1               # Total # of nodes 
 #SBATCH -n 1              # Total # of mpi tasks
