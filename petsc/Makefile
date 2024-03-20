@@ -328,4 +328,4 @@ include ${MAKEINCLUDES}/Make.download
 TGZURL = https://web.cels.anl.gov/projects/petsc/download/release-snapshots/petsc-${PACKAGEVERSION}.tar.gz
 
 clean ::
-	@/bin/rm -f install.o[0-9]*
+	@/bin/rm -f *job.o[0-9]*
