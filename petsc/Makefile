@@ -255,6 +255,11 @@ allinstall :
 	 && echo && echo "See: $${log}" && echo
 biginstall :
 	@ext=${EXT} \
+	   && echo "Compiler issues" \
+	   && case ${TACC_FAMILY_COMPILER} in \
+	        ( gcc ) echo " .. no FORTRAN for gcc" && FORTRAN=0 ;; \
+	        ( * ) FORTRAN=${FORTRAN} ;; esac \
+	   \
 	   && echo "Selecting basic options for extension=$${ext}:" \
 	   && case $${ext} in ( *debug* ) DEBUG=1 ;; ( * ) DEBUG= ;; esac \
 	   && case $${ext} in ( *i64* ) INT=64 ;; ( * ) INT=32 ;; esac \
@@ -267,18 +272,17 @@ biginstall :
 	   && if [ "${CUDA}" != "1" -a "${AMGX}" = "1" ] ; then \
 	        echo " .. disable AMGX because no CUDA" && AMGX=0 \
 	      ; else AMGX=${AMGX} ; fi \
-	   && if [ "${PARMETIS}" = "1" ] ; then MUMPS=1 ; else MUMPS=${MUMPS}; fi \
+	   && if [ "$${FORTRAN}" = "0" ] ; then \
+	          MUMPS=0 \
+	      ; elif [ "$${PARMETIS}" = "1" ] ; then \
+	          MUMPS=1 \
+	      ; fi \
 	   && case $${ext} in \
 	        ( *nohdf5* ) HDF5= ; PHDF5= ;; esac \
 	   && case $${ext} in \
 	        ( *single* ) HDF5= ; PHDF5= ; HYPRE= ; MUMPS= ; SCALAPACK= ;; esac \
 	   && case $${ext} in \
 	        ( *i64* ) CHACO= ; PARMETIS= ;; esac \
-	   \
-	   && echo "Compiler issues" \
-	   && case ${TACC_FAMILY_COMPILER} in \
-	        ( gcc ) echo " .. no FORTRAN for gcc" && FORTRAN=0 ;; \
-	        ( * ) FORTRAN=${FORTRAN} ;; esac \
 	   \
 	   && echo "Start configure/build at $$( date )" \
 	   && cmdline="make --no-print-directory configure build  \
