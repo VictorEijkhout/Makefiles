@@ -36,6 +36,8 @@ pv=3.9
 pvv=3.9.2
 export PATH=/opt/apps/intel19/python3/${pvv}/bin:${PATH}
 export LD_LIBRARY_PATH=/opt/apps/intel19/python3/${pvv}/lib:${LD_LIBRARY_PATH}
+# find libimf for python
+export LD_LIBRARY_PATH=/opt/intel/compilers_and_libraries_2018.5.274/linux/compiler/lib/intel64_lin/libimf.so:${LD_LIBRARY_PATH}
 export PYTHONPATH=/opt/apps/intel19/impi19_0/python3/${pvv}/lib/python${pv}/site-packages:${PYTHONPATH}
 
 module list
