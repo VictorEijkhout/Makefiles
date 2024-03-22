@@ -1,7 +1,10 @@
+##
+## Load standard Intel compiler
+##
+
 echo "module reset"
-export MODULEPATH=$( echo $MODULEPATH | sed -e 's/:/\n/' | grep -v eijkhout | assemblepath )
+# ?? export MODULEPATH=$( echo $MODULEPATH | sed -e 's/:/\n/' | grep -v eijkhout | assemblepath )
 module reset
-module purge 
 module load TACC
 
 echo "module unload intel and others"
