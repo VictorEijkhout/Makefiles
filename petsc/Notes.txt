@@ -1,0 +1,9 @@
+In Frontera jail the intel 19 picks up a really old gcc.
+
+I've tried 
+
+             && echo PATH=$${PATH} \
+             && export PATH=$$( echo $${PATH} | sed -e 's?/opt/apps/gcc/8.3.0?/home1/apps/gcc/13.2.\0?' ) \
+             && echo PATH=$${PATH}
+
+in the build rule but to no avail
