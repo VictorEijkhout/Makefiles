@@ -11,8 +11,8 @@
 PACKAGE = trilinos
 URL = https://github.com/trilinos/Trilinos \
     https://www.docs.trilinos.org/files/TrilinosBuildReference.html
-PACKAGEVERSION = 15.0.0
-PACKAGEVERSION_DOWNLOAD = 15-0-0
+PACKAGEVERSION = 15.1.0
+PACKAGEVERSION_DOWNLOAD = 15-1-0
 MODE = mpi
 MODULES = boost phdf5 pnetcdf parallelnetcdf
 MODULE_MINIMUM_VERSION_intel = 20
