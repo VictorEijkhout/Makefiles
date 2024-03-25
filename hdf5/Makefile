@@ -19,11 +19,11 @@ MODULES = zlib
 include ${MAKEINCLUDES}/Make.info
 
 HDF5PARALLEL = ON
-ifeq "${TACC_FAMILY_COMPILER}" "gcc"
-  HDFFORTRAN = OFF
-else
+# ifeq "${TACC_FAMILY_COMPILER}" "gcc"
+#   HDFFORTRAN = OFF
+# else
   HDFFORTRAN = ON
-endif
+# endif
 
 CMAKEFLAGS = \
   -D BUILD_SHARED_LIBS=TRUE \
@@ -38,6 +38,7 @@ CMAKEFLAGS = \
 include ${MAKEINCLUDES}/Make.cmake
 HASBIN=1
 PKGCONFIGLIB = pkgconfig
+FAMILY = hf5
 include ${MAKEINCLUDES}/Make.cbuild
 
 info ::
