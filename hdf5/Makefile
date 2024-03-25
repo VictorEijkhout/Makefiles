@@ -19,11 +19,7 @@ MODULES = zlib
 include ${MAKEINCLUDES}/Make.info
 
 HDF5PARALLEL = ON
-# ifeq "${TACC_FAMILY_COMPILER}" "gcc"
-#   HDFFORTRAN = OFF
-# else
-  HDFFORTRAN = ON
-# endif
+HDFFORTRAN = ON
 
 CMAKEFLAGS = \
   -D BUILD_SHARED_LIBS=TRUE \
@@ -48,11 +44,13 @@ info ::
 seq :
 	@make configure build JCOUNT=${JCOUNT} \
 	    PACKAGEVERSION=${PACKAGEVERSION} \
-	    HDF5PARALLEL=OFF MODE=seq MODULENAME=hdf5
+	    HDF5PARALLEL=OFF MODE=seq \
+	    MODULENAME=hdf5
 par :
 	@make configure build JCOUNT=${JCOUNT} \
 	    PACKAGEVERSION=${PACKAGEVERSION} \
-	    HDF5PARALLEL=ON  MODE=mpi MODULENAME=phdf5 MODULENAMEALT=hdf5
+	    HDF5PARALLEL=ON  MODE=mpi HDFFORTRAN=OFF \
+	    MODULENAME=phdf5 MODULENAMEALT=hdf5
 info ::
 	@echo "make default_install : sequential and parallel versions"
 default_install :: 
