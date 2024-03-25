@@ -14,8 +14,7 @@ URL = https://github.com/trilinos/Trilinos \
 PACKAGEVERSION = 15.1.0
 PACKAGEVERSION_DOWNLOAD = 15-1-0
 MODE = mpi
-MODULES = boost phdf5
-# pnetcdf parallel-netcdf
+MODULES = boost phdf5 netcdf pnetcdf
 MODULE_MINIMUM_VERSION_intel = 20
 #boost swig
 

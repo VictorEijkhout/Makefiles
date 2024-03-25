@@ -40,8 +40,8 @@ cmdline="cmake \
   -D LAPACK_LIBRARY_NAMES:STRING='mkl_intel_lp64;mkl_sequential;mkl_core;iomp5;pthread' \
   \
   -D TPL_ENABLE_HDF5:BOOL=${HAS_HDF5} \
-  -D HDF5_INCLUDE_DIRS:PATH=${TACC_PHDF5_INC}    \
-  -D HDF5_LIBRARY_DIRS:PATH=${TACC_PHDF5_LIB}    \
+  -D HDF5_INCLUDE_DIRS:PATH=${TACC_HDF5_INC}    \
+  -D HDF5_LIBRARY_DIRS:PATH=${TACC_HDF5_LIB}    \
   \
   -D TPL_ENABLE_Netcdf:BOOL=${HAS_NETCDF} \
   -D TPL_Netcdf_INCLUDE_DIRS:PATH=${TACC_NETCDF_INC} \
