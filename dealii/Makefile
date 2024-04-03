@@ -6,7 +6,7 @@
 
 PACKAGE = DEALII
 URL = https://github.com/dealii/dealii https://dealii.org/developer/users/cmake_user.html
-PACKAGEVERSION = 9.5.1
+PACKAGEVERSION = 9.5.2
 MODE = mpi
 MODULES = p4est petsc trilinos
 # intel 23 problem solved in 24
