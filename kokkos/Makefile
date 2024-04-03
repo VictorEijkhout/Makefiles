@@ -7,7 +7,7 @@
 PACKAGE = KOKKOS
 URL = https://github.com/kokkos/kokkos \
     https://kokkos.github.io/kokkos-core-wiki/building.html
-PACKAGEVERSION = 4.2.00
+PACKAGEVERSION = 4.2.01
 MODE = seq
 MODULES = 
 MODULE_MINIMUM_VERSION_cuda = 12
@@ -54,10 +54,11 @@ configure_cuda :
 	      -D CMAKE_CXX_COMPILER=${SRCPATH}/bin/nvcc_wrapper \
 	      -D Kokkos_ENABLE_SERIAL=ON -D Kokkos_ENABLE_CUDA=ON \
 	      -D Kokkos_ARCH_TURING75=ON -D Kokkos_ENABLE_CUDA_LAMBDA=ON \
-	      -D KOKKOS_CUDA_OPTIONS=-allow-unsupported-compiler \
+	      -D CMAKE_CXX_FLAGS=-allow-unsupported-compiler \
 	      " \
 	    MODULES=cuda  VARIANT=cuda
-## CMAKE_CXX_FLAGS=-allow-unsupported-compiler
+## 	      -D KOKKOS_CUDA_OPTIONS=-allow-unsupported-compiler \
+##      
 ##   -D CMAKE_CXX_FLAGS=--gcc-toolchain=/opt/apps/gcc/12.2.0
 
 info ::
@@ -78,3 +79,5 @@ include ${MAKEINCLUDES}/Make.download
 GITREPO = https://github.com/kokkos/kokkos.git
 include ${MAKEINCLUDES}/Make.git
 
+clean ::
+	@rm -f cuda_install.o*
