@@ -2,14 +2,12 @@
 ####
 #### Makefile for Netcdf installation
 ####
-#### https://parallel-netcdf.github.io/
-####
 ################################################################
 
 PACKAGE = pnetcdf
 URL = https://parallel-netcdf.github.io/ \
     https://github.com/Parallel-NetCDF/PnetCDF
-PACKAGEVERSION = 1.12.3
+PACKAGEVERSION = 1.13.0
 MODE = mpi
 MODULES = 
 
