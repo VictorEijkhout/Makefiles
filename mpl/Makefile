@@ -24,7 +24,7 @@ module_help :
 	    "and use" \
 	    "   #include <mpl/mpl.hpp>" \
 	    "in your code" \
-	; do echo "$$line" ; done >>${MODULEFILE}
+	; do echo "$$line" ; done 
 
 
 info ::
