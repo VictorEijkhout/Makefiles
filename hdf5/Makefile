@@ -34,6 +34,7 @@ CMAKEFLAGS = \
 include ${MAKEINCLUDES}/Make.cmake
 HASBIN=1
 PKGCONFIGLIB = pkgconfig
+CMAKEPREFIXPATHSET = 1
 FAMILY = hf5
 include ${MAKEINCLUDES}/Make.cbuild
 
