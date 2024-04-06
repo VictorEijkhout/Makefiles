@@ -46,6 +46,7 @@ build ::
 	    ) 2>&1 | tee $$installlog \
 	 && make --no-print-directory varsmodule \
 	      CMAKEPREFIXPATHSET=1
+
 .PHONY: seq par default_install
 default_install : seq
 seq :
