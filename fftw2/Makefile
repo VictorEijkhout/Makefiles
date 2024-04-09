@@ -4,10 +4,9 @@
 ####
 ################################################################
 
-PACKAGE = FFTW3
-URL = http://fftw.org/ \
-    http://www.fftw.org/fftw3_doc/Installation-on-Unix.html
-PACKAGEVERSION = 3.3.10
+PACKAGE = FFTW2
+URL = http://fftw.org/
+PACKAGEVERSION = 2.1.5
 MODE = mpi
 MODULES = 
 
@@ -34,6 +33,7 @@ PKGCONFIGLIB = pkgconfig
 include ${MAKEINCLUDES}/Make.install
 .PHONY: default_install
 info ::
+	@echo "make single, double"
 	@echo "make default_install : double precision version"
 default_install : double
 .PHONY: single double
