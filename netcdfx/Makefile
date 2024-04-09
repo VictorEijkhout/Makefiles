@@ -1,28 +1,32 @@
 ################################################################
 ####
 #### Makefile for Netcdf installation
-#### Fortran interface
+#### C++ interface
 ####
 ################################################################
 
-PACKAGE = NETCDFF
-URL = https://github.com/Unidata/netcdf-fortran \
-    https://docs.unidata.ucar.edu/netcdf-fortran/current \
-    https://docs.unidata.ucar.edu/netcdf-c/current/building_netcdf_fortran.html
-PACKAGEVERSION = 4.6.1
+PACKAGE = NETCDFX
+URL = https://github.com/Unidata/netcdf-cxx4
+PACKAGEVERSION = 4.3.1
 MODE = seq
-MODULES = hdf5 netcdf
-NONMODULES = phdf5 parallelnetcdf
+MODULES =
+# hdf5 netcdf
+NONMODULES =
+# phdf5 parallelnetcdf
 
 include ${MAKEINCLUDES}/Make.info
 
 #
-# 1. NCDIR not actually used though it appears in the docs
-# 2. cmake discovery seems broken, hence explicit lib/inc
+# cmake discovery seems broken, hence explicit lib/inc
+# the hdf5 lib variable appears in the cmakelists,
+# the hdf5 inc is pure guesswork
+# https://github.com/Unidata/netcdf-cxx4/issues/151
 #
-CMAKEFLAGS = -DNCDIR=${TACC_NETCDF_DIR} \
-    -DnetCDF_LIBRARIES=${TACC_NETCDF_LIB}/libnetcdf.so \
-    -DnetCDF_INCLUDE_DIR=${TACC_NETCDF_INC}
+CMAKEFLAGS = \
+    -D HDF5_C_LIBRARY_hdf5=${TACC_HDF5_LIB}/libhdf5.so \
+    -D NOT_HDF5_INCLUDE_DIRECTORIES=${TACC_HDF5_INC} \
+    -D netCDF_LIBRARIES=${TACC_NETCDF_LIB}/libnetcdf.so \
+    -D netCDF_INCLUDE_DIR='${TACC_NETCDF_INC};${TACC_HDF5_INC}'
 include ${MAKEINCLUDES}/Make.cmake
 ##
 ## Install into netcdf installation
@@ -37,6 +41,8 @@ include ${MAKEINCLUDES}/Make.cbuild
 default_install : seq
 info ::
 	@echo "make seq par, default_install=seq"
+# this fixes the compile problem
+# but now the h5 include files wind up in the netcdf inc
 seq : configure build
 par :
 	@make configure build JCOUNT=${JCOUNT} \
@@ -48,7 +54,6 @@ par :
 	    " \
 	  INSTALLPATH=${TACC_PARALLELNETCDF_DIR}
 
-TGZURL = https://github.com/Unidata/netcdf-fortran/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
+TGZURL = https://github.com/Unidata/netcdf-cxx4/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 include ${MAKEINCLUDES}/Make.clean
-

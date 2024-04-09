@@ -29,7 +29,7 @@ DEPENDSON = phdf5
 ## NOTE the enable_pnetcdf flag is for parallel-netcdf 1.9
 ##
 CMAKEFLAGS = \
-    -D ENABLE_PNETCDF=${NETCDF_PARALLEL} ${CMAKE_C_EXTRA_FLAGS} \
+    -D NOT_ENABLE_PNETCDF=${NETCDF_PARALLEL} ${CMAKE_C_EXTRA_FLAGS} \
     -D ENABLE_PARALLEL4=${NETCDF_PARALLEL} \
     -D ENABLE_PARALLEL_TESTS=OFF \
     -D ENABLE_NETCDF_4=ON \
@@ -46,9 +46,9 @@ seq :
 	    MODULENAME=netcdf DEPENDSON=hdf5
 par :
 	@make --no-print-directory configure build JCOUNT=${JCOUNT} \
-	    MODE=mpi MODULES="phdf5 parallelnetcdf" NETCDF_PARALLEL=ON \
-	    CMAKE_C_EXTRA_FLAGS="-D CMAKE_C_FLAGS='-I${TACC_PARALLELNETCDF_INC} -I${TACC_PHDF5_INC} -L${TACC_PARALLELNETCDF_LIB} -lpnetcdf'" \
-	    MODULENAME=pnetcdf MODULENAMEALT=netcdf DEPENDSON=phdf5
+	    MODE=mpi MODULES="phdf5 pnetcdf" NETCDF_PARALLEL=ON \
+	    CMAKE_C_EXTRA_FLAGS="-D CMAKE_C_FLAGS='-I${TACC_PHDF5_INC} -I${TACC_PNETCDF_INC}' -D CMAKE_LINKER_FLAGS='-L${TACC_PNETCDF_LIB} -lpnetcdf'" \
+	    MODULENAME=parallel-netcdf MODULEVARNAME=parallelnetcdf DEPENDSON=phdf5
 .PHONY: default_install
 info ::
 	@echo "make default_install: parallel version, also available: seq"

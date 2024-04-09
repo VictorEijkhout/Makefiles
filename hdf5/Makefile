@@ -19,11 +19,7 @@ MODULES = zlib
 include ${MAKEINCLUDES}/Make.info
 
 HDF5PARALLEL = ON
-ifeq "${TACC_FAMILY_COMPILER}" "gcc"
-  HDFFORTRAN = OFF
-else
-  HDFFORTRAN = ON
-endif
+HDFFORTRAN = ON
 
 ifeq "${TACC_SYSTEM}" "macbookair"
   LIBEXT = dylib
@@ -31,7 +27,7 @@ else
   LIBEXT = SO
 endif
 CMAKEFLAGS = \
-  -D BUILD_SHARED_LIBS=TRUE \
+  -D HDF5_ENABLE_PLUGIN_SUPPORT=OFF \
   -D HDF5_ENABLE_Z_LIB_SUPPORT:BOOL=ON \
   -D ZLIB_DIR:PATH=${TACC_ZLIB_DIR} \
   -D ZLIB_INCLUDE_DIR:PATH=${TACC_ZLIB_INC} \
@@ -43,6 +39,8 @@ CMAKEFLAGS = \
 include ${MAKEINCLUDES}/Make.cmake
 HASBIN=1
 PKGCONFIGLIB = pkgconfig
+CMAKEPREFIXPATHSET = 1
+FAMILY = hf5
 include ${MAKEINCLUDES}/Make.cbuild
 
 info ::
@@ -52,11 +50,13 @@ info ::
 seq :
 	@make configure build JCOUNT=${JCOUNT} \
 	    PACKAGEVERSION=${PACKAGEVERSION} \
-	    HDF5PARALLEL=OFF MODE=seq MODULENAME=hdf5
+	    HDF5PARALLEL=OFF MODE=seq \
+	    MODULENAME=hdf5
 par :
 	@make configure build JCOUNT=${JCOUNT} \
 	    PACKAGEVERSION=${PACKAGEVERSION} \
-	    HDF5PARALLEL=ON  MODE=mpi MODULENAME=phdf5 MODULENAMEALT=hdf5
+	    HDF5PARALLEL=ON  MODE=mpi HDFFORTRAN=OFF \
+	    MODULENAME=phdf5 MODULENAMEALT=hdf5
 info ::
 	@echo "make default_install : sequential and parallel versions"
 default_install :: 

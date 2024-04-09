@@ -11,10 +11,10 @@
 PACKAGE = trilinos
 URL = https://github.com/trilinos/Trilinos \
     https://www.docs.trilinos.org/files/TrilinosBuildReference.html
-PACKAGEVERSION = 15.0.0
-PACKAGEVERSION_DOWNLOAD = 15-0-0
+PACKAGEVERSION = 15.1.0
+PACKAGEVERSION_DOWNLOAD = 15-1-0
 MODE = mpi
-MODULES = boost phdf5 pnetcdf parallelnetcdf
+MODULES = boost phdf5 netcdf pnetcdf
 MODULE_MINIMUM_VERSION_intel = 20
 #boost swig
 
@@ -64,6 +64,7 @@ configure :: modules
 	     \
 	     && export HAS_PYTHON=${PYTHON} \
 	     && export HAS_BOOST=${HAS_BOOST} \
+	     && export HAS_HDF5=${HAS_HDF5} \
 	     && export HAS_NETCDF=${HAS_NETCDF} \
 	     && export HAS_OPENMP=${HAS_OPENMP} \
 	     \
@@ -83,8 +84,12 @@ configure :: modules
 ##	 && make --no-print-directory varsmodule
 
 include ${MAKEINCLUDES}/Make.cbuild
-.PHONY: netcdfcopy
-build :: netcdfcopy
+.PHONY: netcdfcopy notnetcdfcopy
+build :: notnetcdfcopy
+notnetcdfcopy :
+	@echo 
+	@echo "Warning: not copying netcdf files"
+	@echo 
 netcdfcopy ::
 	@source ${MAKEINCLUDES}/names.sh \
 	 && export MODE=${MODE} \
@@ -105,3 +110,9 @@ include ${MAKEINCLUDES}/Make.download
 
 GITREPO = git@github.com:trilinos/Trilinos.git
 include ${MAKEINCLUDES}/Make.git
+
+# Which netcdf?
+# https://github.com/trilinos/Trilinos/issues/12854
+
+# Build fail on Chaco
+# https://github.com/trilinos/Trilinos/issues/12857
