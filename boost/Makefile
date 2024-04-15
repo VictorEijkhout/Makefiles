@@ -23,7 +23,9 @@ configure :: modules
 build ::
 	@source ${MAKEINCLUDES}/names.sh \
 	     && export MODE=${MODE} && export INSTALLROOT=${INSTALLROOT} \
-	     && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" "" "" \
+	     && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" \
+	            "${PACKAGEBASENAME}" "" "" \
+	 && source ${MAKEINCLUDES}/compilers.sh && setcompilers \
 	 && ( \
 	    rm -rf $$builddir && mkdir -p $$builddir \
 	     && mkdir -p $$installdir && rm -rf $$installdir/* \
