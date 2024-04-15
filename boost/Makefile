@@ -5,8 +5,8 @@
 ################################################################
 
 PACKAGE = boost
-PACKAGEVERSION = 1.84.0
-PACKAGEVERSION_DOWNLOAD = 1_84_0
+PACKAGEVERSION = 1.85.0
+PACKAGEVERSION_DOWNLOAD = 1_85_0
 URL = https://www.boost.org/ \
     https://www.boost.org/doc/libs/${PACKAGEVERSION_DOWNLOAD}/tools/build/doc/html/index.html
 MODE = seq
