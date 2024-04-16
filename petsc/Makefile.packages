@@ -98,7 +98,7 @@ param_settings :
 	 && export int=${INT} \
 	     && export int_option_64="--with-64-bit-indices=1" \
 	 && export precision=${PRECISION} \
-	 && export scalar=${SCALAR} \
+	 && export scalar-type=${SCALAR} \
 	 \
 	 && parameters="useThreads=0 --with-perfstubs-tau=1 ${MPI_FLAGS} -with-np=${JCOUNT}" \
 	 && if [ ${X} -eq 1 ] ; then parameters="$${parameters} ${WITH_X}" ; fi \
