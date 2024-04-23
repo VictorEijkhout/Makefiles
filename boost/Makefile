@@ -5,8 +5,8 @@
 ################################################################
 
 PACKAGE = boost
-PACKAGEVERSION = 1.84.0
-PACKAGEVERSION_DOWNLOAD = 1_84_0
+PACKAGEVERSION = 1.85.0
+PACKAGEVERSION_DOWNLOAD = 1_85_0
 URL = https://www.boost.org/ \
     https://www.boost.org/doc/libs/${PACKAGEVERSION_DOWNLOAD}/tools/build/doc/html/index.html
 MODE = seq
@@ -23,7 +23,9 @@ configure :: modules
 build ::
 	@source ${MAKEINCLUDES}/names.sh \
 	     && export MODE=${MODE} && export INSTALLROOT=${INSTALLROOT} \
-	     && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" "" "" \
+	     && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" \
+	            "${PACKAGEBASENAME}" "" "" \
+	 && source ${MAKEINCLUDES}/compilers.sh && setcompilers \
 	 && ( \
 	    rm -rf $$builddir && mkdir -p $$builddir \
 	     && mkdir -p $$installdir && rm -rf $$installdir/* \
