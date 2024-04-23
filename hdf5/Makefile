@@ -24,7 +24,7 @@ HDFFORTRAN = ON
 ifeq "${TACC_SYSTEM}" "macbookair"
   LIBEXT = dylib
 else
-  LIBEXT = SO
+  LIBEXT = so
 endif
 CMAKEFLAGS = \
   -D HDF5_ENABLE_PLUGIN_SUPPORT=OFF \
