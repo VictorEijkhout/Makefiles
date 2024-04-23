@@ -44,6 +44,7 @@ FAMILY = hf5
 include ${MAKEINCLUDES}/Make.cbuild
 
 info ::
+	@echo "================ hdf5 rules"
 	@echo "make par : parallel installation"
 	@echo "make seq : sequential installation"
 .PHONY: seq par
