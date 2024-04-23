@@ -34,6 +34,8 @@ PKGCONFIGLIB = pkgconfig
 include ${MAKEINCLUDES}/Make.install
 .PHONY: default_install
 info ::
+	@echo "================ fftw rules"
+	@echo "make single double"
 	@echo "make default_install : double precision version"
 default_install : double
 .PHONY: single double
