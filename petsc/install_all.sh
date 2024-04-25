@@ -16,7 +16,7 @@ function usage() {
 cuda=0
 jcount=6
 p4p=1
-pversion=3.21.0
+pversion=3.21.1
 while [ $# -gt 0 ] ; do
     if [ $1 = "-h" ] ; then
 	usage && exit 0
@@ -63,7 +63,7 @@ for debug in 0 1 ; do
 		else
 		    echo ${arch} >> ${archs}
 		fi
-		./install_big.sh -j ${jcount} \
+		./install_big.sh -j ${jcount} -v ${pversion} \
 		    $( if [ ${p4p} -eq 0 ] ; then echo "-4" ; fi ) \
 		    $( if [ ${cuda} -eq 1 ] ; then echo "-c" ; fi ) \
 		    | tee -a ${alllog}
@@ -93,6 +93,7 @@ export NOHDF5=0
 
 export FORTRAN=08
 # problem with hdf5, so skip
+# also skip p4p, even though only complexf08debug bombs
 for debug in 0 1 ; do 
     for scalar in real complex ; do 
 	export INT=32
@@ -103,8 +104,7 @@ for debug in 0 1 ; do
 	( echo && echo "Installing big for arch=${arch}" && echo ) | tee -a ${alllog}
 	echo ${arch} >> ${archs}
 	./install_big.sh -j ${jcount} \
-	    -5 -8 \
-	    $( if [ ${p4p} -eq 0 ] ; then echo "-4" ; fi ) \
+	    -5 -8 -4 \
 	    $( if [ ${cuda} -eq 1 ] ; then echo "-c" ; fi ) \
 	    | tee -a ${alllog}
 	if [ $? -gt 0 ] ; then exit 1 ; fi 
