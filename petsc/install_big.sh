@@ -1,13 +1,13 @@
 #!/bin/bash
 
 jcount=6
-pversion=3.21.0
+pversion=3.21.1
 function usage() {
     echo "Usage: $0 [ -h ] [ -v (default: ${pversion} ]"
     echo "    [ -j jpar (default: ${jcount}) ]"
     echo "    [ -c : cuda build ]"
     echo "    [ -e customext ]"
-    echo "    [ -4 : skip petsc/slepc4py ] [ -5 : skip hdf5 ] [ -8 : f08 suupport ]"
+    echo "    [ -4 : skip petsc/slepc4py ] [ -5 : skip hdf5 ] [ -8 : f08 support ]"
     echo "    environment: DEBUG INT PRECISION SCALAR"
 }
 
