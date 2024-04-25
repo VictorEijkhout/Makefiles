@@ -5,15 +5,12 @@
 ################################################################
 
 PACKAGE = PETSC
-PACKAGEVERSION = 3.21.0
+PACKAGEVERSION = 3.21.1
 MODE = mpi
 
 include ${MAKEINCLUDES}/Make.info
 list_installations ::
 	@source ${MAKEINCLUDES}/names.sh \
-	 && setdirlognames \
-	      "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" \
-	      "${PACKAGEBASENAME}" "${VARIANT}" "${MODULENAME}" "${MODE}" \
 	 && echo "installations in $${srcdir}: $$( cd $$srcdir && for d in * ; do if [ -d $${d} ] ; then echo $${d} ; fi ; done )"
 modules ::
 	@if [ "${TACC_FAMILY_COMPILER}" = "gcc" -a "${TACC_SYSTEM}" != "macbookair" ] ; then \
@@ -50,6 +47,9 @@ TIME =
 ## Petsc Architecture
 ##
 
+info ::
+	@echo "================ PETSc specific options"
+
 .PHONY: petscarch petscshortarch
 petscshortarch :
 	@export PETSC_EXT="" \
@@ -80,10 +80,8 @@ petscarch :
 	@source ${MAKEINCLUDES}/names.sh \
 	 && systemnames && compilernames \
 	 && notetoself "TODO dir names are no needed?" \
-	 && setdirlognames \
-	      "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" \
-	      "${PACKAGEBASENAME}" "${VARIANT}" "${MODULENAME}" "${MODE}" \
-	 && requirenonzero compilercode && requirenonzero mpicode \
+	 && compilernames && requirenonzero compilercode && requirenonzero mpicode \
+	 && systemnames \
 	 && petscarch=$${taccsystemcode}-$${compilercode}$${compilershortversion}-$${mpicode} \
 	 && petscext=$$( make --no-print-directory petscshortarch ) \
 	 && if [ -z "$${petscext}" -o "$${petscext}" = "vanilla" ] ; then \
@@ -98,11 +96,11 @@ configurelog :
 	@source ${MAKEINCLUDES}/names.sh \
 	 && systemnames && compilernames \
 	 && notetoself "TODO dir names are no needed?" \
-	 && setdirlognames \
-	      "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" \
-	      "${PACKAGEBASENAME}" "${VARIANT}" "${MODULENAME}" "${MODE}" \
+	 && setnames \
+	    "${PACKAGE}"  "${PACKAGEVERSION}"  "${PACKAGEBASENAME}" \
+	    "${DOWNLOADPATH}" "${SRCPATH}" \
 	 && cd $${srcdir} \
-	 && ( ls -l configure.log && cat configure.log )
+	 && ( ls -l configure.log && cat ./configure.log )
 
 ####
 #### Packages
@@ -124,12 +122,13 @@ build :: modules
 	                CUDA=${CUDA} DEBUG=${DEBUG} CUSTOMEXT=${CUSTOMEXT} \
 	                petscarch` \
 	 && echo && echo "Deduce petc arch <<$$petscarch>>" && echo \
-	 && notetoself "VARIANT is petsc arch" \
-	 && notetoself "INSTALLEXT zero: ext=petsc-ls6-intel24-impi22-arch" \
-	 && notetoself "used for build/install-ext" \
-	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "" \
-	    "${PACKAGEBASENAME}" "$${petscarch}" "${MODULENAME}" "${MODE}" \
-	 && echo "Deduce install dir <<$$installdir>>" && echo \
+	 && setnames \
+	    "${PACKAGE}"  "${PACKAGEVERSION}"  "${PACKAGEBASENAME}" \
+	    "${DOWNLOADPATH}" "${SRCPATH}" \
+	    "${INSTALLPATH}"  "${INSTALLROOT}"  "${INSTALLEXT}"  "$${petscarch}" \
+	    "${HOMEDIR}"  "${BUILDDIRROOT}"  "${MODE}" \
+	    "${PREFIXOPTION}"  "${PREFIXEXTRA}" \
+	 && echo "Deduce install dir <<$$prefixdir>>" && echo \
 	 \
 	 && export package_options="$$( make --no-print-directory package_options \
 	        AMGX=${AMGX} CHACO=${CHACO} EIGEN=${EIGEN} FFTW=${FFTW} HDF5=${HDF5} \
@@ -155,10 +154,10 @@ build :: modules
 	     && export PETSC_DIR=`pwd` \
 	     && export I_MPI_FABRICS=shm:tmi \
 	     && export PETSC_ARCH=$${petscarch} \
-	     && echo "Kludge: adding <<$${installdir}/lib>> to pythonpath" \
-	     && export PYTHONPATH=${PYTHONPATH}:$${installdir}/lib \
+	     && echo "Kludge: adding <<$${prefixdir}/lib>> to pythonpath" \
+	     && export PYTHONPATH=${PYTHONPATH}:$${prefixdir}/lib \
 	     && echo "PYTHONPATH=$${PYTHONPATH}" \
-	     && cmdline="${TIME} python3 ./configure --prefix=$${installdir} \
+	     && cmdline="${TIME} python3 ./configure --prefix=$${prefixdir} \
 	        CFLAGS=\"${OPTFLAGS}\" CXXFLAGS=\"${OPTFLAGS}\" \
 	        `if [ \"${FORTRAN}\" != \"0\" ] ; then echo FFLAGS=\"${OPTFLAGS}\" ; fi `\
 	        `if [ ${CUDA} -eq 1 ] ; then echo ${CUDA_OPTIONS} ; else echo --with-cudac=0 ; fi ` \
@@ -204,21 +203,24 @@ makemodule :
 	                ALIGN=${ALIGN} \
 	                CUDA=${CUDA} DEBUG=${DEBUG} CUSTOMEXT=${CUSTOMEXT} \
 	                petscarch` \
-	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" \
-	    "" "${PACKAGEBASENAME}" "$${petscarch}" "${MODULENAME}" "${MODE}" \
-	 && echo "makemodule: deduce install dir <<$$installdir>>" \
+	 && setnames \
+	    "${PACKAGE}"  "${PACKAGEVERSION}"  "${PACKAGEBASENAME}" \
+	    "${DOWNLOADPATH}" "${SRCPATH}" \
+	    "${INSTALLPATH}"  "${INSTALLROOT}"  "${INSTALLEXT}"  "$${petscarch}" \
+	    "${HOMEDIR}"  "${BUILDDIRROOT}"  "${MODE}" \
+	    "${PREFIXOPTION}"  "${PREFIXEXTRA}" \
+	 && echo "makemodule: deduce install dir <<$$prefixdir>>" \
 	 \
 	 && shortversion=${PACKAGEVERSION} && shortversion=$${shortversion%.*} \
 	 && petscshortarch=$$( make --no-print-directory petscshortarch ) \
 	 && echo "making module with version=$${shortversion} extra=<<$${petscshortarch}>>" \
 	 && ( make --no-print-directory varsmodule  \
-	        INSTALLDIR="$${installdir}" \
-	        PACKAGEVERSION=${PACKAGEVERSION} \
-	        INSTALLEXT= VARIANT=$${petscarch} \
+	        MODULEROOT=${MODULEROOT} MODULEPATH=${MODULEPATH} \
+	        INSTALLPATH="$${prefixdir}" \
 	        PACKAGEMODULEVERSION=$${shortversion} \
 	        MODULEVERSIONEXTRA=$${petscshortarch} \
 	        PKGCONFIGLIB=pkgconfig \
-	        EXTRAVARS="PETSC_DIR=$${installdir} PETSC_ARCH=$${petscarch}" \
+	        EXTRAVARS="PETSC_DIR=$${prefixdir} PETSC_ARCH=$${petscarch}" \
 	        EXTRAINSTALLPATHS="PYTHONPATH=lib" \
 	    ) 2>&1 | tee -a $${installlog}
 
@@ -256,10 +258,10 @@ allinstall :
 biginstall :
 	@ext=${EXT} \
 	   && echo "Compiler issues" \
+	   && FORTRAN=${FORTRAN} \
 	   && case ${TACC_FAMILY_COMPILER} in \
 	        ( gcc ) echo " .. no FORTRAN for gcc" && FORTRAN=0 ;; \
-	        ( * ) FORTRAN=${FORTRAN} ;; esac \
-	   \
+	        esac \
 	   && echo "Selecting basic options for extension=$${ext}:" \
 	   && case $${ext} in ( *debug* ) DEBUG=1 ;; ( * ) DEBUG= ;; esac \
 	   && case $${ext} in ( *i64* ) INT=64 ;; ( * ) INT=32 ;; esac \
@@ -267,22 +269,35 @@ biginstall :
 	   && case $${ext} in ( *complex* ) SCALAR=complex ;; ( * ) SCALAR=real ;; esac \
 	   \
 	   && echo "Selecting packages" \
-	   && CHACO=${CHACO} && HDF5=${HDF5} && HYPRE=${HYPRE} \
+	   && CHACO=${CHACO} && HDF5=${HDF5} && HYPRE=${HYPRE} && METIS=${METIS} \
 	   && MUMPS=${MUMPS} && PARMETIS=${PARMETIS} \
+	   && PTSCOTCH=${PTSCOTCH} \
+	   && SCALAPACK=${SCALAPACK} && ZOLTAN=${ZOLTAN} \
 	   && if [ "${CUDA}" != "1" -a "${AMGX}" = "1" ] ; then \
 	        echo " .. disable AMGX because no CUDA" && AMGX=0 \
 	      ; else AMGX=${AMGX} ; fi \
 	   && if [ "$${FORTRAN}" = "0" ] ; then \
-	          MUMPS=0 \
+	        echo " .. disable MUMPS because no Fortran" \
+	         && MUMPS=0 \
 	      ; elif [ "$${PARMETIS}" = "1" ] ; then \
 	          MUMPS=1 \
 	      ; fi \
+	   && echo "Incompatibilities mode/package" \
 	   && case $${ext} in \
-	        ( *nohdf5* ) HDF5= ; PHDF5= ;; esac \
+	        ( *nohdf5* ) HDF5=0 ; PHDF5=0 ;; esac \
 	   && case $${ext} in \
-	        ( *single* ) HDF5= ; PHDF5= ; HYPRE= ; MUMPS= ; SCALAPACK= ;; esac \
+	        ( *single* ) echo " .. disable hdf5, Hypre, Mumps because single" \
+	                && HDF5=0 ; PHDF5=0 ; HYPRE=0 ; MUMPS=0 ;; esac \
 	   && case $${ext} in \
-	        ( *i64* ) CHACO= ; PARMETIS= ;; esac \
+	        ( *i64* ) CHACO=0 ; PARMETIS=0 ;; esac \
+	   && case $${ext} in \
+	        ( *complex* ) \
+	                echo " .. disable Hypre, Metis, Mumps because complex" \
+	                 && HYPRE=0 ; METIS=0 ; MUMPS=0 ; MUMPSbecauseSCALAPACKcrash=1 \
+	      ;; esac \
+	   \
+	   && if [ "$${METIS}" = "0" ] ; then PARMETIS=0 && PTSCOTCH=0 ; fi \
+	   && if [ "$${MUMPS}" = "0" ] ; then SCALAPACK=0 ; fi \
 	   \
 	   && echo "Start configure/build at $$( date )" \
 	   && cmdline="make --no-print-directory configure build  \
@@ -291,8 +306,9 @@ biginstall :
 	      $$( if [ ! -z ${CUSTOMEXT} ] ; then echo CUSTOMEXT=${CUSTOMEXT} ; fi ) \
 	      \
 	      AMGX=$${AMGX} CHACO=$${CHACO} EIGEN=${EIGEN} FFTW3=${FFTW3} \
-	      HDF5=$${HDF5} HYPRE=$${HYPRE} \
-	      MUMPS=$${MUMPS} PARMETIS=$${PARMETIS} SCALAPACK=${SCALAPACK} \
+	      HDF5=$${HDF5} HYPRE=$${HYPRE} METIS=$${METIS} \
+	      MUMPS=$${MUMPS} PARMETIS=$${PARMETIS} PTSCOTCH=$${PTSCOTCH} \
+	      SCALAPACK=$${SCALAPACK} ZOLTAN=$${ZOLTAN} \
 	      \
 	      CUDA=${CUDA} FORTRAN=$${FORTRAN} \
 	      PETSC4PY=${PETSC4PY} SLEPC4PY=${SLEPC4PY} \
@@ -332,4 +348,4 @@ include ${MAKEINCLUDES}/Make.download
 TGZURL = https://web.cels.anl.gov/projects/petsc/download/release-snapshots/petsc-${PACKAGEVERSION}.tar.gz
 
 clean ::
-	@/bin/rm -f *job.o[0-9]*
+	@/bin/rm -f *job.o[0-9]* archs-*
