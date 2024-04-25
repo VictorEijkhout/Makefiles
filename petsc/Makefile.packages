@@ -29,7 +29,7 @@ package_options :
 	@downloads="" \
 	 && for p in ${packagelist} ; do \
 	      export P=$$( echo $$p | tr a-z A-Z ) && eval optval=\$${$${P}} \
-	       && echo "p=$$p optval=$$optval" >/dev/null \
+	       && echo "package select $$p optval=$$optval" && echo >/dev/null \
 	       && if [ "$$optval" = "1" ] ; then \
 	            plocation=$$( make --no-print-directory package_location PACKAGE=$${p} ) \
 	             && eval extra=\$${$${p}_extra} \
@@ -98,11 +98,10 @@ param_settings :
 	 && export int=${INT} \
 	     && export int_option_64="--with-64-bit-indices=1" \
 	 && export precision=${PRECISION} \
-	 && export scalar-type=${SCALAR} \
+	 && export scalar=${SCALAR} \
 	 \
 	 && parameters="useThreads=0 --with-perfstubs-tau=1 ${MPI_FLAGS} -with-np=${JCOUNT}" \
 	 && if [ ${X} -eq 1 ] ; then parameters="$${parameters} ${WITH_X}" ; fi \
-	 && echo "what is this" >/dev/null && dev=1 \
 	 && for p in ${parameterlist} ; do \
 	      eval optval=\$${$$p} \
 	       && if [ ! -z "$$optval" ] ; then \
@@ -113,7 +112,10 @@ param_settings :
 	                  option="$${explicit}" \
 	                ; else \
 	                  eval optdef="\$${$${p}_default}" \
-	                   && option="--with-$${p}=$${optval}" \
+	                   && if [ "$$p" = "scalar" ] ; then \
+	                        option="--with-scalar-type=$${optval}" \
+	                      ; else \
+	                        option="--with-$${p}=$${optval}" ; fi \
 	                ; fi \
 	             && echo "$${p}: option=$${option}" >/dev/null \
 	             && export parameters="$$parameters $$option" \
