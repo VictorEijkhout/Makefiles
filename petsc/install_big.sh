@@ -53,6 +53,7 @@ if [ "${TACC_FAMILY_COMPILER}" = "gcc" ] ; then
 fi
 
 module load eigen
+## Note: petsc has "with-fftw", no 3.
 module load fftw3
 # if [ "${INT}" = "64" ] ; then 
 #     module load hypre/2.30.0-i64
@@ -104,7 +105,7 @@ cmdline="\
 make --no-print-directory biginstall JCOUNT=${jcount} PACKAGEVERSION=${pversion} \
     EXT=${EXTENSION} \
     $( if [ ! -z "${customext}" ] ; then echo CUSTOMEXT=${customext} ; fi ) \
-    AMGX=1 CHACO=${CHACO} EIGEN=1 FFTW3=1 HDF5=${hdf5} HYPRE=1 MUMPS=1 METIS=1 \
+    AMGX=1 CHACO=${CHACO} EIGEN=1 FFTW=1 HDF5=${hdf5} HYPRE=1 MUMPS=1 METIS=1 \
     PARMETIS=1 PTSCOTCH=1 \
     CUDA=${cuda} FORTRAN=${fortran} \
     PETSC4PY=${p4p} SLEPC4PY=${p4p} \
