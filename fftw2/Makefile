@@ -29,7 +29,7 @@ CONFIGUREFLAGS += \
 endif
 CONFIGUREFLAGS = ${CONFIGUREFLAGS_STD}
 
-PKGCONFIGLIB = pkgconfig
+## PKGCONFIGLIB = pkgconfig
 include ${MAKEINCLUDES}/Make.install
 .PHONY: default_install
 info ::
@@ -38,10 +38,12 @@ info ::
 default_install : double
 .PHONY: single double
 single :
-	@make configure build JCOUNT=${JCOUNT} \
-	    CONFIGUREFLAGS="${CONFIGUREFLAGS_STD} --enable-float"
+	@make --no-print-directory configure build JCOUNT=${JCOUNT} \
+	    CONFIGUREFLAGS="${CONFIGUREFLAGS_STD} --enable-float" \
+	    INSTALLVARIANT=single INSTALLEXT=single
 double :
-	@make configure build JCOUNT=${JCOUNT}
+	@make --no-print-directory configure build JCOUNT=${JCOUNT} \
+	    INSTALLVARIANT=double 
 
 TGZURL = http://fftw.org/fftw-${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
