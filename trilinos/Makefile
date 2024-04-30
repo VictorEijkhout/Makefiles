@@ -33,7 +33,16 @@ HAS_BOOST = OFF
 HAS_NETCDF = ON
 HAS_HDF5 = ON
 HAS_OPENMP = ON
-.PHONY: configure
+.PHONY: configure config-help
+info ::
+	@echo "make config-help"
+config-help :
+	@source ${MAKEINCLUDES}/names.sh \
+	 && export MODE=${MODE} \
+	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "" "" "" "${MODE}" \
+	 \
+	 && cd $${srcdir} && rm -rf config-help-dir && mkdir config-help-dir \
+	     && cd config-help-dir && cmake .. 2>&1 | grep "Final set of .*enabled packages"
 configure :: modules
 	@source ${MAKEINCLUDES}/names.sh \
 	 && export MODE=${MODE} \

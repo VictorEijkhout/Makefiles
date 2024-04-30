@@ -43,7 +43,7 @@ gpu :
 	@make --no-print-directory PACKAGE_VERSION=${PACKAGE_VERSION} \
 	    configure_cuda build public \
 	    MODULES=cuda DEPENDSON=cuda/12 \
-	    VARIANT=cuda INSTALLEXT=cuda
+	    INSTALLVARIANT=cuda INSTALLEXT=cuda
 # VOLTA70 ?
 configure_cuda :
 	@if [ -z "${TACC_CXX}" ] ; then \
@@ -56,7 +56,7 @@ configure_cuda :
 	      -D Kokkos_ARCH_TURING75=ON -D Kokkos_ENABLE_CUDA_LAMBDA=ON \
 	      -D CMAKE_CXX_FLAGS=-allow-unsupported-compiler \
 	      " \
-	    MODULES=cuda  VARIANT=cuda
+	    MODULES=cuda  INSTALLVARIANT=cuda
 ## 	      -D KOKKOS_CUDA_OPTIONS=-allow-unsupported-compiler \
 ##      
 ##   -D CMAKE_CXX_FLAGS=--gcc-toolchain=/opt/apps/gcc/12.2.0

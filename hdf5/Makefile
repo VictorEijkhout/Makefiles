@@ -21,12 +21,17 @@ include ${MAKEINCLUDES}/Make.info
 HDF5PARALLEL = ON
 HDFFORTRAN = ON
 
+ifeq "${TACC_SYSTEM}" "macbookair"
+  LIBEXT = dylib
+else
+  LIBEXT = so
+endif
 CMAKEFLAGS = \
-  -D BUILD_SHARED_LIBS=TRUE \
+  -D HDF5_ENABLE_PLUGIN_SUPPORT=OFF \
   -D HDF5_ENABLE_Z_LIB_SUPPORT:BOOL=ON \
   -D ZLIB_DIR:PATH=${TACC_ZLIB_DIR} \
   -D ZLIB_INCLUDE_DIR:PATH=${TACC_ZLIB_INC} \
-  -D ZLIB_LIBRARY:PATH=${TACC_ZLIB_LIB}/libz.so \
+  -D ZLIB_LIBRARY:PATH=${TACC_ZLIB_LIB}/libz.${LIBEXT} \
   \
   -D HDF5_BUILD_FORTRAN:BOOL=${HDFFORTRAN} \
   -D HDF5_ENABLE_PARALLEL:BOOL=${HDF5PARALLEL}
@@ -34,10 +39,12 @@ CMAKEFLAGS = \
 include ${MAKEINCLUDES}/Make.cmake
 HASBIN=1
 PKGCONFIGLIB = pkgconfig
+CMAKEPREFIXPATHSET = 1
 FAMILY = hf5
 include ${MAKEINCLUDES}/Make.cbuild
 
 info ::
+	@echo "================ hdf5 rules"
 	@echo "make par : parallel installation"
 	@echo "make seq : sequential installation"
 .PHONY: seq par

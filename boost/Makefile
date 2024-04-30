@@ -5,8 +5,8 @@
 ################################################################
 
 PACKAGE = boost
-PACKAGEVERSION = 1.84.0
-PACKAGEVERSION_DOWNLOAD = 1_84_0
+PACKAGEVERSION = 1.85.0
+PACKAGEVERSION_DOWNLOAD = 1_85_0
 URL = https://www.boost.org/ \
     https://www.boost.org/doc/libs/${PACKAGEVERSION_DOWNLOAD}/tools/build/doc/html/index.html
 MODE = seq
@@ -23,25 +23,32 @@ configure :: modules
 build ::
 	@source ${MAKEINCLUDES}/names.sh \
 	     && export MODE=${MODE} && export INSTALLROOT=${INSTALLROOT} \
-	     && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" "" "" \
+	     && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" \
+	            "${PACKAGEBASENAME}" "" "" \
+	 && source ${MAKEINCLUDES}/compilers.sh && setcompilers \
 	 && ( \
 	    rm -rf $$builddir && mkdir -p $$builddir \
 	     && mkdir -p $$installdir && rm -rf $$installdir/* \
 	     && cd $$srcdir \
 	     && ./bootstrap.sh --prefix=$$installdir \
-	        --with-libraries=atomic,chrono,container,context,contract,coroutine,date_time,exception,fiber,filesystem,graph,graphviz,graph_parallel,headers,iostreams,json,locale,log,math${MPI},nowide,program_options,python,random,regex,serialization,stacktrace,system,test,thread,timer,type_erasure,url,wave \
 	     && ./b2 toolset=${TACC_FAMILY_COMPILER} \
 	          variant=release link=shared debug-symbols=off inlining=full \
 	          address-model=64  stage \
-	            --with-context --with-fiber --with-atomic --with-filesystem --with-headers --with-iostreams \
-	            --with-serialization --with-system --with-test install \
-	          --prefix=$${installdir} --build-dir=$${builddir} \
-	     && echo "not /b2 --with-fiber --with-context  --with-atomic --with-test" \
-	     && echo "not ./b2 install --prefix=$$installdir --build-dir=$$builddir toolset=gcc" \
+	            --with-atomic --with-chrono --with-container --with-context \
+	            --with-contract --with-coroutine --with-date_time \
+	            --with-exception --with-fiber --with-filesystem --with-graph --with-graph_parallel \
+	            --with-headers --with-iostreams --with-json --with-locale --with-log \
+	            --with-math --with-nowide --with-program_options \
+	            --with-random --with-regex --with-serialization --with-stacktrace --with-system \
+	            --with-test --with-thread --with-timer \
+	            --with-type_erasure --with-url --with-wave \
+	            install \
+	            --prefix=$${installdir} --build-dir=$${builddir} \
 	     && echo "inoperative option: link=shared" >/dev/null \
 	    ) 2>&1 | tee $$installlog \
 	 && make --no-print-directory varsmodule \
 	      CMAKEPREFIXPATHSET=1
+
 .PHONY: seq par default_install
 default_install : seq
 seq :

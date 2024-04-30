@@ -14,7 +14,7 @@ include ${MAKEINCLUDES}/Make.cmake
 CMAKEFLAGS = -Dblas=mkl
 LIBDIR = lib64
 # .cmake files
-CMAKE_PREFIXPATH_SET = lib64/blaspp
+CMAKEPREFIXPATHSET = lib64/blaspp
 
 include ${MAKEINCLUDES}/Make.cbuild
 
