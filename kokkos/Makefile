@@ -37,11 +37,11 @@ CMAKEPREFIXPATHSET = 1
 SRCPATH = ${PACKAGEROOT}/kokkos/kokkos-${PACKAGEVERSION}
 cpu :
 	@make --no-print-directory PACKAGE_VERSION=${PACKAGE_VERSION} \
-	    configure build public \
+	    configure build \
 	    INSTALLVARIANT=omp INSTALLEXT=omp
 gpu : 
 	@make --no-print-directory PACKAGE_VERSION=${PACKAGE_VERSION} \
-	    configure_cuda build public \
+	    configure_cuda build \
 	    MODULES=cuda DEPENDSON=cuda/12 \
 	    INSTALLVARIANT=cuda INSTALLEXT=cuda
 # VOLTA70 ?
@@ -67,7 +67,12 @@ info ::
 kokkoscore :
 	@source ${MAKEINCLUDES}/names.sh \
 	 && export INSTALLROOT=${INSTALLROOT} \
-	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" "${VARIANT}" "${MODULENAME}" "${MODE}" \
+	 && setnames \
+	    "${PACKAGE}"  "${PACKAGEVERSION}"  "${PACKAGEBASENAME}" \
+	    "${DOWNLOADPATH}" "${SRCPATH}" \
+	    "${INSTALLPATH}"  "${INSTALLROOT}"  "${INSTALLEXT}"  "$${petscarch}" \
+	    "${HOMEDIR}"  "${BUILDDIRROOT}"  "${MODE}" \
+	    "${PREFIXOPTION}"  "${PREFIXEXTRA}" \
 	 && source ${MAKEINCLUDES}/compilers.sh \
 	 \
 	 && echo $${builddir} && ls $${builddir} \
