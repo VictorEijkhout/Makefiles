@@ -20,9 +20,13 @@ export MODULEROOT=${VICTOR_WORK}/modulefiles
 export VICTOR_MODULEPATH_ROOT=${MODULEROOT}
 module use ${VICTOR_MODULEPATH_ROOT}/Core
 
-intelversion=19.1.1
-echo "loading intel ${intelversion}"
-module load intel/${intelversion}
+compiler=intel
+compilerversion=19.1.1
+( cd ${VICTOR_MODULEPATH_ROOT}/Core/${compiler} \
+     && ln -s ${compilerversion}.lua default )
+echo "loading ${compiler} ${compilerversion}"
+module load ${compiler}/${compilerversion}
+module -t show ${compiler}
 export TACC_CC=icc
 export TACC_CXX=icpc
 export TACC_FC=ifort
