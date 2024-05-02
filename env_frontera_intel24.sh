@@ -20,19 +20,20 @@ export VICTOR_MODULEPATH_ROOT=${MODULEROOT}
 module use ${VICTOR_MODULEPATH_ROOT}/Core
 
 
-intelversion=24.0
+intelversion=24.1
 echo "loading intel ${intelversion}"
 module load intel/${intelversion}
 export TACC_CC=icx
 export TACC_CXX=icpx
 export TACC_FC=ifx
-module load impi/21.11
+module load impi/21.12
 
-# echo "add python3 from intel21"
-# export PATH=/scratch1/projects/compilers/oneapi_2021.4.0.3422/intelpython/python3.7/bin/:$PATH
-# export PYTHONPATH=/opt/apps/intel19/impi19_0/python3/3.7.0/lib/python3.7/site-packages:$PYTHONPATH
+echo "add python3 from intel21"
+export PATH=/scratch1/projects/compilers/oneapi_2021.4.0.3422/intelpython/python3.7/bin/:$PATH
+export PYTHONPATH=/opt/apps/intel19/impi19_0/python3/3.7.0/lib/python3.7/site-packages:$PYTHONPATH
 
-module load python3/3.9.2
+## module load python3/3.9.2
+
 # pv=3.9
 # pvv=3.9.2
 # export PATH=/opt/apps/intel19/python3/${pvv}/bin:${PATH}
