@@ -1,0 +1,34 @@
+# -*- makefile -*-
+################################################################
+####
+#### Makefile for Zoltan installation
+####
+#### UNFINISHED
+####
+################################################################
+
+PACKAGE = ZOLTAN
+URL = https://sandialabs.github.io/Zoltan/
+PACKAGEVERSION = 3.901
+MODE = mpi
+MODULES = 
+
+include ${MAKEINCLUDES}/Make.info
+
+CONFIGINBUILD=1
+include ${MAKEINCLUDES}/Make.configure
+# HASBIN=1
+PKGCONFIGLIB = pkgconfig
+CMAKEPREFIXPATHSET = 1
+include ${MAKEINCLUDES}/Make.install
+
+info ::
+	@echo "make default_install : configure install"
+default_install ::  configure install
+
+##
+## download
+##
+TGZURL = https://github.com/sandialabs/Zoltan/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
+include ${MAKEINCLUDES}/Make.download
+
