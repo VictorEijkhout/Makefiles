@@ -23,6 +23,7 @@ module use ${VICTOR_MODULEPATH_ROOT}/Core
 compiler=intel
 compilerversion=19.1.1
 ( cd ${VICTOR_MODULEPATH_ROOT}/Core/${compiler} \
+     && rm -f default \
      && ln -s ${compilerversion}.lua default )
 echo "loading ${compiler} ${compilerversion}"
 module load ${compiler}/${compilerversion}
