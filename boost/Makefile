@@ -22,15 +22,18 @@ configure :: modules
 	@echo "there is no configure rule"
 build ::
 	@source ${MAKEINCLUDES}/names.sh \
-	     && export MODE=${MODE} && export INSTALLROOT=${INSTALLROOT} \
-	     && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" \
-	            "${PACKAGEBASENAME}" "" "" \
+	 && setnames \
+	    "${PACKAGE}"  "${PACKAGEVERSION}"  "${PACKAGEBASENAME}" \
+	    "${DOWNLOADPATH}" "${SRCPATH}" \
+	    "${INSTALLPATH}"  "${INSTALLROOT}"  "${INSTALLEXT}"  "${INSTALLVARIANT}" \
+	    "${HOMEDIR}"  "${BUILDDIRROOT}"  "${MODE}" \
+	    "${PREFIXOPTION}"  "${PREFIXEXTRA}" \
 	 && source ${MAKEINCLUDES}/compilers.sh && setcompilers \
 	 && ( \
-	    rm -rf $$builddir && mkdir -p $$builddir \
-	     && mkdir -p $$installdir && rm -rf $$installdir/* \
+	    requirenonzero builddir && rm -rf $$builddir && mkdir -p $$builddir \
+	     && requirenonzero prefixdir && mkdir -p $$prefixdir && rm -rf $$prefixdir/* \
 	     && cd $$srcdir \
-	     && ./bootstrap.sh --prefix=$$installdir \
+	     && ./bootstrap.sh --prefix=$$prefixdir \
 	     && ./b2 toolset=${TACC_FAMILY_COMPILER} \
 	          variant=release link=shared debug-symbols=off inlining=full \
 	          address-model=64  stage \
@@ -43,7 +46,7 @@ build ::
 	            --with-test --with-thread --with-timer \
 	            --with-type_erasure --with-url --with-wave \
 	            install \
-	            --prefix=$${installdir} --build-dir=$${builddir} \
+	            --prefix=$${prefixdir} --build-dir=$${builddir} \
 	     && echo "inoperative option: link=shared" >/dev/null \
 	    ) 2>&1 | tee $$installlog \
 	 && make --no-print-directory varsmodule \
