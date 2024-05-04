@@ -23,6 +23,11 @@ CONFIGUREFLAGS=--enable-mpi
 include ${MAKEINCLUDES}/Make.configure
 include ${MAKEINCLUDES}/Make.install
 
+info ::
+	@echo "make default_install : configure build"
+.PHONY: default_install
+default_install : configure build
+
 ##
 ## cmake version
 ##
