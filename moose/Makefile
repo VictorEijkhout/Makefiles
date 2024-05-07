@@ -1,51 +1,56 @@
 ################################################################
 ####
-#### Makefile for Hypre installation
+#### Makefile for Moose installation
 ####
 ################################################################
 
-PACKAGE = hypre
-URL = https://github.com/hypre-space/hypre \
-    https://hypre.readthedocs.io/en/latest/ch-misc.html#cmake-instructions
-PACKAGEVERSION = 2.30.0
+PACKAGE = moose
+URL = https://mooseframework.inl.gov/
+PACKAGEVERSION = git
 
 MODE = mpi
 MODULES = 
 
 include ${MAKEINCLUDES}/Make.info
 
-info ::
-	@echo "make small big ( 32/64 bit int versions)"
-.PHONY: small big
-small :
-	@make --no-print-directory configure build public JCOUNT=${JCOUNT} \
-	    CMAKEFLAGS="-D HYPRE_ENABLE_SHARED=ON" \
-	    INSTALLVARIANT=i32 
-big :
-	@make --no-print-directory configure build public JCOUNT=${JCOUNT} \
-	    CMAKEFLAGS="-D HYPRE_ENABLE_SHARED=ON -D HYPRE_ENABLE_BIGINT=ON" \
-	    CONFIGUREFLAGS=--enable-bigint \
-	    INSTALLVARIANT=i64 INSTALLEXT=i64
-default_install : small big
+.PHONY: configure install default_install
+default_install : configure install
+include ${MAKEINCLUDES}/Make.configure
+include ${MAKEINCLUDES}/Make.install
+notconfigure : modules
+	@source ${MAKEINCLUDES}/names.sh \
+	 && export MODE=${MODE} \
+	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "" "" "" "${MODE}" \
+	 \
+	 && source ${MAKEINCLUDES}/compilers.sh \
+	 && setmpicompilers \
+	    \
+	 && requirenonzero builddir \
+	 && rm -rf $$builddir && mkdir -p $$builddir \
+	 && ( \
+	    cd $${srcdir} \
+	     && echo "not cd $${builddir}" \
+	     && reportnames && echo \
+	     && reportcompilers && echo \
+	     && ( cd scripts \
+	         && export MOOSE_JOBS=6 METHODS=opt \
+	         && ./update_and_rebuild_petsc.sh \
+	         && ./update_and_rebuild_libmesh.sh \
+	         && ./update_and_rebuild_wasp.sh \
+	        ) \
+	     && ( cd test \
+	         && make -j ${JCOUNT} \
+	        ) \
+	    ) 2>&1 | tee $$configurelog
+	@echo && echo "CMake configuration ended: $$( date )" && echo 
 
-##
-## configure version
-##
-CONFIGURESUBDIR = src
-MAKESUBDIR = src
-#include ${MAKEINCLUDES}/Make.configure
-#include ${MAKEINCLUDES}/Make.install
-
-##
-## cmake version
-##
-CMAKESUBDIR = src
-CMAKEPREFIXPATHSET = 1
-include ${MAKEINCLUDES}/Make.cmake
-include ${MAKEINCLUDES}/Make.cbuild
-
-TGZURL = https://github.com/hypre-space/hypre/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
-include ${MAKEINCLUDES}/Make.download
+# tagged versions fail, seem to think they are in a repository?
+# TGZURL = https://github.com/idaholab/moose/archive/refs/tags/${PACKAGEVERSION}.tar.gz
+# include ${MAKEINCLUDES}/Make.download
+GITREPO = https://github.com/idaholab/moose.git
+SUBMODULE = 1
+BRANCH = master
+include ${MAKEINCLUDES}/Make.git
 
 include ${MAKEINCLUDES}/Make.clean
 
