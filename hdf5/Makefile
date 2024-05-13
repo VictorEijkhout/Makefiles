@@ -9,7 +9,8 @@
 ################################################################
 
 PACKAGE = HDF5
-URL = https://portal.hdfgroup.org/downloads/index.html
+URL = https://portal.hdfgroup.org/downloads/index.html \
+    https://support.hdfgroup.org/ftp/HDF5/releases/
 # there is a micro version but we ignore that for now.
 PACKAGESHORTVERSION = 1.14
 PACKAGEVERSION = 1.14.4
