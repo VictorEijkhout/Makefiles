@@ -5,7 +5,8 @@
 ################################################################
 
 PACKAGE = ZLIB
-PACKAGEVERSION = 1.2.13
+URL = https://github.com/madler/zlib
+PACKAGEVERSION = 1.3.1
 MODE = seq
 
 include ${MAKEINCLUDES}/Make.info
