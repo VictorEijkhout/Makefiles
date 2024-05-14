@@ -157,6 +157,7 @@ build :: modules
 	     && echo "Kludge: adding <<$${prefixdir}/lib>> to pythonpath" \
 	     && export PYTHONPATH=${PYTHONPATH}:$${prefixdir}/lib \
 	     && echo "PYTHONPATH=$${PYTHONPATH}" \
+	     && echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> VLE configure" \
 	     && cmdline="${TIME} python3 ./configure --prefix=$${prefixdir} \
 	        CFLAGS=\"${OPTFLAGS}\" CXXFLAGS=\"${OPTFLAGS}\" \
 	        `if [ \"${FORTRAN}\" != \"0\" ] ; then echo FFLAGS=\"${OPTFLAGS}\" ; fi `\
@@ -164,16 +165,28 @@ build :: modules
 	        "${BLAS_FLAGS}" \
 	        $${package_options} $${param_settings} \
 	        " \
-	     && echo "Cmdline=$$cmdline" && eval $$cmdline || retcode=$$? \
+	     && echo "Cmdline=$$cmdline" && retcode=0 && eval $$cmdline || retcode=$$? \
 	     && if [ $${retcode} -gt 0 ] ; then \
 	        echo "Build failed for $${PETSC_ARCH}" && exit 1 ; fi \
+	     \
 	     && echo "PYTHONPATH=$${PYTHONPATH}" \
+	     && echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> VLE make" \
 	     && make PETSC_DIR=`pwd` PETSC_ARCH=$${PETSC_ARCH} MAKE_NP=${JCOUNT} all \
 	     && make PETSC_DIR=`pwd` PETSC_ARCH=$${PETSC_ARCH} MAKE_NP=${JCOUNT} install \
+	     && echo "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< VLE make" \
 	  ) 2>&1 | tee $${installlog}
 include ${MAKEINCLUDES}/Make.vars
 include ${MAKEINCLUDES}/Make.public
 ## build :: installation_public
+
+     # && ( cd $${petscarch}/include \
+     #     && sed -i \
+     #            -e '/define PETSC_HAVE_I_MPI_NUMVERSION/s/define/undef/' \
+     #            petscconf.h \
+     #     && sed -i \
+     #            -e '/PETSC_HAVE_I_MPI_NUMVERSION/s/[0-9]\+//g' \
+     #            petscconf.h \
+     #    ) 
 
 info ::
 	@echo "make installation_public : open installation (also done as part of build)"
@@ -196,7 +209,8 @@ info ::
 build :: makemodule
 .PHONY: makemodule
 makemodule :
-	@source ${MAKEINCLUDES}/names.sh \
+	@echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> VLE make module" \
+	 && source ${MAKEINCLUDES}/names.sh \
 	 && export INSTALLROOT=${INSTALLROOT} \
 	 && export petscarch=`make --no-print-directory \
 	                SCALAR=${SCALAR} PRECISION=${PRECISION} INT=${INT} \
