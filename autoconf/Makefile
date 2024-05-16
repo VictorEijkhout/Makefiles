@@ -7,7 +7,7 @@
 PACKAGE = AUTOCONF
 URL = https://ftp.gnu.org/gnu/autoconf/
 PACKAGEVERSION = 2.72
-MODE = seq
+MODE = core
 MODULES = 
 
 include ${MAKEINCLUDES}/Make.info

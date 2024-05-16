@@ -14,7 +14,7 @@ URL = https://netcdf.geodynamics.org/ \
     https://docs.unidata.ucar.edu/nug/current/getting_and_building_netcdf.html#configure_options
 PACKAGEVERSION = 4.9.2
 MODE = mpi
-MODULES = phdf5
+MODULES = 
 
 include ${MAKEINCLUDES}/Make.info
 
@@ -33,7 +33,7 @@ CMAKEFLAGS = \
     -D ENABLE_PARALLEL4=${NETCDF_PARALLEL} \
     -D ENABLE_PARALLEL_TESTS=OFF \
     -D ENABLE_NETCDF_4=ON \
-    -D ENABLE_DAP=OFF
+    -D ENABLE_DAP=ON
 include ${MAKEINCLUDES}/Make.cbuild
 .PHONY: seq par
 info ::

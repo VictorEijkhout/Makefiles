@@ -7,7 +7,7 @@
 PACKAGE = AUTOMAKE
 URL = https://ftp.gnu.org/gnu/automake/
 PACKAGEVERSION = 1.16.5
-MODE = seq
+MODE = core
 MODULES = 
 
 include ${MAKEINCLUDES}/Make.info
