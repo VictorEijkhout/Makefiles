@@ -166,8 +166,10 @@ build :: modules
 	        $${package_options} $${param_settings} \
 	        " \
 	     && echo "Cmdline=$$cmdline" && retcode=0 && eval $$cmdline || retcode=$$? \
+	    \
 	     && if [ $${retcode} -gt 0 ] ; then \
 	        echo "Build failed for $${PETSC_ARCH}" && exit 1 ; fi \
+	     && echo "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< VLE configure" \
 	     \
 	     && echo "PYTHONPATH=$${PYTHONPATH}" \
 	     && echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> VLE make" \
