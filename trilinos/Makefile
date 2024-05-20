@@ -14,7 +14,8 @@ URL = https://github.com/trilinos/Trilinos \
 PACKAGEVERSION = 15.1.0
 PACKAGEVERSION_DOWNLOAD = 15-1-0
 MODE = mpi
-MODULES = boost phdf5 netcdf pnetcdf
+MODULES = boost swig phdf5 pnetcdf
+# hdf5 netcdf
 MODULE_MINIMUM_VERSION_intel = 20
 #boost swig
 
@@ -29,8 +30,9 @@ info ::
 PYTHON = ON
 
 CMAKEPREFIXPATHSET = 1
-HAS_BOOST = OFF
-HAS_NETCDF = ON
+HAS_BOOST = ON
+HAS_NETCDF = OFF
+HAS_PNETCDF = ON
 HAS_HDF5 = ON
 HAS_OPENMP = ON
 .PHONY: configure config-help
@@ -43,20 +45,24 @@ config-help :
 	 \
 	 && cd $${srcdir} && rm -rf config-help-dir && mkdir config-help-dir \
 	     && cd config-help-dir && cmake .. 2>&1 | grep "Final set of .*enabled packages"
-configure :: modules
+configure :: 
 	@source ${MAKEINCLUDES}/names.sh \
-	 && export MODE=${MODE} \
-	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "" "" "" "${MODE}" \
-	 \
 	 && source ${MAKEINCLUDES}/compilers.sh \
+	 && export scriptdir=$$(pwd) \
 	 && setmpicompilers \
-	    \
-	 && requirenonzero builddir \
-	 && rm -rf $$builddir && mkdir -p $$builddir \
+	 \
+	 && setnames \
+	    "${PACKAGE}"  "${PACKAGEVERSION}"  "${PACKAGEBASENAME}" \
+	    "${DOWNLOADPATH}" "${SRCPATH}" \
+	    "${INSTALLPATH}"  "${INSTALLROOT}"  "${INSTALLEXT}"  "${INSTALLVARIANT}" \
+	    "${HOMEDIR}"  "${BUILDDIRROOT}"  "${MODE}" \
+	    "${PREFIXOPTION}"  "${PREFIXEXTRA}" \
+	     \
 	 && ( \
-	    cd $${builddir} \
-	     && reportnames && echo \
-	     && reportcompilers && echo \
+	    reportnames && echo \
+	     && requirenonzero builddir \
+	     && rm -rf $$builddir && mkdir -p $$builddir \
+	     && cd $${builddir} \
 	     \
 	     && export HAS_MUMPS=0 \
 	     && export HAS_STK=0 \
