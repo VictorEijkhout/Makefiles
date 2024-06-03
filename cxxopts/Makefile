@@ -6,6 +6,7 @@
 
 PACKAGE = CXXOPTS
 PACKAGEVERSION = 3.1.1
+URL = https://github.com/jarro2783/cxxopts
 MODE = seq
 
 include ${MAKEINCLUDES}/Make.info
@@ -18,3 +19,4 @@ default_install : configure build public
 
 TGZURL = https://github.com/jarro2783/cxxopts/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
+GITREPO = https://github.com/jarro2783/cxxopts.git
