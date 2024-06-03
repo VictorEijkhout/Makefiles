@@ -14,6 +14,7 @@ include ${MAKEINCLUDES}/Make.info
 ## CMAKEFLAGS = 
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
+CMAKEPREFIXPATHSET=1
 .PHONY: default_install
 default_install : configure build
 
