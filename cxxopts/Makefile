@@ -5,7 +5,7 @@
 ################################################################
 
 PACKAGE = CXXOPTS
-PACKAGEVERSION = 3.1.1
+PACKAGEVERSION = 3.2.0
 URL = https://github.com/jarro2783/cxxopts
 MODE = seq
 
