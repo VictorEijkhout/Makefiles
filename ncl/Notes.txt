@@ -1,0 +1,23 @@
+ifort -O3 -o xdByBxz17f1X -mcmodel=large dByBxz17f1X.f -L$TACC_NCARG_LIB -lncarg -lncarg_gks -lncarg_c -lX11 -lXext -lgfortran -lcairo -lfreetype
+
+# diagnosis
+# nm /opt/apps/ncl_ncarg/6.6.2/lib/libncarg.a | grep gfortran_stop_n
+#                 U _gfortran_stop_numeric_f08
+#                 U _gfortran_stop_numeric_f08
+
+# this uses
+# for p in $( ./splitpath LD_LIBRARY_PATH ) ; do echo $p && ls $p/libgfort* 2>/dev/null ; done
+# /opt/apps/gcc/8.3.0/lib64
+# /opt/apps/gcc/8.3.0/lib64/libgfortran.a   /opt/apps/gcc/8.3.0/lib64/libgfortran.so.5
+
+# but even
+# staff.frontera(1055)$ nm /opt/apps/gcc/9.1.0/lib64/libgfortran.a | grep gfortran_stop
+#                  U _gfortran_stop_string
+# 0000000000000000 T _gfortran_stop_numeric
+# 0000000000000000 T _gfortran_stop_string
+
+# and even
+# [staff ~:8] nm /home1/apps/gcc/13.2.0/lib64/libgfortran.a  | grep stop_numeric
+# 0000000000000000 T _gfortran_error_stop_numeric
+# 0000000000000000 T _gfortran_stop_numeric
+#                  U _gfortran_error_stop_numeric

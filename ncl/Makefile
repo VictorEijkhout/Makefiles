@@ -68,9 +68,9 @@ default_install : configure build module
 ## include ${MAKEINCLUDES}/Make.configure
 ## include ${MAKEINCLUDES}/Make.install
 
-TGZURL = https://github.com/NCAR/ncl/archive/refs/tags/${PACKAGEVERSION}.tar.gz
+TGZURL = https://www.earthsystemgrid.org/dataset/ncl.${PACKAGEVERSION_NODOT}.src/file/ncl_ncarg-${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 
-GITREPO = https://github.com/NCAR/ncl.git
+GITREPO = https://github.com/flame/ncl.git
 include ${MAKEINCLUDES}/Make.git
 
