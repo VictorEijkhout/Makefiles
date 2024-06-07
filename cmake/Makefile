@@ -1,23 +1,21 @@
 ################################################################
 ####
-#### Makefile for CXXOPTS installation
+#### Makefile for CMAKE installation
 ####
 ################################################################
 
-PACKAGE = CXXOPTS
-PACKAGEVERSION = 3.2.0
-URL = https://github.com/jarro2783/cxxopts
-MODE = seq
+PACKAGE = CMAKE
+PACKAGEVERSION = 3.29.5
+URL = https://cmake.org/
+MODE = core
 
 include ${MAKEINCLUDES}/Make.info
 
-PKGCONFIGLIB = pkgconfig
 CMAKEPREFIXPATHSET = 1
 NOLIB = 1
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
-default_install : configure build public
+default_install : configure build 
 
-TGZURL = https://github.com/jarro2783/cxxopts/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
+TGZURL = https://github.com/Kitware/CMake/releases/download/v${PACKAGEVERSION}/cmake-${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
-GITREPO = https://github.com/jarro2783/cxxopts.git
