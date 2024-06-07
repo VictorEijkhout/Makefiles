@@ -2,10 +2,6 @@
 ####
 #### Makefile for Silo installation
 ####
-#### note: also comes in C++ and Fortran download
-#### 
-#### see release_docs/INSTALL_CMake.txt
-#### 
 ################################################################
 
 PACKAGE = SILO
@@ -20,6 +16,10 @@ include ${MAKEINCLUDES}/Make.info
 CMAKEFLAGS = \
     -D SILO_ENABLE_HDF5=ON \
     -D SILO_ENABLE_FORTRAN=ON
+ifeq "${TACC_FAMILY_COMPILER}" "intel"
+    CMAKEFLAGS += -D CMAKE_C_FLAGS=-Wno-int-conversion
+endif
+
 HASBIN=1
 CMAKEPREFIXPATHSET = 1
 include ${MAKEINCLUDES}/Make.cmake
