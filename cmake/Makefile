@@ -13,6 +13,7 @@ include ${MAKEINCLUDES}/Make.info
 
 CMAKEPREFIXPATHSET = 1
 NOLIB = 1
+HASBIN = 1
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
 default_install : configure build 
