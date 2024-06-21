@@ -4,7 +4,7 @@
 ####
 ################################################################
 
-PACKAGE = SZLIB
+PACKAGE = SZIP
 PACKAGEVERSION = 2.1.1
 MODE = seq
 
@@ -15,6 +15,7 @@ CMAKFLAGS=\
   -D CMAKE_CXX_FLAGS=-fPIC
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
+CMAKEPREFIXPATHSET = 1
 default_install : configure build
 
 TGZURL = https://docs.hdfgroup.org/archive/support/ftp/lib-external/szip/${PACKAGEVERSION}/src/szip-${PACKAGEVERSION}.tar.gz
