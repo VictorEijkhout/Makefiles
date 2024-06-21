@@ -14,6 +14,8 @@ include ${MAKEINCLUDES}/Make.info
 CMAKFLAGS=
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
+PKGCONFIG = share/pkgconfig
+CMAKEPREFIXPATHSET = 1
 POSTINSTALLinLIB = ln libSZ.so libsz.so
 
 default_install : configure build
