@@ -6,6 +6,8 @@
 #### this the 5.1.0.3 version only
 #### there are big problems with the Karypis 5.2 version
 ####
+####   --with-64-bit-indices option requires a metis build with IDXTYPEWIDTH=64
+####
 ################################################################
 
 PACKAGE = metis
