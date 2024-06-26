@@ -17,6 +17,13 @@ PACKAGEVERSION = 1.14.4
 MODE = mpi
 MODULES = zlib
 
+# there is something wrong with the szip installation:
+# CMake Error at /Users/eijkhout/Installation/szip/build-2.1.1-macbookair-gcc14/szip-config.cmake:61 (include):
+#   include could not find requested file:
+
+#     /Users/eijkhout/Installation/share/cmake/szip-targets.cmake
+
+
 include ${MAKEINCLUDES}/Make.info
 
 HDF5PARALLEL = ON
@@ -50,12 +57,12 @@ info ::
 	@echo "make seq : sequential installation"
 .PHONY: seq par
 seq :
-	@make configure build JCOUNT=${JCOUNT} \
+	@make --no-print-directory configure build JCOUNT=${JCOUNT} \
 	    PACKAGEVERSION=${PACKAGEVERSION} \
 	    HDF5PARALLEL=OFF MODE=seq \
 	    MODULENAME=hdf5
 par :
-	@make configure build JCOUNT=${JCOUNT} \
+	@make --no-print-directory configure build JCOUNT=${JCOUNT} \
 	    PACKAGEVERSION=${PACKAGEVERSION} \
 	    HDF5PARALLEL=ON  MODE=mpi HDFFORTRAN=OFF \
 	    MODULENAME=phdf5 MODULENAMEALT=hdf5
@@ -68,7 +75,7 @@ default_install ::
 ##
 ## download
 ##
-TGZURL = https://github.com/VictorEijkhout/hdf5-with-predictable-naming/releases/download/${PACKAGEVERSION}/hdf5-${PACKAGEVERSION}.tar.gz
+TGZURL = https://github.com/VictorEijkhout/hdf5-with-predictable-naming/archive/refs/tags/${PACKAGEVERSION}.tar.gz
 ## https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-${PACKAGESHORTVERSION}/hdf5-${PACKAGEVERSION}/src/hdf5-${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 
