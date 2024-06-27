@@ -1,23 +1,40 @@
 ################################################################
 ####
-#### Makefile for CXXOPTS installation
+#### Makefile for Meson installation
 ####
 ################################################################
 
-PACKAGE = CXXOPTS
-PACKAGEVERSION = 3.2.0
-URL = https://github.com/jarro2783/cxxopts
-MODE = seq
+PACKAGE = meson
+PACKAGEVERSION = 1.4.1
+URL = https://github.com/mesonbuild/meson
+MODE = core
+MODULE = 
 
 include ${MAKEINCLUDES}/Make.info
 
 PKGCONFIGLIB = pkgconfig
 CMAKEPREFIXPATHSET = 1
 NOLIB = 1
-include ${MAKEINCLUDES}/Make.cmake
-include ${MAKEINCLUDES}/Make.cbuild
-default_install : configure build public
+HASBIN = 1
+include ${MAKEINCLUDES}/Make.vars
+.PHONY: default_install
+info ::
+	@echo "make default_install : pip in the source directory"
+default_install : 
+	@source ${MAKEINCLUDES}/names.sh \
+	 && setnames \
+	    "${PACKAGE}"  "${PACKAGEVERSION}"  "${PACKAGEBASENAME}" \
+	    "${DOWNLOADPATH}" "${SRCPATH}" \
+	    "${INSTALLPATH}"  "${INSTALLROOT}"  "${INSTALLEXT}"  "${INSTALLVARIANT}" \
+	    "${HOMEDIR}"  "${BUILDDIRROOT}"  "${MODE}" \
+	    "${PREFIXOPTION}"  "${PREFIXEXTRA}" \
+	 && requirenonzero srcdir \
+	 && requirenonzero prefixdir \
+	 && ( cd $${srcdir} && pip3 install --target=$${prefixdir} . ) \
+	 && make --no-print-directory varsmodule \
+	        EXTRAINSTALLPATHS=PYTHONPATH=
 
-TGZURL = https://github.com/jarro2783/cxxopts/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
+TGZURL = https://github.com/mesonbuild/meson/archive/refs/tags/${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
-GITREPO = https://github.com/jarro2783/cxxopts.git
+GITREPO = https://github.com/mesonbuild/meson.git
+
