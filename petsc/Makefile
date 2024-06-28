@@ -159,6 +159,7 @@ build :: modules
 	     && echo "PYTHONPATH=$${PYTHONPATH}" \
 	     && echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> VLE configure" \
 	     && cmdline="${TIME} python3 ./configure --prefix=$${prefixdir} \
+	        --download-cmake \
 	        CFLAGS=\"${OPTFLAGS}\" CXXFLAGS=\"${OPTFLAGS}\" \
 	        `if [ \"${FORTRAN}\" != \"0\" ] ; then echo FFLAGS=\"${OPTFLAGS}\" ; fi `\
 	        `if [ ${CUDA} -eq 1 ] ; then echo ${CUDA_OPTIONS} ; else echo --with-cudac=0 ; fi ` \

@@ -46,7 +46,7 @@ find . -name \*.f \
 echo "================ VLE build Site.Local"
 rm -f config/Site.local
 
-for d in /usr/lib64 ${TACC_NETCDF_LIB} ${TACC_HDF5_LIB} ${TACC_UDUNITS_LIB} \
+for d in /usr/lib64 ${TACC_NETCDF_LIB} ${TACC_HDF5_LIB} ${TACC_UDUNITS_LIB} ${TACC_SZ_LIB} \
     /usr/include/X11 /usr/include/freetype2 ${TACC_NETCDF_INC} ${TACC_HDF5_INC} ${TACC_UDUNITS_INC} ; do 
     if [ ! -d "${d}" ] ; then 
 	echo "Non-existing directory <<$d>>" && exit 1
@@ -74,7 +74,7 @@ for line in \
     "y,build HDF5 support" \
     "n,do not build HDF-EOS5 support" \
     "n,do not build GRIB2 support" \
-    "${TACC_NETCDF_LIB} ${TACC_HDF5_LIB} ${TACC_UDUNITS_LIB} /usr/lib64,lib search" \
+    "${TACC_NETCDF_LIB} ${TACC_HDF5_LIB} ${TACC_UDUNITS_LIB} ${TACC_SZ_LIB} /usr/lib64,lib search" \
     "/usr/include/linux /usr/include/X11 /usr/include/freetype2 ${TACC_NETCDF_INC} ${TACC_HDF5_INC} ${TACC_UDUNITS_INC},inc search" \
     "n,no changes" \
     "y,yes save configuration" \

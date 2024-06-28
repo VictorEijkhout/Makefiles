@@ -22,10 +22,11 @@ endif
 
 HASBIN=1
 CMAKEPREFIXPATHSET = 1
+#DEPENDSON = hdf5
+## silo executables need exact .so version
+DEPENDSONCURRENT = hdf5
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
-# include ${MAKEINCLUDES}/Make.configure
-# include ${MAKEINCLUDES}/Make.install
 info ::
 	@echo "make default_install : configure build"
 default_install : configure build
