@@ -42,4 +42,8 @@ include ${MAKEINCLUDES}/Make.download
 ##
 GITREPO = https://github.com/LLNL/Silo.git
 include ${MAKEINCLUDES}/Make.git
+
+##
+## Clean
+##
 include ${MAKEINCLUDES}/Make.clean
