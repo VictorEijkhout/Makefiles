@@ -8,6 +8,8 @@ PACKAGE = SILO
 URL = http://software.llnl.gov/Silo/
 PACKAGEVERSION = git
 #4.11.1
+## WEIRD main branch has an error that is fixed in 4.11
+## https://github.com/LLNL/Silo/issues/375
 MODE = seq
 MODULES = hdf5
 
