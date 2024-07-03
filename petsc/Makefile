@@ -5,7 +5,7 @@
 ################################################################
 
 PACKAGE = PETSC
-PACKAGEVERSION = 3.21.1
+PACKAGEVERSION = 3.21.3
 MODE = mpi
 
 include ${MAKEINCLUDES}/Make.info
@@ -304,13 +304,13 @@ biginstall :
 	        ( *nohdf5* ) HDF5=0 ; PHDF5=0 ;; esac \
 	   && case $${ext} in \
 	        ( *single* ) echo " .. disable hdf5, Hypre, Mumps because single" \
-	                && HDF5=0 ; PHDF5=0 ; HYPRE=0 ; MUMPS=0 ;; esac \
+	                && HDF5=0 && PHDF5=0 && HYPRE=0 && MUMPS=0 ;; esac \
 	   && case $${ext} in \
-	        ( *i64* ) CHACO=0 ; PARMETIS=0 ;; esac \
+	        ( *i64* ) CHACO=0 && PARMETIS=0 ;; esac \
 	   && case $${ext} in \
 	        ( *complex* ) \
 	                echo " .. disable Hypre, Metis, Mumps because complex" \
-	                 && HYPRE=0 ; METIS=0 ; MUMPS=0 ; MUMPSbecauseSCALAPACKcrash=1 \
+	                 && retryHYPRE=0 && retryMETIS=0 && retryMUMPS=0 && MUMPSbecauseSCALAPACKcrash=1 \
 	      ;; esac \
 	   \
 	   && if [ "$${METIS}" = "0" ] ; then PARMETIS=0 && PTSCOTCH=0 ; fi \
@@ -365,4 +365,4 @@ include ${MAKEINCLUDES}/Make.download
 TGZURL = https://web.cels.anl.gov/projects/petsc/download/release-snapshots/petsc-${PACKAGEVERSION}.tar.gz
 
 clean ::
-	@/bin/rm -f *job.o[0-9]* archs-*
+	@/bin/rm -f *job.o[0-9]* archs-* *setnames petscinstalljob* 
