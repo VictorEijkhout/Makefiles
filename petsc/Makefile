@@ -170,13 +170,15 @@ build :: modules
 	    \
 	     && if [ $${retcode} -gt 0 ] ; then \
 	        echo "Build failed for $${PETSC_ARCH}" && exit 1 ; fi \
-	     && echo "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< VLE configure" \
+	     && echo "................................ VLE configure" \
 	     \
 	     && echo "PYTHONPATH=$${PYTHONPATH}" \
 	     && echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> VLE make" \
 	     && make PETSC_DIR=`pwd` PETSC_ARCH=$${PETSC_ARCH} MAKE_NP=${JCOUNT} all \
 	     && make PETSC_DIR=`pwd` PETSC_ARCH=$${PETSC_ARCH} MAKE_NP=${JCOUNT} install \
-	     && echo "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< VLE make" \
+	     && echo " .. sys error disable" \
+	     && sed -e 's/#error/#warning/' -i $${prefixdir}/include/petscsys.h \
+	     && echo "................................ VLE make" \
 	  ) 2>&1 | tee $${installlog}
 include ${MAKEINCLUDES}/Make.vars
 include ${MAKEINCLUDES}/Make.public
