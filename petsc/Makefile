@@ -305,14 +305,14 @@ biginstall :
 	   && case $${ext} in \
 	        ( *nohdf5* ) HDF5=0 ; PHDF5=0 ;; esac \
 	   && case $${ext} in \
-	        ( *single* ) echo " .. disable hdf5, Hypre, Mumps because single" \
-	                && HDF5=0 && PHDF5=0 && HYPRE=0 && MUMPS=0 ;; esac \
+	        ( *single* ) echo " .. disable fftw hdf5, Hypre, Mumps because single" \
+	                && FFTW=0 && HDF5=0 && PHDF5=0 && HYPRE=0 && MUMPS=0 ;; esac \
 	   && case $${ext} in \
 	        ( *i64* ) CHACO=0 && PARMETIS=0 ;; esac \
 	   && case $${ext} in \
 	        ( *complex* ) \
 	                echo " .. disable Hypre, Metis, Mumps because complex" \
-	                 && retryHYPRE=0 && retryMETIS=0 && retryMUMPS=0 && MUMPSbecauseSCALAPACKcrash=1 \
+	                 && HYPRE=0 && retryMETIS=0 && retryMUMPS=0 && MUMPSbecauseSCALAPACKcrash=1 \
 	      ;; esac \
 	   \
 	   && if [ "$${METIS}" = "0" ] ; then PARMETIS=0 && PTSCOTCH=0 ; fi \
