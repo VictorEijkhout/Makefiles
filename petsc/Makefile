@@ -278,6 +278,8 @@ biginstall :
 	@ext=${EXT} \
 	   && echo "Compiler issues" \
 	   && FORTRAN=${FORTRAN} \
+	   && if [ -z "${TACC_FAMILY_COMPILER}}" ] ; then \
+	        echo "ERROR compiler does not define the usual variables" && exit 1 ; fi \
 	   && case ${TACC_FAMILY_COMPILER} in \
 	        ( gcc ) echo " .. no FORTRAN for gcc" && FORTRAN=0 ;; \
 	        esac \
