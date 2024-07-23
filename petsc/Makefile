@@ -290,7 +290,7 @@ biginstall :
 	   && case $${ext} in ( *complex* ) SCALAR=complex ;; ( * ) SCALAR=real ;; esac \
 	   \
 	   && echo "Selecting packages" \
-	   && CHACO=${CHACO} && HDF5=${HDF5} && HYPRE=${HYPRE} && METIS=${METIS} \
+	   && CHACO=${CHACO} && FFTW=${FFTW} && HDF5=${HDF5} && HYPRE=${HYPRE} && METIS=${METIS} \
 	   && MUMPS=${MUMPS} && PARMETIS=${PARMETIS} \
 	   && PTSCOTCH=${PTSCOTCH} \
 	   && SCALAPACK=${SCALAPACK} && ZOLTAN=${ZOLTAN} \
@@ -326,7 +326,7 @@ biginstall :
 	      DEBUG=$${DEBUG} INT=$${INT} PRECISION=$${PRECISION} SCALAR=$${SCALAR} \
 	      $$( if [ ! -z ${CUSTOMEXT} ] ; then echo CUSTOMEXT=${CUSTOMEXT} ; fi ) \
 	      \
-	      AMGX=$${AMGX} CHACO=$${CHACO} EIGEN=${EIGEN} FFTW=${FFTW} \
+	      AMGX=$${AMGX} CHACO=$${CHACO} EIGEN=${EIGEN} FFTW=$${FFTW} \
 	      HDF5=$${HDF5} HYPRE=$${HYPRE} METIS=$${METIS} \
 	      MUMPS=$${MUMPS} PARMETIS=$${PARMETIS} PTSCOTCH=$${PTSCOTCH} \
 	      SCALAPACK=$${SCALAPACK} ZOLTAN=$${ZOLTAN} \
