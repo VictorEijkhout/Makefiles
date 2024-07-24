@@ -15,8 +15,11 @@ include ${MAKEINCLUDES}/Make.info
 ##
 ## Installation
 ##
-## BEFORECONFIGURECMDS = ./buildconf.sh
+## for clones only: BEFORECONFIGURECMDS = ./buildconf.sh
 include ${MAKEINCLUDES}/Make.configure
+PKGCONFIGLIB = pkgconfig
+CMAKEPREFIXPATHSET = 1
+HASBIN = 1
 include ${MAKEINCLUDES}/Make.install
 .PHONY: default_install
 info ::
