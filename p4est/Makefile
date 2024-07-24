@@ -35,7 +35,8 @@ default_install : configure build
 # include ${MAKEINCLUDES}/Make.cmake
 # include ${MAKEINCLUDES}/Make.cbuild
 
-TGZURL = https://p4est.github.io/release/p4est-${PACKAGEVERSION}.tar.gz
+TGZURL = https://github.com/cburstedde/p4est/releases/download/v${PACKAGEVERSION}/p4est-${PACKAGEVERSION}.tar.gz
+## https://p4est.github.io/release/p4est-${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 
 GITREPO = https://github.com/cburstedde/p4est.git

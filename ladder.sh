@@ -29,9 +29,10 @@ if [ $# -eq 0 ] ; then
 fi
 
 function module_avail {
-    module avail $1/$2 2>&1 \
-    | awk 'BEGIN {skip=0} /Where/ {skip=1} /No module/ {skip=1 } skip==0 {print}' \
-    | sed -e 's/-//g'
+    module -t avail $1/$2 2>&1
+    # module avail $1/$2 2>&1 \
+    # | awk 'BEGIN {skip=0} /Where/ {skip=1} /No module/ {skip=1 } skip==0 {print}' \
+    # | sed -e 's/-//g'
 }
 
 while [ $# -gt 0 ] ; do
@@ -84,6 +85,8 @@ for m in $( echo ${packages} | tr , ' ' ) ; do
 	pacver=${numpacver#*,}
 	pac=${pacver%,*}
 	ver=${pacver#*,}
+	eval fullver=\${${pac}_full_version}
+	if [ -z "$fullver" ] ; then fullver=${ver} ; fi
 	echo "================"
 	echo "Package $num: $pac version $ver"
 	if [ ! -z "${list}" ] ; then 
@@ -91,7 +94,7 @@ for m in $( echo ${packages} | tr , ' ' ) ; do
 	elif [ $m -eq $num ] ; then 
 	    echo "Installing" && echo
 	    ( cd ../$pac \
-	       && make configure build public JCOUNT=${jcount} PACKAGEVERSION=$ver \
+	       && make configure build public JCOUNT=${jcount} PACKAGEVERSION=$fullver \
 	     )
 	    break
 	fi

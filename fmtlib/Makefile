@@ -6,7 +6,7 @@
 
 PACKAGE = fmtlib
 URL = https://github.com/fmtlib/fmt
-PACKAGEVERSION = 10.2.1
+PACKAGEVERSION = 11.0.2
 MODE = seq
 
 include ${MAKEINCLUDES}/Make.info
@@ -15,6 +15,7 @@ include ${MAKEINCLUDES}/Make.cmake
 CMAKEFLAGS = \
     -D FMT_TEST=OFF
 PKGCONFIGLIB = pkgconfig
+CMAKEPREFIXPATHSET = 1
 include ${MAKEINCLUDES}/Make.cbuild
 default_install : configure build
 
