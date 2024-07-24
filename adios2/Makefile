@@ -9,7 +9,7 @@ URL = https://github.com/ornladios/ADIOS2
 PACKAGEVERSION = 2.9.1
 
 MODE = mpi
-MODULES = 
+MODULES = phdf5
 ## can use hdf5, kokkos, zlib
 
 include ${MAKEINCLUDES}/Make.info
@@ -25,6 +25,10 @@ CMAKEFLAGS = -D CMAKE_BUILD_TYPE=Release \
 
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
+info ::
+	@echo "make default_install : configure build"
+.PHONY: default_install
+default_install : configure build
 
 TGZURL = https://github.com/ornladios/ADIOS2/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
