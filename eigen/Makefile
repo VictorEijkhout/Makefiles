@@ -13,6 +13,7 @@ MODE = seq
 include ${MAKEINCLUDES}/Make.info
 
 PKGCONFIG = share/pkgconfig
+CMAKEPREFIXPATHSET = 1
 include ${MAKEINCLUDES}/Make.cmake
 NOLIB = 1
 include ${MAKEINCLUDES}/Make.cbuild
