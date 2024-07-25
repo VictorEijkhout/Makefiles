@@ -25,7 +25,7 @@ big :
 	@make --no-print-directory configure build public JCOUNT=${JCOUNT} \
 	    CMAKEFLAGS="-D HYPRE_ENABLE_SHARED=ON -D HYPRE_ENABLE_BIGINT=ON" \
 	    CONFIGUREFLAGS=--enable-bigint \
-	    INSTALLVARIANT=i64 INSTALLEXT=i64
+	    INSTALLVARIANT=i64 MODULEVERSIONEXTRA=i64
 default_install : small big
 
 ##
