@@ -27,7 +27,7 @@ default_install :
 	 && mkdir -p $${prefixdir} \
 	 && cp -r $${srcdir}/{docs,examples,README.md,scripts,src,tests} $${prefixdir}/ \
 	 && make --no-print-directory varsmodule \
-	      NOLIB=1 NOINC=1 PYTHONPATH=src/pylauncher
+	      NOLIB=1 NOINC=1 PYTHONPATHADD=src/pylauncher
 
 include ${MAKEINCLUDES}/Make.vars
 
