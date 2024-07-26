@@ -14,6 +14,11 @@ include ${MAKEINCLUDES}/Make.info
 CONFIGUREFLAGS = generic
 include ${MAKEINCLUDES}/Make.configure
 include ${MAKEINCLUDES}/Make.install
+PKGCONFIG = share/pkgconfig
+.PHONY: default_install
+info ::
+	@echo "make default_install : configure build"
+default_install : configure build public
 
 GITREPO = https://github.com/flame/blis.git
 include ${MAKEINCLUDES}/Make.git
