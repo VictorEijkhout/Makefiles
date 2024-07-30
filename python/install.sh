@@ -1,6 +1,7 @@
 #!/bin/bash
 
 ## https://devguide.python.org/getting-started/setup-building/#setup
+## https://github.com/python/cpython/issues/122412
 
 function usage () {
     echo "Usage: $0 [ -h ] [ -v 3.12345 (default: ${pythonver}) ]"
