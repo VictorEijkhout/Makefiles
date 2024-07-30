@@ -1,5 +1,7 @@
 #!/bin/bash
 
+## https://devguide.python.org/getting-started/setup-building/#setup
+
 function usage () {
     echo "Usage: $0 [ -h ] [ -v 3.12345 (default: ${pythonver}) ]"
     echo "    [ -5 (hdf5 only) ] [ -m (mpi only) ] [ -n (numpy only) ] "
