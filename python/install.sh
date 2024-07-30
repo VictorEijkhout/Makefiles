@@ -40,7 +40,7 @@ pyminiver=${pythonver#*.} && pyminiver=${pyminiver%.*}
 pymicrover=${pythonver##*.}
 echo && echo "Installing ${pymacrover}.${pyminiver}.${pymicrover}" && echo
 
-pythondir=${WORK}/python
+pythondir=${STOCKYARD}/python
 prefixdir=${pythondir}/installation-${pythonver}-${TACC_FAMILY_COMPILER}
 pkgprefix=${prefixdir}/lib/python${pymacrover}.${pyminiver}/site-packages/
 
@@ -61,10 +61,10 @@ if [ ! -z "${installpython}" ] ; then
     export CC=${TACC_CC} && export CXX=${TACC_CXX}
     echo && echo "configuring" && echo
     ./configure --prefix=${prefixdir} \
-		--enable-optimizations \
 		2>&1 | tee ${pythondir}/configure.log
     echo && echo "making" && echo
-    ( make && make install ) 2>&1
+    ( make && make -j 1 install ) 2>&1
+    ## 		--enable-optimizations \
     ## | tee ${pythondir}/install.log
 fi
 
