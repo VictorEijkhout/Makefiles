@@ -62,12 +62,15 @@ if [ ! -z "${installpython}" ] ; then
 
     module load sqlite
     export CC=${TACC_CC} && export CXX=${TACC_CXX}
+    export LDFLAGS="-L${TACC_MKL_LIB} -L${TACC_INTEL_LIB}"
     echo && echo "configuring" && echo
+    ./configure --help 
     ./configure --prefix=${prefixdir} \
+		--enable-optimizations \
+		--with-ensurepip=install \
 		2>&1 | tee ${pythondir}/configure.log
     echo && echo "making" && echo
-    ( make && make -j 1 install ) 2>&1
-    ## 		--enable-optimizations \
+    ( make -j 1 && echo && echo "make install" && echo && make -j 1 install ) 2>&1
     ## | tee ${pythondir}/install.log
 fi
 
@@ -115,7 +118,9 @@ if [ ! -z "${installnumpy}" ] ; then
 	git fetch --all --tags --prune
 	git checkout tags/v${numpyver}
 	## https://github.com/numpy/numpy/pull/26802
-	python3 -m pip install --target=${pkgprefix} .
+	pip3 install . --target=${pkgprefix} \
+             -Csetup-args=-Dblas=${blas} -Csetup-args=-Dlapack=${blas}
+	## python3 -m pip install --target=${pkgprefix} .
 	## \
 	    ## -Csetup-args=-Dblas-order=mkl,blis,openblas \
 	    ## -Csetup-args=-Dallow-noblas=false \
