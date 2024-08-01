@@ -31,6 +31,7 @@ endif
 CONFIGUREFLAGS = ${CONFIGUREFLAGS_STD}
 
 PKGCONFIGLIB = pkgconfig
+CMAKEPREFIXPATHSET = 1
 include ${MAKEINCLUDES}/Make.install
 .PHONY: default_install
 info ::
@@ -42,7 +43,7 @@ default_install : double
 single :
 	@make configure build JCOUNT=${JCOUNT} \
 	    CONFIGUREFLAGS="${CONFIGUREFLAGS_STD} --enable-float" \
-	    INSTALLVARIANT=single INSTALLEXT=single \
+	    INSTALLVARIANT=single MODULEVERSIONEXTRA=single \
 	    MODE=mpi
 double :
 	@make configure build JCOUNT=${JCOUNT} \
