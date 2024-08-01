@@ -11,7 +11,7 @@ URL = https://siesta-project.org/siesta/index.html
 PACKAGEVERSION = 5.0.1
 
 MODE = mpi
-MODULES = 
+MODULES = fftw3
 
 include ${MAKEINCLUDES}/Make.info
 
@@ -24,6 +24,7 @@ PKGCONFIGLIB = pkgconfig
 CMAKEFLAGS = \
     -D SIESTA_WITH_FLOOK=FALSE \
     -D Fortran_FLAGS_DEBUG=-O0 \
+    -D SIESTA_WITH_FFTW=TRUE \
     -D SCALAPACK_INCLUDE=${TACC_INTEL_DIR}/include/mkl_scalapack.h \
     -D SCALAPACK_LIBRARY_DIR=${TACC_INTEL_LIB} \
     -D SCALAPACK_LIBRARY='-lmkl_scalapack_ilp64 -lmkl_blacs_intelmpi_lp64'
