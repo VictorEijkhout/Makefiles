@@ -23,6 +23,7 @@ PKGCONFIGLIB = pkgconfig
 # https://docs.siesta-project.org/projects/siesta/en/stable/installation/build-issues.html#siesta-does-not-recognize-intel-mkl-libraries
 CMAKEFLAGS = \
     -D SIESTA_WITH_FLOOK=FALSE \
+    -D Fortran_FLAGS_DEBUG=-O0 \
     -D SCALAPACK_INCLUDE=${TACC_INTEL_DIR}/include/mkl_scalapack.h \
     -D SCALAPACK_LIBRARY_DIR=${TACC_INTEL_LIB} \
     -D SCALAPACK_LIBRARY='-lmkl_scalapack_ilp64 -lmkl_blacs_intelmpi_lp64'
