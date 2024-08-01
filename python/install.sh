@@ -44,7 +44,7 @@ pymicrover=${pythonver##*.}
 echo && echo "Installing ${pymacrover}.${pyminiver}.${pymicrover}" && echo
 
 pythondir=${STOCKYARD}/python
-prefixdir=${pythondir}/installation-${pythonver}-${TACC_FAMILY_COMPILER}
+prefixdir=${pythondir}/installation-${pythonver}-${TACC_SYSTEM}-${TACC_FAMILY_COMPILER}-${TACC_FAMILY_COMPILER_VERSION}
 pkgprefix=${prefixdir}/lib/python${pymacrover}.${pyminiver}/site-packages/
 
 if [ ! -z "${installpython}" ] ; then 
@@ -60,34 +60,36 @@ if [ ! -z "${installpython}" ] ; then
 
     cd ${pythondir}/Python-${pythonver}
 
-    module load sqlite
+    module load sqlite || exit 1
     export CC=${TACC_CC} && export CXX=${TACC_CXX}
     echo && echo "configuring" && echo
     ./configure --prefix=${prefixdir} \
-		2>&1 | tee ${pythondir}/configure.log
+	--enable-optimizations \
+	2>&1 | tee ${pythondir}/configure.log
     echo && echo "making" && echo
-    ( make && make -j 1 install ) 2>&1
-    ## 		--enable-optimizations \
+    ( make && make install ) 2>&1
     ## | tee ${pythondir}/install.log
 fi
 
 ##
 ## set paths for the rest of the installation
 ##
-cat > ${pythondir}/load.sh <<EOF
-export PATH=/home1/00434/eijkhout/.local/bin:${prefixdir}/bin:${PATH}
+if [ ! -d "${pkgprefix}" ] ; then 
+    echo "ERROR: not finding site-packages: ${pkgprefix}" && exit 1 
+fi
+cat >${pythondir}/load.sh <<EOF
+export TACC_PYTHON_DIR=${prefixdir}
+export PATH=${prefixdir}/bin:/home1/00434/eijkhout/.local/bin:${PATH}
 export PYTHONPATH=${pkgprefix}:${PYTHONPATH}
 EOF
 source ${pythondir}/load.sh
-
-echo $PATH
-echo "python=$(which python)"
-echo "python3=$(which python3)"
+echo "Now using python: $( which python3 ), deduced version: $( python3 --version )"
 export XDG_CACHE_HOME=$( pwd )/pipcache
 
 ##
 ## new pip
 ##
+echo && echo "Upgrading pip" && echo
 python3 -m pip install --upgrade pip
 
 ##
@@ -161,10 +163,9 @@ if [ ! -z "${installhdf}" ] ; then
     echo && echo "Building h5py" && echo
     if [ -z "${TACC_HDF5_DIR}" ] ; then
 	echo "Needs hdf5 module loaded" && exit 1 ; fi
-    HDF5_DIR=${TACC_HDF5_DIR} pip3 install --target=${pkgprefix} \
-	    --no-binary=h5py h5py
-    HDF5_VERSION=${TACC_HDF5_VERSION} pip3 install --target=${pkgprefix} \
-		--no-binary=h5py h5py
+    HDF5_DIR=${TACC_HDF5_DIR} \
+    HDF5_VERSION=${TACC_HDF5_VERSION} \
+	pip3 install --target=${pkgprefix} --no-binary=h5py h5py
     ## CC="mpicc" HDF5_MPI="ON" HDF5_DIR=/path/to/parallel-hdf5 pip3 install --target=${pkgprefix} --no-binary=h5py h5py
 fi
 
