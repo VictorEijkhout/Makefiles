@@ -48,3 +48,6 @@ double :
 TGZURL = http://fftw.org/fftw-${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 
+## config.guess can not guess NVIDIA
+## http://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.guess;hb=HEAD
+## http://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.sub;hb=HEAD

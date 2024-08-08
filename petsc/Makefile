@@ -5,7 +5,7 @@
 ################################################################
 
 PACKAGE = PETSC
-PACKAGEVERSION = 3.21.1
+PACKAGEVERSION = 3.21.4
 MODE = mpi
 
 include ${MAKEINCLUDES}/Make.info
@@ -159,6 +159,7 @@ build :: modules
 	     && echo "PYTHONPATH=$${PYTHONPATH}" \
 	     && echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> VLE configure" \
 	     && cmdline="${TIME} python3 ./configure --prefix=$${prefixdir} \
+	        --download-cmake \
 	        CFLAGS=\"${OPTFLAGS}\" CXXFLAGS=\"${OPTFLAGS}\" \
 	        `if [ \"${FORTRAN}\" != \"0\" ] ; then echo FFLAGS=\"${OPTFLAGS}\" ; fi `\
 	        `if [ ${CUDA} -eq 1 ] ; then echo ${CUDA_OPTIONS} ; else echo --with-cudac=0 ; fi ` \
@@ -169,13 +170,15 @@ build :: modules
 	    \
 	     && if [ $${retcode} -gt 0 ] ; then \
 	        echo "Build failed for $${PETSC_ARCH}" && exit 1 ; fi \
-	     && echo "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< VLE configure" \
+	     && echo "................................ VLE configure" \
 	     \
 	     && echo "PYTHONPATH=$${PYTHONPATH}" \
 	     && echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> VLE make" \
 	     && make PETSC_DIR=`pwd` PETSC_ARCH=$${PETSC_ARCH} MAKE_NP=${JCOUNT} all \
 	     && make PETSC_DIR=`pwd` PETSC_ARCH=$${PETSC_ARCH} MAKE_NP=${JCOUNT} install \
-	     && echo "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< VLE make" \
+	     && echo " .. sys error disable" \
+	     && sed -e 's/#error/#warning/' -i $${prefixdir}/include/petscsys.h \
+	     && echo "................................ VLE make" \
 	  ) 2>&1 | tee $${installlog}
 include ${MAKEINCLUDES}/Make.vars
 include ${MAKEINCLUDES}/Make.public
@@ -274,7 +277,9 @@ allinstall :
 biginstall :
 	@ext=${EXT} \
 	   && echo "Compiler issues" \
-	   && FORTRAN=${FORTRAN} \
+	   && FORTRAN=${FORTRAN} && SLEPC=${SLEPC} \
+	   && if [ -z "${TACC_FAMILY_COMPILER}}" ] ; then \
+	        echo "ERROR compiler does not define the usual variables" && exit 1 ; fi \
 	   && case ${TACC_FAMILY_COMPILER} in \
 	        ( gcc ) echo " .. no FORTRAN for gcc" && FORTRAN=0 ;; \
 	        esac \
@@ -285,7 +290,7 @@ biginstall :
 	   && case $${ext} in ( *complex* ) SCALAR=complex ;; ( * ) SCALAR=real ;; esac \
 	   \
 	   && echo "Selecting packages" \
-	   && CHACO=${CHACO} && HDF5=${HDF5} && HYPRE=${HYPRE} && METIS=${METIS} \
+	   && CHACO=${CHACO} && FFTW=${FFTW} && HDF5=${HDF5} && HYPRE=${HYPRE} && METIS=${METIS} \
 	   && MUMPS=${MUMPS} && PARMETIS=${PARMETIS} \
 	   && PTSCOTCH=${PTSCOTCH} \
 	   && SCALAPACK=${SCALAPACK} && ZOLTAN=${ZOLTAN} \
@@ -302,14 +307,14 @@ biginstall :
 	   && case $${ext} in \
 	        ( *nohdf5* ) HDF5=0 ; PHDF5=0 ;; esac \
 	   && case $${ext} in \
-	        ( *single* ) echo " .. disable hdf5, Hypre, Mumps because single" \
-	                && HDF5=0 ; PHDF5=0 ; HYPRE=0 ; MUMPS=0 ;; esac \
+	        ( *single* ) echo " .. disable fftw hdf5, Hypre, Mumps because single" \
+	                && FFTW=0 && HDF5=0 && PHDF5=0 && HYPRE=0 && MUMPS=0 ;; esac \
 	   && case $${ext} in \
-	        ( *i64* ) CHACO=0 ; PARMETIS=0 ;; esac \
+	        ( *i64* ) CHACO=0 && PARMETIS=0 ;; esac \
 	   && case $${ext} in \
 	        ( *complex* ) \
 	                echo " .. disable Hypre, Metis, Mumps because complex" \
-	                 && HYPRE=0 ; METIS=0 ; MUMPS=0 ; MUMPSbecauseSCALAPACKcrash=1 \
+	                 && HYPRE=0 \
 	      ;; esac \
 	   \
 	   && if [ "$${METIS}" = "0" ] ; then PARMETIS=0 && PTSCOTCH=0 ; fi \
@@ -321,12 +326,12 @@ biginstall :
 	      DEBUG=$${DEBUG} INT=$${INT} PRECISION=$${PRECISION} SCALAR=$${SCALAR} \
 	      $$( if [ ! -z ${CUSTOMEXT} ] ; then echo CUSTOMEXT=${CUSTOMEXT} ; fi ) \
 	      \
-	      AMGX=$${AMGX} CHACO=$${CHACO} EIGEN=${EIGEN} FFTW=${FFTW} \
+	      AMGX=$${AMGX} CHACO=$${CHACO} EIGEN=${EIGEN} FFTW=$${FFTW} \
 	      HDF5=$${HDF5} HYPRE=$${HYPRE} METIS=$${METIS} \
 	      MUMPS=$${MUMPS} PARMETIS=$${PARMETIS} PTSCOTCH=$${PTSCOTCH} \
 	      SCALAPACK=$${SCALAPACK} ZOLTAN=$${ZOLTAN} \
 	      \
-	      CUDA=${CUDA} FORTRAN=$${FORTRAN} \
+	      CUDA=${CUDA} FORTRAN=$${FORTRAN} SLEPC=$${SLEPC} \
 	      PETSC4PY=${PETSC4PY} SLEPC4PY=${SLEPC4PY} \
 	      " \
 	   && if [ ! -z "${OUTERLOG}" ] ; then \
@@ -364,4 +369,4 @@ include ${MAKEINCLUDES}/Make.download
 TGZURL = https://web.cels.anl.gov/projects/petsc/download/release-snapshots/petsc-${PACKAGEVERSION}.tar.gz
 
 clean ::
-	@/bin/rm -f *job.o[0-9]* archs-*
+	@/bin/rm -f *job.o[0-9]* archs-* *setnames petscinstalljob* 

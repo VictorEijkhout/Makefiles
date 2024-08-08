@@ -1,0 +1,772 @@
+# -*- makefile -*-
+#########################################################################
+#                                                                       #
+#       This Makefile was created by the "ymake" utility.               #
+#       If you wish to make changes in the "Makefile" or "makefile",    #
+#       do so by making changes to "yMakefile" or "ymakefile"           #
+#       and executing "make local-Makefile".                            #
+#                                                                       #
+#########################################################################
+
+#########################################################################
+#
+# In main Template
+#
+#########################################################################
+
+SYSTEM_INCLUDE		= "LINUX"
+DATE                    = $(shell date +%d%b%Y_%H%M)
+
+OS1_DEF		=	-DLinux
+OS2_DEF		=
+OS_DEF		=	$(OS1_DEF) $(OS2_DEF)
+ARCH_DEF	=	-Dx86_64
+VENDOR_DEF	=	-DIBM
+
+MAJOR_DEF	=	-DMAJOR=3
+MINOR_DEF	=	-DMINOR=10
+
+SUBMINOR_DEF	=	-DSUBMINOR=0-1160
+
+#########################################################################
+#
+# Including Site - first time
+#
+#########################################################################
+
+#########################################################################
+#
+# After Including Site - first time
+#
+#########################################################################
+
+#########################################################################
+#
+# Including "LINUX"
+#
+#########################################################################
+
+FC = $(F77)
+
+#########################################################################
+#
+# After Including "LINUX"
+#
+#########################################################################
+
+#########################################################################
+#
+# Including Site - second time
+#
+#########################################################################
+
+#########################################################################
+#
+# After Including Site - second time
+#
+#########################################################################
+
+INSTALLDIR = theinstalldir
+YMAKEROOT		= ${INSTALLDIR}
+BINROOT			= ${INSTALLDIR}/bin
+LIBROOT			= ${INSTALLDIR}/lib
+INCROOT			= ${INSTALLDIR}/include
+MANROOT			= ${INSTALLDIR}/man
+TMPROOT			= /tmp/ncl
+
+ROOTPATH		= ${INSTALLDIR}
+BINPATH			= ${INSTALLDIR}/bin
+LIBPATH			= ${INSTALLDIR}/lib
+INCPATH			= ${INSTALLDIR}/include
+MANPATH			= ${INSTALLDIR}/man
+
+LIBSEARCH		= -L/etc/X11
+INCSEARCH		= -I/usr/include/X11
+LIBSEARCHUSER		= -L/usr/X11R6/lib64
+INCSEARCHUSER		= -I/usr/X11R6/include
+PYTHONVERSION		=
+PYTHONLIBSEARCH		=
+PYTHONINCSEARCH		=
+PYTHONPKGSDIR           =
+PYTHONBINDIR            =
+
+LIB_SEARCH		= $(LIBSEARCH)
+INC_SEARCH		= $(INCSEARCH)
+
+TOP			= .
+CURRENT_DIR		= .
+
+BINDIR			= bin
+LIBDIR			= lib
+INCDIR			= include
+MANDIR			= man
+DOCDIR			= doc
+NGTMPDIR		= tmp
+CONFIGDIR		= config
+
+MANLPATH		= $(MANPATH)/manl
+MAN1PATH		= $(MANPATH)/man1
+MAN3PATH		= $(MANPATH)/man3
+MAN5PATH		= $(MANPATH)/man5
+MAN6PATH		= $(MANPATH)/man6
+MAN8PATH		= $(MANPATH)/man8
+
+MANL_SECTION		= l
+MAN1_SECTION		= 1
+MAN3_SECTION		= 3
+MAN5_SECTION		= 5
+MAN6_SECTION		= 6
+MAN8_SECTION		= 8
+
+CONFIG_DIR		= $(CONFIGSRC)
+
+XLIB			= -lX11 -lXext
+EXTENSIONLIB		= -lXext
+XTOOLLIB		= -lXt -lSM -lICE
+XMULIB			= -lXmu
+XAWLIB			= -lXaw
+XMOTIFLIB		= -lXm
+
+XMOTIFCLIENTLIBS	= $(XMOTIFLIB) $(XTOOLLIB) $(XLIB)
+XATHENACLIENTLIBS	= $(XAWLIB) $(XTOOLLIB) $(EXTENSIONLIB) $(XLIB)
+XMUATHENACLIENTLIBS	= $(XAWLIB) $(XMULIB) $(XTOOLLIB) $(EXTENSIONLIB) $(XLIB)
+
+CTOFLIBS	= -lgfortran -lm
+CTOFLIBSUSER	= -lgfortran -lm
+MAKE		= make
+
+CC		= gcc
+CXX		= g\+\+
+CC_LD		= gcc
+CDYNAMIC	=
+CSTATIC		=
+
+CCOPTIONS	= -ansi -fPIC -fopenmp -std=c99 $(EXTRA_CCOPTIONS)
+
+BUILDINCDIR	= $(TOP)/include
+
+BUILDINCTOP	= ./..
+
+_LIBROOTSEARCH	=	-L$(LIBROOT)
+_EXECLIBSEARCH	=	$(RPATHFLAG)$(TOP)/shared:$(LIBROOT)
+_SHLIBSEARCH	=	-rpath $(TOP)/shared:$(LIBROOT)
+
+_INCROOTSEARCH	=	-I$(INCROOT)
+
+SHAREDLIBFLAGS =
+
+TOP_INCLUDES	= -I$(BUILDINCDIR)
+LDLIBS		= $(_LIBROOTSEARCH) $(LIB_SEARCH) $(EXTRA_LIBS)
+CC_LDOPTIONS	= $(CCOPTIONS) $(COPT) $(XTRA_CLDFLAGS) $(SHAREDLIBFLAGS)
+FC_LDOPTIONS	= $(FCOPTIONS) $(FOPT) $(XTRA_FLDFLAGS) $(SHAREDLIBFLAGS)
+
+EXTRA_LDLIBS	= $(SYS_LIBS) $(EXTRA_SYS_LIBS) $(DEV_SYS_LIBS)
+
+ALLINCLUDES	= $(EXTRA_INCLUDES) $(TOP_INCLUDES) $(INC_SEARCH)
+STD_DEFINES	= -DSYSV -D_POSIX_SOURCE -D_XOPEN_SOURCE -DByteSwapped
+XTRA_CDEFINES	= $(EXTRA_CDEFINES) $(EXTRA_DEFINES)
+ALLDEFINES	= $(ALLINCLUDES) $(DEV_DEFINES) $(XTRA_CDEFINES) $(STD_DEFINES) $(PROJECTDEFINES) $(DEFINES)
+CFLAGS		= $(CCOPTIONS) $(COPT) $(ALLDEFINES)
+XTRA_CLDFLAGS	= $(EXTRA_CLDFLAGS) $(EXTRA_LDFLAGS)
+EXTRA_SYS_LIBS	=
+EXTRA_EXPORT_FLAGS = -rdynamic
+
+DEPEND		= makedepend
+CPP		= '/usr/bin/cpp -traditional'
+FCPP		= $(CONFIG_DIR)/fcpp $(CPP)
+
+F77		= gfortran
+F77_LD		= gfortran
+FCOPTIONS	= -fPIC -fno-second-underscore -fno-range-check -fopenmp $(EXTRA_FCOPTIONS)
+NGCALLF = reg\#\#_
+
+EXE_SUFFIX	=
+
+XTRA_FDEFINES	= $(EXTRA_FDEFINES) $(EXTRA_DEFINES)
+FFLAGS	= $(FCOPTIONS) $(FOPT) $(XTRA_FDEFINES)
+XTRA_FLDFLAGS	= $(EXTRA_FLDFLAGS) $(EXTRA_LDFLAGS)
+
+LD		= ld
+LD_REL		= ld
+RPATHFLAG	= -Wl,-rpath,
+AR		= ar
+AR_SRC		= ar
+AR_SRC_QUICK	= $(AR_SRC) q
+AR_SRC_CHECK	= $(AR_SRC) vru
+AR_REG		= $(AR) vru
+AR_QUICK	= $(AR) q
+
+RM		= rm -f
+LEX		= flex
+YACC		= yacc
+LEXLIB		= -lfl
+CAT		= cat
+CP		= cp
+MV		= mv -f
+LN		= ln -s
+RANLIB		= ranlib
+NO_OPT		= touch -c
+TBL		= tbl
+NROFF		= nroff -man
+COL		= col
+
+LINT		= lint
+INSTALL		= $(CONFIG_DIR)/ymake-install -c
+INSTALL_RM	= $(RM)
+
+INSTALL_BIN	= 0755
+INSTALL_MAN	= 0644
+INSTALL_DOC	= 0644
+INSTALL_APP	= 0644
+INSTALL_LIB	= 0644
+INSTALL_DB	= 0644
+INSTALL_INC	= 0644
+
+CONFIGSRC	= $(TOP)/$(CONFIGDIR)
+NEWCONFIGSRC	= ../$(CONFIGSRC)
+
+_YMAKE_EXTRA	=
+
+YMAKE		= $(CONFIGSRC)/ymake -config $(CONFIGSRC) $(_YMAKE_EXTRA)
+NEWYMAKE	= $(NEWCONFIGSRC)/ymake -config $(NEWCONFIGSRC) $(_YMAKE_EXTRA)
+YMAKEDEP	= $(CONFIGSRC)/ymake-filter
+
+SHELL		= /bin/sh
+CALLCONV	= $(CONFIG_DIR)/callconv
+MKDIRHIER	= mkdir -p
+
+#########################################################################
+#
+# Including Project file
+#
+#########################################################################
+
+NGVERSION       = 6.6.2
+NCLVERSION      = 6.6.2
+
+NCARGDIR		= ncarg
+HLUDIR			= hlu
+HLUEXDIR		= hluex
+NCLDIR			= ncl
+NCLEXDIR		= nclex
+PYNGLEXDIR		= pynglex
+PYNGLDIR		= PyNGL
+NGODIR			= ngo
+NFPDIR			= nfp
+NFPFORTDIR		= nfpfort
+DATADIR			= data
+GRIB2CODETABLEDIR	= grib2_codetables
+DBDIR			= database
+FONTCAPDIR		= fontcaps
+GRAPHCAPDIR		= graphcaps
+EXAMPLESDIR		= examples
+TUTORIALDIR		= tutorial
+TESTSDIR		= tests
+RESDIR			= resfiles
+ROBJDIR			= robj
+WWWDIR			= ngwww
+XAPPDIR			= xapp
+
+LIBNCARGROOT		= $(LIBROOT)/$(NCARGDIR)
+CONFIGROOT		= $(LIBNCARGROOT)/$(CONFIGDIR)
+DBROOT			= $(LIBNCARGROOT)/$(DBDIR)
+FONTCAPROOT		= $(LIBNCARGROOT)/$(FONTCAPDIR)
+GRAPHCAPROOT		= $(LIBNCARGROOT)/$(GRAPHCAPDIR)
+DATAROOT		= $(LIBNCARGROOT)/$(DATADIR)
+DOCROOT			= $(LIBNCARGROOT)/$(DOCDIR)
+EXAMPLESROOT		= $(LIBNCARGROOT)/$(EXAMPLESDIR)
+ROBJROOT		= $(LIBNCARGROOT)/$(ROBJDIR)
+TESTSROOT		= $(LIBNCARGROOT)/$(TESTSDIR)
+TUTORIALROOT		= $(LIBNCARGROOT)/$(TUTORIALDIR)
+WWWROOT			= $(LIBNCARGROOT)/$(WWWDIR)
+XAPPROOT		= $(LIBNCARGROOT)/$(XAPPDIR)
+HLUEXROOT		= $(LIBNCARGROOT)/$(HLUEXDIR)
+RESFILEROOT		= $(LIBNCARGROOT)/$(RESDIR)
+NCLEXROOT		= $(LIBNCARGROOT)/$(NCLEXDIR)
+GRIB2CODETABLEROOT	= $(LIBNCARGROOT)/$(GRIB2CODETABLEDIR)
+LIBNCARGPATH		= $(LIBPATH)/$(NCARGDIR)
+CONFIGPATH		= $(LIBNCARGPATH)/$(CONFIGDIR)
+DBPATH			= $(LIBNCARGPATH)/$(DBDIR)
+FONTCAPPATH		= $(LIBNCARGPATH)/$(FONTCAPDIR)
+GRAPHCAPPATH		= $(LIBNCARGPATH)/$(GRAPHCAPDIR)
+DATAPATH		= $(LIBNCARGPATH)/$(DATADIR)
+DOCPATH			= $(LIBNCARGPATH)/$(DOCDIR)
+EXAMPLESPATH		= $(LIBNCARGPATH)/$(EXAMPLESDIR)
+ROBJPATH		= $(LIBNCARGPATH)/$(ROBJDIR)
+TESTSPATH		= $(LIBNCARGPATH)/$(TESTSDIR)
+TUTORIALPATH		= $(LIBNCARGPATH)/$(TUTORIALDIR)
+WWWPATH			= $(LIBNCARGPATH)/$(WWWDIR)
+XAPPPATH		= $(LIBNCARGPATH)/$(XAPPDIR)
+LIBNCLPATH		= $(LIBNCARGPATH)/$(NCLDIR)
+HLUEXPATH		= $(LIBNCARGPATH)/$(HLUEXDIR)
+RESFILEPATH		= $(LIBNCARGPATH)/$(RESDIR)
+NCLEXPATH		= $(LIBNCARGPATH)/$(NCLEXDIR)
+NCARGINCPATH		= $(INCPATH)/$(NCARGDIR)
+HLUINCPATH		= $(NCARGINCPATH)/$(HLUDIR)
+NCLINCPATH		= $(NCARGINCPATH)/$(NCLDIR)
+NGOINCPATH		= $(NCARGINCPATH)/$(NGODIR)
+PYNGLDOCPATH		= webdoc/pyngl
+PYNGLBINPATH		= $(PYTHONBINDIR)
+PYNGLNCARGPATH		= $(PYTHONPKGSDIR)/$(PYNGLDIR)/$(NCARGDIR)
+USRRESFILE		= "~/.hluresfile"
+NCARGURL		= "ngurl"
+NCARGSITEFILE   = "ncargsite"
+
+ROOTPATHCHECK		= "/lib/ncarg/fontcaps/font1"
+
+NGENV_DESCRIPT	= 		{"tmp","TMPDIR",NULL,"$(TMPROOT)",NULL,			"fontcap","FONTCAP",NULL,NULL,NULL,				"graphcap","GRAPHCAP",NULL,NULL,NULL,				"root",NULL,NULL,"$(ROOTPATH)",$(ROOTPATHCHECK),		"usrresfile",NULL,NULL,$(USRRESFILE),NULL,			"gks_output",NULL,NULL,"gmeta",NULL,				"bin",NULL,"root",NULL,NULL,					"lib",NULL,"root",NULL,NULL,					"include",NULL,"root",NULL,NULL,				"man",NULL,"root",NULL,NULL,					"ncarg",NULL,"lib",NULL,NULL,					"config",NULL,"ncarg",NULL,NULL,				"data",NULL,"ncarg",NULL,NULL,					"database",NULL,"ncarg",NULL,NULL,				"doc",NULL,"ncarg",NULL,NULL,					"fontcaps",NULL,"ncarg",NULL,NULL,				"graphcaps",NULL,"ncarg",NULL,NULL,				"colormaps",NULL,"ncarg",NULL,NULL,				"rangs","NCARG_RANGS","database",NULL,NULL,			"udunits","NCARG_UDUNITS","ncarg",NULL,NULL,			"psadilookup","PSADILOOKUP_PATH",NULL,NULL,NULL,		"examples",NULL,"ncarg",NULL,NULL,				"hluex",NULL,"ncarg",NULL,NULL,					"nclex",NULL,"ncarg",NULL,NULL,					"pynglex",NULL,"ncarg",NULL,NULL,				"resfiles",NULL,"ncarg",NULL,NULL,				"tests",NULL,"ncarg",NULL,NULL,					"tutorial",NULL,"ncarg",NULL,NULL,				"xapp",NULL,"ncarg",NULL,NULL,					"ngwww",NULL,"ncarg",NULL,NULL,					"ngurl",NULL,"ngwww",NULL,NULL,					"sysresfile",NULL,"ncarg",NULL,NULL,				"sysappres",NULL,"ncarg",NULL,NULL,				"grib2_codetables","NIO_GRIB2_CODETABLES","ncarg",NULL,NULL, 		"ftfonts",NULL,"database",NULL,NULL,            		NULL}
+
+NGENVDEF	=	-DENV_DEFS=$(NGENV_DESCRIPT)
+
+COMMONSRC	= $(TOP)/common/src
+NCARG2DSRC	= $(TOP)/ncarg2d/src
+NGMATHSRC	= $(TOP)/ngmath/src
+NGMATHLIBSRC= $(NGMATHSRC)/lib
+NVIEWSRC	= $(TOP)/ncarview/src
+NVIEWBINSRC	= $(NVIEWSRC)/bin
+NVIEWLIBSRC	= $(NVIEWSRC)/lib
+NISRC		= $(TOP)/ni/src
+NIBINSRC	= $(NISRC)/bin
+NILIBSRC	= $(NISRC)/lib
+EXTERNALSRC	= $(TOP)/external
+PYNIOSRC        = $(TOP)/pynio
+NCARGCLIBSRC	= $(COMMONSRC)/libncarg_c
+NCARGLIBSRC	= $(NCARG2DSRC)/libncarg
+NCARGGKSLIBSRC	= $(NCARG2DSRC)/libncarg_gks
+NCARGOPTLIBSRC	= $(NCARG2DSRC)/liboptional
+CGMLIBSRC	= $(NVIEWLIBSRC)/libcgm
+CTRANSLIBSRC	= $(NVIEWLIBSRC)/libctrans
+ICTRANSLIBSRC	= $(NVIEWLIBSRC)/libictrans
+NCARGRASLIBSRC	= $(NVIEWLIBSRC)/libncarg_ras
+HLULIBSRC	= $(NILIBSRC)/hlu
+BLASSRC	        = $(EXTERNALSRC)/blas
+LAPACKSRC       = $(EXTERNALSRC)/lapack
+SPHERESRC	= $(EXTERNALSRC)/sphere3.1_dp
+FFTPACK5SRC	= $(EXTERNALSRC)/fftpack5_dp
+NGOLIBSRC	= $(NILIBSRC)/ngo
+XCBLIBSRC	= $(NILIBSRC)/xcb
+NFPLIBSRC	= $(NILIBSRC)/nfp
+NFPFORTLIBSRC	= $(NILIBSRC)/nfpfort
+NCLLIBSRC	= $(NISRC)/ncl
+NIOLIBSRC	= $(NILIBSRC)/nio
+
+NCARGCLIB	= -L$(NCARGCLIBSRC) -lncarg_c
+NCARGLIB	= -L$(NCARGLIBSRC) -lncarg
+NCARGGKSLIB	= -L$(NCARGGKSLIBSRC) -lncarg_gks
+NCARGGKSXQFLIB	= -L$(NCARGGKSLIBSRC) -lncarg_gks_xq_fix
+NGMATHLIB	= -L$(NGMATHLIBSRC) -lngmath
+CGMLIB		= -L$(CGMLIBSRC) -lcgm
+NCARGRASLIB	= -L$(NCARGRASLIBSRC) -lncarg_ras
+HLULIB		= -L$(HLULIBSRC) -lhlu
+NGOLIB		= -L$(NGOLIBSRC) -lngo
+NFPLIB		= -L$(NFPLIBSRC) -lnfp
+NFPFORTLIB	= -L$(NFPFORTLIBSRC) -lnfpfort
+NIOLIB		= -L$(NIOLIBSRC) -lnio
+XCBLIB		= -L$(XCBLIBSRC) -lXcb
+NCLLIB		= -L$(NCLLIBSRC) -lncl
+NCLAPILIB	= -L$(NCLLIBSRC) -lnclapi
+BLASLIB         = -L$(BLASSRC) -lblas_ncl
+LAPACKLIB       = -L$(LAPACKSRC) -llapack_ncl
+SPHERELIB	= -L$(SPHERESRC) -lsphere3.1_dp
+FFTPACK5LIB	= -L$(FFTPACK5SRC) -lfftpack5_dp
+
+CTRANSLIB	= $(CTRANSLIBSRC)/libctrans.o
+ICTRANS_LIB	= $(ICTRANSLIBSRC)/libictrans_.o
+
+DEPNCARGCLIB	= $(NCARGCLIBSRC)/libncarg_c.a
+DEPNCARGLIB	= $(NCARGLIBSRC)/libncarg.a
+DEPNCARGGKSLIB	= $(NCARGGKSLIBSRC)/libncarg_gks.a
+DEPNCARGGKSXQFLIB= $(NCARGGKSLIBSRC)/libncarg_gks_xq_fix.a
+DEPNGMATHLIB	= $(NGMATHLIBSRC)/libngmath.a
+DEPCGMLIB	= $(CGMLIBSRC)/libcgm.a
+DEPNCARGRASLIB	= $(NCARGRASLIBSRC)/libncarg_ras.a
+DEPHLULIB	= $(HLULIBSRC)/libhlu.a
+DEPNGOLIB	= $(NGOLIBSRC)/libngo.a
+DEPNFPLIB	= $(NFPLIBSRC)/libnfp.a
+DEPNFPFORTLIB	= $(NFPFORTLIBSRC)/libnfpfort.a
+DEPNIOLIB	= $(NIOLIBSRC)/libnio.a
+DEPNCLLIB	= $(NCLLIBSRC)/libncl.a
+DEPNCLAPILIB	= $(NCLLIBSRC)/libnclapi.a
+
+DEPCTRANSLIB	= $(CTRANSLIB)
+DEPICTRANS_LIB	= $(ICTRANS_LIB)
+
+ICTRANSLIB	= $(ICTRANSLIBSRC)/libictrans.o
+DEPICTRANSLIB	= $(ICTRANSLIB)
+
+NCARGLIBS	= $(NCARGLIB) $(NCARGGKSLIB) $(NCARGCLIB)
+NCARGXQFLIBS	= $(NCARGLIB) $(NCARGGKSXQFLIB) $(NCARGCLIB)
+NGMATHLIBS	= $(NGMATHLIB)
+HLULIBS		= $(HLULIB)
+NCLLIBS		= $(NCLAPILIB)
+NFPLIBS		= $(NFPLIB) $(NFPFORTLIB)
+NIOLIBS		= $(NIOLIB)
+EXTERNALLIBS    = $(SPHERELIB) $(FFTPACK5LIB) $(LAPACKLIB) $(BLASLIB)
+
+DEPNCARGLIBS	= $(DEPNCARGLIB) $(DEPNCARGGKSLIB) $(DEPNCARGCLIB)
+DEPNCARGXQFLIBS	= $(DEPNCARGLIB) $(DEPNCARGGKSXQFLIB) $(DEPNCARGCLIB)
+DEPHLULIBS	= $(DEPHLULIB)
+DEPNCLLIBS	= $(DEPHLULIB) $(DEPNCLAPILIB)
+DEPNFPLIBS	= $(DEPNFPLIB) $(DEPNFPFORTLIB)
+DEPNIOLIBS	= $(DEPNIOLIB)
+
+GRAPHCSRC	= $(COMMONSRC)/graphcap
+FONTCSRC	= $(COMMONSRC)/fontcap
+
+GRAPHC		= $(GRAPHCSRC)/graphc
+FONTC		= $(FONTCSRC)/fontc
+IFTRAN      = $(NCARGLIBSRC)/Iftran/Iftran
+FSPLIT      = $(NCARGLIBSRC)/Iftran/Fsplit
+NYACC      = $(NISRC)/nyacc/nyacc
+
+NETCDFLIB	=
+
+NCDFLIBS	= -lnetcdf
+PNGLIB		= -lpng -lz
+CAIROLIB	= -lcairo -lXrender -lfontconfig -lpixman-1 -lfreetype -lexpat -lpng -lz -lbz2
+CAIROLIBUSER	= -lcairo -lXrender -lfontconfig -lpixman-1 -lfreetype -lexpat -lpng -lz -lbz2
+HDFLIB		=
+NETCDF4LIB      =
+HDFEOSLIB	=
+HDFEOS5LIB	=
+HDF5LIB		= -lhdf5_hl -lhdf5 -lsz -lz
+GDALLIB		=
+GRIB2LIB	=
+EEMDLIB		=
+UDUNITSLIB	=
+V5DLIB      	= V5Dlib
+OpenCLLIB	= OpenCLlib
+GRIDSPECLIB     =
+XDRLIB		=
+HDFDEFINES	= -DLINUX
+VDEFINE		= -DNGVERSION='"$(NGVERSION)"'  -DNCLVERSION='"$(NCLVERSION)"'
+PROJECTDEFINES	= -DNeedFuncProto
+GKS_BUFFER_SIZE	= 0
+PERL = /bin/perl
+NCLWEBROOT      = /web/ncl
+PYNGLWEBROOT      = /web/pyngl
+
+#########################################################################
+#
+# After Including Project file
+#
+#########################################################################
+
+#########################################################################
+#
+# Including Rules file
+#
+#########################################################################
+
+#########################################################################
+#
+# After Including Rules file
+#
+#########################################################################
+
+.SUFFIXES: .f.sed .xml .shtml
+
+.f.sed.o:
+	@$(FCPP) $< $*.f
+	$(F77) $(FFLAGS) -c $*.f
+	@$(RM) $*.f
+
+#########################################################################
+#
+#	local y(mM)akefile is included HERE.
+#
+#########################################################################
+
+SUBDIRS	= config external common ncarg2d ngmath ncarview ni
+
+Info::
+	@echo;	echo "	NCL/NCAR Graphics - Version $(NCLVERSION) Installation Configuration";	echo;	echo "System File		"$(SYSTEM_INCLUDE);	echo "Binary Install Directory	"$(BINPATH);	echo "Library Install Directory	"$(LIBPATH);	echo "Include Install Directory	"$(INCPATH);	echo "Manpage Install Directory	"$(MANPATH);	echo "Config Install Directory	"$(CONFIGPATH);	echo "Data Base Directory	"$(DBPATH);	echo "Programmer Doc Dir	"$(DOCPATH);	echo "Reloc Obj. Directory	"$(ROBJPATH);	echo "Examples Directory	"$(EXAMPLESPATH);	echo "Tutorial Directory	"$(TUTORIALPATH);	echo "Test Directory		"$(TESTSPATH);	echo "X App. Def. Directory	"$(XAPPPATH);	echo "f77 Compiler		"$(F77);	echo "f77 Flags		"$(FFLAGS);	echo "C Compiler		"$(CC);	echo "cc Flags		"$(CFLAGS);
+
+# The "All" target rebuilds the Makefile hierarchy, rearhives
+# all libraries, rebuilding all out-of-date objects and executables.
+# It *does not* clean out the object code.  Its intended use is for
+# rebuilding the system once you have made changes to your configuration file.
+
+All:
+	@echo ""
+	@echo "Making <All>."
+	@$(MAKE) $(MFLAGS) me
+	@$(MAKE) $(MFLAGS) Info
+	@date
+	@$(MAKE) $(MFLAGS) Makefiles
+	@$(MAKE) $(MFLAGS) includes
+	@$(MAKE) $(MFLAGS) depend
+	@$(MAKE) $(MFLAGS) all
+	@date
+	@echo "Finished making <All>."
+
+# The Build target is a *complete* build.  Makefiles
+# are completely rebuilt for the current installation, object
+# code is removed (clean target), and all binaries and libraries
+# are rebuilt from the ground up.
+
+Build:
+	@echo ""
+	@echo "Making <Build>."
+	@$(MAKE) $(MFLAGS) me
+	@$(MAKE) $(MFLAGS) Info
+	@date
+	@$(MAKE) $(MFLAGS) Makefiles
+	@$(MAKE) $(MFLAGS) clean
+	@$(MAKE) $(MFLAGS) includes
+	@$(MAKE) $(MFLAGS) depend
+	@$(MAKE) $(MFLAGS) all
+	@date
+	@echo "Finished making <Build>."
+
+# The Everything target is a *complete* build.  Makefiles
+# are completely rebuilt for the current installation, object
+# code is removed (clean target), and all binaries and libraries
+# are rebuilt from the ground up.  It also installs everything.
+
+Everything:
+	@echo ""
+	@echo "Making <Everything>."
+	@$(MAKE) $(MFLAGS) me
+	@$(MAKE) $(MFLAGS) Info
+	@date
+	@$(MAKE) $(MFLAGS) Makefiles
+	@$(MAKE) $(MFLAGS) clean
+	@$(MAKE) $(MFLAGS) includes
+	@$(MAKE) $(MFLAGS) depend
+	@$(MAKE) $(MFLAGS) all
+	@$(MAKE) $(MFLAGS) install
+	@date
+	@echo "Finished making and Installing <Everything>."
+
+includes::
+	$(RM) -r include
+
+dist-clean::
+	$(RM) -r include
+
+ROOT:
+	@echo "$(YMAKEROOT)"
+
+TROOT:
+	@echo "$(TMPROOT)"
+
+LSEARCH:
+	@echo "$(LIBSEARCH)"
+
+ISEARCH:
+	@echo "$(INCSEARCH)"
+
+PYTHONDIR:
+	@echo "$(PYTHONDIR)"
+
+PYTHONVERS:
+	@echo "$(PYTHONVERSION)"
+
+NCLSTUFF:
+	@echo "y"
+
+XSTUFF:
+	@echo "y"
+
+RASTERHDFSTUFF:
+	@echo "n"
+
+TRIANGLESTUFF:
+	@echo "n"
+
+UDUNITSSTUFF:
+	@echo "n"
+
+NETCDF4STUFF:
+	@echo "n"
+
+HDFSTUFF:
+	@echo "n"
+
+HDFEOSSTUFF:
+	@echo "n"
+
+HDFEOS5STUFF:
+	@echo "n"
+
+HDF5STUFF:
+	@echo "y"
+
+OpenCLSTUFF:
+	@echo "n"
+
+NC4STUFF:
+	@echo "y"
+
+GDALSTUFF:
+	@echo "n"
+
+GRIDSPECSTUFF:
+	@echo "n"
+
+GRIB2STUFF:
+	@echo "n"
+
+EEMDSTUFF:
+	@echo "n"
+
+V5DSTUFF:
+	@echo "n"
+
+PYNGLSTUFF:
+	@echo "n"
+
+NGVERS:
+	@echo "$(NGVERSION)"
+
+NCLVERS:
+	@echo "$(NCLVERSION)"
+#########################################################################
+#
+#	after local y(mM)akefile included.
+#
+#########################################################################
+
+#########################################################################
+#
+#	The Rest of this file is generated from the Template file.
+#
+#########################################################################
+
+COPT	= -O
+FOPT	= -O
+
+makesubdirs:
+	@for dir in $(SUBDIRS) ; do \
+	if (test -d $$dir) then \
+	(cd $$dir; echo "Making $(CURRENT_DIR)/$$dir";\
+	$(MAKE) $(MFLAGS));sleep 1;\
+	else echo "NOT Making $(CURRENT_DIR)/$$dir"; fi \
+	done
+
+all:: all-local makesubdirs
+
+clean-local::
+	@echo "cleaning in $(CURRENT_DIR)"
+
+all::
+
+clean-local::
+	-@$(RM) core Makefile.bak
+
+local-Makefile:: $(YMAKEDEP)
+
+$(YMAKEDEP):
+	@(cd $(CONFIGSRC); if (test -f Makefile) then \
+	echo "checking ymake in $(CONFIGSRC) first..."; $(MAKE) all; else \
+	echo "making ymake from Makefile.ini in $(CONFIGSRC) first..."; \
+	$(MAKE) -f Makefile.ini clean all; fi; \
+	echo "continuing in $(CURRENT_DIR)")
+
+local-Makefile::
+	@echo "Making Makefile in $(CURRENT_DIR)"
+	@$(YMAKE) -Topdir $(TOP) -Curdir $(CURRENT_DIR)
+
+me: local-Makefile
+
+all-local::
+
+install-local::
+	@echo "installing in $(CURRENT_DIR)"
+
+depend-local::
+
+includes-local::
+
+preformatted-local::
+
+all::
+
+install::install-local
+	@tname=install; \
+	for dir in $(SUBDIRS) ; do \
+	  if (test -d $$dir) then \
+	    (cd $$dir; echo "Making $$tname in $$( pwd )/$$dir";\
+	    $(MAKE) $(MFLAGS) install);\
+	  else echo "NOT Making $$tname in $(CURRENT_DIR)/$$dir"; fi \
+	done
+
+Makefiles::
+	@for dir in $(SUBDIRS) ; do \
+	if (test -d $$dir) then \
+	(cd $$dir; echo "Making Makefiles in $(CURRENT_DIR)/$$dir";\
+	$(NEWYMAKE) -Topdir ../$(TOP) -Curdir $(CURRENT_DIR)/$$dir;\
+	$(MAKE) $(MFLAGS) Makefiles);\
+	else echo "NOT Making Makefiles in $(CURRENT_DIR)/$$dir"; fi \
+	done
+
+Makefiles-local::
+	@for dir in $(SUBDIRS) ; do \
+	if (test -d $$dir) then \
+	(cd $$dir; echo "Making Makefile in $(CURRENT_DIR)/$$dir";\
+	$(NEWYMAKE) -Topdir ../$(TOP) -Curdir $(CURRENT_DIR)/$$dir;)\
+	else echo "NOT Making Makefile in $(CURRENT_DIR)/$$dir"; fi \
+	done
+
+all::
+
+clean::clean-local
+	-@tname=clean; \
+	for dir in $(SUBDIRS) ; do \
+	if (test -d $$dir) then \
+	(cd $$dir; echo "Making $$tname in $(CURRENT_DIR)/$$dir";\
+	$(MAKE) $(MFLAGS) clean);\
+	else echo "NOT Making $$tname in $(CURRENT_DIR)/$$dir"; fi \
+	done
+
+all::
+
+dist-clean::clean-local
+	-@tname=dist-clean; \
+	for dir in $(SUBDIRS) ; do \
+	if (test -d $$dir) then \
+	(cd $$dir; echo "Making $$tname in $(CURRENT_DIR)/$$dir";\
+	$(MAKE) $(MFLAGS) dist-clean);\
+	else echo "NOT Making $$tname in $(CURRENT_DIR)/$$dir"; fi \
+	done
+
+dist-clean::
+	-@$(RM) Makefile
+	@echo "ist-clean in $(CURRENT_DIR)"
+
+all::
+
+depend::depend-local
+	@tname=depend; \
+	for dir in $(SUBDIRS) ; do \
+	if (test -d $$dir) then \
+	(cd $$dir; echo "Making $$tname in $(CURRENT_DIR)/$$dir";\
+	$(MAKE) $(MFLAGS) depend);\
+	else echo "NOT Making $$tname in $(CURRENT_DIR)/$$dir"; fi \
+	done
+
+all::
+
+includes::includes-local
+	@tname=includes; \
+	for dir in $(SUBDIRS) ; do \
+	if (test -d $$dir) then \
+	(cd $$dir; echo "Making $$tname in $(CURRENT_DIR)/$$dir";\
+	$(MAKE) $(MFLAGS) includes);\
+	else echo "NOT Making $$tname in $(CURRENT_DIR)/$$dir"; fi \
+	done
+
+preformatted-local::
+
+all::
+
+preformatted::preformatted-local
+	@tname=preformatted; \
+	for dir in $(SUBDIRS) ; do \
+	if (test -d $$dir) then \
+	(cd $$dir; echo "Making $$tname in $(CURRENT_DIR)/$$dir";\
+	$(MAKE) $(MFLAGS) preformatted);\
+	else echo "NOT Making $$tname in $(CURRENT_DIR)/$$dir"; fi \
+	done
+
