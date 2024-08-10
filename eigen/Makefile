@@ -16,6 +16,7 @@ include ${MAKEINCLUDES}/Make.cmake
 NOLIB = 1
 PKGCONFIG = share/pkgconfig
 CMAKEPREFIXPATHSET = 1
+INCLUDELOC = include/eigen3
 include ${MAKEINCLUDES}/Make.cbuild
 
 .PHONY: default_install

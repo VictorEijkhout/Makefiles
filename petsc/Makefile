@@ -5,7 +5,7 @@
 ################################################################
 
 PACKAGE = PETSC
-PACKAGEVERSION = 3.21.3
+PACKAGEVERSION = 3.21.4
 MODE = mpi
 
 include ${MAKEINCLUDES}/Make.info
@@ -277,7 +277,7 @@ allinstall :
 biginstall :
 	@ext=${EXT} \
 	   && echo "Compiler issues" \
-	   && FORTRAN=${FORTRAN} \
+	   && FORTRAN=${FORTRAN} && SLEPC=${SLEPC} \
 	   && if [ -z "${TACC_FAMILY_COMPILER}}" ] ; then \
 	        echo "ERROR compiler does not define the usual variables" && exit 1 ; fi \
 	   && case ${TACC_FAMILY_COMPILER} in \
@@ -331,7 +331,7 @@ biginstall :
 	      MUMPS=$${MUMPS} PARMETIS=$${PARMETIS} PTSCOTCH=$${PTSCOTCH} \
 	      SCALAPACK=$${SCALAPACK} ZOLTAN=$${ZOLTAN} \
 	      \
-	      CUDA=${CUDA} FORTRAN=$${FORTRAN} \
+	      CUDA=${CUDA} FORTRAN=$${FORTRAN} SLEPC=$${SLEPC} \
 	      PETSC4PY=${PETSC4PY} SLEPC4PY=${SLEPC4PY} \
 	      " \
 	   && if [ ! -z "${OUTERLOG}" ] ; then \
