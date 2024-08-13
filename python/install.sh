@@ -55,7 +55,9 @@ if [ ! -z "${installpython}" ] ; then
 	echo && echo "first downloading tgz" && echo
 	wget https://www.python.org/ftp/python/${pythonver}/Python-${pythonver}.tgz
     fi
-    tar fxz Python-${pythonver}.tgz
+    echo && echo "Untar" && echo
+    ##tar fxz Python-${pythonver}.tgz
+    echo && echo "Remove previous installation" && echo
     rm -rf ${prefixdir}
 
     cd ${pythondir}/Python-${pythonver}
@@ -63,14 +65,14 @@ if [ ! -z "${installpython}" ] ; then
     module load sqlite || exit 1
     export CC=${TACC_CC} && export CXX=${TACC_CXX}
     export LDFLAGS="-L${TACC_MKL_LIB} -L${TACC_INTEL_LIB}"
-    echo && echo "configuring" && echo
+    echo && echo "Configuring" && echo
     ./configure --help 
     ./configure --prefix=${prefixdir} \
 		--enable-optimizations \
 		--with-ensurepip=install \
 		2>&1 | tee ${pythondir}/configure.log
-    echo && echo "making" && echo
-    ( make -j 1 && echo && echo "make install" && echo && make -j 1 install ) 2>&1
+    echo && echo "Making" && echo
+    ( make -j 1 && echo && echo "Make install" && echo && make -j 1 install ) 2>&1
     ## | tee ${pythondir}/install.log
 fi
 

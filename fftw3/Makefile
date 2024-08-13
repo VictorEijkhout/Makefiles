@@ -43,12 +43,15 @@ default_install : double
 single :
 	@make configure build JCOUNT=${JCOUNT} \
 	    CONFIGUREFLAGS="${CONFIGUREFLAGS_STD} --enable-float" \
-	    INSTALLVARIANT=single MODULEVERSIONEXTRA=single \
+	    \
 	    MODE=mpi
+## INSTALLVARIANT=single INSTALLEXT=single 
+## MODULEVERSIONEXTRA=single
 double :
 	@make configure build JCOUNT=${JCOUNT} \
-	    INSTALLVARIANT=double \
+	    \
 	    MODE=mpi
+## INSTALLVARIANT=double 
 
 TGZURL = http://fftw.org/fftw-${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download

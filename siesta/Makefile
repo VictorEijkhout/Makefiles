@@ -30,6 +30,7 @@ CMAKEFLAGS = \
 #     -D LAPACK_LIBRARY_DIR=${TACC_INTEL_LIB} \
 #     -D LAPACK_LIBRARY='-lmkl_intel_lp64 -lmkl_intel_thread -lmkl_core' \
 #     -D SCALAPACK_INCLUDE=${TACC_INTEL_DIR}/include/mkl_scalapack.h
+HASBIN = 1
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
 info ::

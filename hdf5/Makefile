@@ -64,7 +64,7 @@ seq :
 par :
 	@make --no-print-directory configure build JCOUNT=${JCOUNT} \
 	    PACKAGEVERSION=${PACKAGEVERSION} \
-	    HDF5PARALLEL=ON  MODE=mpi HDFFORTRAN=OFF \
+	    HDF5PARALLEL=ON  MODE=mpi HDFFORTRAN=ON \
 	    MODULENAME=phdf5 MODULENAMEALT=hdf5
 info ::
 	@echo "make default_install : sequential and parallel versions"
@@ -76,6 +76,7 @@ default_install ::
 ## download
 ##
 TGZURL = https://github.com/VictorEijkhout/hdf5-with-predictable-naming/archive/refs/tags/${PACKAGEVERSION}.tar.gz
+## https://github.com/VictorEijkhout/hdf5-with-predictable-naming/releases/download/${PACKAGEVERSION}/hdf5-${PACKAGEVERSION}.tar.gz
 ## https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-${PACKAGESHORTVERSION}/hdf5-${PACKAGEVERSION}/src/hdf5-${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 
