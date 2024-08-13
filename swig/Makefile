@@ -6,7 +6,7 @@
 
 PACKAGE = swig
 URL = https://www.swig.org/
-PACKAGEVERSION = 4.1.1
+PACKAGEVERSION = 4.2.1
 MODE = seq
 MODULES = pcre2
 
