@@ -59,12 +59,12 @@ info ::
 seq :
 	@make --no-print-directory configure build JCOUNT=${JCOUNT} \
 	    PACKAGEVERSION=${PACKAGEVERSION} \
-	    HDF5PARALLEL=OFF MODE=seq \
+	    HDF5PARALLEL=OFF MODE=seq HDFFORTRAN=${HDFFORTRAN} \
 	    MODULENAME=hdf5
 par :
 	@make --no-print-directory configure build JCOUNT=${JCOUNT} \
 	    PACKAGEVERSION=${PACKAGEVERSION} \
-	    HDF5PARALLEL=ON  MODE=mpi HDFFORTRAN=ON \
+	    HDF5PARALLEL=ON  MODE=mpi HDFFORTRAN=${HDFFORTRAN} \
 	    MODULENAME=phdf5 MODULENAMEALT=hdf5
 info ::
 	@echo "make default_install : sequential and parallel versions"
