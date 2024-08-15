@@ -4,10 +4,16 @@
 ####
 ################################################################
 
+BUILD = 4
+# or BUILD=git
+
 PACKAGE = SILO
 URL = http://software.llnl.gov/Silo/
-PACKAGEVERSION = git
-#4.11.1
+ifeq "${BUILD}" "git"
+  PACKAGEVERSION = git
+else
+  PACKAGEVERSION = 4.11.1
+endif
 ## WEIRD main branch has an error that is fixed in 4.11
 ## https://github.com/LLNL/Silo/issues/375
 MODE = seq
@@ -27,8 +33,14 @@ CMAKEPREFIXPATHSET = 1
 #DEPENDSON = hdf5
 ## silo executables need exact .so version
 DEPENDSONCURRENT = hdf5
-include ${MAKEINCLUDES}/Make.cmake
-include ${MAKEINCLUDES}/Make.cbuild
+ifeq "${BUILD}" "git"
+  include ${MAKEINCLUDES}/Make.cmake
+  include ${MAKEINCLUDES}/Make.cbuild
+else
+  include ${MAKEINCLUDES}/Make.configure
+  include ${MAKEINCLUDES}/Make.install
+endif
+
 info ::
 	@echo "make default_install : configure build"
 default_install : configure build
