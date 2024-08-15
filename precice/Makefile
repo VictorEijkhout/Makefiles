@@ -8,10 +8,11 @@
 
 PACKAGE = precice
 URL = https://github.com/precice/precice
-PACKAGEVERSION = 2.5.0
+PACKAGEVERSION = 3.1.2
+# 2.5.0
 
 MODE = seq
-MODULES = boost eigen
+MODULES = boost eigen petsc
 
 include ${MAKEINCLUDES}/Make.info
 
