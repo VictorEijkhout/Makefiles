@@ -34,9 +34,15 @@ ifeq "${TACC_SYSTEM}" "macbookair"
 else
   LIBEXT = so
 endif
+
+#### test failure with NVidia compiler:
+#### https://hdfgroup.atlassian.net/servicedesk/customer/portal/6/HELP-2539
+TESTING = ON
+
 CMAKEFLAGS = \
   -D HDF5_ENABLE_PLUGIN_SUPPORT=OFF \
   -D HDF5_ENABLE_Z_LIB_SUPPORT:BOOL=ON \
+  -D BUILD_TESTING:BOOL=${TESTING} \
   -D ZLIB_DIR:PATH=${TACC_ZLIB_DIR} \
   -D ZLIB_INCLUDE_DIR:PATH=${TACC_ZLIB_INC} \
   -D ZLIB_LIBRARY:PATH=${TACC_ZLIB_LIB}/libz.${LIBEXT} \
