@@ -48,9 +48,13 @@ done
 echo " .. make thread count $jcount"
 
 set -e
-if [ "${TACC_FAMILY_COMPILER}" = "gcc" ] ; then
-    module load mkl
-fi
+case "${TACC_SYSTEM}" in
+  ( "vista" )      module load nvpl ;;
+  ( * )
+    if [ "${TACC_FAMILY_COMPILER}" = "gcc" ] ; then
+      module load mkl
+    fi ;;
+esac
 
 module load eigen
 ## Note: petsc has "with-fftw", no 3.
