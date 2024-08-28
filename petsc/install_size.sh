@@ -11,7 +11,7 @@ function usage() {
     echo "    environment: DEBUG INT PRECISION SCALAR"
 }
 
-echo && echo "Starting big installation"
+echo && echo "Starting ${size} installation"
 echo " .. compiler=${TACC_FAMILY_COMPILER}/${TACC_FAMILY_COMPILER_VERSION}"
 
 fortran=90
@@ -101,8 +101,7 @@ cmdline="\
 make --no-print-directory biginstall JCOUNT=${jcount} PACKAGEVERSION=${pversion} \
     EXT=${EXTENSION} \
     $( if [ ! -z "${customext}" ] ; then echo CUSTOMEXT=${customext} ; fi ) \
-    AMGX=1 CHACO=${CHACO} EIGEN=1 FFTW=1 HDF5=${hdf5} HYPRE=1 MUMPS=1 METIS=1 \
-    PARMETIS=1 PTSCOTCH=1 SLEPC=1 \
+    $( source ${size}.sh ) \
     CUDA=${cuda} FORTRAN=${fortran} \ 
     PETSC4PY=${p4p} SLEPC4PY=${p4p} \
 "
