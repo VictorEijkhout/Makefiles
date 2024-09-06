@@ -10,18 +10,18 @@ function usage() {
     echo "    [ -v (default: ${pversion} ]"
     echo "    [ -j jpar (default: ${jcount}) ]"
     echo "    [ -c : cuda build ]"
-    echo "    [ -4 : skip petsc/slepc4py ]"
+    echo "    [ -4 : include petsc/slepc4py ]"
 }
 
 cuda=0
 jcount=6
-p4p=1
-pversion=3.21.4
+p4p=0
+pversion=3.21.5
 while [ $# -gt 0 ] ; do
     if [ $1 = "-h" ] ; then
 	usage && exit 0
     elif [ $1 = "-4" ] ; then 
-	p4p=0 && shift
+	p4p=1 && shift
     elif [ $1 = "-c" ] ; then 
 	cuda=1 && shift
     elif [ $1 = "-j" ] ; then
