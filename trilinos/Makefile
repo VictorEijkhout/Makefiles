@@ -13,7 +13,7 @@ URL = https://github.com/trilinos/Trilinos \
     https://www.docs.trilinos.org/files/TrilinosBuildReference.html
 PACKAGEVERSION = 15.1.0
 PACKAGEVERSION_DOWNLOAD = 15-1-0
-MODE = mpi
+MODE = hybrid
 MODULES = boost swig phdf5 pnetcdf
 # hdf5 netcdf
 MODULE_MINIMUM_VERSION_intel = 20
@@ -31,6 +31,7 @@ PYTHON = ON
 
 CMAKEPREFIXPATHSET = 1
 HAS_BOOST = ON
+HAS_KOKKOS = ON
 HAS_NETCDF = OFF
 HAS_PNETCDF = ON
 HAS_HDF5 = ON
@@ -47,9 +48,7 @@ config-help :
 	     && cd config-help-dir && cmake .. 2>&1 | grep "Final set of .*enabled packages"
 configure :: 
 	@source ${MAKEINCLUDES}/names.sh \
-	 && source ${MAKEINCLUDES}/compilers.sh \
 	 && export scriptdir=$$(pwd) \
-	 && setmpicompilers \
 	 \
 	 && setnames \
 	    "${PACKAGE}"  "${PACKAGEVERSION}"  "${PACKAGEBASENAME}" \
@@ -58,8 +57,12 @@ configure ::
 	    "${HOMEDIR}"  "${BUILDDIRROOT}"  "${MODE}" \
 	    "${PREFIXOPTION}"  "${PREFIXEXTRA}" \
 	     \
+	 && source ${MAKEINCLUDES}/compilers.sh \
+	 && setmpicompilers \
+	     \
 	 && ( \
-	    reportnames && echo \
+	    reportnames	&& reportcompilers \
+	     && echo \
 	     && requirenonzero builddir \
 	     && rm -rf $$builddir && mkdir -p $$builddir \
 	     && cd $${builddir} \
