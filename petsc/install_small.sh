@@ -1,6 +1,5 @@
 #!/bin/bash
 
 # call the general script with the remaining arguments
-export size=big
+export size=small
 ./install_size.sh $*
-

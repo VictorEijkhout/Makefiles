@@ -8,12 +8,21 @@ PACKAGE = ARPACK
 URL = https://github.com/opencollab/arpack-ng
 PACKAGEVERSION = 3.9.1
 MODE = seq
-MODULES = eigen
+ifeq "${TACC_SYSTEM}" "vista"
+  MODULES = eigen nvpl
+else
+  MODULES = eigen
+endif
 
 include ${MAKEINCLUDES}/Make.info
 
 CMAKEFLAGSBASIC = \
     -D EXAMPLES=ON -D ICB=ON -D EIGEN=ON
+ifeq "${TACC_SYSTEM}" "vista"
+  CMAKEFLAGSBASIC += \
+    -D LAPACK_LIBRARIES='${TACC_NVPL_LIB}/libnvpl_lapack_lp64_seq.so;${TACC_NVPL_LIB}/libnvpl_lapack_core.so' \
+    -D BLAS_LIBRARIES='${TACC_NVPL_LIB}/libnvpl_blas_lp64_seq.so;${TACC_NVPL_LIB}/libnvpl_blas_core.so'
+endif
 CMAKEFLAGS = ${CMAKEFLAGSBASIC}
 PKGCONFIGLIB = pkgconfig
 CMAKEPREFIXPATHSET = 1

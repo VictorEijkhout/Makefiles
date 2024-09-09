@@ -5,7 +5,7 @@
 ################################################################
 
 PACKAGE = PETSC
-PACKAGEVERSION = 3.21.4
+PACKAGEVERSION = 3.21.5
 MODE = mpi
 
 include ${MAKEINCLUDES}/Make.info
@@ -13,8 +13,14 @@ list_installations ::
 	@source ${MAKEINCLUDES}/names.sh \
 	 && echo "installations in $${srcdir}: $$( cd $$srcdir && for d in * ; do if [ -d $${d} ] ; then echo $${d} ; fi ; done )"
 modules ::
-	@if [ "${TACC_FAMILY_COMPILER}" = "gcc" -a "${TACC_SYSTEM}" != "macbookair" ] ; then \
-	    make --no-print-directory moduletest MODULE=mkl ; fi
+	@\
+	  case "${TACC_SYSTEM}" in \
+	    ( "vista" )      make --no-print-directory moduletest MODULE=nvpl ;; \
+	    ( * ) \
+	      if [ "${TACC_FAMILY_COMPILER}" = "gcc" ] ; then \
+	        make --no-print-directory moduletest MODULE=mkl \
+	      ; fi ;; \
+	  esac
 
 info ::
 	@echo "make build "
@@ -25,15 +31,20 @@ JCOUNT = 4
 OPTFLAGS=-O2 -fPIC
 LOPTFLAGS=-O1 -fPIC
 
-ifeq "${TACC_SYSTEM}" "nvarm"
-  BLAS_FLAGS = --download-fblaslapack=yes
+ifeq "${TACC_SYSTEM}" "vista"
+  BLAS_FLAGS = "\
+    --with-lapack-lib=[${TACC_NVPL_LIB}/libnvpl_lapack_lp64_seq.so,libnvpl_lapack_core.so] \
+    --with-blas-lib=[${TACC_NVPL_LIB}/libnvpl_blas_lp64_seq.so,libnvpl_blas_core.so] \
+    "
 else ifeq "${TACC_SYSTEM}" "macbookair"
   BLAS_FLAGS= --download-fblaslapack=yes
-else ifeq "${TACC_SYSTEM}" "grace"
-  BLAS_FLAGS = --download-fblaslapack=yes
 else
-  BLAS_FLAGS=--with-blas-lapack-dir=${MKLROOT}
+  BLAS_FLAGS=--with-blas-lapack-dir=${TACC_MKL_DIR}
 endif
+
+DOWNLOADCMAKE =
+## --download-cmake
+
 
 CUDA = 0
 info ::
@@ -159,7 +170,7 @@ build :: modules
 	     && echo "PYTHONPATH=$${PYTHONPATH}" \
 	     && echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> VLE configure" \
 	     && cmdline="${TIME} python3 ./configure --prefix=$${prefixdir} \
-	        --download-cmake \
+	        ${DOWNLOADCMAKE} \
 	        CFLAGS=\"${OPTFLAGS}\" CXXFLAGS=\"${OPTFLAGS}\" \
 	        `if [ \"${FORTRAN}\" != \"0\" ] ; then echo FFLAGS=\"${OPTFLAGS}\" ; fi `\
 	        `if [ ${CUDA} -eq 1 ] ; then echo ${CUDA_OPTIONS} ; else echo --with-cudac=0 ; fi ` \

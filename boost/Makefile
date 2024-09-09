@@ -20,6 +20,7 @@ info ::
 .PHONY: configure build
 configure :: modules
 	@echo "there is no configure rule"
+TOOLSET = ${TACC_FAMILY_COMPILER}
 build ::
 	@source ${MAKEINCLUDES}/names.sh \
 	 && setnames \
@@ -34,7 +35,7 @@ build ::
 	     && requirenonzero prefixdir && mkdir -p $$prefixdir && rm -rf $$prefixdir/* \
 	     && cd $$srcdir \
 	     && ./bootstrap.sh --prefix=$$prefixdir \
-	     && ./b2 toolset=${TACC_FAMILY_COMPILER} \
+	     && ./b2 toolset=${TOOLSET} \
 	          variant=release link=shared debug-symbols=off inlining=full \
 	          address-model=64  stage \
 	            --with-atomic --with-chrono --with-container --with-context \

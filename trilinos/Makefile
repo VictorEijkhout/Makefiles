@@ -11,13 +11,12 @@
 PACKAGE = trilinos
 URL = https://github.com/trilinos/Trilinos \
     https://www.docs.trilinos.org/files/TrilinosBuildReference.html
-PACKAGEVERSION = 15.1.0
-PACKAGEVERSION_DOWNLOAD = 15-1-0
-MODE = hybrid
-MODULES = boost swig phdf5 pnetcdf
-# hdf5 netcdf
+PACKAGEVERSION = 16.0.0
+PACKAGEVERSION_DOWNLOAD = 16-0-0
+#15-1-0
+MODE = mpi
+MODULES = boost swig phdf5 pnetcdf nvpl
 MODULE_MINIMUM_VERSION_intel = 20
-#boost swig
 
 include ${MAKEINCLUDES}/Make.info
 
@@ -75,16 +74,36 @@ configure ::
 	            source $${scriptdir}/../yaml-cpp/yamlcpp_vars.sh ; fi \
 	     \
 	     && export TRILINOS_LOCATION=${TRILINOS_SCRIPTDIR} \
-	     && if [ "${TACC_FAMILY_COMPILER}" = "intel" ] ; then \
-	          export MKLFLAG="-mkl" ; fi \
-	     && export TACC_MKL_INC=${MKLROOT}/include \
-	     && export TACC_MKL_LIB=${MKLROOT}/lib/intel64 \
+	     && if [ [ "a" = "b" ] ; then \
+	          exit 1 \
+	        ; elif [ "${TACC_SYSTEM}" = "vista" ] ; then \
+	          export MKLFLAG="-Mnvpl -Mscalapack" \
+	           && export TACC_MKL_INC=${TACC_NVPL_INC} \
+	           && export TACC_MKL_LIB=${TACC_NVPL_LIB} \
+	           && export TRILINOS_BLAS_LIBS='nvpl_blas_lp64_seq;nvpl_blas_core' \
+	           && export TRILINOS_LAPACK_LIBS='nvpl_lapack_lp64_seq;nvpl_lapack_core' \
+	        ; elif [ "${TACC_FAMILY_COMPILER}" = "intel" ] ; then \
+	          export MKLFLAG="-mkl" \
+	           && export TACC_MKL_INC=${MKLROOT}/include \
+	           && export TACC_MKL_LIB=${MKLROOT}/lib/intel64 \
+	           && export TRILINOS_BLAS_LIBS="mkl_intel_lp64;mkl_core;iomp5;pthread" \
+	           && export TRILINOS_LAPACK_LIBS="mkl_intel_lp64;mkl_sequential;mkl_core;iomp5;pthread" \
+	        ; elif [ "${TACC_FAMILY_COMPILER}" = "gcc" ] ; then \
+	          export TACC_MKL_INC=${MKLROOT}/include \
+	           && export TACC_MKL_LIB=${MKLROOT}/lib/intel64 \
+	           && export TRILINOS_BLAS_LIBS='mkl_intel_lp64;mkl_core;iomp5;pthread' \
+	           && export TRILINOS_LAPACK_LIBS='mkl_intel_lp64;mkl_sequential;mkl_core;iomp5;pthread' \
+	        ; fi \
 	     \
 	     && export HAS_PYTHON=${PYTHON} \
 	     && export HAS_BOOST=${HAS_BOOST} \
 	     && export HAS_HDF5=${HAS_HDF5} \
 	     && export HAS_NETCDF=${HAS_NETCDF} \
 	     && export HAS_OPENMP=${HAS_OPENMP} \
+	     \
+	     && export DEPRECATED=OFF \
+	     && export HAS_TEUCHOS=ON \
+	     && export HAS_EPETRA=OFF \
 	     \
 	     && set -x \
 	     && if [ -f $${scriptdir}/trilinos_cmake_${TACC_SYSTEM}.sh ] ; then \
