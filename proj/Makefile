@@ -22,6 +22,7 @@ CMAKEFLAGS = --trace \
 CMAKEPREFIXPATHSET = 1
 include ${MAKEINCLUDES}/Make.cmake
 PKGCONFIGLIB = pkgconfig
+HASBIN = 1
 include ${MAKEINCLUDES}/Make.cbuild
 .PHONY: default_install
 default_install : configure build public
