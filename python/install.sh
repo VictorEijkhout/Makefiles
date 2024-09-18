@@ -17,8 +17,9 @@ installpython=1
 installothers=1
 others="paramiko setuptools"
 
-pythonver=3.11.0
-# 3.12.4
+pythonver=3.12.4
+#3.11.0
+#
 
 while [ $# -gt 0 ] ; do
     if [ $1 = "-h" ] ; then
@@ -51,14 +52,16 @@ if [ ! -z "${installpython}" ] ; then
     rm -rf ${HOME}/{.local,.cache}
     echo && echo "Building python ${pythonver}" && echo
     cd ${pythondir}
-    if [ ! -f Python-${pythonver}.tgz ] ; then 
-	echo && echo "first downloading tgz" && echo
-	wget https://www.python.org/ftp/python/${pythonver}/Python-${pythonver}.tgz
-    fi
-    echo && echo "Untar" && echo
-    ##tar fxz Python-${pythonver}.tgz
-    echo && echo "Remove previous installation" && echo
-    rm -rf ${prefixdir}
+    # if [ ! -f Python-${pythonver}.tgz ] ; then 
+    # 	echo && echo "first downloading tgz" && echo
+    # 	wget https://www.python.org/ftp/python/${pythonver}/Python-${pythonver}.tgz
+    # fi
+    # if [ ! -f Python-${pythonver} ] ; then 
+    # 	echo && echo "Untar" && echo
+    # 	tar fxz Python-${pythonver}.tgz
+    # fi
+    # echo && echo "Remove previous installation" && echo
+    # rm -rf ${prefixdir}
 
     cd ${pythondir}/Python-${pythonver}
 
@@ -66,7 +69,7 @@ if [ ! -z "${installpython}" ] ; then
     export CC=${TACC_CC} && export CXX=${TACC_CXX}
     export LDFLAGS="-L${TACC_MKL_LIB} -L${TACC_INTEL_LIB}"
     echo && echo "Configuring" && echo
-    ./configure --help 
+    ##./configure --help 
     ./configure --prefix=${prefixdir} \
 		--enable-optimizations \
 		--with-ensurepip=install \

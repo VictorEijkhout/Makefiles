@@ -13,7 +13,7 @@ URL = https://netcdf.geodynamics.org/ \
     https://github.com/Unidata/netcdf \
     https://docs.unidata.ucar.edu/nug/current/getting_and_building_netcdf.html#configure_options
 PACKAGEVERSION = 4.9.2
-MODE = mpi
+MODE = seq
 MODULES = 
 
 include ${MAKEINCLUDES}/Make.info

@@ -19,10 +19,11 @@ CMAKEFLAGS = --trace \
     -D SQLITE3_INCLUDE_DIR=${TACC_SQLITE_INC} \
     -D SQLITE3_LIBRARY=${TACC_SQLITE_LIB}/libsqlite3.so
 
-CMAKEPREFIXPATHSET = 1
-include ${MAKEINCLUDES}/Make.cmake
-PKGCONFIGLIB = pkgconfig
 HASBIN = 1
+DEPENDSON = sqlite
+CMAKEPREFIXPATHSET = 1
+PKGCONFIGLIB = pkgconfig
+include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
 .PHONY: default_install
 default_install : configure build public
