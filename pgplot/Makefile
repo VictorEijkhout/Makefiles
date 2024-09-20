@@ -56,7 +56,7 @@ build ::
 	    esac \
 	 && ( \
 	    builddir=$${srcdir}/build && rm -rf $$builddir && mkdir -p $$builddir \
-	     && requirenonzero prefixdir && rm -rf $$prefixdir && mkdir -p $$prefixdir \
+	     && requirenonzero prefixdir && mkdir -p $$prefixdir && rm -rf $$prefixdir/* \
 	     && echo " .. building in the build dir does not work, using src" \
 	     && cd $${srcdir} \
 	     && echo " .. make make" \
