@@ -28,7 +28,8 @@ configure :: modules
 	 && requirenonzero srcdir \
 	 && case "${TACC_FAMILY_COMPILER}" in \
 	      ( "gcc" ) export conf=g90 ;; \
-	      ( * ) echo "Only gcc implemented" && exit 1 ;; \
+	      ( "intel" ) export conf=intel ;; \
+	      ( * ) echo "Not implemented for compiler=${TACC_FAMILY_COMPILER}" && exit 1 ;; \
 	    esac \
 	 && echo "Modifications in the source tree" \
 	 && cp $${conf}.conf $${srcdir}/sys_linux/ \
@@ -50,7 +51,8 @@ build ::
 	 && source ${MAKEINCLUDES}/compilers.sh && setcompilers \
 	 && case "${TACC_FAMILY_COMPILER}" in \
 	      ( "gcc" ) export conf=g90 ;; \
-	      ( * ) echo "Only gcc implemented" && exit 1 ;; \
+	      ( "intel" ) export conf=intel ;; \
+	      ( * ) echo "Not implemented for compiler=${TACC_FAMILY_COMPILER}" && exit 1 ;; \
 	    esac \
 	 && ( \
 	    builddir=$${srcdir}/build && rm -rf $$builddir && mkdir -p $$builddir \
