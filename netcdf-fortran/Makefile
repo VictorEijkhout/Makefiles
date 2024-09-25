@@ -8,7 +8,7 @@
 ## note that we have a separate name here
 ## but as a system rpm we will merge C & F
 ##
-PACKAGE = NETCDFF
+PACKAGE = netcdffortran
 URL = https://github.com/Unidata/netcdf-fortran \
     https://docs.unidata.ucar.edu/netcdf-c/current/building_netcdf_fortran.html
 PACKAGEVERSION = 4.6.1
@@ -34,12 +34,12 @@ info ::
 seq :
 	@make --no-print-directory configure build JCOUNT=${JCOUNT} \
 	    MODE=seq MODULES="hdf5 netcdf" NETCDF_PARALLEL=OFF \
-	    MODULENAME=netcdff  DEPENDSON=netcdf
+	    MODULENAME=netcdffortran  DEPENDSON=netcdf
 # MODULENAMEALT=netcdf
 par :
 	@make --no-print-directory configure build JCOUNT=${JCOUNT} \
 	    MODE=mpi MODULES="phdf5 pnetcdf" NETCDF_PARALLEL=ON \
-	    MODULENAME=pnetcdff DEPENDSON=pnetcdf
+	    MODULENAME=parallelnetcdffortran DEPENDSON=pnetcdf
 #  MODULENAMEALT=netcdf
 .PHONY: default_install
 info ::
