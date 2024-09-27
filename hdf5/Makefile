@@ -68,7 +68,10 @@ seq :
 	    HDF5PARALLEL=OFF MODE=seq HDFFORTRAN=${HDFFORTRAN} \
 	    MODULENAME=hdf5
 par :
-	@make --no-print-directory configure build JCOUNT=${JCOUNT} \
+	@if [ "${TACC_FAMILY_COMPILER}" = "gcc" ] ; then \
+	    export I_MPI_FCFLAGS="-I/opt/intel/oneapi/mpi/2021.9.0/include/gfortran/11.1.0" \
+	 ; fi \
+	 && make --no-print-directory configure build JCOUNT=${JCOUNT} \
 	    PACKAGEVERSION=${PACKAGEVERSION} \
 	    HDF5PARALLEL=ON  MODE=mpi HDFFORTRAN=${HDFFORTRAN} \
 	    MODULENAME=phdf5 MODULENAMEALT=hdf5
