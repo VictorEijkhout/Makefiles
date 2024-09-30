@@ -13,19 +13,28 @@ PACKAGEVERSION = 4.7
 HYPREVERSION = 2.31.0
 
 MODE = mpi
-MODULES = adios2 hypre/${HYPREVERSION}-i64 metis
+MODULES = mkl adios2 hypre/${HYPREVERSION}-i64 metis
 
 include ${MAKEINCLUDES}/Make.info
 
 ##
 ## cmake 
 ##
+ifeq "${TACC_SYSTEM}" "vista"
+  BLASLIB=${TACC_NVPL_LIB}/libnvpl_blas_lp64_seq.so 
+  LAPACKLIB=${TACC_NVPL_LIB}/libnvpl_lapack_lp64_seq.so
+else
+  # mkl_intel_lp64;mkl_sequential;mkl_core;iomp5;pthread" \
+  BLASLIB=${TACC_MKL_LIB}/libmkl_sequential.so 
+  LAPACKLIB=${TACC_MKL_LIB}/libmkl_intel_lp64.so
+endif
+
 CMAKEFLAGS = -Wno-dev \
     -D CMAKE_BUILD_TYPE=Release \
     -D MFEM_USE_MPI=YES \
     -D MFEM_USE_LAPACK=YES \
-    -D LAPACK_LIBRARIES=${TACC_NVPL_LIB}/libnvpl_lapack_lp64_seq.so \
-    -D BLAS_LIBRARIES=${TACC_NVPL_LIB}/libnvpl_blas_lp64_seq.so \
+    -D LAPACK_LIBRARIES=${LAPACKLIB} \
+    -D BLAS_LIBRARIES=${BLASLIB} \
     -D MFEM_DEBUG=NO \
     -D HYPRE_DIR=${TACC_HYPRE_DIR} \
     -D MFEM_USE_METIS_5=ON -D METIS_DIR=${TACC_METIS_DIR} \

@@ -10,7 +10,7 @@ PACKAGE = PERIDIGM
 URL = https://github.com/peridigm/peridigm
 PACKAGEVERSION = git
 MODE = mpi
-MODULES = trilinos netcdf boost
+MODULES = trilinos/13.0.0 boost pnetcdf
 
 include ${MAKEINCLUDES}/Make.info
 
@@ -27,7 +27,7 @@ HASBIN=1
 ##
 ## total hack because peridigm is not up with trilinos >2022
 ##
-CPTOSOURCE = src,${TACC_NETCDF_INC}/\*.h
+# CPTOSOURCE = src,${TACC_NETCDF_INC}/\*.h
 include ${MAKEINCLUDES}/Make.cbuild
 .PHONY: default_install
 info ::

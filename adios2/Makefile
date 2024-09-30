@@ -9,7 +9,7 @@ URL = https://github.com/ornladios/ADIOS2
 PACKAGEVERSION = 2.9.1
 
 MODE = mpi
-MODULES = phdf5
+MODULES = phdf5 
 ## can use hdf5, kokkos, zlib
 
 include ${MAKEINCLUDES}/Make.info
