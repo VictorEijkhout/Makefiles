@@ -13,7 +13,7 @@ PACKAGEVERSION = 4.7
 HYPREVERSION = 2.31.0
 
 MODE = mpi
-MODULES = mkl adios2 hypre/${HYPREVERSION}-i64 metis
+MODULES = mkl adios2 hypre/${HYPREVERSION}-i64 metis petsc
 
 include ${MAKEINCLUDES}/Make.info
 
@@ -32,6 +32,7 @@ endif
 CMAKEFLAGS = -Wno-dev \
     -D CMAKE_BUILD_TYPE=Release \
     -D MFEM_USE_MPI=YES \
+    -D MFEM_USE_PETSC=NO \
     -D MFEM_USE_LAPACK=YES \
     -D LAPACK_LIBRARIES=${LAPACKLIB} \
     -D BLAS_LIBRARIES=${BLASLIB} \
@@ -39,6 +40,7 @@ CMAKEFLAGS = -Wno-dev \
     -D HYPRE_DIR=${TACC_HYPRE_DIR} \
     -D MFEM_USE_METIS_5=ON -D METIS_DIR=${TACC_METIS_DIR} \
     -D MFEM_USE_ADIOS2=ON -D ADIOS2_DIR=${TACC_ADIOS2_DIR}
+CMAKEPREFIXPATHSET=1
 
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
