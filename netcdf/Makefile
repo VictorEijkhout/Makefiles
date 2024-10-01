@@ -10,7 +10,7 @@
 
 PACKAGE = NETCDF
 URL = https://netcdf.geodynamics.org/ \
-    https://github.com/Unidata/netcdf \
+    https://github.com/Unidata/netcdf-c \
     https://docs.unidata.ucar.edu/nug/current/getting_and_building_netcdf.html#configure_options
 PACKAGEVERSION = 4.9.2
 MODE = seq
