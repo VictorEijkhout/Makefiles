@@ -9,7 +9,7 @@ URL = https://github.com/parthenon-hpc-lab/athenapk
 PACKAGEVERSION = git
 
 MODE = mpi
-MODULES = 
+MODULES = phdf5
 
 include ${MAKEINCLUDES}/Make.info
 
