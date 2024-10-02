@@ -7,7 +7,7 @@
 PACKAGE = NCVIEW
 URL = https://cirrus.ucsd.edu/ncview/
 PACKAGEVERSION = 2.1.9
-MODE = seq
+MODE = core
 MODULES = netcdf udunits
 
 include ${MAKEINCLUDES}/Make.info
