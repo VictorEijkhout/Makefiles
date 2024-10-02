@@ -16,6 +16,7 @@ MODE = mpi
 MODULES = 
 
 include ${MAKEINCLUDES}/Make.info
+HASBIN = 1
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
 
