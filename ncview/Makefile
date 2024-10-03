@@ -2,6 +2,10 @@
 ####
 #### Makefile for NCVIEW installation
 ####
+#### install on vista requires:
+#### export cc=$( which ${TACC_CC} )
+#### contemplate doing that in general?
+####
 ################################################################
 
 PACKAGE = NCVIEW
