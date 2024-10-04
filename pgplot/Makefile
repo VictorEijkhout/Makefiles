@@ -2,13 +2,15 @@
 ####
 #### Makefile for PGPLOT installation
 ####
+#### https://consult.tacc.utexas.edu/Ticket/Display.html?id=101229
+####
 ################################################################
 
 PACKAGE = PGPLOT
 URL = https://sites.astro.caltech.edu/~tjp/pgplot/
 PACKAGEVERSION = 5.2
 MODE = seq
-MODULES = 
+MODULES = mkl
 include ${MAKEINCLUDES}/Make.info
 
 include ${MAKEINCLUDES}/Make.vars
