@@ -22,7 +22,7 @@ include ${MAKEINCLUDES}/Make.info
 CMAKEFLAGS = -D CMAKE_BUILD_TYPE=Release \
     -D ADIOS2_USE_Fortran=OFF \
     -D ADIOS2_USE_AWSSDK=OFF
-
+HASBIN = 1
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
 info ::
