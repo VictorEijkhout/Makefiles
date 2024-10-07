@@ -16,7 +16,7 @@ function usage() {
 cuda=0
 jcount=6
 p4p=0
-pversion=3.21.5
+pversion=3.22.0
 while [ $# -gt 0 ] ; do
     if [ $1 = "-h" ] ; then
 	usage && exit 0
