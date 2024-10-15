@@ -5,7 +5,7 @@
 ################################################################
 
 PACKAGE = PETSC
-PACKAGEVERSION = 3.21.5
+PACKAGEVERSION = 3.22.0
 MODE = mpi
 
 include ${MAKEINCLUDES}/Make.info

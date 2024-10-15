@@ -1,7 +1,7 @@
 #!/bin/bash
 
 jcount=6
-pversion=3.21.5
+pversion=3.22.0
 function usage() {
     echo "Usage: $0 [ -h ] [ -v (default: ${pversion} ]"
     echo "    [ -j jpar (default: ${jcount}) ]"
@@ -101,7 +101,7 @@ cmdline="\
 make --no-print-directory biginstall JCOUNT=${jcount} PACKAGEVERSION=${pversion} \
     EXT=${EXTENSION} \
     $( if [ ! -z "${customext}" ] ; then echo CUSTOMEXT=${customext} ; fi ) \
-    $( source ${size}.sh ) \
+    PKGSTART=1 $( cat ${size}.sh ) PKGSTOP=1 \
     CUDA=${cuda} FORTRAN=${fortran} \ 
     PETSC4PY=${p4p} SLEPC4PY=${p4p} \
 "

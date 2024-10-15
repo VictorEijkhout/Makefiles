@@ -15,8 +15,13 @@ include ${MAKEINCLUDES}/Make.info
 default_install : configure 
 configure : 
 	@source ${MAKEINCLUDES}/names.sh \
-	 && export MODE=${MODE} && export INSTALLROOT=${INSTALLROOT} \
-	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" "${VARIANT}" "${MODULENAME}" "${MODE}" \
+	 && PACKAGEVERSION=git \
+	    setnames \
+	    "${PACKAGE}"  "${PACKAGEVERSION}"  "${PACKAGEBASENAME}" \
+	    "${DOWNLOADPATH}" "${SRCPATH}" \
+	    "${INSTALLPATH}"  "${INSTALLROOT}"  "${INSTALLEXT}"  "${INSTALLVARIANT}" \
+	    "${HOMEDIR}"  "${BUILDDIRROOT}"  "${MODE}" \
+	    "${PREFIXOPTION}"  "${PREFIXEXTRA}" \
 	 && source ${MAKEINCLUDES}/compilers.sh && setcompilers \
 	 && cd $${srcdir} \
 	 && git tag
@@ -27,6 +32,6 @@ include ${MAKEINCLUDES}/Make.vars
 TGZURL = https://github.com/ESCOMP/CESM/archive/refs/tags/release-cesm${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 
-GITREPO = 
+GITREPO = https://github.com/escomp/cesm.git
 include ${MAKEINCLUDES}/Make.git
 
