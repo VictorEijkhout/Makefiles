@@ -9,7 +9,7 @@ URL = https://github.com/parthenon-hpc-lab/athenapk
 PACKAGEVERSION = git
 
 MODE = mpi
-MODULES = phdf5
+MODULES = phdf5 cuda
 
 include ${MAKEINCLUDES}/Make.info
 
@@ -21,9 +21,29 @@ default_install : configure build
 ##
 ## cmake version
 ##
+CPPSTANDARD = 20
+CUDAFLAGS = -allow-unsupported-compiler -Xcompiler -std=gnu++${CPPSTANDARD}
+.PHONY: outer_config
+outer_config :
+	export CUDAFLAGS="${CUDAFLAGS}" \
+	 && export NVCC_APPEND_FLAGS="${CUDAFLAGS}" \
+	 && make --no-print-directory configure 
+
+CMAKEFLAGS = \
+    -D Athena_ENABLE_MPI=ON \
+    -D Kokkos_ENABLE_OPENMP=ON \
+    -D Kokkos_ENABLE_CUDA=On \
+    -D CMAKE_CUDA_FLAGS='${CUDAFLAGS}' \
+    -D Kokkos_ARCH_HOPPER90=ON \
+    -D CMAKE_CXX_STANDARD=${CPPSTANDARD}
 CMAKEPREFIXPATHSET = 1
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
+.PHONY: default_install
+info ::
+	@echo "make default_install : outer_config build"
+	@echo "Do Not Use 'config' target"
+default_install : outer_config build
 
 GITREPO = https://github.com/parthenon-hpc-lab/athenapk.git
 SUBMODULE = 1
