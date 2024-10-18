@@ -22,8 +22,9 @@ include ${MAKEINCLUDES}/Make.cmake
 HASBIN=1
 CMAKEPREFIXPATHSET = 1
 PKGCONFIGLIB = pkgconfig
-NETCDF_PARALLEL = ON
-DEPENDSON = phdf5
+NETCDF_PARALLEL = OFF
+DEPENDSON = hdf5
+LINKLIB64toLIB = 1
 
 ##
 ## NOTE the enable_pnetcdf flag is for parallel-netcdf 1.9
@@ -51,8 +52,8 @@ par :
 	    MODULENAME=parallel-netcdf MODULEVARNAME=parallelnetcdf DEPENDSON=phdf5
 .PHONY: default_install
 info ::
-	@echo "make default_install: parallel version, also available: seq"
-default_install : par
+	@echo "make default_install: sequential version, also available: par"
+default_install : seq
 
 TGZURL = https://downloads.unidata.ucar.edu/netcdf-c/${PACKAGEVERSION}/netcdf-c-${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
