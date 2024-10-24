@@ -4,6 +4,8 @@
 ####
 #### https://gitlab.com/siesta-project/siesta/-/issues/397
 ####
+#### libfdf cloning in F jail: https://gitlab.com/siesta-project/siesta/-/issues/417
+####
 ################################################################
 
 PACKAGE = siesta
@@ -26,9 +28,10 @@ CMAKEBUILDDEBUG = 1
 CMAKEFLAGS = \
     -D SIESTA_WITH_FLOOK=FALSE \
     -D Fortran_FLAGS_DEBUG=-O0 \
+    -D CMAKE_Fortran_FLAGS=-fPIE \
     -D SIESTA_WITH_FFTW=TRUE \
     -D SCALAPACK_LIBRARY_DIR=${TACC_MKL_LIB} \
-    -D SCALAPACK_LIBRARY='-lmkl_scalapack_ilp64 -lmkl_blacs_intelmpi_lp64'
+    -D SCALAPACK_LIBRARY='-lmkl_scalapack_ilp64 -lmkl_blacs_intelmpi_lp64 -lmkl_intel_ilp64 -lmkl_sequential -lmkl_core'
 
 HASBIN = 1
 include ${MAKEINCLUDES}/Make.cmake

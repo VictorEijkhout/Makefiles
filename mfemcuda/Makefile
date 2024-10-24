@@ -6,14 +6,15 @@
 ####
 ################################################################
 
-PACKAGE = mfem
+PACKAGE = mfemcuda
 URL = https://github.com/mfem/mfem
 PACKAGEVERSION = 4.7
 ## 4.5.2 has breaking changes for CHyPS.
 HYPREVERSION = 2.31.0
 
 MODE = mpi
-MODULES = mkl adios2 hypre/${HYPREVERSION}-i64 metis petsc
+BASICMODULES = mkl adios2 hypre/${HYPREVERSION}-i64 metis 
+MODULES = ${BASIC_MODULES} cuda
 
 include ${MAKEINCLUDES}/Make.info
 
@@ -29,12 +30,14 @@ else
   LAPACKLIB=${TACC_MKL_LIB}/libmkl_intel_lp64.so
 endif
 
+USEGPU = YES
+CUDAFLAGS = -allow-unsupported-compiler -Xcompiler -std=gnu++14
 CMAKEFLAGS = -Wno-dev \
     -D CMAKE_BUILD_TYPE=Release \
     -D MFEM_USE_MPI=YES \
-    -D MFEM_USE_PETSC=YES \
-    -D PETSC_DIR=${PETSC_DIR} \
-    -D PETSC_ARCH=${PETSC_ARCH} \
+    -D MFEM_USE_CUDA=${USEGPU} \
+    -D CMAKE_CUDA_FLAGS="-std=c++14" \
+    -D MFEM_USE_PETSC=NO \
     -D MFEM_USE_LAPACK=YES \
     -D LAPACK_LIBRARIES=${LAPACKLIB} \
     -D BLAS_LIBRARIES=${BLASLIB} \
@@ -47,19 +50,12 @@ CMAKEPREFIXPATHSET=1
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
 info ::
-	@echo "make cpu, gpu"
-	@echo "make default_install : cpu version"
-.PHONY: default_install cpu gpu
-default_install : cpu
-cpu : configure build
-CUDAFLAGS = -allow-unsupported-compiler -Xcompiler -std=gnu++14
-gpu :
+	@echo "make default_install : gpu version"
+.PHONY: default_install gpu
+default_install gpu :
 	@export CUDAFLAGS="${CUDAFLAGS}" \
 	 && export NVCC_APPEND_FLAGS="${CUDAFLAGS}" \
-	 && make --no-print-directory configure build \
-	    MODULES="${BASICMODULES} cuda" \
-	    USEGPU=YES \
-	    NVCCFLAGS="-D CMAKE_CUDA_FLAGS='${CUDAFLAGS}' "
+	 && make --no-print-directory configure build 
 
 TGZURL = https://github.com/mfem/mfem/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download

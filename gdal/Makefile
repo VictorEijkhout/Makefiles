@@ -6,9 +6,12 @@
 
 PACKAGE = GDAL
 URL = https://gdal.org/index.html
-PACKAGEVERSION = 3.7.0
+PACKAGEVERSION = 3.9.2
 MODE = seq
-MODULES = jsonc proj swig zlib
+MODULES = jsonc proj zlib 
+ifeq "${TACC_SYSTEM}" "fronter"
+ MODULE += swig
+endif
 
 include ${MAKEINCLUDES}/Make.info
 
@@ -20,6 +23,7 @@ HASBIN = 1
 # libsqlite3.so lacks the RTree extension!
 CMAKEFLAGS = \
     -D CMAKE_BUILD_TYPE=Debug \
+    -D CMAKE_C_FLAGS=-Wno-deprecated-declarations \
     \
     -D GDAL_BUILD_OPTIONAL_DRIVERS=OFF \
     -D OGR_BUILD_OPTIONAL_DRIVERS=OFF \
@@ -37,7 +41,7 @@ default_install : configure build public
 
 TGZURL = https://github.com/OSGeo/gdal/releases/download/v${PACKAGEVERSION}/gdal-${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
-untar ::
+untar-3.7 ::
 	@source ${MAKEINCLUDES}/names.sh \
 	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEB\ASENAME}" "${VARIANT}" "${MODULENAME}" "${MODE}" \
 	 && f=ogrgeopackagetablelayer.cpp \

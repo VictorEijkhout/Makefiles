@@ -12,10 +12,12 @@
 
 PACKAGE = metis
 PACKAGEVERSION = 5.1.0.3
+URL = https://github.com/scivision/METIS
 MODE = mpi
 MODULES = 
 
 include ${MAKEINCLUDES}/Make.info
+HASBIN = 1
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
 

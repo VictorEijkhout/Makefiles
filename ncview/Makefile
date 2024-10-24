@@ -2,12 +2,16 @@
 ####
 #### Makefile for NCVIEW installation
 ####
+#### install on vista requires:
+#### export cc=$( which ${TACC_CC} )
+#### contemplate doing that in general?
+####
 ################################################################
 
 PACKAGE = NCVIEW
 URL = https://cirrus.ucsd.edu/ncview/
 PACKAGEVERSION = 2.1.9
-MODE = seq
+MODE = core
 MODULES = netcdf udunits
 
 include ${MAKEINCLUDES}/Make.info
