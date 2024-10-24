@@ -21,15 +21,15 @@ PKGCONFIGLIB = pkgconfig
 ## cmake version
 ##
 # https://docs.siesta-project.org/projects/siesta/en/stable/installation/build-issues.html#siesta-does-not-recognize-intel-mkl-libraries
+CMAKEPREP = find . -name \*make -exec sed -i -e 's/\-xHost//' -e 's/\-check//' {} \;
+CMAKEBUILDDEBUG = 1
 CMAKEFLAGS = \
     -D SIESTA_WITH_FLOOK=FALSE \
     -D Fortran_FLAGS_DEBUG=-O0 \
     -D SIESTA_WITH_FFTW=TRUE \
     -D SCALAPACK_LIBRARY_DIR=${TACC_MKL_LIB} \
     -D SCALAPACK_LIBRARY='-lmkl_scalapack_ilp64 -lmkl_blacs_intelmpi_lp64'
-#     -D LAPACK_LIBRARY_DIR=${TACC_INTEL_LIB} \
-#     -D LAPACK_LIBRARY='-lmkl_intel_lp64 -lmkl_intel_thread -lmkl_core' \
-#     -D SCALAPACK_INCLUDE=${TACC_INTEL_DIR}/include/mkl_scalapack.h
+
 HASBIN = 1
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
