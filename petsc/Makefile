@@ -292,7 +292,7 @@ biginstall :
 	   && if [ -z "${TACC_FAMILY_COMPILER}}" ] ; then \
 	        echo "ERROR compiler does not define the usual variables" && exit 1 ; fi \
 	   && case ${TACC_FAMILY_COMPILER} in \
-	        ( gcc ) echo " .. no FORTRAN for gcc" && FORTRAN=0 ;; \
+	        ( gcc ) echo " .. no FORTRAN for gcc" && echo FORTRAN=0 ;; \
 	        esac \
 	   && echo "Selecting basic options for extension=$${ext}:" \
 	   && case $${ext} in ( *debug* ) DEBUG=1 ;; ( * ) DEBUG= ;; esac \
