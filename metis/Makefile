@@ -12,6 +12,7 @@
 
 PACKAGE = metis
 PACKAGEVERSION = 5.1.0.3
+URL = https://github.com/scivision/METIS
 MODE = mpi
 MODULES = 
 

@@ -13,6 +13,7 @@ include ${MAKEINCLUDES}/Make.info
 
 PKGCONFIGLIB = pkgconfig
 NOLIB = 1
+NOINC = 1
 .PHONY: default_install
 info ::
 	@echo "make default_install : copy to install dir, make module"
@@ -27,7 +28,9 @@ default_install :
 	 && mkdir -p $${prefixdir} \
 	 && cp -r $${srcdir}/{docs,examples,README.md,scripts,src,tests} $${prefixdir}/ \
 	 && make --no-print-directory varsmodule \
-	      NOLIB=1 NOINC=1 PYTHONPATHADD=src/pylauncher
+	      NOLIB=1 NOINC=1 \
+	      DOCURL=https://docs.tacc.utexas.edu/software/pylauncher/ \
+	      PYTHONPATHADD=src/pylauncher
 
 include ${MAKEINCLUDES}/Make.vars
 
