@@ -16,21 +16,25 @@ MODULES = phdf5
 
 include ${MAKEINCLUDES}/Make.info
 
-##
-## cmake 
-##
-CMAKEFLAGS = -D CMAKE_BUILD_TYPE=Release \
-    -D VTKHDF_USE_Fortran=OFF \
-    -D VTKHDF_USE_AWSSDK=OFF
-HASBIN = 1
-include ${MAKEINCLUDES}/Make.cmake
-include ${MAKEINCLUDES}/Make.cbuild
-info ::
-	@echo "make default_install : configure build"
 .PHONY: default_install
-default_install : configure build
+default_install : 
+	@source ${MAKEINCLUDES}/names.sh \
+	 && setnames \
+	    "${PACKAGE}" "${PACKAGEVERSION}" "${PACKAGEBASENAME}" \
+	    "${DOWNLOADPATH}" "${SRCPATH}" \
+	    "${INSTALLPATH}" "${INSTALLROOT}" "${INSTALLEXT}" "${INSTALLVARIANT}" \
+	    "${HOMEDIR}" "${BUILDDIRROOT}"  "${MODE}" \
+	    "${PREFIXOPTION}" "${PREFIXEXTRA}" \
+	 && source ${MAKEINCLUDES}/compilers.sh && setcompilers \
+	 && ( cd $$srcdir \
+	     && cd Build && make clean \
+	     && export HDF5_HOME=${TACC_HDF5_DIR} \
+	     && cd impi_intel_linux \
+	     && ./make_fds.sh \
+	    ) 2>&1 | tee $$installlog \
 
 GITREPO = https://github.com/johodges/fds.git
+BRANCH= vtkhdf
 include ${MAKEINCLUDES}/Make.git
 
 include ${MAKEINCLUDES}/Make.clean
