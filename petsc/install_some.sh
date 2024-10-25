@@ -33,8 +33,8 @@ while [ $# -gt 0 ] ; do
     fi
 done
 
-alllog=all.log
-rm -f ${alllog} && touch ${alllog}
+somelog=some.log
+rm -f ${somelog} && touch ${somelog}
 
 ( \
 echo "================================================================" && \
@@ -43,18 +43,22 @@ echo "    Installation petsc variants for:" && \
 echo "    compiler=${TACC_FAMILY_COMPILER}/${TACC_FAMILY_COMPILER_VERSION} mpi=${TACC_FAMILY_MPI}/${TACC_FAMILY_MPI_VERSION}" && \
 echo "" && \
 echo "================================================================" \
-) | tee -a ${alllog}      
+) | tee -a ${somelog}      
 
 set -e
 archs=archs-${pversion}
 rm -f $archs && touch $archs
-for arch in  "" debug complex i64 complexi64 complexsingle f08 single nohdf5 ; do
+
+#
+# install the arch list that we test in all_local/tacc_tests.sh
+#
+for arch in  $( cat test_versions.txt ) ; do
     case "${arch}" in ( *debug* ) export DEBUG=1 ;; ( * ) export DEBUG=0 ;; esac
     case "${arch}" in ( *i64 ) export INT=64 ;; ( * ) export INT=32 ;; esac
     case "${arch}" in ( *single* ) export PRECISION=single ;; ( * ) export PRECISION=double ;; esac
     case "${arch}" in ( *complex* ) export SCALAR=complex ;; ( * ) export SCALAR=real ;; esac
     arch=$( make --no-print-directory petscshortarch )
-    ( echo && echo "Installing big for arch=${arch}" && echo ) | tee -a ${alllog}
+    ( echo && echo "Installing big for arch=${arch}" && echo ) | tee -a ${somelog}
     if [ -z "${arch}" ] ; then 
 	echo vanilla >> ${archs}
     else
@@ -65,8 +69,8 @@ for arch in  "" debug complex i64 complexi64 complexsingle f08 single nohdf5 ; d
 	$( if [ "${arch}" = "nohdf5" ] ; then echo "-5" ; fi ) \
 	$( if [ ${p4p} -eq 1 ] ; then echo "-4" ; fi ) \
 	$( if [ ${cuda} -eq 1 ] ; then echo "-c" ; fi ) \
-	| tee -a ${alllog}
+	| tee -a ${somelog}
 done
 
 
-( echo && echo "done archs: $( cat ${archs} | tr '\n' ' ' )" && echo ) | tee -a ${alllog}
+( echo && echo "done archs: $( cat ${archs} | tr '\n' ' ' )" && echo ) | tee -a ${somelog}
