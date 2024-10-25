@@ -40,6 +40,8 @@ else
       --enable-shared \
       --with-hdf5=${TACC_HDF5_INC},${TACC_HDF5_LIB}
   CONFIGUREENV="BUILD_SHARED_LIBS=1"
+  # DEFUNPROGFC = 1
+  # FORCERECONF = 1
   include ${MAKEINCLUDES}/Make.configure
   include ${MAKEINCLUDES}/Make.install
 endif

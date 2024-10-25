@@ -6,7 +6,7 @@
 
 PACKAGE = charmpp
 URL = https://charmplusplus.org/
-PACKAGEVERSION = 8.0.0
+PACKAGEVERSION = 8.0.1
 
 MODE = mpi
 MODULES = 
@@ -18,6 +18,7 @@ PKGCONFIGLIB = pkgconfig
 CMAKEFLAGS = \
     -D NETWORK=mpi \
     -D CMAKE_POSITION_INDEPENDENT_CODE=ON
+BUILDSTATICLIBS = 1
 
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
