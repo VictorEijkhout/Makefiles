@@ -41,11 +41,3 @@ default_install : configure build public
 
 TGZURL = https://github.com/OSGeo/gdal/releases/download/v${PACKAGEVERSION}/gdal-${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
-untar-3.7 ::
-	@source ${MAKEINCLUDES}/names.sh \
-	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEB\ASENAME}" "${VARIANT}" "${MODULENAME}" "${MODE}" \
-	 && f=ogrgeopackagetablelayer.cpp \
-	 && echo " .. fixing source file $$f" \
-	 && cd $${srcdir}/ogr/ogrsf_frmts/gpkg/ \
-	 && mv $$f tmp \
-	 && cat $${scriptdir}/gdal_fix.txt tmp > $$f

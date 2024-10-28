@@ -24,11 +24,11 @@ TOOLSET = ${TACC_FAMILY_COMPILER}
 build ::
 	@source ${MAKEINCLUDES}/names.sh \
 	 && setnames \
-	    "${PACKAGE}"  "${PACKAGEVERSION}"  "${PACKAGEBASENAME}" \
+	    "${PACKAGE}" "${PACKAGEVERSION}" "${PACKAGEBASENAME}" \
 	    "${DOWNLOADPATH}" "${SRCPATH}" \
-	    "${INSTALLPATH}"  "${INSTALLROOT}"  "${INSTALLEXT}"  "${INSTALLVARIANT}" \
-	    "${HOMEDIR}"  "${BUILDDIRROOT}"  "${MODE}" \
-	    "${PREFIXOPTION}"  "${PREFIXEXTRA}" \
+	    "${INSTALLPATH}" "${INSTALLROOT}" "${INSTALLEXT}" "${INSTALLVARIANT}" \
+	    "${HOMEDIR}" "${BUILDDIRROOT}" "${MODE}" \
+	    "${PREFIXOPTION}" "${PREFIXEXTRA}" \
 	 && source ${MAKEINCLUDES}/compilers.sh && setcompilers \
 	 && ( \
 	    requirenonzero builddir && rm -rf $$builddir && mkdir -p $$builddir \
