@@ -28,7 +28,22 @@ BUILDSTATICLIBS = 1
 # .PHONY: default_install
 # default_install : configure build
 
+.PHONY: config-help
+config-help :
+	@source ${MAKEINCLUDES}/names.sh \
+	 && setnames \
+	    "${PACKAGE}" "${PACKAGEVERSION}" "${PACKAGEBASENAME}" \
+	    "${DOWNLOADPATH}" "${SRCPATH}" \
+	    "${INSTALLPATH}" "${INSTALLROOT}" "${INSTALLEXT}" "${INSTALLVARIANT}" \
+	    "${HOMEDIR}" "${BUILDDIRROOT}" "${MODE}" \
+	    "${PREFIXOPTION}" "${PREFIXEXTRA}" \
+	 && source ${MAKEINCLUDES}/compilers.sh && setcompilers \
+	 && cd $$srcdir \
+	 && ./build --help
+
 .PHONY: default_install
+# Vista Intel build fails
+# https://github.com/charmplusplus/charm/issues/3851
 default_install :
 	@source ${MAKEINCLUDES}/names.sh \
 	 && setnames \
@@ -40,7 +55,8 @@ default_install :
 	 && source ${MAKEINCLUDES}/compilers.sh && setcompilers \
 	 && ( \
 	    cd $$srcdir \
-	     && ./build charm++ mpi-linux-x86_64 \
+	     && ./build charm++ \
+	            $$( if [ "${TACC_SYSTEM}" = "vista" ] ; then echo mpi-linux-arm8 ; else echo mpi-linux-x86_64 ; fi ) \
 	            --install-prefix=$${prefixdir} --force \
 	    ) 2>&1 | tee $$installlog \
 	 && make --no-print-directory varsmodule
