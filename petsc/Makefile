@@ -49,8 +49,13 @@ DOWNLOADCMAKE =
 CUDA = 0
 info ::
 	@echo "     [CUDA=0/1 (default: ${CUDA})]"
-CUDA_OPTIONS = --with-cuda=1 --with-cuda-dir=${TACC_CUDA_DIR} \
+ifeq "${TACC_SYSTEM}" "vista"
+  CUDA_OPTIONS = --with-cuda=1 \
 	--with-cudac=nvcc --with-cuda-gencodearch=70
+else
+  CUDA_OPTIONS = --with-cuda=1 --with-cuda-dir=${TACC_CUDA_DIR} \
+	--with-cudac=nvcc --with-cuda-gencodearch=70
+endif
 
 TIME =
 
@@ -122,7 +127,7 @@ include Makefile.packages
 configure :
 	@echo && echo "there is no configure rule" && echo
 build :: modules
-	@if [ ${CUDA} -eq 1 -a -z "${TACC_CUDA_DIR}" ] ; then \
+	@if [ "${TACC_SYSTEM}" != "vista" -a ${CUDA} -eq 1 -a -z "${TACC_CUDA_DIR}" ] ; then \
 	    echo && echo "Please load cuda module" && echo && exit 1 \
 	    ; fi
 	@source ${MAKEINCLUDES}/names.sh \

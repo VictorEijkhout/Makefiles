@@ -45,6 +45,11 @@ while [ $# -gt 0 ] ; do
 	echo "Error: unknown option <<$1>>" && exit 1
     fi
 done
+if [ $cuda -eq 1 ] ; then
+    echo " .. disabling Fortran for Cuda"
+    fortran=0
+fi
+
 echo " .. make thread count $jcount"
 
 set -e
@@ -60,7 +65,7 @@ module load eigen
 ## Note: petsc has "with-fftw", no 3.
 module load fftw3
 
-if [ "${cuda}" = "1" ] ; then 
+if [ "${cuda}" = "1" -a "${TACC_SYSTEM}" != "vista" ] ; then 
     cversion=${TACC_FAMILY_COMPILER_VERSION}
     cversion=${cversion%%.*}
     if [ ${cversion} -gt 12 ] ; then 
