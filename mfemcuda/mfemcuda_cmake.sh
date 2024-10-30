@@ -16,9 +16,9 @@ else
 fi
 
 CPPSTANDARD=14
-export CUDAFLAGS="-allow-unsupported-compiler -Xcompiler -std=gnu++${CPPSTANDARD}"
+export CUDAFLAGS="--allow-unsupported-compiler -Xcompiler -std=c++${CPPSTANDARD}"
 export NVCC_APPEND_FLAGS="${CUDAFLAGS}"
-
+export CMAKE_CUDA_FLAGS="--allow-unsupported-compiler -Xcompiler -std=gnu++${CPPSTANDARD}"
 
 
 cmake -Wno-dev \
@@ -27,7 +27,6 @@ cmake -Wno-dev \
     -D CMAKE_CXX_STANDARD=${CPPSTANDARD} \
     \
     -D MFEM_USE_CUDA=YES \
-    -D CMAKE_CUDA_FLAGS="${CUDAFLAGS}" \
     \
     -D MFEM_USE_MPI=YES \
     -D MFEM_USE_PETSC=NO \
