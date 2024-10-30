@@ -55,7 +55,8 @@ default_install :
 	 && source ${MAKEINCLUDES}/compilers.sh && setcompilers \
 	 && ( \
 	    cd $$srcdir \
-	     && ./build charm++ mpi-linux-arm8 \
+	     && ./build charm++ \
+	            $( if [ ${TACC_SYSTEM} = "vista" ] ; then echo mpi-linux-arm8 ; else echo mpi-linux-x86_64 ; fi ) \
 	            --install-prefix=$${prefixdir} --force \
 	    ) 2>&1 | tee $$installlog \
 	 && make --no-print-directory varsmodule
