@@ -56,7 +56,7 @@ default_install :
 	 && ( \
 	    cd $$srcdir \
 	     && ./build charm++ \
-	            $( if [ ${TACC_SYSTEM} = "vista" ] ; then echo mpi-linux-arm8 ; else echo mpi-linux-x86_64 ; fi ) \
+	            $$( if [ "${TACC_SYSTEM}" = "vista" ] ; then echo mpi-linux-arm8 ; else echo mpi-linux-x86_64 ; fi ) \
 	            --install-prefix=$${prefixdir} --force \
 	    ) 2>&1 | tee $$installlog \
 	 && make --no-print-directory varsmodule
