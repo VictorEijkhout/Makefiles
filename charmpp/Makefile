@@ -5,7 +5,8 @@
 ################################################################
 
 PACKAGE = charmpp
-URL = https://charmplusplus.org/
+URL = https://charmplusplus.org/ \
+    https://github.com/UIUC-PPL/charm
 PACKAGEVERSION = 8.0.1
 
 MODE = mpi
@@ -20,13 +21,29 @@ CMAKEFLAGS = \
     -D CMAKE_POSITION_INDEPENDENT_CODE=ON
 BUILDSTATICLIBS = 1
 
-include ${MAKEINCLUDES}/Make.cmake
-include ${MAKEINCLUDES}/Make.cbuild
-info ::
-	@echo "make default_install : configure build"
-.PHONY: default_install
-default_install : configure build
+# include ${MAKEINCLUDES}/Make.cmake
+# include ${MAKEINCLUDES}/Make.cbuild
+# info ::
+# 	@echo "make default_install : configure build"
+# .PHONY: default_install
+# default_install : configure build
 
+.PHONY: default_install
+default_install :
+	@source ${MAKEINCLUDES}/names.sh \
+	 && setnames \
+	    "${PACKAGE}" "${PACKAGEVERSION}" "${PACKAGEBASENAME}" \
+	    "${DOWNLOADPATH}" "${SRCPATH}" \
+	    "${INSTALLPATH}" "${INSTALLROOT}" "${INSTALLEXT}" "${INSTALLVARIANT}" \
+	    "${HOMEDIR}" "${BUILDDIRROOT}" "${MODE}" \
+	    "${PREFIXOPTION}" "${PREFIXEXTRA}" \
+	 && source ${MAKEINCLUDES}/compilers.sh && setcompilers \
+	 && ( \
+	    cd $$srcdir \
+	     && ./build charm++ mpi-linux-x86_64 \
+	            --install-prefix=$${prefixdir} --force \
+	    ) 2>&1 | tee $$installlog \
+	 && make --no-print-directory varsmodule
 
 TGZURL = https://github.com/charmplusplus/charm/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
