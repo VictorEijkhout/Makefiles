@@ -28,7 +28,22 @@ BUILDSTATICLIBS = 1
 # .PHONY: default_install
 # default_install : configure build
 
+.PHONY: config-help
+config-help :
+	@source ${MAKEINCLUDES}/names.sh \
+	 && setnames \
+	    "${PACKAGE}" "${PACKAGEVERSION}" "${PACKAGEBASENAME}" \
+	    "${DOWNLOADPATH}" "${SRCPATH}" \
+	    "${INSTALLPATH}" "${INSTALLROOT}" "${INSTALLEXT}" "${INSTALLVARIANT}" \
+	    "${HOMEDIR}" "${BUILDDIRROOT}" "${MODE}" \
+	    "${PREFIXOPTION}" "${PREFIXEXTRA}" \
+	 && source ${MAKEINCLUDES}/compilers.sh && setcompilers \
+	 && cd $$srcdir \
+	 && ./build --help
+
 .PHONY: default_install
+# Vista Intel build fails
+# https://github.com/charmplusplus/charm/issues/3851
 default_install :
 	@source ${MAKEINCLUDES}/names.sh \
 	 && setnames \
@@ -40,10 +55,11 @@ default_install :
 	 && source ${MAKEINCLUDES}/compilers.sh && setcompilers \
 	 && ( \
 	    cd $$srcdir \
-	     && ./build charm++ mpi-linux-x86_64 \
+	     && ./build charm++ mpi-linux-arm8 \
 	            --install-prefix=$${prefixdir} --force \
 	    ) 2>&1 | tee $$installlog \
 	 && make --no-print-directory varsmodule
+include ${MAKEINCLUDES}/Make.vars
 
 TGZURL = https://github.com/charmplusplus/charm/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
