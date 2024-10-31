@@ -61,6 +61,7 @@ default_install :
 	    ) 2>&1 | tee $$installlog \
 	 && make --no-print-directory varsmodule
 include ${MAKEINCLUDES}/Make.vars
+HASBIN=1
 
 TGZURL = https://github.com/charmplusplus/charm/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
