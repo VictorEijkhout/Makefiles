@@ -35,12 +35,11 @@ seq :
 	@make --no-print-directory configure build JCOUNT=${JCOUNT} \
 	    MODE=seq MODULES="hdf5 netcdf" NETCDF_PARALLEL=OFF \
 	    MODULENAME=netcdff  DEPENDSON=netcdf
-# MODULENAMEALT=netcdf
 par :
 	@make --no-print-directory configure build JCOUNT=${JCOUNT} \
 	    MODE=mpi MODULES="phdf5 pnetcdf" NETCDF_PARALLEL=ON \
 	    MODULENAME=parallelnetcdff
-#  MODULENAMEALT=netcdf
+
 .PHONY: default_install
 info ::
 	@echo "make default_install: sequential version"
