@@ -13,11 +13,9 @@ MODULES =
 
 include ${MAKEINCLUDES}/Make.info
 
-CMAKEFLAGS = 
-
-PKGCONFIG = 
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
+CPTOINSTALLDIR = grackle_data_files
 .PHONY: default_install
 info ::
 	@echo "make default_install : configure build"
