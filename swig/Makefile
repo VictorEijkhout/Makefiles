@@ -8,7 +8,7 @@ PACKAGE = swig
 URL = https://www.swig.org/
 PACKAGEVERSION = 4.2.1
 MODE = seq
-MODULES = pcre2
+MODULES = pcre2 bison
 
 include ${MAKEINCLUDES}/Make.info
 
