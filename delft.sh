@@ -10,6 +10,7 @@ function load_or_install_module () {
 	case $m in 
 	    ( hdf5 ) make seq ;;
 	    ( netcdf ) make seq ;;
+	    ( petsc ) ./install_small.sh ;;
 	    ( * ) make default_install ;;
 	esac
 	popd
@@ -18,13 +19,14 @@ function load_or_install_module () {
     # module -t list
 }
 
-for m in \
-        pcre2 bison swig \
-        zlib hdf5 netcdf jsonc sqlite proj gdal metis ; do 
+prereqs="pcre2 bison swig zlib"
+delft="hdf5 netcdf jsonc sqlite proj gdal metis"
+petsc="eigen fftw3 petsc"
+for m in ${prereqs} ${delft} ${petsc} ; do
     load_or_install_module $m
 done
 
-cmdline="module -t avail netcdf hdf5 metis petsc gdal jsonc proj sqlite"
+cmdline="module -t avail ${delft} petsc"
 echo "What is available?"
 echo $cmdline
 eval $cmdline
