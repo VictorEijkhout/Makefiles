@@ -22,7 +22,9 @@ HASBIN=1
 CMAKEPREFIXPATHSET = 1
 DEPENDSON = netcdf
 PKGCONFIGLIB = pkgconfig
+LINKLIB64toLIB = 1
 NETCDF_PARALLEL = OFF
+CPTOINSTALLDIR = examples
 CMAKEFLAGS = \
     -D netCDF_INCLUDE_DIR=${TACC_NETCDF_INC} \
     -D netCDF_LIBRARIES=${TACC_NETCDF_LIB}/libnetcdf.so \
@@ -35,12 +37,11 @@ seq :
 	@make --no-print-directory configure build JCOUNT=${JCOUNT} \
 	    MODE=seq MODULES="hdf5 netcdf" NETCDF_PARALLEL=OFF \
 	    MODULENAME=netcdff  DEPENDSON=netcdf
-# MODULENAMEALT=netcdf
 par :
 	@make --no-print-directory configure build JCOUNT=${JCOUNT} \
 	    MODE=mpi MODULES="phdf5 pnetcdf" NETCDF_PARALLEL=ON \
 	    MODULENAME=parallelnetcdff
-#  MODULENAMEALT=netcdf
+
 .PHONY: default_install
 info ::
 	@echo "make default_install: sequential version"

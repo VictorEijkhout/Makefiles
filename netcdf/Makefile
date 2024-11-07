@@ -25,7 +25,7 @@ PKGCONFIGLIB = pkgconfig
 NETCDF_PARALLEL = OFF
 DEPENDSON = hdf5
 LINKLIB64toLIB = 1
-
+CPTOINSTALLDIR = examples
 ##
 ## NOTE the enable_pnetcdf flag is for parallel-netcdf 1.9
 ##
