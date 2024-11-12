@@ -39,7 +39,7 @@ seq :
 	    MODULENAME=netcdff  DEPENDSON=netcdf
 par :
 	@make --no-print-directory configure build JCOUNT=${JCOUNT} \
-	    MODE=mpi MODULES="phdf5 pnetcdf" NETCDF_PARALLEL=ON \
+	    MODE=mpi MODULES="" NETCDF_PARALLEL=ON \
 	    MODULENAME=parallelnetcdff
 
 .PHONY: default_install
