@@ -9,7 +9,7 @@ URL = https://gdal.org/index.html
 PACKAGEVERSION = 3.9.2
 MODE = seq
 MODULES = jsonc proj zlib 
-ifeq "${TACC_SYSTEM}" "fronter"
+ifeq "${TACC_SYSTEM}" "frontera"
  MODULE += swig
 endif
 
