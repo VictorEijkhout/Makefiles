@@ -14,11 +14,9 @@ include ${MAKEINCLUDES}/Make.info
 
 info ::
 	@echo "================ installation"
-	@echo "make build"
-.PHONY: configure build
-configure :: modules
-	@echo "there is no configure rule"
-build ::
+	@echo "make default_install"
+.PHONY: default_install
+default_install :
 	@source ${MAKEINCLUDES}/names.sh \
 	 && setnames \
 	    "${PACKAGE}"  "${PACKAGEVERSION}"  "${PACKAGEBASENAME}" \
@@ -30,12 +28,10 @@ build ::
 	 && ( \
 	    requirenonzero prefixdir && mkdir -p $$prefixdir && rm -rf $$prefixdir/* \
 	     && $${scriptdir}/install.sh -v ${PACKAGEVERSION} \
+	          --prefix $${prefixdir} \
 	    ) 2>&1 | tee $$installlog \
 	 && make --no-print-directory varsmodule \
 	      CMAKEPREFIXPATHSET=1
-
-.PHONY: default_install
-default_install : configure install
 
 include ${MAKEINCLUDES}/Make.vars
 include ${MAKEINCLUDES}/Make.public
