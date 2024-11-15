@@ -2,8 +2,6 @@
 ####
 #### Makefile for Mfem installation
 ####
-#### only needed for the CHyPS CSA project
-####
 ################################################################
 
 PACKAGE = mfem
@@ -13,7 +11,8 @@ PACKAGEVERSION = 4.7
 HYPREVERSION = 2.31.0
 
 MODE = mpi
-MODULES = mkl adios2 hypre/${HYPREVERSION}-i64 metis petsc
+BASICMODULES = mkl adios2 hypre/${HYPREVERSION}-i64 metis petsc
+MODULES = ${BASICMODULES}
 
 include ${MAKEINCLUDES}/Make.info
 
@@ -28,6 +27,11 @@ else
   BLASLIB=${TACC_MKL_LIB}/libmkl_sequential.so 
   LAPACKLIB=${TACC_MKL_LIB}/libmkl_intel_lp64.so
 endif
+
+##
+## petsc problem:
+## https://github.com/mfem/mfem/issues/4526
+##
 
 CMAKEFLAGS = -Wno-dev \
     -D CMAKE_BUILD_TYPE=Release \
