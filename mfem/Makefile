@@ -11,8 +11,7 @@ PACKAGEVERSION = 4.7
 HYPREVERSION = 2.31.0
 
 MODE = mpi
-BASICMODULES = mkl adios2 hypre/${HYPREVERSION}-i64 metis petsc \
-    doxygen
+BASICMODULES = mkl adios2 hypre/${HYPREVERSION}-i64 metis petsc
 MODULES = ${BASICMODULES}
 
 include ${MAKEINCLUDES}/Make.info
