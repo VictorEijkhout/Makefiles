@@ -13,8 +13,10 @@ MODE = core
 include ${MAKEINCLUDES}/Make.info
 
 CMAKEPREFIXPATHSET = 1
-NOLIB = 1
+## NOLIB = 1
 HASBIN = 1
+CMAKEFLAGS = \
+    -D SPDLOG_INSTALL=ON
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
 default_install : configure build 
