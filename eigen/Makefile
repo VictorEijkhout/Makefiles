@@ -29,6 +29,9 @@ default_install : configure build
 TGZURL = https://gitlab.com/libeigen/eigen/-/archive/${PACKAGEVERSION}/eigen-${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 
+GITREPO = https://gitlab.com/libeigen/eigen.git
+include ${MAKEINCLUDES}/Make.git
+
 .PHONY: docs
 docs :
 	@source ${MAKEINCLUDES}/names.sh \
