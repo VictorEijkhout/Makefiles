@@ -2,8 +2,6 @@
 ####
 #### Makefile for Mfem installation
 ####
-#### only needed for the CHyPS CSA project
-####
 ################################################################
 
 PACKAGE = mfem
@@ -13,7 +11,8 @@ PACKAGEVERSION = 4.7
 HYPREVERSION = 2.31.0
 
 MODE = mpi
-MODULES = mkl adios2 hypre/${HYPREVERSION}-i64 metis petsc
+BASICMODULES = mkl adios2 hypre/${HYPREVERSION}-i64 metis petsc
+MODULES = ${BASICMODULES}
 
 include ${MAKEINCLUDES}/Make.info
 
@@ -29,12 +28,18 @@ else
   LAPACKLIB=${TACC_MKL_LIB}/libmkl_intel_lp64.so
 endif
 
+##
+## petsc problem:
+## https://github.com/mfem/mfem/issues/4526
+##
+
 CMAKEFLAGS = -Wno-dev \
     -D CMAKE_BUILD_TYPE=Release \
     -D MFEM_USE_MPI=YES \
     -D MFEM_USE_PETSC=YES \
     -D PETSC_DIR=${PETSC_DIR} \
-    -D PETSC_ARCH=${PETSC_ARCH} \
+    -D PETSC_ARCH= \
+    \
     -D MFEM_USE_LAPACK=YES \
     -D LAPACK_LIBRARIES=${LAPACKLIB} \
     -D BLAS_LIBRARIES=${BLASLIB} \
@@ -42,6 +47,12 @@ CMAKEFLAGS = -Wno-dev \
     -D HYPRE_DIR=${TACC_HYPRE_DIR} \
     -D MFEM_USE_METIS_5=ON -D METIS_DIR=${TACC_METIS_DIR} \
     -D MFEM_USE_ADIOS2=ON -D ADIOS2_DIR=${TACC_ADIOS2_DIR}
+nopetsc = \
+    -D PETSC_LIBRARIES=${PETSC_DIR}/lib \
+    -D PETSC_INCLUDES=${PETSC_DIR}/include \
+    -D PETSC_EXECUTABLE_RUNS=${PETSC_DIR}/bin \
+    -D DOXYGEN_EXECUTABLE=${TACC_DOXYGEN_BIN}/doxygen \
+    -D foo=bar
 CMAKEPREFIXPATHSET=1
 
 include ${MAKEINCLUDES}/Make.cmake

@@ -7,6 +7,7 @@ function usage () {
     echo "Usage: $0 [ -h ] [ -v 3.12345 (default: ${pythonver}) ]"
     echo "    [ -5 (hdf5 only) ] [ -m (mpi only) ] [ -n (numpy only) ] "
     echo "    [ -o (others only: ${others}) ]"
+    echo "    [ --prefix prefixdir ]"
     echo "    no options: install everything"
 }
 
@@ -16,6 +17,7 @@ installnumpy=1
 installpython=1
 installothers=1
 others="paramiko setuptools"
+prefixdir=
 
 pythonver=3.12.4
 #3.11.0
@@ -32,6 +34,8 @@ while [ $# -gt 0 ] ; do
 	shift && installhdf= && installpython= && installmpi= && installnumpy=1 && installothers=
     elif [ $1 = "-o" ] ; then
 	shift && installhdf= && installpython= && installmpi= && installnumpy= && installothers=1
+    elif [ $1 = "--prefix" ] ; then
+	shift && prefixdir=$1 && shift
     elif [ $1 = "-v" ] ; then
 	shift && pythonver=$1 && shift
     else
@@ -39,13 +43,19 @@ while [ $# -gt 0 ] ; do
     fi
 done
 
+if [ -z "${TACC_HDF5_DIR}" ] ; then
+    echo "Needs hdf5 module loaded" && exit 1
+fi
+
 pymacrover=${pythonver%%.*}
 pyminiver=${pythonver#*.} && pyminiver=${pyminiver%.*}
 pymicrover=${pythonver##*.}
 echo && echo "Installing ${pymacrover}.${pyminiver}.${pymicrover}" && echo
 
 pythondir=${STOCKYARD}/python
-prefixdir=${pythondir}/installation-${pythonver}-${TACC_SYSTEM}-${TACC_FAMILY_COMPILER}-${TACC_FAMILY_COMPILER_VERSION}
+if [ -z "${prefixdir}" ] ; then 
+    prefixdir=${pythondir}/installation-${pythonver}-${TACC_SYSTEM}-${TACC_FAMILY_COMPILER}-${TACC_FAMILY_COMPILER_VERSION}
+fi
 pkgprefix=${prefixdir}/lib/python${pymacrover}.${pyminiver}/site-packages/
 
 if [ ! -z "${installpython}" ] ; then 
@@ -171,8 +181,6 @@ fi
 ##
 if [ ! -z "${installhdf}" ] ; then
     echo && echo "Building h5py" && echo
-    if [ -z "${TACC_HDF5_DIR}" ] ; then
-	echo "Needs hdf5 module loaded" && exit 1 ; fi
     HDF5_DIR=${TACC_HDF5_DIR} \
     HDF5_VERSION=${TACC_HDF5_VERSION} \
 	pip3 install --target=${pkgprefix} --no-binary=h5py h5py

@@ -24,6 +24,7 @@ DEPENDSON = netcdf
 PKGCONFIGLIB = pkgconfig
 LINKLIB64toLIB = 1
 NETCDF_PARALLEL = OFF
+CPTOINSTALLDIR = examples
 CMAKEFLAGS = \
     -D netCDF_INCLUDE_DIR=${TACC_NETCDF_INC} \
     -D netCDF_LIBRARIES=${TACC_NETCDF_LIB}/libnetcdf.so \
@@ -38,7 +39,7 @@ seq :
 	    MODULENAME=netcdff  DEPENDSON=netcdf
 par :
 	@make --no-print-directory configure build JCOUNT=${JCOUNT} \
-	    MODE=mpi MODULES="phdf5 pnetcdf" NETCDF_PARALLEL=ON \
+	    MODE=mpi MODULES="" NETCDF_PARALLEL=ON \
 	    MODULENAME=parallelnetcdff
 
 .PHONY: default_install
