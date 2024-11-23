@@ -2,6 +2,9 @@
 ####
 #### Makefile for Eigen installation
 ####
+#### eigen can not be used in Arpack with nvidia compiler:
+#### https://gitlab.com/libeigen/eigen/-/issues/2846
+####
 ################################################################
 
 PACKAGE = EIGEN
