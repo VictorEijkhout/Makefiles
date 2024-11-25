@@ -77,7 +77,15 @@ if [ ! -z "${installpython}" ] ; then
 
     module load sqlite || exit 1
     export CC=${TACC_CC} && export CXX=${TACC_CXX}
-    export LDFLAGS="-L${TACC_MKL_LIB} -L${TACC_INTEL_LIB}"
+    if [ "${TACC_COMPILER_FAMILY}"  = "intel" ] ; then 
+	export LDFLAGS="-DLDFLAGS -L${TACC_MKL_LIB:?MISSING_MKL_LIB} -L${TACC_INTEL_LIB:?MISSING_INTEL_LIB}"
+    else 
+	echo "find /opt/intel/oneapi/compiler/2024.0/lib/libintlc.so.5"
+	export LDFLAGS="-DLDFLAGS \
+-L${TACC_MKL_LIB:?MISSING_MKL_LIB}       -Wl,-rpath=${TACC_MKL_LIB} \
+-L/opt/intel/oneapi/compiler/2024.0/lib  -Wl,-rpath=/opt/intel/oneapi/compiler/2024.0/lib \
+-lintlc"
+    fi
     echo && echo "Configuring" && echo
     ##./configure --help 
     ./configure --prefix=${prefixdir} \
