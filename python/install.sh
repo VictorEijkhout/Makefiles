@@ -59,23 +59,9 @@ fi
 pkgprefix=${prefixdir}/lib/python${pymacrover}.${pyminiver}/site-packages/
 
 if [ ! -z "${installpython}" ] ; then 
-    rm -rf ${HOME}/{.local,.cache}
-    echo && echo "Building python ${pythonver}" && echo
-    cd ${pythondir}
-    # if [ ! -f Python-${pythonver}.tgz ] ; then 
-    # 	echo && echo "first downloading tgz" && echo
-    # 	wget https://www.python.org/ftp/python/${pythonver}/Python-${pythonver}.tgz
-    # fi
-    # if [ ! -f Python-${pythonver} ] ; then 
-    # 	echo && echo "Untar" && echo
-    # 	tar fxz Python-${pythonver}.tgz
-    # fi
-    # echo && echo "Remove previous installation" && echo
-    # rm -rf ${prefixdir}
 
-    cd ${pythondir}/Python-${pythonver}
+    cd ${pythondir}/python-${pythonver}
 
-    module load sqlite || exit 1
     export CC=${TACC_CC} && export CXX=${TACC_CXX}
     if [ "${TACC_COMPILER_FAMILY}"  = "intel" ] ; then 
 	export LDFLAGS="-DLDFLAGS -L${TACC_MKL_LIB:?MISSING_MKL_LIB} -L${TACC_INTEL_LIB:?MISSING_INTEL_LIB}"
@@ -87,8 +73,9 @@ if [ ! -z "${installpython}" ] ; then
 -lintlc"
     fi
     echo && echo "Configuring" && echo
-    ##./configure --help 
+
     ./configure --prefix=${prefixdir} \
+		--disable-test-modules \
 		--enable-optimizations \
 		--with-ensurepip=install \
 		2>&1 | tee ${pythondir}/configure.log
@@ -236,23 +223,3 @@ echo && echo "================ Installation finished"
 echo "in: ${prefixdir}"
 ls -ld ${prefixdir}
 
-exit 0
-
-################################################################
-##
-## problem with Intel:
-##
-
-Traceback (most recent call last):
-  File "/work2/00434/eijkhout/stampede3/python/Python-3.12.4/Lib/multiprocessing/process.py", line 314, in _bootstrap
-    self.run()
-  File "/work2/00434/eijkhout/stampede3/python/Python-3.12.4/Lib/multiprocessing/process.py", line 108, in run
-    self._target(*self._args, **self._kwargs)
-  File "/work2/00434/eijkhout/stampede3/python/installation-3.12.4-intel/lib/python3.12/concurrent/futures/process.py", line 251, in _process_worker
-    call_item = call_queue.get(block=True)
-                ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/work2/00434/eijkhout/stampede3/python/Python-3.12.4/Lib/multiprocessing/queues.py", line 102, in get
-    with self._rlock:
-  File "/work2/00434/eijkhout/stampede3/python/Python-3.12.4/Lib/multiprocessing/synchronize.py", line 95, in __enter__
-    return self._semlock.__enter__()
-           ^^^^^^^^^^^^^^^^^^^^^^^^^
