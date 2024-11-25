@@ -6,7 +6,7 @@
 
 PACKAGE = adios2
 URL = https://github.com/ornladios/ADIOS2
-PACKAGEVERSION = 2.9.1
+PACKAGEVERSION = 2.10.2
 
 MODE = mpi
 MODULES = phdf5 

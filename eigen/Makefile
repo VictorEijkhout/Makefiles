@@ -2,11 +2,15 @@
 ####
 #### Makefile for Eigen installation
 ####
+#### eigen can not be used in Arpack with nvidia compiler:
+#### https://gitlab.com/libeigen/eigen/-/issues/2846
+####
 ################################################################
 
 PACKAGE = EIGEN
 PACKAGEVERSION = 3.4.0
-URL = https://eigen.tuxfamily.org/index.php?title=Main_Page
+URL = https://eigen.tuxfamily.org/index.php?title=Main_Page \
+    https://gitlab.com/libeigen/eigen/-/tree/master
 MODULES = 
 MODE = seq
 
@@ -24,6 +28,9 @@ default_install : configure build
 
 TGZURL = https://gitlab.com/libeigen/eigen/-/archive/${PACKAGEVERSION}/eigen-${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
+
+GITREPO = https://gitlab.com/libeigen/eigen.git
+include ${MAKEINCLUDES}/Make.git
 
 .PHONY: docs
 docs :
