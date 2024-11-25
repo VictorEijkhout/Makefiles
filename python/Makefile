@@ -29,9 +29,11 @@ default_install :
 	 && ( \
 	    echo "Calling install.sh script" \
 	     && requirenonzero srcdir \
+	     && requirenonzero builddir && mkdir -p $$builddir && rm -rf $$builddir/* \
 	     && requirenonzero prefixdir && mkdir -p $$prefixdir && rm -rf $$prefixdir/* \
 	     && $${scriptdir}/install.sh \
 	          -v ${PACKAGEVERSION} \
+	          --build $${builddir} \
 	          --srcdir $${srcdir} \
 	          --prefix $${prefixdir} \
 	    ) 2>&1 | tee $$installlog \

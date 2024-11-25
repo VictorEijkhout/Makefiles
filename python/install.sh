@@ -7,6 +7,7 @@ function usage () {
     echo "Usage: $0 [ -h ] [ -v 3.12345 (default: ${pythonver}) ]"
     echo "    [ -5 (hdf5 only) ] [ -m (mpi only) ] [ -n (numpy only) ] "
     echo "    [ -o (others only: ${others}) ]"
+    echo "    [ --build builddir ]"
     echo "    [ --prefix prefixdir ]"
     echo "    [ --srcdir srcdir ]"
     echo "    no options: install everything"
@@ -18,6 +19,7 @@ installnumpy=1
 installpython=1
 installothers=1
 others="paramiko setuptools"
+builddir=
 prefixdir=
 srcdir=
 
@@ -36,6 +38,8 @@ while [ $# -gt 0 ] ; do
 	shift && installhdf= && installpython= && installmpi= && installnumpy= && installothers=1
     elif [ $1 = "--prefix" ] ; then
 	shift && prefixdir=$1 && shift
+    elif [ $1 = "--build" ] ; then
+	shift && builddir=$1 && shift
     elif [ $1 = "--srcdir" ] ; then
 	shift && srcdir=$1 && shift
     elif [ $1 = "-v" ] ; then
@@ -93,12 +97,12 @@ fi
 if [ ! -d "${pkgprefix}" ] ; then 
     echo "ERROR: not finding site-packages: ${pkgprefix}" && exit 1 
 fi
-cat >${pythondir}/load.sh <<EOF
+cat >${builddir:?MISSING_BUILD_DIR}/load.sh <<EOF
 export TACC_PYTHON_DIR=${prefixdir}
 export PATH=${prefixdir}/bin:/home1/00434/eijkhout/.local/bin:${PATH}
 export PYTHONPATH=${pkgprefix}:${PYTHONPATH}
 EOF
-source ${pythondir}/load.sh
+source ${builddir}/load.sh
 echo "Now using python: $( which python3 ), deduced version: $( python3 --version )"
 export XDG_CACHE_HOME=$( pwd )/pipcache
 
@@ -115,10 +119,10 @@ python3 -m pip install --upgrade pip
 ##
 numpyver=2.0.1
 ## 1.21.0
-numpygit=${pythondir}/numpy-git
-numpydir=${pythondir}/numpy-git
+numpygit=${builddir}/numpy-git
+numpydir=${builddir}/numpy-git
 scipyver=1.14.0
-scipygit=${pythondir}/scipy-git
+scipygit=${builddir}/scipy-git
 
 if [ ! -z "${installnumpy}" ] ; then
     rm -rf ${pkgprefix}/numpy*
