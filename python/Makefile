@@ -28,11 +28,11 @@ default_install :
 	 && source ${MAKEINCLUDES}/compilers.sh && setcompilers \
 	 && ( \
 	    echo "Calling install.sh script" \
-	     && requirenonzero homedir \
+	     && requirenonzero srcdir \
 	     && requirenonzero prefixdir && mkdir -p $$prefixdir && rm -rf $$prefixdir/* \
 	     && $${scriptdir}/install.sh \
 	          -v ${PACKAGEVERSION} \
-	          --pythondir $${homedir} \
+	          --srcdir $${srcdir} \
 	          --prefix $${prefixdir} \
 	    ) 2>&1 | tee $$installlog \
 	 && make --no-print-directory varsmodule \

@@ -8,6 +8,7 @@ function usage () {
     echo "    [ -5 (hdf5 only) ] [ -m (mpi only) ] [ -n (numpy only) ] "
     echo "    [ -o (others only: ${others}) ]"
     echo "    [ --prefix prefixdir ]"
+    echo "    [ --srcdir srcdir ]"
     echo "    no options: install everything"
 }
 
@@ -18,6 +19,7 @@ installpython=1
 installothers=1
 others="paramiko setuptools"
 prefixdir=
+srcdir=
 
 pythonver=3.12.4
 
@@ -34,8 +36,8 @@ while [ $# -gt 0 ] ; do
 	shift && installhdf= && installpython= && installmpi= && installnumpy= && installothers=1
     elif [ $1 = "--prefix" ] ; then
 	shift && prefixdir=$1 && shift
-    elif [ $1 = "--pythondir" ] ; then
-	shift && pythondir=$1 && shift
+    elif [ $1 = "--srcdir" ] ; then
+	shift && srcdir=$1 && shift
     elif [ $1 = "-v" ] ; then
 	shift && pythonver=$1 && shift
     else
@@ -52,15 +54,16 @@ pyminiver=${pythonver#*.} && pyminiver=${pyminiver%.*}
 pymicrover=${pythonver##*.}
 echo && echo "Installing ${pymacrover}.${pyminiver}.${pymicrover}" && echo
 
-pythondir=${STOCKYARD}/python
 if [ -z "${prefixdir}" ] ; then 
+    # standard pythondir for local install only
+    pythondir=${STOCKYARD}/python
     prefixdir=${pythondir}/installation-${pythonver}-${TACC_SYSTEM}-${TACC_FAMILY_COMPILER}-${TACC_FAMILY_COMPILER_VERSION}
 fi
 pkgprefix=${prefixdir}/lib/python${pymacrover}.${pyminiver}/site-packages/
 
 if [ ! -z "${installpython}" ] ; then 
 
-    cd ${pythondir}/python-${pythonver}
+    cd ${srcdir}
 
     export CC=${TACC_CC} && export CXX=${TACC_CXX}
     if [ "${TACC_COMPILER_FAMILY}"  = "intel" ] ; then 
@@ -77,11 +80,11 @@ if [ ! -z "${installpython}" ] ; then
     ./configure --prefix=${prefixdir} \
 		--disable-test-modules \
 		--enable-optimizations \
-		--with-ensurepip=install \
-		2>&1 | tee ${pythondir}/configure.log
+		--with-ensurepip=install
     echo && echo "Making" && echo
-    ( make -j 1 && echo && echo "Make install" && echo && make -j 1 install ) 2>&1
-    ## | tee ${pythondir}/install.log
+    make -j 12
+    echo && echo "Make install" && echo
+    make -j 5 install
 fi
 
 ##
