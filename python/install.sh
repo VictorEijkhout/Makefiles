@@ -20,8 +20,6 @@ others="paramiko setuptools"
 prefixdir=
 
 pythonver=3.12.4
-#3.11.0
-#
 
 while [ $# -gt 0 ] ; do
     if [ $1 = "-h" ] ; then
@@ -36,6 +34,8 @@ while [ $# -gt 0 ] ; do
 	shift && installhdf= && installpython= && installmpi= && installnumpy= && installothers=1
     elif [ $1 = "--prefix" ] ; then
 	shift && prefixdir=$1 && shift
+    elif [ $1 = "--pythondir" ] ; then
+	shift && pythondir=$1 && shift
     elif [ $1 = "-v" ] ; then
 	shift && pythonver=$1 && shift
     else

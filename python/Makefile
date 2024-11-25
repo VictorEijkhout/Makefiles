@@ -27,8 +27,12 @@ default_install :
 	    "${PREFIXOPTION}"  "${PREFIXEXTRA}" \
 	 && source ${MAKEINCLUDES}/compilers.sh && setcompilers \
 	 && ( \
-	    requirenonzero prefixdir && mkdir -p $$prefixdir && rm -rf $$prefixdir/* \
-	     && $${scriptdir}/install.sh -v ${PACKAGEVERSION} \
+	    echo "Calling install.sh script" \
+	     && requirenonzero homedir \
+	     && requirenonzero prefixdir && mkdir -p $$prefixdir && rm -rf $$prefixdir/* \
+	     && $${scriptdir}/install.sh \
+	          -v ${PACKAGEVERSION} \
+	          --pythondir $${homedir} \
 	          --prefix $${prefixdir} \
 	    ) 2>&1 | tee $$installlog \
 	 && make --no-print-directory varsmodule \
