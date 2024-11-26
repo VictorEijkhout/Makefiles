@@ -115,14 +115,20 @@ python3 -m pip install --upgrade pip
 ##
 ## numpy & scipy
 ## https://github.com/numpy/numpy
+## https://github.com/scipy/scipy.git
 ## https://docs.scipy.org/doc/scipy/building/blas_lapack.html
 ##
 numpyver=2.0.1
 ## 1.21.0
 numpygit=${builddir}/numpy-git
-numpydir=${builddir}/numpy-git
+if [ ! -d ${numpygit} ] ; then
+    ( cd ${builddir} && git clone https://github.com/numpy/numpy numpy-git )
+fi
 scipyver=1.14.0
 scipygit=${builddir}/scipy-git
+if [ ! -d ${scipygit} ] ; then
+    ( cd ${builddir} && git clone https://github.com/scipy/scipy.git scipy-git )
+fi
 
 if [ ! -z "${installnumpy}" ] ; then
     rm -rf ${pkgprefix}/numpy*
@@ -156,14 +162,6 @@ if [ ! -z "${installnumpy}" ] ; then
     git fetch --all --tags --prune
     git checkout tags/v${scipyver}
     pip3 --version
-    # for p in $( echo ${PKG_CONFIG_PATH} | tr ':' ' ' ) ; do
-    # 	echo "PKG_CONFIG_PATH contains: $p"
-    # 	ls ${p}/*.pc
-    # done
-    # for p in $( echo ${CMAKE_PREFIX_PATH} | tr ':' ' ' ) ; do
-    # 	echo "CMAKE_PREFIX_PATH contains $p"
-    # 	find $p -name \*.cmake
-    # done
     blas=mkl-sdl
     #blas=blis
     pip3 install . --target=${pkgprefix} \
