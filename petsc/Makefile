@@ -5,7 +5,7 @@
 ################################################################
 
 PACKAGE = PETSC
-PACKAGEVERSION = 3.22.0
+PACKAGEVERSION = 3.22.1
 MODE = mpi
 
 include ${MAKEINCLUDES}/Make.info
@@ -124,9 +124,10 @@ configurelog :
 
 include Makefile.packages
 
-configure :
-	@echo && echo "there is no configure rule" && echo
-build :: modules
+info ::
+	@echo "make default_install (there are no configure/install rules)"
+.PHONY: defaul_install
+default_install :: modules
 	@if [ "${TACC_SYSTEM}" != "vista" -a ${CUDA} -eq 1 -a -z "${TACC_CUDA_DIR}" ] ; then \
 	    echo && echo "Please load cuda module" && echo && exit 1 \
 	    ; fi
@@ -145,6 +146,7 @@ build :: modules
 	    "${HOMEDIR}"  "${BUILDDIRROOT}"  "${MODE}" \
 	    "${PREFIXOPTION}"  "${PREFIXEXTRA}" \
 	 && echo "Deduce install dir <<$$prefixdir>>" && echo \
+	 && source ${MAKEINCLUDES}/compilers.sh && setcompilers && reportcompilers \
 	 \
 	 && export package_options="$$( make --no-print-directory package_options \
 	        AMGX=${AMGX} CHACO=${CHACO} EIGEN=${EIGEN} FFTW=${FFTW} HDF5=${HDF5} \
@@ -192,6 +194,8 @@ build :: modules
 	     && echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> VLE make" \
 	     && make PETSC_DIR=`pwd` PETSC_ARCH=$${PETSC_ARCH} MAKE_NP=${JCOUNT} all \
 	     && make PETSC_DIR=`pwd` PETSC_ARCH=$${PETSC_ARCH} MAKE_NP=${JCOUNT} install \
+	     && echo " .. open up prefix dir" \
+	     && chmod -R g+rX,o+rX $${prefixdir} \
 	     && echo " .. sys error disable" \
 	     && sed -e 's/#error/#warning/' -i $${prefixdir}/include/petscsys.h \
 	     && echo "................................ VLE make" \
@@ -262,9 +266,6 @@ makemodule :
 ##
 ## installation modes
 ##
-
-.PHONY: default_install
-default_install : configure build
 
 info ::
 	@echo "make biginstall [ EXT=i64debug and such ]"
@@ -337,7 +338,7 @@ biginstall :
 	   && if [ "$${MUMPS}" = "0" ] ; then SCALAPACK=0 ; fi \
 	   \
 	   && echo "Start configure/build at $$( date )" \
-	   && cmdline="make --no-print-directory configure build  \
+	   && cmdline="make --no-print-directory default_install  \
 	      PACKAGEVERSION=${PACKAGEVERSION} JCOUNT=${JCOUNT} \
 	      DEBUG=$${DEBUG} INT=$${INT} PRECISION=$${PRECISION} SCALAR=$${SCALAR} \
 	      $$( if [ ! -z ${CUSTOMEXT} ] ; then echo CUSTOMEXT=${CUSTOMEXT} ; fi ) \

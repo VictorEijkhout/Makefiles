@@ -39,6 +39,7 @@ CMAKEFLAGS = -Wno-dev \
     -D MFEM_USE_PETSC=YES \
     -D PETSC_DIR=${PETSC_DIR} \
     -D PETSC_ARCH= \
+    -D PETSC_EXECUTABLE_RUNS=${PETSC_DIR}/bin \
     \
     -D MFEM_USE_LAPACK=YES \
     -D LAPACK_LIBRARIES=${LAPACKLIB} \
@@ -63,6 +64,7 @@ info ::
 .PHONY: default_install cpu gpu
 default_install : cpu
 cpu : configure build
+## https://github.com/mfem/mfem/issues/4527
 CUDAFLAGS = -allow-unsupported-compiler -Xcompiler -std=gnu++14
 gpu :
 	@export CUDAFLAGS="${CUDAFLAGS}" \

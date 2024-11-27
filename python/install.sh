@@ -7,7 +7,9 @@ function usage () {
     echo "Usage: $0 [ -h ] [ -v 3.12345 (default: ${pythonver}) ]"
     echo "    [ -5 (hdf5 only) ] [ -m (mpi only) ] [ -n (numpy only) ] "
     echo "    [ -o (others only: ${others}) ]"
+    echo "    [ --build builddir ]"
     echo "    [ --prefix prefixdir ]"
+    echo "    [ --srcdir srcdir ]"
     echo "    no options: install everything"
 }
 
@@ -17,11 +19,11 @@ installnumpy=1
 installpython=1
 installothers=1
 others="paramiko setuptools"
+builddir=
 prefixdir=
+srcdir=
 
 pythonver=3.12.4
-#3.11.0
-#
 
 while [ $# -gt 0 ] ; do
     if [ $1 = "-h" ] ; then
@@ -36,6 +38,10 @@ while [ $# -gt 0 ] ; do
 	shift && installhdf= && installpython= && installmpi= && installnumpy= && installothers=1
     elif [ $1 = "--prefix" ] ; then
 	shift && prefixdir=$1 && shift
+    elif [ $1 = "--build" ] ; then
+	shift && builddir=$1 && shift
+    elif [ $1 = "--srcdir" ] ; then
+	shift && srcdir=$1 && shift
     elif [ $1 = "-v" ] ; then
 	shift && pythonver=$1 && shift
     else
@@ -52,41 +58,37 @@ pyminiver=${pythonver#*.} && pyminiver=${pyminiver%.*}
 pymicrover=${pythonver##*.}
 echo && echo "Installing ${pymacrover}.${pyminiver}.${pymicrover}" && echo
 
-pythondir=${STOCKYARD}/python
 if [ -z "${prefixdir}" ] ; then 
+    # standard pythondir for local install only
+    pythondir=${STOCKYARD}/python
     prefixdir=${pythondir}/installation-${pythonver}-${TACC_SYSTEM}-${TACC_FAMILY_COMPILER}-${TACC_FAMILY_COMPILER_VERSION}
 fi
 pkgprefix=${prefixdir}/lib/python${pymacrover}.${pyminiver}/site-packages/
 
 if [ ! -z "${installpython}" ] ; then 
-    rm -rf ${HOME}/{.local,.cache}
-    echo && echo "Building python ${pythonver}" && echo
-    cd ${pythondir}
-    # if [ ! -f Python-${pythonver}.tgz ] ; then 
-    # 	echo && echo "first downloading tgz" && echo
-    # 	wget https://www.python.org/ftp/python/${pythonver}/Python-${pythonver}.tgz
-    # fi
-    # if [ ! -f Python-${pythonver} ] ; then 
-    # 	echo && echo "Untar" && echo
-    # 	tar fxz Python-${pythonver}.tgz
-    # fi
-    # echo && echo "Remove previous installation" && echo
-    # rm -rf ${prefixdir}
 
-    cd ${pythondir}/Python-${pythonver}
+    cd ${srcdir}
 
-    module load sqlite || exit 1
     export CC=${TACC_CC} && export CXX=${TACC_CXX}
-    export LDFLAGS="-L${TACC_MKL_LIB} -L${TACC_INTEL_LIB}"
+    if [ "${TACC_COMPILER_FAMILY}"  = "intel" ] ; then 
+	export LDFLAGS="-DLDFLAGS -L${TACC_MKL_LIB:?MISSING_MKL_LIB} -L${TACC_INTEL_LIB:?MISSING_INTEL_LIB}"
+    else 
+	echo "find /opt/intel/oneapi/compiler/2024.0/lib/libintlc.so.5"
+	export LDFLAGS="-DLDFLAGS \
+-L${TACC_MKL_LIB:?MISSING_MKL_LIB}       -Wl,-rpath=${TACC_MKL_LIB} \
+-L/opt/intel/oneapi/compiler/2024.0/lib  -Wl,-rpath=/opt/intel/oneapi/compiler/2024.0/lib \
+-lintlc"
+    fi
     echo && echo "Configuring" && echo
-    ##./configure --help 
+
     ./configure --prefix=${prefixdir} \
+		--disable-test-modules \
 		--enable-optimizations \
-		--with-ensurepip=install \
-		2>&1 | tee ${pythondir}/configure.log
+		--with-ensurepip=install
     echo && echo "Making" && echo
-    ( make -j 1 && echo && echo "Make install" && echo && make -j 1 install ) 2>&1
-    ## | tee ${pythondir}/install.log
+    make -j 12
+    echo && echo "Make install" && echo
+    make -j 5 install
 fi
 
 ##
@@ -95,12 +97,12 @@ fi
 if [ ! -d "${pkgprefix}" ] ; then 
     echo "ERROR: not finding site-packages: ${pkgprefix}" && exit 1 
 fi
-cat >${pythondir}/load.sh <<EOF
+cat >${builddir:?MISSING_BUILD_DIR}/load.sh <<EOF
 export TACC_PYTHON_DIR=${prefixdir}
 export PATH=${prefixdir}/bin:/home1/00434/eijkhout/.local/bin:${PATH}
 export PYTHONPATH=${pkgprefix}:${PYTHONPATH}
 EOF
-source ${pythondir}/load.sh
+source ${builddir}/load.sh
 echo "Now using python: $( which python3 ), deduced version: $( python3 --version )"
 export XDG_CACHE_HOME=$( pwd )/pipcache
 
@@ -113,14 +115,20 @@ python3 -m pip install --upgrade pip
 ##
 ## numpy & scipy
 ## https://github.com/numpy/numpy
+## https://github.com/scipy/scipy.git
 ## https://docs.scipy.org/doc/scipy/building/blas_lapack.html
 ##
 numpyver=2.0.1
 ## 1.21.0
-numpygit=${pythondir}/numpy-git
-numpydir=${pythondir}/numpy-git
+numpygit=${builddir}/numpy-git
+if [ ! -d ${numpygit} ] ; then
+    ( cd ${builddir} && git clone https://github.com/numpy/numpy numpy-git )
+fi
 scipyver=1.14.0
-scipygit=${pythondir}/scipy-git
+scipygit=${builddir}/scipy-git
+if [ ! -d ${scipygit} ] ; then
+    ( cd ${builddir} && git clone https://github.com/scipy/scipy.git scipy-git )
+fi
 
 if [ ! -z "${installnumpy}" ] ; then
     rm -rf ${pkgprefix}/numpy*
@@ -154,14 +162,6 @@ if [ ! -z "${installnumpy}" ] ; then
     git fetch --all --tags --prune
     git checkout tags/v${scipyver}
     pip3 --version
-    # for p in $( echo ${PKG_CONFIG_PATH} | tr ':' ' ' ) ; do
-    # 	echo "PKG_CONFIG_PATH contains: $p"
-    # 	ls ${p}/*.pc
-    # done
-    # for p in $( echo ${CMAKE_PREFIX_PATH} | tr ':' ' ' ) ; do
-    # 	echo "CMAKE_PREFIX_PATH contains $p"
-    # 	find $p -name \*.cmake
-    # done
     blas=mkl-sdl
     #blas=blis
     pip3 install . --target=${pkgprefix} \
@@ -228,23 +228,3 @@ echo && echo "================ Installation finished"
 echo "in: ${prefixdir}"
 ls -ld ${prefixdir}
 
-exit 0
-
-################################################################
-##
-## problem with Intel:
-##
-
-Traceback (most recent call last):
-  File "/work2/00434/eijkhout/stampede3/python/Python-3.12.4/Lib/multiprocessing/process.py", line 314, in _bootstrap
-    self.run()
-  File "/work2/00434/eijkhout/stampede3/python/Python-3.12.4/Lib/multiprocessing/process.py", line 108, in run
-    self._target(*self._args, **self._kwargs)
-  File "/work2/00434/eijkhout/stampede3/python/installation-3.12.4-intel/lib/python3.12/concurrent/futures/process.py", line 251, in _process_worker
-    call_item = call_queue.get(block=True)
-                ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/work2/00434/eijkhout/stampede3/python/Python-3.12.4/Lib/multiprocessing/queues.py", line 102, in get
-    with self._rlock:
-  File "/work2/00434/eijkhout/stampede3/python/Python-3.12.4/Lib/multiprocessing/synchronize.py", line 95, in __enter__
-    return self._semlock.__enter__()
-           ^^^^^^^^^^^^^^^^^^^^^^^^^
