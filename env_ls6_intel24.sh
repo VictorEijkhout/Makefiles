@@ -30,5 +30,7 @@ module load impi/21.12
 
 ## let's see if this python is compatible enough
 ## module load oneapi22/python3/3.9.10
+module use /scratch/projects/compilers/modulefiles
+module load intel22/python3
 
 module -t list
