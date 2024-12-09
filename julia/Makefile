@@ -19,19 +19,24 @@ info ::
 	@echo "================ custom build"
 	@echo "make configure : not needed"
 	@echo "make build : custom installation"
-.PHONY: configure build
-configure ::
-	@echo "there is no configure rule"
-build ::
+.PHONY: default_install
+info ::
+	@echo "make default_install (no cinfigure or build)"
+default_install ::
 	@source ${MAKEINCLUDES}/names.sh \
-	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" \
+	 && setnames \
+	    "${PACKAGE}" "${PACKAGEVERSION}" "${PACKAGEBASENAME}" \
+	    "${DOWNLOADPATH}" "${SRCPATH}" \
+	    "${INSTALLPATH}" "${INSTALLROOT}" "${INSTALLEXT}" "${INSTALLVARIANT}" \
+	    "${HOMEDIR}" "${BUILDDIRROOT}" "${MODE}" \
+	    "${PREFIXOPTION}" "${PREFIXEXTRA}" \
 	 && ( \
 	    echo "In-source build in $$srcdir" \
 	     && rm -rf $$builddir && mkdir -p $$builddir \
 	     && cd $$srcdir \
 	     && echo " .. git reset and clean" \
 	     && git reset --hard && git clean -x -f -d \
-	     && echo prefix=$$installdir > Make.user \
+	     && echo prefix=$$prefixdir > Make.user \
 	     && echo " .. Make.user : " && cat Make.user \
 	     && echo " .. starting make" \
 	     && make --no-print-directory \
@@ -45,7 +50,7 @@ build ::
 projecttoml :
 	@source ${MAKEINCLUDES}/names.sh \
 	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" \
-	 && cd $$installdir \
+	 && cd $$prefixdir \
 	 && mkdir -p share/tacc \
 	 && for line in \
 	      "[extras]" \
@@ -86,4 +91,4 @@ completely_clean : clean
 	@/bin/rm -rf ${HOME}/.julia
 	@source ${MAKEINCLUDES}/names.sh \
 	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" \
-	 && rm -rf $$srcdir $$builddir $$installdir
+	 && rm -rf $$srcdir $$builddir $$prefixdir
