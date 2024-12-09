@@ -5,7 +5,7 @@
 ################################################################
 
 PACKAGE = claymore
-URL = 
+URL = https://github.com/Javiermro/claymore_JLM
 PACKAGEVERSION = git
 
 MODE = mpi cuda
