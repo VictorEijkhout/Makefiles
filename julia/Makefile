@@ -17,8 +17,6 @@ include ${MAKEINCLUDES}/Make.info
 ## JULIA_INSTALL = ${STOCKYARD}/julia/installation-${TACC_SYSTEM}-${TACC_FAMILY_COMPILER}
 info ::
 	@echo "================ custom build"
-	@echo "make configure : not needed"
-	@echo "make build : custom installation"
 .PHONY: default_install
 info ::
 	@echo "make default_install (no cinfigure or build)"
@@ -36,8 +34,8 @@ default_install ::
 	     && cd $$srcdir \
 	     && echo " .. git reset and clean" \
 	     && git reset --hard && git clean -x -f -d \
-	     && echo prefix=$$prefixdir > Make.user \
-	     && echo " .. Make.user : " && cat Make.user \
+	     && echo prefix=$${prefixdir} > Make.user \
+	     && echo " .. Make.user : " && echo "%%%%" && cat Make.user && echo "%%%%" \
 	     && echo " .. starting make" \
 	     && make --no-print-directory \
 	     && make --no-print-directory install \
@@ -80,6 +78,7 @@ build ::
 	@make public
 
 GITREPO = https://github.com/JuliaLang/julia.git
+BRANCH = v1.11.1
 include ${MAKEINCLUDES}/Make.git
 
 include ${MAKEINCLUDES}/Make.clean

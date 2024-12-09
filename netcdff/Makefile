@@ -20,27 +20,35 @@ include ${MAKEINCLUDES}/Make.info
 include ${MAKEINCLUDES}/Make.cmake
 HASBIN=1
 CMAKEPREFIXPATHSET = 1
-DEPENDSON = netcdf
 PKGCONFIGLIB = pkgconfig
 LINKLIB64toLIB = 1
 NETCDF_PARALLEL = OFF
 CPTOINSTALLDIR = examples
-CMAKEFLAGS = \
+CMAKEFLAGS_seq = \
     -D netCDF_INCLUDE_DIR=${TACC_NETCDF_INC} \
     -D netCDF_LIBRARIES=${TACC_NETCDF_LIB}/libnetcdf.so \
+    -D ENABLE_DAP=OFF
+CMAKEFLAGS_par = \
+    -D netCDF_INCLUDE_DIR=${TACC_PARALLELNETCDF_INC} \
+    -D netCDF_LIBRARIES=${TACC_PARALLELNETCDF_LIB}/libnetcdf.so \
     -D ENABLE_DAP=OFF
 include ${MAKEINCLUDES}/Make.cbuild
 .PHONY: seq par
 info ::
 	@echo "make seq par : separate versions"
 seq :
-	@make --no-print-directory configure build JCOUNT=${JCOUNT} \
-	    MODE=seq MODULES="hdf5 netcdf" NETCDF_PARALLEL=OFF \
-	    MODULENAME=netcdff  DEPENDSON=netcdf
+	@make --no-print-directory configure build \
+	    NETCDF_PARALLEL=OFF JCOUNT=${JCOUNT} \
+	    CMAKEFLAGS="${CMAKEFLAGS_$@}" \
+	    MODE=seq MODULES="hdf5 netcdf" \
+	    DEPENDSON=netcdf \
+	    MODULENAME=netcdff  
 par :
-	@make --no-print-directory configure build JCOUNT=${JCOUNT} \
-	    MODE=mpi MODULES="" NETCDF_PARALLEL=ON \
-	    MODULENAME=parallelnetcdff
+	@make --no-print-directory configure build \
+	    NETCDF_PARALLEL=ON JCOUNT=${JCOUNT} \
+	    CMAKEFLAGS="${CMAKEFLAGS_$@}" \
+	    MODE=mpi MODULES="" \
+	    MODULENAME=parallel-netcdff MODULEVARNAME=PARALLELNETCDFF
 
 .PHONY: default_install
 info ::
