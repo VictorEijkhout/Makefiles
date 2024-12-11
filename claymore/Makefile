@@ -8,8 +8,8 @@ PACKAGE = claymore
 URL = https://github.com/Javiermro/claymore_JLM
 PACKAGEVERSION = git
 
-MODE = mpi cuda
-MODULES = 
+MODE = omp
+MODULES = cuda
 
 include ${MAKEINCLUDES}/Make.info
 
@@ -36,12 +36,10 @@ CMAKEPREFIXPATHSET=1
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
 info ::
-	@echo "make cpu, gpu"
-	@echo "make default_install : cpu version"
-.PHONY: default_install gpu
-default_install : gpu
+	@echo "make default_install : gpu version"
+.PHONY: default_install 
 CUDAFLAGS = -allow-unsupported-compiler -Xcompiler -std=gnu++14
-gpu :
+default_install : 
 	@export CUDAFLAGS="${CUDAFLAGS}" \
 	 && export NVCC_APPEND_FLAGS="${CUDAFLAGS}" \
 	 && make --no-print-directory configure build \
