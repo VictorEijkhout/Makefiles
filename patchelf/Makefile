@@ -12,6 +12,7 @@ MODE = core
 include ${MAKEINCLUDES}/Make.info
 
 NOLIB = 1
+NOINCLUDE = 1
 HASBIN = 1
 BEFORECONFIGURECMDS = ./bootstrap.sh
 include ${MAKEINCLUDES}/Make.configure
