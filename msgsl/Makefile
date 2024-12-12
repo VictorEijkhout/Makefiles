@@ -14,6 +14,7 @@ include ${MAKEINCLUDES}/Make.info
 CMAKEFLAGS = -D GSL_TEST=OFF
 include ${MAKEINCLUDES}/Make.cmake
 NOLIB = 1
+CMAKEPREFIXPATHSET = 1
 include ${MAKEINCLUDES}/Make.cbuild
 info ::
 	@echo "make default_install : configure build"
