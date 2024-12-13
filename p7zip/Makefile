@@ -8,6 +8,9 @@
 #### lack of prefix dir
 #### https://github.com/p7zip-project/p7zip/issues/242
 ####
+#### Alone7z does not build:
+#### https://github.com/p7zip-project/p7zip/issues/243
+####
 ################################################################
 
 PACKAGE = P7ZIP
@@ -38,6 +41,15 @@ default_install :
 	     && requirenonzero prefixdir && rm -rf $$prefixdir/ \
 	     && mkdir -p $$prefixdir/{bin,lib} \
 	     && requirenonzero srcdir && cd $$srcdir \
+	     && if [ -z "a" ] ; then \
+	        ( cd CPP/7zip/Bundles/Alone7z     \
+	         && make -f makefile.gcc \
+	         && echo "Alone7z/bin: " && ls _o/bin && echo "to: $${prefixdir}/bin" \
+	         && cp _o/bin/* $${prefixdir}/bin \
+	         && echo "Alone7z/lib: " && ls _o/lib/*/lib* \
+	         && cp _o/lib/*/lib* $${prefixdir}/lib \
+	        ) \
+	        ; fi \
 	     && ( cd CPP/7zip/Bundles/Alone2    \
 	         && make -f makefile.gcc \
 	         && echo "Alone2/bin: " && ls _o/bin && echo "to: $${prefixdir}/bin" \
@@ -52,7 +64,6 @@ default_install :
 	         && echo "Alone/lib: " && ls _o/lib/*/lib* \
 	         && cp _o/lib/*/lib* $${prefixdir}/lib \
 	        ) \
-	     && echo '( cd CPP/7zip/Bundles/Alone7z   && make -f makefile.gcc )' \
 	     && ( cd CPP/7zip/Bundles/Format7zF && make -f makefile.gcc ) \
 	    ) 2>&1 | tee $$installlog \
 	 && make --no-print-directory varsmodule \
