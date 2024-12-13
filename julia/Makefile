@@ -34,10 +34,14 @@ default_install ::
 	     && cd $$srcdir \
 	     && echo " .. git reset and clean" \
 	     && git reset --hard && git clean -x -f -d \
-	     && echo prefix=$${prefixdir} > Make.user \
+	     && rm -f Make.user && touch Make.user \
+	     && cat >>Make.user <<< "prefix=$${prefixdir}" \
+	     && cat >>Make.user <<< "USE_BINARYBUILDER=0" \
+	     && cat >>Make.user <<< "USE_SYSTEM_MPFR=1" \
+	     && cat >>Make.user <<< "USE_SYSTEM_P7ZIP=1" \
 	     && echo " .. Make.user : " && echo "%%%%" && cat Make.user && echo "%%%%" \
 	     && echo " .. starting make" \
-	     && make --no-print-directory \
+	     && make -j ${JCOUNT} O=$${builddir} --no-print-directory \
 	     && make --no-print-directory install \
 	    ) 2>&1 | tee $$installlog
 ##  BUILDROOT=$$builddir
