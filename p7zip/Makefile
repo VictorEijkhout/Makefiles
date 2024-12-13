@@ -5,6 +5,9 @@
 #### release can not be built:
 #### https://github.com/p7zip-project/p7zip/issues/241
 ####
+#### lack of prefix dir
+#### https://github.com/p7zip-project/p7zip/issues/242
+####
 ################################################################
 
 PACKAGE = P7ZIP
@@ -32,10 +35,23 @@ default_install :
 	 && source ${MAKEINCLUDES}/compilers.sh && setcompilers \
 	 && ( \
 	    requirenonzero builddir && rm -rf $$builddir && mkdir -p $$builddir \
-	     && requirenonzero prefixdir && mkdir -p $$prefixdir && rm -rf $$prefixdir/* \
+	     && requirenonzero prefixdir && rm -rf $$prefixdir/ \
+	     && mkdir -p $$prefixdir/{bin,lib} \
 	     && requirenonzero srcdir && cd $$srcdir \
-	     && ( cd CPP/7zip/Bundles/Alone2    && make -f makefile.gcc ) \
-	     && ( cd CPP/7zip/Bundles/Alone     && make -f makefile.gcc ) \
+	     && ( cd CPP/7zip/Bundles/Alone2    \
+	         && make -f makefile.gcc \
+	         && echo "Alone2/bin: " && ls _o/bin && echo "to: $${prefixdir}/bin" \
+	         && cp _o/bin/* $${prefixdir}/bin \
+	         && echo "Alone2/lib: " && ls _o/lib/*/lib* \
+	         && cp _o/lib/*/lib* $${prefixdir}/lib \
+	        ) \
+	     && ( cd CPP/7zip/Bundles/Alone     \
+	         && make -f makefile.gcc \
+	         && echo "Alone/bin: " && ls _o/bin && echo "to: $${prefixdir}/bin" \
+	         && cp _o/bin/* $${prefixdir}/bin \
+	         && echo "Alone/lib: " && ls _o/lib/*/lib* \
+	         && cp _o/lib/*/lib* $${prefixdir}/lib \
+	        ) \
 	     && echo '( cd CPP/7zip/Bundles/Alone7z   && make -f makefile.gcc )' \
 	     && ( cd CPP/7zip/Bundles/Format7zF && make -f makefile.gcc ) \
 	    ) 2>&1 | tee $$installlog \
