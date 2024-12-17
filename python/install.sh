@@ -64,6 +64,7 @@ if [ -z "${prefixdir}" ] ; then
     prefixdir=${pythondir}/installation-${pythonver}-${TACC_SYSTEM}-${TACC_FAMILY_COMPILER}-${TACC_FAMILY_COMPILER_VERSION}
 fi
 pkgprefix=${prefixdir}/lib/python${pymacrover}.${pyminiver}/site-packages/
+echo "${pkgprefix}" > ${pkgprefix}/tacc.pth
 
 if [ ! -z "${installpython}" ] ; then 
 
