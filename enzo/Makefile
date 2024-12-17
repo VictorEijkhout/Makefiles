@@ -37,6 +37,7 @@ BUILDSTATICLIBS	= 1
 HASBIN = 1
 
 include ${MAKEINCLUDES}/Make.cmake
+MAKEBUILDTARGET = enzo-e
 include ${MAKEINCLUDES}/Make.cbuild
 
 info ::
