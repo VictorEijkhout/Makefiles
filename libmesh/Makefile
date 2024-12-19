@@ -7,12 +7,14 @@
 ################################################################
 
 PACKAGE = libmesh
-URL = 
-PACKAGEVERSION = git
-## 1.7.1
+URL = http://libmesh.github.io/ \
+    https://github.com/libMesh/libmesh
+PACKAGEVERSION = 1.8.0-rc1
+# 1.7.6
+## git
 
 MODE = mpi
-MODULES = phdf5
+MODULES = phdf5 petsc
 
 include ${MAKEINCLUDES}/Make.info
 
@@ -41,7 +43,7 @@ CONFIGUREFLAGS=\
 
 include ${MAKEINCLUDES}/Make.install
 
-TGZURL = https://github.com/libMesh/libmesh/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
+TGZURL = https://github.com/libMesh/libmesh/releases/download/v${PACKAGEVERSION}/libmesh-${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 
 GITREPO = https://github.com/libMesh/libmesh.git
