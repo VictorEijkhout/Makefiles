@@ -9,7 +9,8 @@
 PACKAGE = libmesh
 URL = http://libmesh.github.io/ \
     https://github.com/libMesh/libmesh
-PACKAGEVERSION = 1.8.0-rc1
+PACKAGEVERSION = 1.8.0
+PACKAGEVERSIONDOWNLOAD = 1.8.0-rc1
 # 1.7.6
 ## git
 
@@ -30,20 +31,27 @@ include ${MAKEINCLUDES}/Make.configure
 CONFIGUREFLAGS=\
       --enable-silent-rules \
       --enable-unique-id \
-      --disable-warnings \
-      --with-thread-model=openmp \
       --disable-maintainer-mode \
+      --disable-warnings \
+    \
       --enable-hdf5 \
       --enable-petsc-hypre-required \
-      --enable-metaphysicl-required \
-      --enable-xdr-required \
+    --enable-dirichlet --enable-nodeconstraint \
+    --enable-metaphysicl-required \
+    --enable-parmesh \
+    --enable-xdr-required \
+    \
+    --enable-fortran \
+      --with-thread-model=openmp \
       --with-cxx-std-min=2014 \
       --without-gdb-command \
       --with-methods=opt 
+HASBIN = 1
+PKGCONFIGLIB = pkgconfig
 
 include ${MAKEINCLUDES}/Make.install
 
-TGZURL = https://github.com/libMesh/libmesh/releases/download/v${PACKAGEVERSION}/libmesh-${PACKAGEVERSION}.tar.gz
+TGZURL = https://github.com/libMesh/libmesh/releases/download/v${PACKAGEVERSIONDOWNLOAD}/libmesh-${PACKAGEVERSIONDOWNLOAD}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 
 GITREPO = https://github.com/libMesh/libmesh.git
