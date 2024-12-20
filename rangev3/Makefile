@@ -2,6 +2,9 @@
 ####
 #### Makefile for rangev3
 ####
+#### Intel problems:
+#### https://github.com/ericniebler/range-v3/issues/1845
+####
 ################################################################
 
 URL = https://github.com/ericniebler/range-v3
@@ -14,8 +17,9 @@ include ${MAKEINCLUDES}/Make.info
 
 # intel compiler considers missing proto as fatal
 CMAKEFLAGS = \
-    -DCMAKE_COMPILE_WARNING_AS_ERROR=OFF
-##    -DCMAKE_CXX_COMPILER_FLAGS=-Wno-error
+    -D RANGES_ENABLE_WERROR=OFF \
+    -DCMAKE_COMPILE_WARNING_AS_ERROR=OFF \
+    -DCMAKE_CXX_COMPILER_FLAGS=-Wno-error
 nocmakeflag = \
     --compile-no-warning-as-error \
     -DCMAKE_CXX_FLAGS=-Wno-error
