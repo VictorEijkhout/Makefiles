@@ -28,5 +28,6 @@ mkdir dave_build
 cd dave_build
 
 cmake $config_common -DEnzo-E_CONFIG=linux_nvc ../enzo-git
-make
+make -j 8 enzo-e
+
 

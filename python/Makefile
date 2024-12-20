@@ -37,8 +37,8 @@ default_install :
 	          --srcdir $${srcdir} \
 	          --prefix $${prefixdir} \
 	    ) 2>&1 | tee $$installlog \
-	 && make --no-print-directory varsmodule \
-	      CMAKEPREFIXPATHSET=1
+	 && make --no-print-directory varsmodule
+
 config-help :
 	@source ${MAKEINCLUDES}/names.sh \
 	 && setnames \
@@ -48,6 +48,9 @@ config-help :
 	    "${HOMEDIR}"  "${BUILDDIRROOT}"  "${MODE}" \
 	    "${PREFIXOPTION}"  "${PREFIXEXTRA}" \
 	 && cd $${srcdir} && ./configure --help 
+
+CMAKEPREFIXPATHSET = 1
+HASBIN = 1
 
 include ${MAKEINCLUDES}/Make.vars
 include ${MAKEINCLUDES}/Make.public
