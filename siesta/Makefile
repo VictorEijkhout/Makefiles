@@ -10,7 +10,7 @@
 
 PACKAGE = siesta
 URL = https://siesta-project.org/siesta/index.html
-PACKAGEVERSION = 5.0.1
+PACKAGEVERSION = 5.2.1
 
 MODE = mpi
 MODULES = fftw3 mkl
