@@ -3,9 +3,9 @@
 #SBATCH -J myjob           # Job name
 #SBATCH -o myjob.o%j       # Name of stdout output file
 #SBATCH -e myjob.e%j       # Name of stderr error file
-#SBATCH -p skx
-#SBATCH -N 1               # Total # of nodes 
-#SBATCH -n 1              # Total # of mpi tasks
+#SBATCH -p vm-small
+#SBATCH -N 1
+#SBATCH -n 1
 #SBATCH -t 10:0:0
 #SBATCH -A A-ccsc       # Allocation name (req'd if you have more than 1)
 

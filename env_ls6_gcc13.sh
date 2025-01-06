@@ -26,7 +26,8 @@ module load ${compiler}/${compilerversion}
 export TACC_CC=gcc
 export TACC_CXX=g++
 export TACC_FC=gfortran
-module load impi/19.0.9
+module load impi
+# /19.0.9
 
 # module load python3/3.9.7
 export TACC_PYTHON_DIR=/opt/apps/gcc11_2/python3/3.9.7

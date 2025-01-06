@@ -15,17 +15,12 @@ module unload intel oneapi gcc impi mvapich2 python3 python2 2>/dev/null
 echo "==== adding experimental and my own module paths"
 
 export VICTOR_WORK=/work2/00434/eijkhout/ls6
-export MODULEROOT=${VICTOR_WORK}/modulefiles
-
-export VICTOR_MODULEPATH_ROOT=${MODULEROOT}
+export VICTOR_MODULEPATH_ROOT=${VICTOR_WORK}/modulefiles
 module use ${VICTOR_MODULEPATH_ROOT}/Core
 
 intelversion=24.1
 echo "==== loading intel ${intelversion}"
 module load intel/${intelversion}
-# export TACC_CC=icx
-# export TACC_CXX=icpx
-# export TACC_FC=ifx
 module load impi/21.12
 
 ## let's see if this python is compatible enough
