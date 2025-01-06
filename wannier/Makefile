@@ -21,7 +21,8 @@ info ::
 	@echo "make default_install : make-based install"
 .PHONY: default_install
 default_install :
-	@source ${MAKEINCLUDES}/names.sh \
+	@scriptdir=$$(pwd) \
+	 && source ${MAKEINCLUDES}/names.sh \
 	 && setnames \
 	    "${PACKAGE}" "${PACKAGEVERSION}" "${PACKAGEBASENAME}" \
 	    "${DOWNLOADPATH}" "${SRCPATH}" \
@@ -34,11 +35,7 @@ default_install :
 	     && requirenonzero prefixdir && mkdir -p $$prefixdir && rm -rf $$prefixdir/* \
 	     && cd $$srcdir \
 	     && rm -rf src/{obj,objp} \
-	     && if [ "${TACC_FAMILY_COMPILER}" = "intel" ] ; then \
-	          cp config/make.inc.ifort ./make.inc \
-	        ; elif [ "${TACC_FAMILY_COMPILER}" = "gcc" ] ; then \
-	          cp config/make.inc.gfort ./make.inc \
-	        ; fi \
+	     && cp $${scriptdir}/make.inc.${TACC_FAMILY_COMPILER} ./make.inc \
 	     && export DESTDIR="$${prefixdir}" && export PREFIX="" \
 	         && make -j ${JCOUNT} all && make install \
 	         && cp -r examples doc $${prefixdir}/ \
