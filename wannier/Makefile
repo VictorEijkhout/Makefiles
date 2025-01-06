@@ -48,6 +48,7 @@ default_install :
 	    ) 2>&1 | tee $$installlog \
 	 && make --no-print-directory varsmodule HASBIN=1 
 include ${MAKEINCLUDES}/Make.vars
+include ${MAKEINCLUDES}/Make.public
 
 
 TGZURL = https://github.com/wannier-developers/wannier90/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
