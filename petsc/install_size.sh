@@ -1,7 +1,7 @@
 #!/bin/bash
 
 jcount=6
-pversion=3.22.0
+pversion=
 function usage() {
     echo "Usage: $0 [ -h ] [ -v (default: ${pversion} ]"
     echo "    [ -j jpar (default: ${jcount}) ]"
@@ -66,11 +66,11 @@ module load eigen
 module load fftw3
 
 if [ "${cuda}" = "1" -a "${TACC_SYSTEM}" != "vista" ] ; then 
-    cversion=${TACC_FAMILY_COMPILER_VERSION}
-    cversion=${cversion%%.*}
-    if [ ${cversion} -gt 12 ] ; then 
-	echo "ERROR can not deal with gcc > 12" && exit 1
-    fi
+    gcc_version=${TACC_FAMILY_COMPILER_VERSION}
+    gcc_version=${gcc_version%%.*}
+    # if [ ${gcc_version} -gt 12 ] ; then 
+    # 	echo "ERROR can not deal with gcc > 12" && exit 1
+    # fi
     module load cuda/12
 fi
 
@@ -103,7 +103,8 @@ fi
 export biglog=install_big$( if [ ! -z "${customext}" ] ; then echo "-${customext}" ; fi ).log
 rm -f $biglog
 cmdline="\
-make --no-print-directory biginstall JCOUNT=${jcount} PACKAGEVERSION=${pversion} \
+make --no-print-directory biginstall JCOUNT=${jcount} \
+    $( if [ ! -z "${pversion}" ] ; then echo PACKAGEVERSION=${pversion} ; fi ) \
     EXT=${EXTENSION} \
     $( if [ ! -z "${customext}" ] ; then echo CUSTOMEXT=${customext} ; fi ) \
     PKGSTART=1 $( cat ${size}.sh ) PKGSTOP=1 \
