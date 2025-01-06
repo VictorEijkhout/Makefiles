@@ -37,12 +37,19 @@ MODE = mpi
 ## - these modules do not go into the "depends_on" clause of the module file
 ##
 MODULES = fftw3 mkl 
+##
 
 ##
 ## The first of the include files.
 ## this one is absolutely required
 ##
 include ${MAKEINCLUDES}/Make.info
+
+####
+####
+#### Configure and build
+####
+####
 
 ##
 ## CMAKE installation needs the following include files:
@@ -62,17 +69,52 @@ CMAKEFLAGS = \
 CMAKEBUILDDEBUG = 1
 
 ##
+## if CMakeLists.txt is not at root level:
+##
+CMAKESUBDIR=src
+
+##
+## CMake has its own logic whether to generate a `lib' or `lib64' directory.
+## Since this goes into an environment variable you don't care.
+## However, if you hard rely on `lib' being there, set:
+##
+LINKLIB64toLIB = 1
+
+##
+## Autotools uses the lines
+## !! incompatible with cmake: use one or the other !!
+##
+include ${MAKEINCLUDES}/Make.configure
+include ${MAKEINCLUDES}/Make.install
+
+##
+## if configure / make files are not at root level:
+##
+CONFIGURESUBDIR=src
+MAKESUBDIR=src
+
+##
+## The scripts are pretty clever about `autoreconf' and such,
+## however you can always use:
+##
+BEFORECONFIGURECMDS = autoreconf -i
+
+##
 ## Customization. any non-zero value counts as true; default is false
 ## - HASBIN : is there a bin directory? 
+## - NOLIB : is there no lib directory?
 ## - NOINCLUDE : is there no include directory? 
 HASBIN = 1
+NOLIB =
 NOINCLUDE =
 
 ##
-## Customization settings
+## Customization settings:
+## - CMAKEPREFIXPATHSET : nonzero causes the CMAKE_PREFIX_PATH to be set
 ## - PKGCONFIG : path for ".pc" files relative to installation root
 ## - PKGCONFIGLIB : path for ".pc" files relative to lib/lib64 dir
 ## - CPTOINSTALLDIR : extra files/directories to copy to the installation
+## - INCLUDELOC : non-standard name/location of the include directory
 ##
 PKGCONFIGLIB = pkgconfig
 CPTOINSTALLDIR = Examples
@@ -87,10 +129,22 @@ info ::
 default_install : configure build
 
 ##
+## parallel make: set
+## JCOUNT=24
+##
+
+####
+####
+#### Download / clone
+####
+####
+
+##
 ## Download of versioned releases
 ## Specify a TGZURL path
 ## - this can end in tgz or tar.gz; it gets renamed to a standard name anyway
 ## - use PACKAGEVERSION here as much as possible
+## - for zip files use ZIPURL
 ##
 TGZURL = https://gitlab.com/pkg-project/pkg/-/archive/${PACKAGEVERSION}/pkg-${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
