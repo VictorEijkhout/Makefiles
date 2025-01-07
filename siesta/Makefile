@@ -13,7 +13,7 @@ URL = https://siesta-project.org/siesta/index.html
 PACKAGEVERSION = 5.2.1
 
 MODE = mpi
-MODULES = fftw3 mkl wannier90
+MODULES = fftw3 mkl 
 
 include ${MAKEINCLUDES}/Make.info
 
@@ -31,9 +31,6 @@ CMAKEFLAGS = \
     -D CMAKE_Fortran_FLAGS=-fPIE \
     \
     -D SIESTA_WITH_WANNIER90=ON \
-    -D WANNIER90_ROOT=${TACC_WANNIER90_DIR} \
-    -D WANNIER90_LIBRARIES=${TACC_WANNIER90_LIB} \
-    -D WANNIER90_INCLUDE_DIRS=${TACC_WANNIER90_INC} \
     \
     -D SIESTA_WITH_FFTW=TRUE \
     -D SCALAPACK_LIBRARY_DIR=${TACC_MKL_LIB} \
