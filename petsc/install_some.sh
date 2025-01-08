@@ -16,7 +16,7 @@ function usage() {
 cuda=0
 jcount=6
 p4p=0
-pversion=3.22.0
+pversion=
 while [ $# -gt 0 ] ; do
     if [ $1 = "-h" ] ; then
 	usage && exit 0
@@ -46,7 +46,7 @@ echo "================================================================" \
 ) | tee -a ${somelog}      
 
 set -e
-archs=archs-${pversion}
+archs=archs
 rm -f $archs && touch $archs
 
 #
@@ -64,7 +64,8 @@ for arch in  $( cat test_versions.txt ) ; do
     else
 	echo ${arch} >> ${archs}
     fi
-    ./install_big.sh -j ${jcount} -v ${pversion} \
+    ./install_big.sh -j ${jcount} \
+	$( if [ ! -z "${pversion}" ] ; then echo "-v ${pversion}" ; fi ) \
 	$( if [ "${arch}" = "f08" ] ; then echo "-8" ; fi ) \
 	$( if [ "${arch}" = "nohdf5" ] ; then echo "-5" ; fi ) \
 	$( if [ ${p4p} -eq 1 ] ; then echo "-4" ; fi ) \

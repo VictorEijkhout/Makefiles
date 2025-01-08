@@ -5,7 +5,7 @@
 ################################################################
 
 PACKAGE = PETSC
-PACKAGEVERSION = 3.22.1
+PACKAGEVERSION = 3.22.2
 MODE = mpi
 
 include ${MAKEINCLUDES}/Make.info
@@ -338,7 +338,7 @@ biginstall :
 	   && if [ "$${MUMPS}" = "0" ] ; then SCALAPACK=0 ; fi \
 	   \
 	   && echo "Start configure/build at $$( date )" \
-	   && cmdline="make --no-print-directory default_install  \
+	   && cmdline="make --no-print-directory default_install makemodule \
 	      PACKAGEVERSION=${PACKAGEVERSION} JCOUNT=${JCOUNT} \
 	      DEBUG=$${DEBUG} INT=$${INT} PRECISION=$${PRECISION} SCALAR=$${SCALAR} \
 	      $$( if [ ! -z ${CUSTOMEXT} ] ; then echo CUSTOMEXT=${CUSTOMEXT} ; fi ) \

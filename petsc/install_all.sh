@@ -13,10 +13,10 @@ function usage() {
     echo "    [ -4 : include petsc/slepc4py ]"
 }
 
-cuda=0
+cuda=
 jcount=6
 p4p=0
-pversion=3.22.0
+pversion=
 while [ $# -gt 0 ] ; do
     if [ $1 = "-h" ] ; then
 	usage && exit 0
@@ -46,7 +46,7 @@ echo "================================================================" \
 ) | tee -a ${alllog}      
 
 set -e
-archs=archs-${pversion}
+archs=archs
 rm -f $archs && touch $archs
 for debug in 0 1 ; do 
     for int in 32 64 ; do 
@@ -63,9 +63,9 @@ for debug in 0 1 ; do
 		else
 		    echo ${arch} >> ${archs}
 		fi
-		./install_big.sh -j ${jcount} -v ${pversion} \
+		./install_big.sh -j ${jcount} \
+		    $( if [ ! -z "${pversion}" ] ; then echo "-v ${pversion}" ; fi ) \
 		    $( if [ ${p4p} -eq 0 ] ; then echo "-4" ; fi ) \
-		    $( if [ ${cuda} -eq 1 ] ; then echo "-c" ; fi ) \
 		    | tee -a ${alllog}
 	    done
 	done
@@ -85,7 +85,6 @@ for debug in 0 1 ; do
 	./install_big.sh -j ${jcount} \
     			 -5 \
     			 $( if [ ${p4p} -eq 0 ] ; then echo "-4" ; fi ) \
-    			 $( if [ ${cuda} -eq 1 ] ; then echo "-c" ; fi ) \
 			 | tee -a ${alllog}
     done
 done
@@ -105,10 +104,30 @@ for debug in 0 1 ; do
 	echo ${arch} >> ${archs}
 	./install_big.sh -j ${jcount} \
 	    -5 -8 -4 \
-	    $( if [ ${cuda} -eq 1 ] ; then echo "-c" ; fi ) \
 	    | tee -a ${alllog}
 	if [ $? -gt 0 ] ; then exit 1 ; fi 
     done
 done
+
+##
+## CUDA
+##
+if [ ! -z "${cuda}" ] ; then
+    for debug in 0 1 ; do 
+	export SCALAR=real
+	export INT=32
+	export PRECISION=double
+	export SCALAR=${scalar}
+	export DEBUG=${debug}
+	export CUDA=1
+	arch=$( make --no-print-directory petscshortarch )
+	( echo && echo "Installing big for arch=${arch}" && echo ) | tee -a ${alllog}
+	echo ${arch} >> ${archs}
+	./install_small.sh -j ${jcount} \
+	    -c \
+	    | tee -a ${alllog}
+	if [ $? -gt 0 ] ; then exit 1 ; fi 
+    done
+fi
 
 ( echo && echo "done archs: $( cat ${archs} | tr '\n' ' ' )" && echo ) | tee -a ${alllog}
