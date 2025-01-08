@@ -34,9 +34,20 @@ CMAKEFLAGS = \
     \
     -D SIESTA_WITH_WANNIER90=ON \
     \
-    -D SIESTA_WITH_FFTW=TRUE \
+    -D SIESTA_WITH_FFTW=TRUE
+ifdef TACC_MKL_DIR
+  CMAKEFLAGS += \
     -D SCALAPACK_LIBRARY_DIR=${TACC_MKL_LIB} \
     -D SCALAPACK_LIBRARY='-lmkl_scalapack_ilp64 -lmkl_blacs_intelmpi_lp64 -lmkl_intel_ilp64 -lmkl_sequential -lmkl_core'
+else ifdef TACC_NVPL_DIR
+  CMAKEFLAGS += \
+    -D BLAS_LIBRARY_DIR=${TACC_NVPL_LIB} \
+    -D BLAS_LIBRARY='-lnvpl_blas_lp64_seq -lnvpl_blas_core' \
+    -D LAPACK_LIBRARY_DIR=${TACC_NVPL_LIB} \
+    -D LAPACK_LIBRARY='-lnvpl_lapack_lp64_seq -lnvpl_lapack_core -lnvpl_blas_lp64_seq -lnvpl_blas_core' \
+    -D SCALAPACK_LIBRARY_DIR=${TACC_NVPL_LIB} \
+    -D SCALAPACK_LIBRARY='-lnvpl_scalapack_ilp64 -lnvpl_blacs_lp64_openmpi5'
+endif
 
 HASBIN = 1
 CPTOINSTALLDIR = Examples
