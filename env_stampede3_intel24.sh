@@ -14,12 +14,13 @@ module unload intel oneapi gcc impi mvapich2 python3 python2 2>/dev/null
 
 export VICTOR_WORK=/work2/00434/eijkhout/stampede3
 export VICTOR_MODULEPATH_ROOT=${VICTOR_WORK}/modulefiles
+
+module use /scratch/projects/compilers/modulefiles
+## 24.2 is on scratch
 module use ${VICTOR_MODULEPATH_ROOT}/Core
 
 intelversion=24.2
 echo "loading intel ${intelversion}"
-## 24.2 is on scratch
-module use /scratch/projects/compilers/modulefiles
 
 module load intel/${intelversion}
 export TACC_CC=icx
