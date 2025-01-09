@@ -47,7 +47,7 @@ par :
 	@make --no-print-directory configure build \
 	    NETCDF_PARALLEL=ON JCOUNT=${JCOUNT} \
 	    CMAKEFLAGS="${CMAKEFLAGS_$@}" \
-	    MODE=mpi MODULES="" \
+	    MODE=mpi MODULES="parallel-netcdf phdf5" \
 	    MODULENAME=parallel-netcdff MODULEVARNAME=PARALLELNETCDFF
 
 .PHONY: default_install
