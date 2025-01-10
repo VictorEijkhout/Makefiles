@@ -6,6 +6,8 @@
 #### libfdf cloning in F jail: https://gitlab.com/siesta-project/siesta/-/issues/417
 #### scalapack fortran interface: https://gitlab.com/siesta-project/siesta/-/issues/438
 ####
+#### Vista:
+#### https://gitlab.com/siesta-project/siesta/-/issues/441
 ####
 ################################################################
 
