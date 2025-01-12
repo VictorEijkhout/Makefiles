@@ -39,7 +39,7 @@ CMAKEFLAGS = \
 ifdef TACC_MKL_DIR
   CMAKEFLAGS += \
     -D SCALAPACK_LIBRARY_DIR=${TACC_MKL_LIB} \
-    -D SCALAPACK_LIBRARY='-lmkl_scalapack_ilp64 -lmkl_blacs_intelmpi_lp64 -lmkl_intel_lp64 -lmkl_sequential -lmkl_core'
+    -D SCALAPACK_LIBRARY='-lmkl_scalapack_lp64 -lmkl_blacs_intelmpi_lp64 -lmkl_intel_lp64 -lmkl_sequential -lmkl_core'
 else ifdef TACC_NVPL_DIR
   CMAKEFLAGS += \
     -D BLAS_LIBRARY_DIR=${TACC_NVPL_LIB} \
