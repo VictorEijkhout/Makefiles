@@ -47,7 +47,7 @@ else ifdef TACC_NVPL_DIR
     -D LAPACK_LIBRARY_DIR=${TACC_NVPL_LIB} \
     -D LAPACK_LIBRARY='-lnvpl_lapack_lp64_seq -lnvpl_lapack_core -lnvpl_blas_lp64_seq -lnvpl_blas_core' \
     -D SCALAPACK_LIBRARY_DIR=${TACC_NVPL_LIB} \
-    -D SCALAPACK_LIBRARY='-lnvpl_scalapack_ilp64 -lnvpl_blacs_lp64_openmpi5'
+    -D SCALAPACK_LIBRARY='-lnvpl_scalapack_lp64 -lnvpl_blacs_lp64_openmpi5'
 endif
 
 HASBIN = 1
