@@ -10,7 +10,9 @@ URL = https://www.octopus-code.org \
 PACKAGEVERSION = 15.1
 
 MODE = mpi
-MODULES = gsl fftw3 libxc metis mkl
+MODULES = gsl fftw3 libxc mkl
+# Note: metis is included https://www.octopus-code.org/documentation/15/faq/
+# Issue: https://gitlab.com/octopus-code/octopus/-/issues/1157
 
 include ${MAKEINCLUDES}/Make.info
 
@@ -22,8 +24,8 @@ PKGCONFIGLIB = pkgconfig
 ##
 include ${MAKEINCLUDES}/Make.cmake
 CMAKEFLAGS = \
-    -D OCTOPUS_MPI=ON \
-    -D OCTOPUS_METIS=ON --debug-find-pkg=metis
+    -D OCTOPUS_MPI=ON 
+#    -D OCTOPUS_METIS=ON --debug-find-pkg=metis
 include ${MAKEINCLUDES}/Make.cbuild
 info ::
 	@echo "make default_install : configure build"
