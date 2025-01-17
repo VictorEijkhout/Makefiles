@@ -10,10 +10,14 @@
 #### however
 #### https://github.com/scivision/METIS/issues/7
 ####
+#### https://github.com/scivision/METIS/issues/10
+#### https://github.com/scivision/METIS/issues/8
+####
 ################################################################
 
 PACKAGE = metis
-PACKAGEVERSION = 5.1.0.3
+PACKAGEVERSION = 5.2.1.1
+## 5.1.0.3
 URL = https://github.com/scivision/METIS
 MODE = mpi
 MODULES = 
