@@ -26,5 +26,6 @@ default_install : configure build public
 TGZURL = https://github.com/flame/blis/archive/refs/tags/${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 GITREPO = https://github.com/flame/blis.git
+BRANCH = fix-examples-installed
 include ${MAKEINCLUDES}/Make.git
 
