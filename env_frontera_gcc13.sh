@@ -18,6 +18,8 @@ module load gcc/${gnuversion}
 export TACC_CC=gcc
 export TACC_CXX=g++
 export TACC_FC=gfortran
+## fix for broken gcc13 mpif90:
+export I_MPI_FCFLAGS="-I/opt/intel/oneapi/mpi/2021.9.0/include/gfortran/11.1.0"
 
 module load impi/21.9.0
 
