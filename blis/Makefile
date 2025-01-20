@@ -5,7 +5,8 @@
 ################################################################
 
 PACKAGE = blis
-PACKAGEVERSION = git
+PACKAGEVERSION = 1.0
+# git
 URL = https://github.com/flame/blis
 MODE = seq
 
@@ -15,22 +16,16 @@ CONFIGUREFLAGS = generic
 include ${MAKEINCLUDES}/Make.configure
 include ${MAKEINCLUDES}/Make.install
 PKGCONFIG = share/pkgconfig
+CPTOINSTALLDIR = examples
+
 .PHONY: default_install
 info ::
 	@echo "make default_install : configure build"
 default_install : configure build public
 
+TGZURL = https://github.com/flame/blis/archive/refs/tags/${PACKAGEVERSION}.tar.gz
+include ${MAKEINCLUDES}/Make.download
 GITREPO = https://github.com/flame/blis.git
+BRANCH = fix-examples-installed
 include ${MAKEINCLUDES}/Make.git
 
-old_install ::
-	@/bin/rm -rf ${BLIS_BUILD} ${BLIS_INSTALL}
-	@( \
-	cd ${BLIS_SRC} \
-	 && mkdir -p ${BLIS_BUILD} ${BLIS_INSTALL} \
-	 && ./configure --prefix=${BLIS_INSTALL} \
-	        `if [ ! -z "${MT}" ] ; then echo "--enable-threading=openmp" ; fi` \
-	        CC=clang generic \
-	 && make \
-	 && make install \
-	) 2>&1 | tee install.log

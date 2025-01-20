@@ -14,7 +14,7 @@ URL = https://github.com/trilinos/Trilinos \
 PACKAGEVERSION = 16.0.0
 PACKAGEVERSION_DOWNLOAD = 16-0-0
 #15-1-0
-MODE = mpi
+MODE = hybrid
 MODULES = boost swig phdf5 pnetcdf nvpl
 MODULE_MINIMUM_VERSION_intel = 20
 
@@ -29,12 +29,18 @@ info ::
 PYTHON = ON
 
 CMAKEPREFIXPATHSET = 1
+LANGUAGE = CXX
+CPPSTANDARD = 20
+# ThyraEpetraAdapters don't work in 13
+HAS_ADAPTERS = ON
 HAS_BOOST = ON
+HAS_FEI = ${HAS_ADAPTERS}
 HAS_KOKKOS = ON
 HAS_NETCDF = OFF
 HAS_PNETCDF = ON
 HAS_HDF5 = ON
 HAS_OPENMP = ON
+HAS_Teka = ${HAS_ADAPTERS}
 .PHONY: configure config-help
 info ::
 	@echo "make config-help"

@@ -4,7 +4,7 @@
 ####
 #### Fortran debug flags: https://gitlab.com/siesta-project/siesta/-/issues/397
 #### libfdf cloning in F jail: https://gitlab.com/siesta-project/siesta/-/issues/417
-#### fortran interface: https://gitlab.com/siesta-project/siesta/-/issues/438
+#### scalapack fortran interface: https://gitlab.com/siesta-project/siesta/-/issues/438
 ####
 #### Vista:
 #### https://gitlab.com/siesta-project/siesta/-/issues/441
@@ -26,10 +26,11 @@ PKGCONFIGLIB = pkgconfig
 ## cmake version
 ##
 # https://docs.siesta-project.org/projects/siesta/en/stable/installation/build-issues.html#siesta-does-not-recognize-intel-mkl-libraries
-CMAKEPREP = find . -name \*make -exec sed -i -e 's/\-xHost//' -e 's/\-check//' {} \;
+## CMAKEPREP = find . -name \*make -exec sed -i -e 's/\-xHost//' -e 's/\-check//' {} \;
 ## CMAKEBUILDDEBUG = 1
 # for nvidia add flag: -Mextend ?
-CMAKEFLAGS = \
+# --log-level=debug --log-context
+CMAKEFLAGS =  \
     -D SIESTA_WITH_FLOOK=FALSE \
     -D Fortran_FLAGS_DEBUG=-O0 \
     -D CMAKE_Fortran_FLAGS=-fPIE \
@@ -37,18 +38,25 @@ CMAKEFLAGS = \
     -D SIESTA_WITH_WANNIER90=ON \
     \
     -D SIESTA_WITH_FFTW=TRUE
-ifdef TACC_MKL_DIR
+ifdef TACC_SCALAPACK_DIR
   CMAKEFLAGS += \
-    -D SCALAPACK_LIBRARY_DIR=${TACC_MKL_LIB} \
-    -D SCALAPACK_LIBRARY='-lmkl_scalapack_ilp64 -lmkl_blacs_intelmpi_lp64 -lmkl_intel_lp64 -lmkl_sequential -lmkl_core'
+    -D SCALAPACK_LIBRARY_DIR=${TACC_SCALAPACK_LIB} \
+    -D SCALAPACK_LIBRARY='-L${TACC_SCALAPACK_LIB} -lscalapack -lmkl_gf_lp64 -lmkl_sequential -lmkl_core -lpthread -lm -ldl' \
+    -D LAPACK_LIBRARY='-L${TACC_MKL_LIB} -lmkl_gf_lp64 -lmkl_sequential -lmkl_core -lpthread -lm -ldl'
+
+else ifdef TACC_MKL_DIR
+  CMAKEFLAGS += \
+    -D LAPACK_LIBRARY='-L${TACC_MKL_LIB} -lmkl_gf_lp64 -lmkl_sequential -lmkl_core -lpthread -lm -ldl' \
+    -D SCALAPACK_LIBRARY='-L${TACC_MKL_LIB} -m64 -lmkl_scalapack_lp64 -Wl,--start-group -lmkl_gf_lp64 -lmkl_sequential -lmkl_core -lmkl_blacs_intelmpi_lp64 -Wl,--end-group -lpthread -lm -ldl'
+
 else ifdef TACC_NVPL_DIR
   CMAKEFLAGS += \
     -D BLAS_LIBRARY_DIR=${TACC_NVPL_LIB} \
-    -D BLAS_LIBRARY='-lnvpl_blas_lp64_seq -lnvpl_blas_core' \
+    -D BLAS_LIBRARY='-L${TACC_NVPL_LIB} -lnvpl_blas_lp64_seq -lnvpl_blas_core' \
     -D LAPACK_LIBRARY_DIR=${TACC_NVPL_LIB} \
-    -D LAPACK_LIBRARY='-lnvpl_lapack_lp64_seq -lnvpl_lapack_core -lnvpl_blas_lp64_seq -lnvpl_blas_core' \
+    -D LAPACK_LIBRARY='-L${TACC_NVPL_LIB} -lnvpl_lapack_lp64_seq -lnvpl_lapack_core -lnvpl_blas_lp64_seq -lnvpl_blas_core' \
     -D SCALAPACK_LIBRARY_DIR=${TACC_NVPL_LIB} \
-    -D SCALAPACK_LIBRARY='-lnvpl_scalapack_ilp64 -lnvpl_blacs_lp64_openmpi5'
+    -D SCALAPACK_LIBRARY='-L${TACC_NVPL_LIB} -lnvpl_scalapack_lp64 -lnvpl_blacs_lp64_openmpi5'
 endif
 
 HASBIN = 1
@@ -67,3 +75,14 @@ include ${MAKEINCLUDES}/Make.download
 GITREPO = https://gitlab.com/siesta-project/siesta.git
 SUBMODULE = 1
 include ${MAKEINCLUDES}/Make.git
+
+# Diagnose scalapack linking problem by 
+# editing SiestaCheckLinalg.cmake
+# to read:
+# check_fortran_source_compiles(
+# "
+# external :: blacs_gridinit
+# call blacs_gridinit()
+# end
+# "
+# scalapack_has_blacs_gridinit SRC_EXT F90 OUTPUT_VARIABLE scalapack_compile_output )

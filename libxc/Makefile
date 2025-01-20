@@ -25,6 +25,11 @@ include ${MAKEINCLUDES}/Make.cbuild
 PKGCONFIGLIB = pkgconfig
 CMAKEPREFIXPATHSET = 1
 
+info ::
+	@echo "make default_install : configure build"
+.PHONY: default_install
+default_install : configure build
+
 TGZURL = https://gitlab.com/libxc/libxc/-/archive/${PACKAGEVERSION}/libxc-${PACKAGEVERSION}.tar.gz
 ## http://www.tddft.org/programs/libxc/down.php?file=${PACKAGEVERSION}/libxc-${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
