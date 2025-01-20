@@ -28,6 +28,7 @@ PKGCONFIGLIB = pkgconfig
 # https://docs.siesta-project.org/projects/siesta/en/stable/installation/build-issues.html#siesta-does-not-recognize-intel-mkl-libraries
 CMAKEPREP = find . -name \*make -exec sed -i -e 's/\-xHost//' -e 's/\-check//' {} \;
 ## CMAKEBUILDDEBUG = 1
+# for nvidia add flag: -Mextend ?
 CMAKEFLAGS = \
     -D SIESTA_WITH_FLOOK=FALSE \
     -D Fortran_FLAGS_DEBUG=-O0 \
