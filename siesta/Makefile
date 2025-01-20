@@ -28,7 +28,8 @@ PKGCONFIGLIB = pkgconfig
 # https://docs.siesta-project.org/projects/siesta/en/stable/installation/build-issues.html#siesta-does-not-recognize-intel-mkl-libraries
 ## CMAKEPREP = find . -name \*make -exec sed -i -e 's/\-xHost//' -e 's/\-check//' {} \;
 ## CMAKEBUILDDEBUG = 1
-CMAKEFLAGS = --log-level=debug --log-context \
+# --log-level=debug --log-context
+CMAKEFLAGS =  \
     -D SIESTA_WITH_FLOOK=FALSE \
     -D Fortran_FLAGS_DEBUG=-O0 \
     -D CMAKE_Fortran_FLAGS=-fPIE \
@@ -36,10 +37,15 @@ CMAKEFLAGS = --log-level=debug --log-context \
     -D SIESTA_WITH_WANNIER90=ON \
     \
     -D SIESTA_WITH_FFTW=TRUE
-ifdef TACC_MKL_DIR
+ifdef TACC_SCALAPACK_DIR
   CMAKEFLAGS += \
-    -D SCALAPACK_LIBRARY_DIR=${TACC_MKL_LIB} \
-    -D SCALAPACK_LIBRARY='-m64 -lmkl_scalapack_lp64 -Wl,--start-group -lmkl_gf_lp64 -lmkl_sequential -lmkl_core -lmkl_blacs_intelmpi_lp64 -Wl,--end-group -lpthread -lm -ldl'
+    -D SCALAPACK_LIBRARY_DIR=${TACC_SCALAPACK_LIB} \
+    -D SCALAPACK_LIBRARY='-L${TACC_SCALAPACK_LIB} -lscalapack -lmkl_gf_lp64 -lmkl_sequential -lmkl_core -lpthread -lm -ldl' \
+    -D LAPACK_LIBRARY='-L${TACC_MKL_LIB} -lmkl_gf_lp64 -lmkl_sequential -lmkl_core -lpthread -lm -ldl'
+else ifdef TACC_MKL_DIR
+  CMAKEFLAGS += \
+    -D LAPACK_LIBRARY='-L${TACC_MKL_LIB} -lmkl_gf_lp64 -lmkl_sequential -lmkl_core -lpthread -lm -ldl' \
+    -D SCALAPACK_LIBRARY='-L${TACC_MKL_LIB} -m64 -lmkl_scalapack_lp64 -Wl,--start-group -lmkl_gf_lp64 -lmkl_sequential -lmkl_core -lmkl_blacs_intelmpi_lp64 -Wl,--end-group -lpthread -lm -ldl'
 else ifdef TACC_NVPL_DIR
   CMAKEFLAGS += \
     -D BLAS_LIBRARY_DIR=${TACC_NVPL_LIB} \
@@ -66,3 +72,14 @@ include ${MAKEINCLUDES}/Make.download
 GITREPO = https://gitlab.com/siesta-project/siesta.git
 SUBMODULE = 1
 include ${MAKEINCLUDES}/Make.git
+
+# Diagnose scalapack linking problem by 
+# editing SiestaCheckLinalg.cmake
+# to read:
+# check_fortran_source_compiles(
+# "
+# external :: blacs_gridinit
+# call blacs_gridinit()
+# end
+# "
+# scalapack_has_blacs_gridinit SRC_EXT F90 OUTPUT_VARIABLE scalapack_compile_output )
