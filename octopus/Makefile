@@ -25,10 +25,12 @@ PKGCONFIGLIB = pkgconfig
 ## cmake install (there is an autoconf one)
 ## https://www.octopus-code.org/documentation/15/manual/installation/cmake/
 ##
+OCTOPUS_MPI = ON
 include ${MAKEINCLUDES}/Make.cmake
 CMAKEFLAGS = \
-    -D OCTOPUS_MPI=ON 
-#    -D OCTOPUS_METIS=ON --debug-find-pkg=metis
+    -DLibxc_ROOT="${TACC_LIBXC_DIR}" \
+    -D OCTOPUS_OpenMP=ON \
+    -D OCTOPUS_MPI=${OCTOPUS_MPI}
 include ${MAKEINCLUDES}/Make.cbuild
 info ::
 	@echo "make default_install : configure build"
@@ -36,7 +38,8 @@ info ::
 default_install : configure build
 
 GITREPO = https://gitlab.com/octopus-code/octopus.git
+SUBMODULE = 1
 include ${MAKEINCLUDES}/Make.git
-TXZURL = https://octopus-code.org/download/15.1/octopus-${PACKAGEVERSION}.tar.xz
+TXZURL = https://octopus-code.org/download/${PACKAGEVERSION}/octopus-${PACKAGEVERSION}.tar.xz
 include ${MAKEINCLUDES}/Make.download
 

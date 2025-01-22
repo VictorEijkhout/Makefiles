@@ -15,7 +15,8 @@ PACKAGEVERSIONDOWNLOAD = 1.8.0-rc1
 ## git
 
 MODE = mpi
-MODULES = phdf5 petsc
+# note: petsc installation needs to have hypre
+MODULES = boost phdf5 petsc
 
 include ${MAKEINCLUDES}/Make.info
 
@@ -44,11 +45,12 @@ CONFIGUREFLAGS=\
     --enable-fortran \
       --with-thread-model=openmp \
       --with-cxx-std-min=2014 \
+    --with--boost=${TACC_BOOST_DIR} \
       --without-gdb-command \
       --with-methods=opt 
 HASBIN = 1
 PKGCONFIGLIB = pkgconfig
-DEPENDSONCURRENT = phdf5 petsc
+DEPENDSONCURRENTMINOR = phdf5 petsc
 
 include ${MAKEINCLUDES}/Make.install
 
