@@ -48,6 +48,7 @@ CONFIGUREFLAGS=\
       --with-methods=opt 
 HASBIN = 1
 PKGCONFIGLIB = pkgconfig
+DEPENDSONCURRENT = phdf5 petsc
 
 include ${MAKEINCLUDES}/Make.install
 

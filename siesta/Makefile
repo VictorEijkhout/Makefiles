@@ -28,6 +28,7 @@ PKGCONFIGLIB = pkgconfig
 # https://docs.siesta-project.org/projects/siesta/en/stable/installation/build-issues.html#siesta-does-not-recognize-intel-mkl-libraries
 ## CMAKEPREP = find . -name \*make -exec sed -i -e 's/\-xHost//' -e 's/\-check//' {} \;
 ## CMAKEBUILDDEBUG = 1
+# for nvidia add flag: -Mextend ?
 # --log-level=debug --log-context
 CMAKEFLAGS =  \
     -D SIESTA_WITH_FLOOK=FALSE \
@@ -42,18 +43,20 @@ ifdef TACC_SCALAPACK_DIR
     -D SCALAPACK_LIBRARY_DIR=${TACC_SCALAPACK_LIB} \
     -D SCALAPACK_LIBRARY='-L${TACC_SCALAPACK_LIB} -lscalapack -lmkl_gf_lp64 -lmkl_sequential -lmkl_core -lpthread -lm -ldl' \
     -D LAPACK_LIBRARY='-L${TACC_MKL_LIB} -lmkl_gf_lp64 -lmkl_sequential -lmkl_core -lpthread -lm -ldl'
+
 else ifdef TACC_MKL_DIR
   CMAKEFLAGS += \
     -D LAPACK_LIBRARY='-L${TACC_MKL_LIB} -lmkl_gf_lp64 -lmkl_sequential -lmkl_core -lpthread -lm -ldl' \
     -D SCALAPACK_LIBRARY='-L${TACC_MKL_LIB} -m64 -lmkl_scalapack_lp64 -Wl,--start-group -lmkl_gf_lp64 -lmkl_sequential -lmkl_core -lmkl_blacs_intelmpi_lp64 -Wl,--end-group -lpthread -lm -ldl'
+
 else ifdef TACC_NVPL_DIR
   CMAKEFLAGS += \
     -D BLAS_LIBRARY_DIR=${TACC_NVPL_LIB} \
-    -D BLAS_LIBRARY='-lnvpl_blas_lp64_seq -lnvpl_blas_core' \
+    -D BLAS_LIBRARY='-L${TACC_NVPL_LIB} -lnvpl_blas_lp64_seq -lnvpl_blas_core' \
     -D LAPACK_LIBRARY_DIR=${TACC_NVPL_LIB} \
-    -D LAPACK_LIBRARY='-lnvpl_lapack_lp64_seq -lnvpl_lapack_core -lnvpl_blas_lp64_seq -lnvpl_blas_core' \
+    -D LAPACK_LIBRARY='-L${TACC_NVPL_LIB} -lnvpl_lapack_lp64_seq -lnvpl_lapack_core -lnvpl_blas_lp64_seq -lnvpl_blas_core' \
     -D SCALAPACK_LIBRARY_DIR=${TACC_NVPL_LIB} \
-    -D SCALAPACK_LIBRARY='-lnvpl_scalapack_lp64 -lnvpl_blacs_lp64_openmpi5'
+    -D SCALAPACK_LIBRARY='-L${TACC_NVPL_LIB} -lnvpl_scalapack_lp64 -lnvpl_blacs_lp64_openmpi5'
 endif
 
 HASBIN = 1
