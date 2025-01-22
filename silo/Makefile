@@ -16,6 +16,8 @@ else
 endif
 ## WEIRD main branch has an error that is fixed in 4.11
 ## https://github.com/LLNL/Silo/issues/375
+## Intel 24 problem resolved?
+## https://github.com/LLNL/Silo/issues/400
 MODE = seq
 MODULES = hdf5
 
