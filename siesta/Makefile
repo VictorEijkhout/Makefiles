@@ -86,3 +86,11 @@ include ${MAKEINCLUDES}/Make.git
 # end
 # "
 # scalapack_has_blacs_gridinit SRC_EXT F90 OUTPUT_VARIABLE scalapack_compile_output )
+
+# Nvidia / Openmpi doesn't like something:
+# [  2%] Building Fortran object _deps/libgridxc-build/CMakeFiles/libgridxc-lib.dir/src/mesh3d.F90.o
+# cd /work/00434/eijkhout/siesta/build-5.2.1-vista-nvidia24.9-openmpi5.0.5_nvc249/_deps/libgridxc-build && /home1/apps/nvidia/Linux_aarch64/24.9/compilers/bin/nvfortran -DHAVE_MPI -Dlibgridxc_lib_EXPORTS -I/work/00434/eijkhout/siesta/build-5.2.1-vista-nvidia24.9-openmpi5.0.5_nvc249/_deps/libgridxc-build/include -isystem /opt/apps/nvidia24/openmpi/5.0.5_nvc249/include -isystem /opt/apps/nvidia24/openmpi/5.0.5_nvc249/lib -fPIE  -O2 -gopt -module include -fPIC -c /work/00434/eijkhout/siesta/build-5.2.1-vista-nvidia24.9-openmpi5.0.5_nvc249/_deps/libgridxc-src/src/mesh3d.F90 -o CMakeFiles/libgridxc-lib.dir/src/mesh3d.F90.o
+# NVFORTRAN-W-0189-Argument number 1 to mpi_allreduce: association of scalar actual argument to array dummy argument (/work/00434/eijkhout/siesta/build-5.2.1-vista-nvidia24.9-openmpi5.0.5_nvc249/_deps/libgridxc-src/src/mesh3d.F90: 2016)
+# NVFORTRAN-W-0189-Argument number 2 to mpi_allreduce: association of scalar actual argument to array dummy argument (/work/00434/eijkhout/siesta/build-5.2.1-vista-nvidia24.9-openmpi5.0.5_nvc249/_deps/libgridxc-src/src/mesh3d.F90: 2016)
+#   0 inform,   2 warnings,   0 severes, 0 fatal for optimizetransferorder
+# nvfortran-Fatal-/home1/apps/nvidia/Linux_aarch64/24.9/compilers/bin/tools/fort1 TERMINATED by signal 11
