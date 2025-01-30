@@ -11,7 +11,7 @@ URL = https://github.com/precice/precice
 PACKAGEVERSION = 3.1.2
 # 2.5.0
 
-MODE = seq
+MODE = mpi
 MODULES = boost eigen petsc
 
 include ${MAKEINCLUDES}/Make.info
@@ -19,10 +19,10 @@ include ${MAKEINCLUDES}/Make.info
 ##
 ## cmake 
 ##
-CMAKEFLAGS = -DBUILD_SHARED_LIBS=ON \
-    -D PRECICE_PythonActions=OFF \
-    -D CMAKE_BUILD_TYPE=Release \
-    -D PRECICE_PETScMapping=OFF
+CMAKEFLAGS = \
+    -D PRECICE_FEATURE_MPI_COMMUNICATION=ON \
+    -D PRECICE_FEATURE_PYTHON_ACTIONS=OFF \
+    -D PRECICE_FEATURE_PETSC_MAPPING=ON
 
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
