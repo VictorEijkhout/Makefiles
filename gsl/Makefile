@@ -19,6 +19,7 @@ CONFIGUREFLAGS = \
     --disable-dependency-tracking 
 
 PKGCONFIGLIB = pkgconfig
+HASBIN = 1
 include ${MAKEINCLUDES}/Make.install
 .PHONY: default_install
 info ::
