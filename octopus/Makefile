@@ -11,7 +11,7 @@ PACKAGEVERSION = 15.1
 GITTAG = 15.1
 
 MODE = mpi
-MODULES = gsl fftw3 libxc mkl
+MODULES = gsl fftw3 mkl
 # Note: metis is included https://www.octopus-code.org/documentation/15/faq/
 # Issue: https://gitlab.com/octopus-code/octopus/-/issues/1157
 
