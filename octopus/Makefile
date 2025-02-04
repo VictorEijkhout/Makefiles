@@ -17,11 +17,9 @@ MODULES = gsl fftw3 mkl
 
 # Git clone fails on libxc:
 # https://gitlab.com/octopus-code/octopus/-/issues/1158
-# seems resolved by setting Libxc_ROOT
+# seems resolved by disable finding Libxc
 
 include ${MAKEINCLUDES}/Make.info
-
-PKGCONFIGLIB = pkgconfig
 
 ##
 ## cmake install (there is an autoconf one)
