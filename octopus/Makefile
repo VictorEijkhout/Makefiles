@@ -39,6 +39,7 @@ info ::
 	@echo "make default_install : configure build"
 .PHONY: default_install
 default_install : configure build
+DEPENDSON = gsl,fftw3
 
 GITREPO = https://gitlab.com/octopus-code/octopus.git
 SUBMODULE = 1
