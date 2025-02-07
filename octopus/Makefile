@@ -11,7 +11,9 @@ PACKAGEVERSION = 15.1
 GITTAG = 15.1
 
 MODE = mpi
-MODULES = gsl fftw3 mkl
+MODULES = gsl mkl 
+#  fftw3 not needed because MKL
+
 # Note: metis is included https://www.octopus-code.org/documentation/15/faq/
 # Issue: https://gitlab.com/octopus-code/octopus/-/issues/1157
 
@@ -31,7 +33,9 @@ CMAKEFLAGS = \
     -D CMAKE_DISABLE_FIND_PACKAGE_Libxc=On \
     -D CMAKE_DISABLE_FIND_PACKAGE_METIS=On \
     -D OCTOPUS_OpenMP=ON \
-    -D OCTOPUS_MPI=${OCTOPUS_MPI}
+    -D OCTOPUS_MPI=${OCTOPUS_MPI} \
+    -D OCTOPUS_MKL=ON  \
+    -D OCTOPUS_ScaLAPACK=ON
 ## Note: there are also "--preset stufstufstuf" flags for cmake. See ticket 1158.
 
 include ${MAKEINCLUDES}/Make.cbuild
@@ -39,7 +43,7 @@ info ::
 	@echo "make default_install : configure build"
 .PHONY: default_install
 default_install : configure build
-DEPENDSON = gsl,fftw3
+DEPENDSON = gsl
 
 GITREPO = https://gitlab.com/octopus-code/octopus.git
 SUBMODULE = 1
