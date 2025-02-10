@@ -10,6 +10,9 @@ PACKAGEVERSION_DOWNLOAD = 4.3.0rc4
 URL = https://www.mpich.org
 MODE = seq
 FAMILY = mpi
+#
+# on TACC systems, the mpi module is already there
+#
 NOMODULE = 1
 
 include ${MAKEINCLUDES}/Make.info
@@ -22,7 +25,10 @@ PKGCONFIG = lib/pkgconfig
 MODULENAMEALT = MPI
 HASBIN = 1
 .PHONY: default_install
-default_install : configure build module
+info ::
+	@echo "make default_install"
+	@echo "    (note: module needs to be made explicitly)"
+default_install : configure build 
 
 TGZURL = http://www.mpich.org/static/downloads/${PACKAGEVERSION_DOWNLOAD}/mpich-${PACKAGEVERSION_DOWNLOAD}.tar.gz
 include ${MAKEINCLUDES}/Make.download
