@@ -5,7 +5,8 @@
 ################################################################
 
 PACKAGE = MPICH
-PACKAGEVERSION = 4.2.1
+PACKAGEVERSION = 4.3.0
+PACKAGEVERSION_DOWNLOAD = 4.3.0rc4
 URL = https://www.mpich.org
 MODE = seq
 FAMILY = mpi
@@ -21,9 +22,9 @@ PKGCONFIG = lib/pkgconfig
 MODULENAMEALT = MPI
 HASBIN = 1
 .PHONY: default_install
-default_install : configure build
+default_install : configure build module
 
-TGZURL = http://www.mpich.org/static/downloads/${PACKAGEVERSION}/mpich-${PACKAGEVERSION}.tar.gz
+TGZURL = http://www.mpich.org/static/downloads/${PACKAGEVERSION_DOWNLOAD}/mpich-${PACKAGEVERSION_DOWNLOAD}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 
 SUBMODULE = submodule
