@@ -83,9 +83,10 @@ for debug in 0 1 ; do
 	( echo && echo "Installing big for arch=${arch}" && echo ) | tee -a ${alllog}
 	echo ${arch} >> ${archs}
 	./install_big.sh -j ${jcount} \
-    			 -5 \
-    			 $( if [ ${p4p} -eq 0 ] ; then echo "-4" ; fi ) \
-			 | tee -a ${alllog}
+		    $( if [ ! -z "${pversion}" ] ; then echo "-v ${pversion}" ; fi ) \
+    		    -5 \
+    		    $( if [ ${p4p} -eq 0 ] ; then echo "-4" ; fi ) \
+	    | tee -a ${alllog}
     done
 done
 export NOHDF5=0
@@ -103,7 +104,8 @@ for debug in 0 1 ; do
 	( echo && echo "Installing big for arch=${arch}" && echo ) | tee -a ${alllog}
 	echo ${arch} >> ${archs}
 	./install_big.sh -j ${jcount} \
-	    -5 -8 -4 \
+		     $( if [ ! -z "${pversion}" ] ; then echo "-v ${pversion}" ; fi ) \
+		     -5 -8 -4 \
 	    | tee -a ${alllog}
 	if [ $? -gt 0 ] ; then exit 1 ; fi 
     done
@@ -124,7 +126,8 @@ if [ ! -z "${cuda}" ] ; then
 	( echo && echo "Installing big for arch=${arch}" && echo ) | tee -a ${alllog}
 	echo ${arch} >> ${archs}
 	./install_small.sh -j ${jcount} \
-	    -c \
+		   $( if [ ! -z "${pversion}" ] ; then echo "-v ${pversion}" ; fi ) \
+		   -c \
 	    | tee -a ${alllog}
 	if [ $? -gt 0 ] ; then exit 1 ; fi 
     done
