@@ -5,8 +5,7 @@
 ################################################################
 
 PACKAGE = CMAKE
-PACKAGEVERSION = 3.30.3
-# 3.29.5
+PACKAGEVERSION = 3.31.5
 URL = https://cmake.org/
 MODE = core
 
