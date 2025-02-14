@@ -5,9 +5,11 @@
 #### https://github.com/KarypisLab/METIS
 #### THIS IS PROBABLY BROKEN AND NO LONGER MAINTAINED
 ####
+#### https://github.com/KarypisLab/METIS/issues/66
+####
 ################################################################
 
-PACKAGE = metis
+PACKAGE = metisk
 PACKAGEVERSION = 5.2.1
 #PACKAGEVERSION = git
 MODE = mpi
@@ -17,11 +19,12 @@ include ${MAKEINCLUDES}/Make.info
 
 configure :: modules
 	@source ${MAKEINCLUDES}/names.sh \
-	 && export MODE=${MODE} \
-	 && setnames ${PACKAGEROOT} ${PACKAGE} ${PACKAGEVERSION} "" ${PACKAGEBASENAME} \
-	 && setmodulenames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" \
-	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" \
-	 \
+	 && setnames \
+	    "${PACKAGE}" "${PACKAGEVERSION}" "${PACKAGEBASENAME}" \
+	    "${DOWNLOADPATH}" "${SRCPATH}" \
+	    "${INSTALLPATH}" "${INSTALLROOT}" "${INSTALLEXT}" "${INSTALLVARIANT}" \
+	    "${HOMEDIR}" "${BUILDDIRROOT}" "${MODE}" \
+	    "${PREFIXOPTION}" "${PREFIXEXTRA}" \
 	 && source ${MAKEINCLUDES}/compilers.sh \
 	 && setmpicompilers \
 	 \
@@ -47,10 +50,12 @@ configure :: modules
 ## not quite working BUILDDIR=$${builddir}, see distclean below
 build ::
 	@source ${MAKEINCLUDES}/names.sh \
-	 && export MODE=${MODE} \
-	 && setnames ${PACKAGEROOT} ${PACKAGE} ${PACKAGEVERSION} "" ${PACKAGEBASENAME} \
-	 && setmodulenames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" \
-	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" \
+	 && setnames \
+	    "${PACKAGE}" "${PACKAGEVERSION}" "${PACKAGEBASENAME}" \
+	    "${DOWNLOADPATH}" "${SRCPATH}" \
+	    "${INSTALLPATH}" "${INSTALLROOT}" "${INSTALLEXT}" "${INSTALLVARIANT}" \
+	    "${HOMEDIR}" "${BUILDDIRROOT}" "${MODE}" \
+	    "${PREFIXOPTION}" "${PREFIXEXTRA}" \
 	 && ( cd $${srcdir} \
 	    && echo "\
 	        BUILDDIR=$${srcdir}/build \
@@ -60,6 +65,10 @@ build ::
 	    ) 2>&1 | tee $${installlog} \
 	 && make varsmodule \
 	 && ( cd $${srcdir} && make distclean )
+.PHONY: default_install
+info ::
+	@echo "default_install : configure build module"
+default_install : configure build module public
 include ${MAKEINCLUDES}/Make.vars
 
 clean ::

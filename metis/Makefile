@@ -63,3 +63,8 @@ i64-build :
 TGZURL = https://github.com/scivision/METIS/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 
+ifdef TICKETS
+intel24 compilation S3
+/opt/apps/gcc/13.2.0/bin/ld: CMakeFiles/gpmetis.dir/gpmetis.c.o: undefined reference to symbol 'gk_GetCurMemoryUsed'
+/opt/apps/gcc/13.2.0/bin/ld: /work2/00434/eijkhout/metis/build-5.2.1.1-stampede3-intel24.2-impi21.13-i32/_deps/gklib-build/libGKlib.so: error adding symbols: DSO missing from command line
+endif

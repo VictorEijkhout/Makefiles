@@ -23,7 +23,7 @@ while [ $# -gt 0 ] ; do
     if [ $1 = "-h" ] ; then
 	usage && exit 0
     elif [ $1 = "-4" ] ; then 
-	echo " .. disabling petsc4py/slepc4py"
+	echo " .. enabling petsc4py/slepc4py"
 	p4p=1 && shift
     elif [ $1 = "-5" ] ; then 
 	echo " .. disabling hdf5"

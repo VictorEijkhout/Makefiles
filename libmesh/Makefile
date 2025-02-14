@@ -10,7 +10,7 @@ PACKAGE = libmesh
 URL = http://libmesh.github.io/ \
     https://github.com/libMesh/libmesh
 PACKAGEVERSION = 1.8.0
-PACKAGEVERSIONDOWNLOAD = 1.8.0-rc1
+PACKAGEVERSIONDOWNLOAD = 1.8.0-rc2
 # 1.7.6
 ## git
 

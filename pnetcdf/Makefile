@@ -28,6 +28,10 @@ default_install : configure build
 TGZURL = https://parallel-netcdf.github.io/Release/pnetcdf-${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 
+##
+## trouble with git version
+## https://github.com/Parallel-NetCDF/PnetCDF/issues/134#issuecomment-2657881334
+## 
 GITREPO = https://github.com/Parallel-NetCDF/PnetCDF.git
 include ${MAKEINCLUDES}/Make.git
 

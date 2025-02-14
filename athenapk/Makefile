@@ -1,11 +1,12 @@
 ################################################################
 ####
-#### Makefile for Athenapk installation
+#### Makefile for AthenaK (not Athenapk) installation
 ####
 ################################################################
 
-PACKAGE = athenapk
-URL = https://github.com/parthenon-hpc-lab/athenapk
+PACKAGE = athenak
+URL = https://github.com/IAS-Astrophysics/athenak
+# parthenon-hpc-lab/athenapk
 PACKAGEVERSION = git
 
 MODE = mpi
@@ -45,7 +46,7 @@ info ::
 	@echo "Do Not Use 'config' target"
 default_install : outer_config build
 
-GITREPO = https://github.com/parthenon-hpc-lab/athenapk.git
+GITREPO = https://github.com/IAS-Astrophysics/athenak.git
 SUBMODULE = 1
 include ${MAKEINCLUDES}/Make.git
 
