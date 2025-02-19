@@ -15,10 +15,22 @@ include ${MAKEINCLUDES}/Make.info
 info ::
 	@echo "================ bootstrap install"
 	@echo "make build"
-.PHONY: configure build
-configure :: modules
-	@echo "there is no configure rule"
 TOOLSET = ${TACC_FAMILY_COMPILER}
+
+#
+# Instructions:
+# https://gcc.gnu.org/install/configure.html
+#
+include ${MAKEINCLUDES}/Make.configure
+CONFIGINBUILDDIR = 1
+CONFIGUREFLAGS =  --disable-multilib \
+    --with-isl-include=${TACC_GCC_INC} --with-isl-lib=${TACC_GCC_LIB}
+##--with-mpc=${TACC_GCC_INC}
+
+#
+# https://gcc.gnu.org/install/build.html
+# https://gcc.gnu.org/install/finalinstall.html
+#
 build ::
 	@source ${MAKEINCLUDES}/names.sh \
 	 && setnames \
@@ -29,16 +41,17 @@ build ::
 	    "${PREFIXOPTION}" "${PREFIXEXTRA}" \
 	 && source ${MAKEINCLUDES}/compilers.sh && setcompilers \
 	 && ( \
-	    requirenonzero builddir && rm -rf $$builddir && mkdir -p $$builddir \
-	     && requirenonzero prefixdir && mkdir -p $$prefixdir && rm -rf $$prefixdir/* \
-	     && cd $$srcdir \
-	    ) 2>&1 | tee $$installlog \
-	 && make --no-print-directory varsmodule \
-	      CMAKEPREFIXPATHSET=1
+	    requirenonzero builddir \
+	     && cd $${builddir} \
+	     && make && make install \
+	    ) 2>&1 | tee $${installlog}
+# module 
+# 	 && make --no-print-directory varsmodule \
+# 	      CMAKEPREFIXPATHSET=1
 include ${MAKEINCLUDES}/Make.vars
-## NOLIB = 1
+HASBIN = 1
 include ${MAKEINCLUDES}/Make.public
 
 GITREPO = https://gcc.gnu.org/git/gcc.git
-BRANCH = releases/gcc-14.2
+BRANCH = releases/gcc-14
 include ${MAKEINCLUDES}/Make.git
