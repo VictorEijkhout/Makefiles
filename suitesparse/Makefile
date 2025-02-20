@@ -18,7 +18,7 @@ include ${MAKEINCLUDES}/Make.cbuild
 CMAKEFLAGS=\
         -D CMAKE_C_COMPILER=$${cc} -D CMAKE_CXX_COMPILER=$${cxx} \
         -D CMAKE_C_FLAGS=-diag-disable=10441 -D CMAKE_CXX_FLAGS=-diag-disable=10441
-HASBIN = 
+HASBIN = 1
 CMAKEPREFIXPATHSET = 1
 .PHONY: default_install
 info ::
