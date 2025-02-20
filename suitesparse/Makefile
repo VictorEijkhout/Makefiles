@@ -35,6 +35,8 @@ build ::
 	     && CMAKE_OPTIONS="\
 	        -D CMAKE_C_COMPILER=$${cc} -D CMAKE_CXX_COMPILER=$${cxx} \
 	        -D CMAKE_C_FLAGS=-diag-disable=10441 -D CMAKE_CXX_FLAGS=-diag-disable=10441 \
+	        -D GMP_INCLUDE_DIR=${TACC_GMP_INC} \
+	        -D MPFR_INCLUDE_DIR=${TACC_MPFR_INC} \
 	        -D CMAKE_INSTALL_PREFIX=$$installdir \
 	        -D BUILD_SHARED_LIBS=TRUE \
 	                      " \

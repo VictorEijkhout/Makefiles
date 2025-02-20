@@ -14,6 +14,7 @@ include ${MAKEINCLUDES}/Make.info
 
 include ${MAKEINCLUDES}/Make.configure
 include ${MAKEINCLUDES}/Make.install
+CMAKEPREFIXPATHSET = 1
 PKGCONFIGLIB = pkgconfig
 
 .PHONY: default_install
