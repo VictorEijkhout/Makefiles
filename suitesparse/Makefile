@@ -1,11 +1,12 @@
 ################################################################
 ####
-#### Makefile for Netcdf installation
+#### Makefile for SuiteSparse installation
 ####
 ################################################################
 
 PACKAGE = SUITESPARSE
-PACKAGEVERSION = 7.0.1
+PACKAGEVERSION = 7.8.3
+URL = https://github.com/DrTimothyAldenDavis/SuiteSparse
 MODE = seq
 MODULES = mpfr
 
@@ -17,9 +18,15 @@ include ${MAKEINCLUDES}/Make.info
 .PHONY: configure build
 configure :
 	@echo "There is no separate configure rule"
+# mpfr ticket: https://github.com/DrTimothyAldenDavis/SuiteSparse/issues/903
 build ::
 	@source ${MAKEINCLUDES}/names.sh \
-	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" \
+	 && setnames \
+	    "${PACKAGE}" "${PACKAGEVERSION}" "${PACKAGEBASENAME}" \
+	    "${DOWNLOADPATH}" "${SRCPATH}" \
+	    "${INSTALLPATH}" "${INSTALLROOT}" "${INSTALLEXT}" "${INSTALLVARIANT}" \
+	    "${HOMEDIR}" "${BUILDDIRROOT}" "${MODE}" \
+	    "${PREFIXOPTION}" "${PREFIXEXTRA}" \
 	 && source ${MAKEINCLUDES}/compilers.sh \
 	 && setmpicompilers \
 	 && reportcompilers && echo \
@@ -39,6 +46,10 @@ include ${MAKEINCLUDES}/Make.vars
 include ${MAKEINCLUDES}/Make.public
 build ::
 	@make --no-print-directory varsmodule
+.PHONY: default_install
+info ::
+	@echo "make default_install : build and module"
+default_install : build
 
 ##
 ## temp fix

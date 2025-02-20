@@ -12,6 +12,7 @@ MODE = seq
 include ${MAKEINCLUDES}/Make.info
 
 PKGCONFIG = lib/pkgconfig
+CMAKEPREFIXPATHSET = 1
 include ${MAKEINCLUDES}/Make.configure
 include ${MAKEINCLUDES}/Make.install
 info ::
