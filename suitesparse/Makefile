@@ -12,60 +12,19 @@ MODULES = mpfr
 
 include ${MAKEINCLUDES}/Make.info
 
-## include ${MAKEINCLUDES}/Make.cmake
-## include ${MAKEINCLUDES}/Make.cbuild
+include ${MAKEINCLUDES}/Make.cmake
+include ${MAKEINCLUDES}/Make.cbuild
 
-.PHONY: configure build
-configure :
-	@echo "There is no separate configure rule"
-# mpfr ticket: https://github.com/DrTimothyAldenDavis/SuiteSparse/issues/903
-build ::
-	@source ${MAKEINCLUDES}/names.sh \
-	 && setnames \
-	    "${PACKAGE}" "${PACKAGEVERSION}" "${PACKAGEBASENAME}" \
-	    "${DOWNLOADPATH}" "${SRCPATH}" \
-	    "${INSTALLPATH}" "${INSTALLROOT}" "${INSTALLEXT}" "${INSTALLVARIANT}" \
-	    "${HOMEDIR}" "${BUILDDIRROOT}" "${MODE}" \
-	    "${PREFIXOPTION}" "${PREFIXEXTRA}" \
-	 && source ${MAKEINCLUDES}/compilers.sh \
-	 && setmpicompilers \
-	 && reportcompilers && echo \
-	 && ( \
-	    cd $$srcdir \
-	     && CMAKE_OPTIONS="\
-	        -D CMAKE_C_COMPILER=$${cc} -D CMAKE_CXX_COMPILER=$${cxx} \
-	        -D CMAKE_C_FLAGS=-diag-disable=10441 -D CMAKE_CXX_FLAGS=-diag-disable=10441 \
-	        -D GMP_INCLUDE_DIR=${TACC_GMP_INC} \
-	        -D MPFR_INCLUDE_DIR=${TACC_MPFR_INC} \
-	        -D CMAKE_INSTALL_PREFIX=$$installdir \
-	        -D BUILD_SHARED_LIBS=TRUE \
-	                      " \
-	        make \
-	     && make install \
-	    ) 2>&1 | tee $$installlog \
-	 && echo && echo "Installation finished in: $$installdir" && echo
-include ${MAKEINCLUDES}/Make.vars
-include ${MAKEINCLUDES}/Make.public
-build ::
-	@make --no-print-directory varsmodule
+CMAKEFLAGS=\
+        -D CMAKE_C_COMPILER=$${cc} -D CMAKE_CXX_COMPILER=$${cxx} \
+        -D CMAKE_C_FLAGS=-diag-disable=10441 -D CMAKE_CXX_FLAGS=-diag-disable=10441
+HASBIN = 
+CMAKEPREFIXPATHSET = 1
 .PHONY: default_install
 info ::
-	@echo "make default_install : build and module"
-default_install : build
-
-##
-## temp fix
-##
-.PHONY: move
-move :
-	@source ${MAKEINCLUDES}/names.sh \
-	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" \
-	 && inc=$${installdir}/include \
-	     && mkdir -p $${inc} \
-	     && find $${srcdir} -name \*.h -exec mv {} $${inc} \; \
-	 && lib=$${installdir}/lib \
-	     && mkdir -p $${lib} \
-	     && find $${srcdir} -name \*.so -exec mv {} $${lib} \;
+	@echo "make default_install : configure build"
+default_install : configure build
+DEPENDSON = gmp,mpfr
 
 TGZURL = https://github.com/DrTimothyAldenDavis/SuiteSparse/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
