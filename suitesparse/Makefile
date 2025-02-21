@@ -8,16 +8,18 @@ PACKAGE = SUITESPARSE
 PACKAGEVERSION = 7.8.3
 URL = https://github.com/DrTimothyAldenDavis/SuiteSparse
 MODE = seq
-MODULES = mpfr
+MODULES = gmp mpfr mkl
 
 include ${MAKEINCLUDES}/Make.info
 
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
 
-CMAKEFLAGS=\
-        -D CMAKE_C_COMPILER=$${cc} -D CMAKE_CXX_COMPILER=$${cxx} \
+CMAKEFLAGS=
+ifeq "${TACC_FAMILY_COMPILER}" "intel"
+CMAKEFLAGS += \
         -D CMAKE_C_FLAGS=-diag-disable=10441 -D CMAKE_CXX_FLAGS=-diag-disable=10441
+endif
 HASBIN = 1
 CMAKEPREFIXPATHSET = 1
 .PHONY: default_install
