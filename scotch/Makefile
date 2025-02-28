@@ -17,25 +17,11 @@ MODULES =
 
 include ${MAKEINCLUDES}/Make.info
 
-SCOTCHPARALLEL = ON
-HDFFORTRAN = ON
-
-ifeq "${TACC_SYSTEM}" "macbookair"
-  LIBEXT = dylib
-else
-  LIBEXT = so
-endif
-
-#### test failure with NVidia compiler:
-#### https://hdfgroup.atlassian.net/servicedesk/customer/portal/6/HELP-2539
-TESTING = ON
-
+SCOTCHPARALLEL = OFF
 CMAKEFLAGS = 
 include ${MAKEINCLUDES}/Make.cmake
 HASBIN=1
-PKGCONFIGLIB = pkgconfig
 CMAKEPREFIXPATHSET = 1
-FAMILY = hf5
 include ${MAKEINCLUDES}/Make.cbuild
 
 info ::
@@ -66,6 +52,7 @@ default_install ::
 ## download
 ##
 TGZURL = https://gitlab.inria.fr/scotch/scotch/-/archive/v${PACKAGEVERSION}/scotch-v${PACKAGEVERSION}.tar.gz
+include ${MAKEINCLUDES}/Make.download
 
 ##
 ## git clone
