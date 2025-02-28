@@ -1,163 +1,79 @@
 ################################################################
 ####
-#### Makefile for Trilinos installation
+#### Makefile for Scotch installation
 ####
-#### https://www.docs.trilinos.org/files/TrilinosBuildReference.html
-####
-#### ExodusII / Seacas issue: https://github.com/trilinos/Trilinos/issues/12022
-####
+#### note: also comes in C++ and Fortran download
+#### 
+#### see release_docs/INSTALL_CMake.txt
+#### 
 ################################################################
 
-PACKAGE = trilinos
-URL = https://github.com/trilinos/Trilinos \
-    https://www.docs.trilinos.org/files/TrilinosBuildReference.html
-PACKAGEVERSION = 16.0.0
-PACKAGEVERSION_DOWNLOAD = 16-0-0
-#15-1-0
-MODE = hybrid
-MODULES = boost swig phdf5 pnetcdf nvpl
-MODULE_MINIMUM_VERSION_intel = 20
+PACKAGE = SCOTCH
+URL = https://www.labri.fr/perso/pelegrin/scotch/ \
+    https://gitlab.inria.fr/scotch/scotch
+PACKAGEVERSION = 7.0.6
+MODE = mpi
+MODULES = 
 
 include ${MAKEINCLUDES}/Make.info
 
-info ::
-	@echo "================ cmake configure:"
-	@echo "make configure"
-	@echo "    [ PACKAGEVERSION=... (default=${PACKAGEVERSION}) ]"
-	@echo "    [ PYTHON=ON/OFF (default: ${PYTHON} ) ]"
-	@echo "    [ TEUCHOS=ON/OFF (default: ${TEUCHOS} ) ]"
-PYTHON = ON
+SCOTCHPARALLEL = ON
+HDFFORTRAN = ON
 
+ifeq "${TACC_SYSTEM}" "macbookair"
+  LIBEXT = dylib
+else
+  LIBEXT = so
+endif
+
+#### test failure with NVidia compiler:
+#### https://hdfgroup.atlassian.net/servicedesk/customer/portal/6/HELP-2539
+TESTING = ON
+
+CMAKEFLAGS = 
+include ${MAKEINCLUDES}/Make.cmake
+HASBIN=1
+PKGCONFIGLIB = pkgconfig
 CMAKEPREFIXPATHSET = 1
-LANGUAGE = CXX
-CPPSTANDARD = 20
-# ThyraEpetraAdapters don't work in 13
-HAS_ADAPTERS = ON
-HAS_BOOST = ON
-HAS_EXODUS = OFF # doesn't work anymore in 16?
-HAS_FEI = ${HAS_ADAPTERS}
-HAS_KOKKOS = ON
-HAS_NETCDF = OFF
-HAS_PNETCDF = ON
-HAS_HDF5 = ON
-HAS_OPENMP = ON
-HAS_Teka = ${HAS_ADAPTERS}
-.PHONY: configure config-help
-info ::
-	@echo "make config-help"
-config-help :
-	@source ${MAKEINCLUDES}/names.sh \
-	 && export MODE=${MODE} \
-	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "" "" "" "${MODE}" \
-	 \
-	 && cd $${srcdir} && rm -rf config-help-dir && mkdir config-help-dir \
-	     && cd config-help-dir && cmake .. 2>&1 | grep "Final set of .*enabled packages"
-configure :: 
-	@source ${MAKEINCLUDES}/names.sh \
-	 && export scriptdir=$$(pwd) \
-	 \
-	 && setnames \
-	    "${PACKAGE}"  "${PACKAGEVERSION}"  "${PACKAGEBASENAME}" \
-	    "${DOWNLOADPATH}" "${SRCPATH}" \
-	    "${INSTALLPATH}"  "${INSTALLROOT}"  "${INSTALLEXT}"  "${INSTALLVARIANT}" \
-	    "${HOMEDIR}"  "${BUILDDIRROOT}"  "${MODE}" \
-	    "${PREFIXOPTION}"  "${PREFIXEXTRA}" \
-	     \
-	 && source ${MAKEINCLUDES}/compilers.sh \
-	 && setmpicompilers \
-	     \
-	 && ( \
-	    reportnames	&& reportcompilers \
-	     && echo \
-	     && requirenonzero builddir \
-	     && rm -rf $$builddir && mkdir -p $$builddir \
-	     && cd $${builddir} \
-	     \
-	     && export HAS_MUMPS=0 \
-	     && export HAS_STK=0 \
-	     \
-	     && export HAS_YAMLCPP=0 \
-	     && if [ "$${HAS_YAMLCPP}" = "1" ] ; then \
-	            source $${scriptdir}/../yaml-cpp/yamlcpp_vars.sh ; fi \
-	     \
-	     && export TRILINOS_LOCATION=$${scriptdir} \
-	     && if [ [ "a" = "b" ] ; then \
-	          exit 1 \
-	        ; elif [ "${TACC_SYSTEM}" = "vista" ] ; then \
-	          export MKLFLAG="-Mnvpl -Mscalapack" \
-	           && export TACC_MKL_INC=${TACC_NVPL_INC} \
-	           && export TACC_MKL_LIB=${TACC_NVPL_LIB} \
-	           && export TRILINOS_BLAS_LIBS='nvpl_blas_lp64_seq;nvpl_blas_core' \
-	           && export TRILINOS_LAPACK_LIBS='nvpl_lapack_lp64_seq;nvpl_lapack_core' \
-	        ; elif [ "${TACC_FAMILY_COMPILER}" = "intel" ] ; then \
-	          export MKLFLAG="-mkl" \
-	           && export TACC_MKL_INC=${MKLROOT}/include \
-	           && export TACC_MKL_LIB=${MKLROOT}/lib/intel64 \
-	           && export TRILINOS_BLAS_LIBS="mkl_intel_lp64;mkl_core;pthread" \
-	           && export TRILINOS_LAPACK_LIBS="mkl_intel_lp64;mkl_sequential;mkl_core;pthread" \
-	           && echo "removed iomp5" >/dev/null \
-	        ; elif [ "${TACC_FAMILY_COMPILER}" = "gcc" ] ; then \
-	          export TACC_MKL_INC=${MKLROOT}/include \
-	           && export TACC_MKL_LIB=${MKLROOT}/lib/intel64 \
-	           && export TRILINOS_BLAS_LIBS='mkl_intel_lp64;mkl_core;pthread' \
-	           && export TRILINOS_LAPACK_LIBS='mkl_intel_lp64;mkl_sequential;mkl_core;pthread' \
-	        ; fi \
-	     \
-	     && export HAS_PYTHON=${PYTHON} \
-	     && export HAS_BOOST=${HAS_BOOST} \
-	     && export HAS_HDF5=${HAS_HDF5} \
-	     && export HAS_NETCDF=${HAS_NETCDF} \
-	     && export HAS_OPENMP=${HAS_OPENMP} \
-	     \
-	     && export DEPRECATED=OFF \
-	     && export HAS_TEUCHOS=ON \
-	     && export HAS_EPETRA=OFF \
-	     \
-	     && set -x \
-	     && if [ -f $${scriptdir}/trilinos_cmake_${TACC_SYSTEM}.sh ] ; then \
-	            source $${scriptdir}/trilinos_cmake_${TACC_SYSTEM}.sh \
-	        ; else \
-	            BUILDDIR=$$builddir SRCDIR=$$srcdir \
-	              source $${scriptdir}/trilinos_cmake.sh \
-	        ; fi \
-	     \
-	     && export PYTHON_VERSION=3 \
-	     && export PYTHON_VERSION=$${PYTHON_VERSION%.*} \
-	     && export PYTHON_LOAD_FLAG=${TACC_PYTHON_LIB}/libpython$${PYTHON_VERSION}.so \
-	    ) 2>&1 | tee $$configurelog
-	@echo && echo "CMake configuration ended: $$( date )" && echo 
-##	 && make --no-print-directory varsmodule
-
+FAMILY = hf5
 include ${MAKEINCLUDES}/Make.cbuild
-.PHONY: netcdfcopy notnetcdfcopy
-build :: notnetcdfcopy
-notnetcdfcopy :
-	@echo 
-	@echo "Warning: not copying netcdf files"
-	@echo 
-netcdfcopy ::
-	@source ${MAKEINCLUDES}/names.sh \
-	 && export MODE=${MODE} \
-	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "" "" "" "${MODE}" \
-	 && requirenonzero TACC_PNETCDF_INC \
-	 && cmdline="cp ${TACC_NETCDF_INC}/netcdf*.h $${installdir}/include" \
-	 && echo "copy netcdf.h: " && echo $$cmdline \
-	 && eval $$cmdline \
-	 && if [ $$? -gt 0 ] ; then error "ERROR copy failed" ; fi
 
-.PHONY: default_install
 info ::
-	@echo "make default_install : configure build"
-default_install : configure build
+	@echo "================ scotch rules"
+	@echo "make par : parallel installation"
+	@echo "make seq : sequential installation"
+.PHONY: seq par
+seq :
+	@make --no-print-directory configure build JCOUNT=${JCOUNT} \
+	    PACKAGEVERSION=${PACKAGEVERSION} \
+	    SCOTCHPARALLEL=OFF MODE=seq \
+	    MODULENAME=scotch
+par :
+	@if [ "${TACC_FAMILY_COMPILER}" = "gcc" ] ; then \
+	    export I_MPI_FCFLAGS="-I${TACC_IMPI_INC}/mpi/gfortran/11.1.0" \
+	 ; fi \
+	 && make --no-print-directory configure build JCOUNT=${JCOUNT} \
+	    PACKAGEVERSION=${PACKAGEVERSION} \
+	    SCOTCHPARALLEL=ON  MODE=mpi \
+	    MODULENAME=ptscotch 
+info ::
+	@echo "make default_install : sequential and parallel versions"
+default_install :: 
+	@make --no-print-directory seq par JCOUNT=${JCOUNT} PACKAGEVERSION=${PACKAGEVERSION} \
+	    seq par
 
-TGZURL = https://github.com/trilinos/Trilinos/archive/refs/tags/trilinos-release-${PACKAGEVERSION_DOWNLOAD}.tar.gz
-include ${MAKEINCLUDES}/Make.download
+##
+## download
+##
+TGZURL = https://gitlab.inria.fr/scotch/scotch/-/archive/v${PACKAGEVERSION}/scotch-v${PACKAGEVERSION}.tar.gz
 
-GITREPO = git@github.com:trilinos/Trilinos.git
+##
+## git clone
+##
+GITREPO = https://gitlab.inria.fr/scotch/scotch.git
 include ${MAKEINCLUDES}/Make.git
 
-# Which netcdf?
-# https://github.com/trilinos/Trilinos/issues/12854
-
-# Build fail on Chaco
-# https://github.com/trilinos/Trilinos/issues/12857
+##
+## clean
+##
+include ${MAKEINCLUDES}/Make.clean
