@@ -45,9 +45,7 @@ build ::
 	     && cd $${builddir} \
 	     && make && make install \
 	    ) 2>&1 | tee $${installlog}
-# module 
-# 	 && make --no-print-directory varsmodule \
-# 	      CMAKEPREFIXPATHSET=1
+NOMODULE = 1
 include ${MAKEINCLUDES}/Make.vars
 HASBIN = 1
 include ${MAKEINCLUDES}/Make.public
