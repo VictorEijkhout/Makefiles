@@ -34,6 +34,7 @@ CPPSTANDARD = 20
 # ThyraEpetraAdapters don't work in 13
 HAS_ADAPTERS = ON
 HAS_BOOST = ON
+HAS_EXODUS = OFF # doesn't work anymore in 16
 HAS_FEI = ${HAS_ADAPTERS}
 HAS_KOKKOS = ON
 HAS_NETCDF = OFF
@@ -79,7 +80,7 @@ configure ::
 	     && if [ "$${HAS_YAMLCPP}" = "1" ] ; then \
 	            source $${scriptdir}/../yaml-cpp/yamlcpp_vars.sh ; fi \
 	     \
-	     && export TRILINOS_LOCATION=${TRILINOS_SCRIPTDIR} \
+	     && export TRILINOS_LOCATION=$${scriptdir} \
 	     && if [ [ "a" = "b" ] ; then \
 	          exit 1 \
 	        ; elif [ "${TACC_SYSTEM}" = "vista" ] ; then \
@@ -92,13 +93,14 @@ configure ::
 	          export MKLFLAG="-mkl" \
 	           && export TACC_MKL_INC=${MKLROOT}/include \
 	           && export TACC_MKL_LIB=${MKLROOT}/lib/intel64 \
-	           && export TRILINOS_BLAS_LIBS="mkl_intel_lp64;mkl_core;iomp5;pthread" \
-	           && export TRILINOS_LAPACK_LIBS="mkl_intel_lp64;mkl_sequential;mkl_core;iomp5;pthread" \
+	           && export TRILINOS_BLAS_LIBS="mkl_intel_lp64;mkl_core;pthread" \
+	           && export TRILINOS_LAPACK_LIBS="mkl_intel_lp64;mkl_sequential;mkl_core;pthread" \
+	           && echo "removed iomp5" >/dev/null \
 	        ; elif [ "${TACC_FAMILY_COMPILER}" = "gcc" ] ; then \
 	          export TACC_MKL_INC=${MKLROOT}/include \
 	           && export TACC_MKL_LIB=${MKLROOT}/lib/intel64 \
-	           && export TRILINOS_BLAS_LIBS='mkl_intel_lp64;mkl_core;iomp5;pthread' \
-	           && export TRILINOS_LAPACK_LIBS='mkl_intel_lp64;mkl_sequential;mkl_core;iomp5;pthread' \
+	           && export TRILINOS_BLAS_LIBS='mkl_intel_lp64;mkl_core;pthread' \
+	           && export TRILINOS_LAPACK_LIBS='mkl_intel_lp64;mkl_sequential;mkl_core;pthread' \
 	        ; fi \
 	     \
 	     && export HAS_PYTHON=${PYTHON} \
