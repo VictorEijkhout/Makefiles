@@ -39,6 +39,7 @@ CMAKEFLAGS = \
 ## Note: there are also "--preset stufstufstuf" flags for cmake. See ticket 1158.
 
 include ${MAKEINCLUDES}/Make.cbuild
+HASBIN = 1
 info ::
 	@echo "make default_install : configure build"
 .PHONY: default_install
