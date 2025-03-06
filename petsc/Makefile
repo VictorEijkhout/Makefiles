@@ -5,7 +5,8 @@
 ################################################################
 
 PACKAGE = PETSC
-PACKAGEVERSION = 3.22.2
+URL = https://petsc.org/release/install/download/
+PACKAGEVERSION = 3.22.4
 MODE = mpi
 
 include ${MAKEINCLUDES}/Make.info
@@ -148,14 +149,16 @@ default_install :: modules
 	 && echo "Deduce install dir <<$$prefixdir>>" && echo \
 	 && source ${MAKEINCLUDES}/compilers.sh && setcompilers && reportcompilers \
 	 \
+	 && echo "Finding options and settings" \
 	 && export package_options="$$( make --no-print-directory package_options \
-	        AMGX=${AMGX} CHACO=${CHACO} EIGEN=${EIGEN} FFTW=${FFTW} HDF5=${HDF5} \
-	        HYPRE=${HYPRE} KOKKOS=${KOKKOS} LIBCEED=${LIBCEED} MPE=${MPE} \
-	        MUMPS=${MUMPS} PTSCOTCH=${PTSCOTCH} SLEPC=${SLEPC} \
-	        SUPERLU=${SUPERLU} TRIANGLE=${TRIANGLE} \
-	        \
-	        PETSC4PY=${PETSC4PY} SLEPC4PY=${SLEPC4PY} \
-	        )" \
+	      AMGX=${AMGX} CHACO=${CHACO} EIGEN=${EIGEN} FFTW=${FFTW} HDF5=${HDF5} \
+	      HYPRE=${HYPRE} KOKKOS=${KOKKOS} LIBCEED=${LIBCEED} MPE=${MPE} \
+	      MUMPS=${MUMPS} PTSCOTCH=${PTSCOTCH} SLEPC=${SLEPC} \
+	      STRUMPACK=${STRUMPACK} SUPERLU=${SUPERLU} SUPERLU_DIST=${SUPERLU_DIST} \
+	      TRIANGLE=${TRIANGLE} \
+	      \
+	      PETSC4PY=${PETSC4PY} SLEPC4PY=${SLEPC4PY} \
+	      )" \
 	 && export param_settings="$$( make --no-print-directory param_settings \
 	        DEBUG=${DEBUG} INT=${INT} PRECISION=${PRECISION} SCALAR=${SCALAR} \
 		)" \
@@ -308,8 +311,9 @@ biginstall :
 	   \
 	   && echo "Selecting packages" \
 	   && CHACO=${CHACO} && FFTW=${FFTW} && HDF5=${HDF5} && HYPRE=${HYPRE} && METIS=${METIS} \
-	   && MUMPS=${MUMPS} && PARMETIS=${PARMETIS} \
-	   && PTSCOTCH=${PTSCOTCH} \
+	   && MUMPS=${MUMPS} && PARMETIS=${PARMETIS} && PTSCOTCH=${PTSCOTCH} \
+	   && STRUMPACK=${STRUMPACK} \
+	   && SUPERLU=${SUPERLU} && SUPERLU_DIST=${SUPERLU_DIST} \
 	   && SCALAPACK=${SCALAPACK} && ZOLTAN=${ZOLTAN} \
 	   && if [ "${CUDA}" != "1" -a "${AMGX}" = "1" ] ; then \
 	        echo " .. disable AMGX because no CUDA" && AMGX=0 \
@@ -346,6 +350,9 @@ biginstall :
 	      AMGX=$${AMGX} CHACO=$${CHACO} EIGEN=${EIGEN} FFTW=$${FFTW} \
 	      HDF5=$${HDF5} HYPRE=$${HYPRE} METIS=$${METIS} \
 	      MUMPS=$${MUMPS} PARMETIS=$${PARMETIS} PTSCOTCH=$${PTSCOTCH} \
+	      STRUMPACK=$${STRUMPACK} \
+	      SUPERLU=${SUPERLU} SUPERLU_DIST=${SUPERLU_DIST} \
+	      TRIANGLE=$${TRIANGLE} \
 	      SCALAPACK=$${SCALAPACK} ZOLTAN=$${ZOLTAN} \
 	      \
 	      CUDA=${CUDA} FORTRAN=$${FORTRAN} SLEPC=$${SLEPC} \

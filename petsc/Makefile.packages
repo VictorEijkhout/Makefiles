@@ -18,7 +18,7 @@ info ::
 ## 
 packagelist = amgx chaco eigen fftw hdf5 hypre kokkos mpe \
     metis mumps parmetis petsc4py ptscotch \
-    scalapack slepc slepc4py superlu triangle
+    scalapack slepc slepc4py strumpack superlu superlu_dist triangle
 # libceed
 
 ##
@@ -51,6 +51,7 @@ package_location :
 	     && export slepc_extra="--download-sowing --download-slepc=https://slepc.u\pv.es/download/distrib/slepc-3.22.0.tar.gz" \
 	     && export slepc4py_extra="--download-slepc-configure-arguments=--with-slepc4py" \
 	     && export superlu_extra="--with-superlu_dist=1 --download-superlu_dist=1 --with-cxx-dialect=C++11 --with-openmp=1" \
+	     && export strumpack_extra="--download-scalapack=yes --download-blacs=yes" \
 	 && if [ "$${p}" = "hdf5" ] ; then \
 	      taccvarname=TACC_PHDF5_DIR \
 	    ; else \
