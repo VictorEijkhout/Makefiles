@@ -331,7 +331,7 @@ biginstall :
 	        ( *single* ) echo " .. disable fftw hdf5, Hypre, Mumps because single" \
 	                && FFTW=0 && HDF5=0 && PHDF5=0 && HYPRE=0 && MUMPS=0 ;; esac \
 	   && case $${ext} in \
-	        ( *i64* ) CHACO=0 && PARMETIS=0 ;; esac \
+	        ( *i64* ) CHACO=0 && PARMETIS=0 && SUPERLU=0 SUPERLU_DIST=0 ;; esac \
 	   && case $${ext} in \
 	        ( *complex* ) \
 	                echo " .. disable Hypre, Metis, Mumps because complex" \
@@ -351,7 +351,7 @@ biginstall :
 	      HDF5=$${HDF5} HYPRE=$${HYPRE} METIS=$${METIS} \
 	      MUMPS=$${MUMPS} PARMETIS=$${PARMETIS} PTSCOTCH=$${PTSCOTCH} \
 	      STRUMPACK=$${STRUMPACK} \
-	      SUPERLU=${SUPERLU} SUPERLU_DIST=${SUPERLU_DIST} \
+	      SUPERLU=$${SUPERLU} SUPERLU_DIST=$${SUPERLU_DIST} \
 	      TRIANGLE=$${TRIANGLE} \
 	      SCALAPACK=$${SCALAPACK} ZOLTAN=$${ZOLTAN} \
 	      \
