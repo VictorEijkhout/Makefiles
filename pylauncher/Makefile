@@ -5,7 +5,7 @@
 ################################################################
 
 PACKAGE = PYLAUNCHER
-PACKAGEVERSION = 5.1
+PACKAGEVERSION = 5.1.1
 URL = https://github.com/TACC/pylauncher
 MODE = core
 
