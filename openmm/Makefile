@@ -2,6 +2,9 @@
 ####
 #### Makefile for Openmm installation
 ####
+#### internal compiler error:
+#### https://github.com/openmm/openmm/issues/4843
+####
 ################################################################
 
 PACKAGE = openmmcuda
@@ -9,7 +12,7 @@ URL = https://github.com/openmm/openmm
 PACKAGEVERSION = 8.2.0
 
 MODE = mpi
-BASICMODULES = 
+BASICMODULES = doxygen swig 
 MODULES = ${BASIC_MODULES} cuda
 
 include ${MAKEINCLUDES}/Make.info
@@ -29,10 +32,7 @@ endif
 USEGPU = YES
 CUDAFLAGS = -allow-unsupported-compiler -Xcompiler -std=gnu++14
 CMAKEFLAGS = -Wno-dev \
-    -D OPENMM_USE_CUDA=${USEGPU} \
-    -D CMAKE_CUDA_FLAGS="-std=c++14" \
-    -D LAPACK_LIBRARIES=${LAPACKLIB} \
-    -D BLAS_LIBRARIES=${BLASLIB} 
+    -D OPENMM_BUILD_C_AND_FORTRAN_WRAPPERS=ON
 ## CMAKEPREFIXPATHSET=1
 
 include ${MAKEINCLUDES}/Make.cmake
@@ -48,7 +48,7 @@ info ::
 default_install gpu :
 	@export CUDAFLAGS="${CUDAFLAGS}" \
 	 && export NVCC_APPEND_FLAGS="${CUDAFLAGS}" \
-	 && make --no-print-directory configure build 
+	 && make --no-print-directory configure build JCOUNT=${JCOUNT}
 
 TGZURL = https://github.com/openmm/openmm/archive/refs/tags/${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
