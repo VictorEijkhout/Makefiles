@@ -39,8 +39,8 @@ include ${MAKEINCLUDES}/Make.cmake
 info ::
 	@echo "make config-help"
 config-help :
-	@cd ${STOCKYARD}/openmm/openmm-${PACKAGEVERSION} \
-	 && open docs-source/usersguide/application/01_getting_started.rst
+	@cd ${PACKAGEROOT}/${PACKAGE}/${PACKAGE}-${PACKAGEVERSION} \
+	 && open docs-source//usersguide/library/02_compiling.rst
 include ${MAKEINCLUDES}/Make.cbuild
 info ::
 	@echo "make default_install : gpu version"
