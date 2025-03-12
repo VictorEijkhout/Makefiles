@@ -17,5 +17,6 @@ module load nvpl nvidia_math
 ## python hack
 ##
 export TACC_PYTHON_DIR=/opt/apps/gcc14/cuda12/python3/3.11.8
-export PATH=${PATH}:/opt/apps/gcc14/cuda12/python3/3.11.8/bin/
+export TACC_PYTHON_BIN=/opt/apps/gcc14/cuda12/python3/3.11.8/bin
+export PATH=${PATH}:${TACC_PYTHON_BIN}
 export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${TACC_PYTHON_DIR}/lib
