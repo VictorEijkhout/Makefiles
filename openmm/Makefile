@@ -11,29 +11,23 @@ PACKAGE = openmmcuda
 URL = https://github.com/openmm/openmm
 PACKAGEVERSION = 8.2.0
 
-MODE = mpi
-BASICMODULES = doxygen swig 
-MODULES = ${BASIC_MODULES} cuda
+MODE = seq
+BASICMODULES = doxygen python swig 
+MODULES = ${BASICMODULES} cuda
 
 include ${MAKEINCLUDES}/Make.info
 
 ##
 ## cmake 
 ##
-ifeq "${TACC_SYSTEM}" "vista"
-  BLASLIB=${TACC_NVPL_LIB}/libnvpl_blas_lp64_seq.so 
-  LAPACKLIB=${TACC_NVPL_LIB}/libnvpl_lapack_lp64_seq.so
-else
-  # mkl_intel_lp64;mkl_sequential;mkl_core;iomp5;pthread"
-  BLASLIB=${TACC_MKL_LIB}/libmkl_sequential.so 
-  LAPACKLIB=${TACC_MKL_LIB}/libmkl_intel_lp64.so
-endif
-
 USEGPU = YES
 CUDAFLAGS = -allow-unsupported-compiler -Xcompiler -std=gnu++14
 CMAKEFLAGS = -Wno-dev \
+    -D PYTHON_EXECUTABLE=${TACC_PYTHON_BIN}/python3 \
+    -D OPENMM_BUILD_PYTHON_WRAPPERS=ON \
     -D OPENMM_BUILD_C_AND_FORTRAN_WRAPPERS=ON
-## CMAKEPREFIXPATHSET=1
+HASBIN = 1
+EXTRAINSTALLTARGET = PythonInstall
 
 include ${MAKEINCLUDES}/Make.cmake
 info ::
