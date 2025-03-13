@@ -7,9 +7,10 @@
 ################################################################
 
 PACKAGE = LIBXC
-PACKAGEVERSION = 6.2.2
-URL = https://gitlab.com/libxc/libxc
+PACKAGEVERSION = 7.0.0
+# 6.2.2
 # 5.2.3
+URL = https://gitlab.com/libxc/libxc
 MODE = seq
 
 include ${MAKEINCLUDES}/Make.info
@@ -17,11 +18,11 @@ include ${MAKEINCLUDES}/Make.info
 CMAKEFLAGS = \
     -D CMAKE_C_FLAGS="-O2" \
     -D ENABLE_FORTRAN=ON \
-    -D ENABLE_XHOST=OFF \
-    -D BUILD_SHARED_LIBS=OFF
-## LIBDIR = lib64
+    -D ENABLE_XHOST=OFF 
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
+#BUILDSTATICLIBS=1
+HASBIN = 1
 PKGCONFIGLIB = pkgconfig
 CMAKEPREFIXPATHSET = 1
 

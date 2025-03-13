@@ -7,7 +7,8 @@ function usage() {
     echo "    [ -j jpar (default: ${jcount}) ]"
     echo "    [ -c : cuda build ]"
     echo "    [ -e customext ]"
-    echo "    [ -4 : include petsc/slepc4py ] [ -5 : skip hdf5 ] [ -8 : f08 support ]"
+    echo "    [ -4 : include petsc/slepc4py ] [ -5 : skip hdf5 ]"
+    echo "    [ -f : skip fortran ] [ -8 : f08 support ]"
     echo "    environment: DEBUG INT PRECISION SCALAR"
 }
 
@@ -37,6 +38,9 @@ while [ $# -gt 0 ] ; do
     elif [ $1 = "-e" ] ; then 
 	shift && customext=$1 && shift
 	echo " .. custom extension: $customext"
+    elif [ $1 = "-f" ] ; then 
+	echo " .. disable fortran"
+	fortran=0 && shift
     elif [ $1 = "-j" ] ; then
 	shift && jcount=$1 && shift
     elif [ $1  = "-v" ] ; then 
