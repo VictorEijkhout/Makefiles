@@ -52,7 +52,7 @@ config-help :
 	 \
 	 && cd $${srcdir} && rm -rf config-help-dir && mkdir config-help-dir \
 	     && cd config-help-dir && cmake .. 2>&1 | grep "Final set of .*enabled packages"
-configure :: 
+configure :: modules
 	@source ${MAKEINCLUDES}/names.sh \
 	 && export scriptdir=$$(pwd) \
 	 \
