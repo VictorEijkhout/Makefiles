@@ -33,6 +33,7 @@ info ::
 default_install : cpu
 CMAKEFLAGS = \
     -D Kokkos_ENABLE_SERIAL=ON -D Kokkos_ENABLE_OPENMP=ON 
+HASBIN = 1
 ## we need this so that we can override it in jail
 CMAKEPREFIXPATHSET = 1
 SRCPATH = ${PACKAGEROOT}/kokkos/kokkos-${PACKAGEVERSION}
@@ -66,7 +67,7 @@ configure_cuda :
 .PHONY: sycl configure_sycl 
 sycl : 
 	@make --no-print-directory PACKAGE_VERSION=${PACKAGE_VERSION} \
-	    configure_sycl build \
+	    configure_sycl build public \
 	    INSTALLVARIANT=sycl INSTALLEXT=sycl
 # VOLTA70 ?
 configure_sycl :
