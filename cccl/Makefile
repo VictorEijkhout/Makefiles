@@ -2,6 +2,8 @@
 ####
 #### Makefile for CCCL installation
 ####
+#### https://github.com/NVIDIA/cccl/issues/4101
+####
 ################################################################
 
 PACKAGE = CCCL
@@ -12,8 +14,8 @@ MODULES = cuda
 
 include ${MAKEINCLUDES}/Make.info
 
-CMAKEFLAGS = 
-## just guessing    -D ARG_ALLOW_EXTERNAL=OFF
+CMAKEFLAGS = \
+    -D ARG_ALLOW_EXTERNAL=OFF
 include ${MAKEINCLUDES}/Make.cmake
 PKGCONFIGLIB = pkgconfig
 CMAKEPREFIXPATHSET = 1

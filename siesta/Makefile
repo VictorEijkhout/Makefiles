@@ -13,7 +13,7 @@
 
 PACKAGE = siesta
 URL = https://siesta-project.org/siesta/index.html
-PACKAGEVERSION = 5.2.1
+PACKAGEVERSION = 5.2.2
 
 MODE = mpi
 MODULES = fftw3 mkl 
@@ -69,7 +69,8 @@ info ::
 default_install : configure build
 
 
-TGZURL = https://gitlab.com/siesta-project/siesta/-/archive/${PACKAGEVERSION}/siesta-${PACKAGEVERSION}.tar.gz
+TGZURL = https://gitlab.com/siesta-project/siesta/-/releases/${PACKAGEVERSION}/downloads/siesta-${PACKAGEVERSION}.tar.gz
+# do not use "assets": https://gitlab.com/siesta-project/siesta/-/archive/${PACKAGEVERSION}/siesta-${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 
 GITREPO = https://gitlab.com/siesta-project/siesta.git

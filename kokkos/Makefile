@@ -7,7 +7,7 @@
 PACKAGE = KOKKOS
 URL = https://github.com/kokkos/kokkos \
     https://kokkos.github.io/kokkos-core-wiki/building.html
-PACKAGEVERSION = 4.4.01
+PACKAGEVERSION = 4.5.01
 MODE = seq
 MODULES = 
 MODULE_MINIMUM_VERSION_cuda = 12
@@ -25,13 +25,15 @@ DEPENDSON =
 info ::
 	@echo "make cpu ( configure build )"
 	@echo "make gpu ( configure_cuda build_cuda ) : cuda version in separate install dir"
-.PHONY: cpu gpu configure_cuda
+	@echo "make sycl ( configure_sycl build_sycl ) : sycl version in separate install dir"
+.PHONY: cpu 
 .PHONY: default_install
 info ::
 	@echo "make default_install : omp only, do make gpu for cuda backend"
 default_install : cpu
 CMAKEFLAGS = \
     -D Kokkos_ENABLE_SERIAL=ON -D Kokkos_ENABLE_OPENMP=ON 
+HASBIN = 1
 ## we need this so that we can override it in jail
 CMAKEPREFIXPATHSET = 1
 SRCPATH = ${PACKAGEROOT}/kokkos/kokkos-${PACKAGEVERSION}
@@ -39,6 +41,7 @@ cpu :
 	@make --no-print-directory PACKAGE_VERSION=${PACKAGE_VERSION} \
 	    configure build \
 	    INSTALLVARIANT=omp INSTALLEXT=omp
+.PHONY: gpu configure_cuda 
 gpu : 
 	@make --no-print-directory PACKAGE_VERSION=${PACKAGE_VERSION} \
 	    configure_cuda build \
@@ -60,6 +63,23 @@ configure_cuda :
 ## 	      -D KOKKOS_CUDA_OPTIONS=-allow-unsupported-compiler \
 ##      
 ##   -D CMAKE_CXX_FLAGS=--gcc-toolchain=/opt/apps/gcc/12.2.0
+
+.PHONY: sycl configure_sycl 
+sycl : 
+	@make --no-print-directory PACKAGE_VERSION=${PACKAGE_VERSION} \
+	    configure_sycl build public \
+	    INSTALLVARIANT=sycl INSTALLEXT=sycl
+# VOLTA70 ?
+configure_sycl :
+	@if [ -z "${TACC_CXX}" ] ; then \
+	    echo "No TACC_CXX defined" && exit 1 ; fi 
+	@export NVCC_WRAPPER_DEFAULT_COMPILER=${TACC_CXX} \
+	 && make --no-print-directory configure \
+	    CMAKEFLAGS=" \
+	      -D CMAKE_CXX_COMPILER=icpx \
+	      -D Kokkos_ENABLE_SERIAL=ON -D Kokkos_ENABLE_SYCL=ON \
+	      " \
+	    INSTALLVARIANT=sycl
 
 info ::
 	@echo "make kokkoscore INSTALLVARIANT=..."
