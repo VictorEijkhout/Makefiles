@@ -15,7 +15,7 @@ PACKAGEVERSION = 16.0.0
 PACKAGEVERSION_DOWNLOAD = 16-0-0
 #15-1-0
 MODE = hybrid
-MODULES = boost swig phdf5 pnetcdf nvpl
+MODULES = boost swig phdf5 pnetcdf mkl
 MODULE_MINIMUM_VERSION_intel = 20
 
 include ${MAKEINCLUDES}/Make.info
@@ -33,6 +33,11 @@ LANGUAGE = CXX
 CPPSTANDARD = 20
 # ThyraEpetraAdapters don't work in 13
 HAS_ADAPTERS = ON
+
+# dealii expects Amesos Epetra AztecOO
+# the epetra flag triggers the other two
+HAS_EPETRA = ON
+
 HAS_BOOST = ON
 HAS_EXODUS = OFF # doesn't work anymore in 16
 HAS_FEI = ${HAS_ADAPTERS}
@@ -111,7 +116,7 @@ configure :: modules
 	     \
 	     && export DEPRECATED=OFF \
 	     && export HAS_TEUCHOS=ON \
-	     && export HAS_EPETRA=OFF \
+	     && export HAS_EPETRA=${HAS_EPETRA} \
 	     \
 	     && set -x \
 	     && if [ -f $${scriptdir}/trilinos_cmake_${TACC_SYSTEM}.sh ] ; then \

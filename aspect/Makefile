@@ -8,7 +8,8 @@
 
 PACKAGE = ASPECT
 URL = https://aspect.geodynamics.org/
-PACKAGEVERSION = 2.5.0
+PACKAGEVERSION = 3.0.0
+#2.5.0
 MODE = mpi
 MODULES = dealii
 # dealii newer than 9.3

@@ -29,6 +29,8 @@ CMAKEFLAGS = \
 #    -D DEAL_II_CXX_FLAGS=\"-march=native -qoverride-limits\" \
 # -D DEAL_II_WITH_SLEPC=ON
 PKGCONFIG = lib/pkgconfig
+# https://github.com/dealii/dealii/issues/18254
+BUILDTYPE = DebugRelease
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
 .PHONY: real complex
