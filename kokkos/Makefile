@@ -47,7 +47,7 @@ gpu :
 	    configure_cuda build \
 	    MODULES=cuda DEPENDSON=cuda/12 \
 	    INSTALLVARIANT=cuda INSTALLEXT=cuda
-ziplog ::
+ziplog_info :
 	@echo "Please explicit ziplog-cpu or ziplog-gpu:"
 	@echo make ziplog INSTALLVARIANT=omp INSTALLEXT=omp
 	@echo make ziplog INSTALLVARIANT=cuda INSTALLEXT=cuda
