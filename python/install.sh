@@ -23,7 +23,7 @@ builddir=
 prefixdir=
 srcdir=
 
-pythonver=3.12.4
+pythonver=3.12.5
 
 while [ $# -gt 0 ] ; do
     if [ $1 = "-h" ] ; then
@@ -48,26 +48,43 @@ while [ $# -gt 0 ] ; do
 	echo "Unknown option: <<$1>>" && exit 1
     fi
 done
-
+if [ -z "${srcdir}" ] ; then 
+    srcdir=${STOCKYARD}/python/python-${pythonver}
+    if [ ! -d "${srcdir}" ]  ; then 
+	echo "Need to download python-${pythonver} first!" && exit 1
+    fi
+fi
 if [ -z "${TACC_HDF5_DIR}" ] ; then
     echo "Needs hdf5 module loaded" && exit 1
 fi
 
+##
+## Version handing
+##
 pymacrover=${pythonver%%.*}
 pyminiver=${pythonver#*.} && pyminiver=${pyminiver%.*}
 pymicrover=${pythonver##*.}
 echo && echo "Installing ${pymacrover}.${pyminiver}.${pymicrover}" && echo
 
+##
+## Prefix
+##
 if [ -z "${prefixdir}" ] ; then 
     # standard pythondir for local install only
     pythondir=${STOCKYARD}/python
     prefixdir=${pythondir}/installation-${pythonver}-${TACC_SYSTEM}-${TACC_FAMILY_COMPILER}-${TACC_FAMILY_COMPILER_VERSION}
+    mkdir -p "${prefixdir}"
 fi
 pkgprefix=${prefixdir}/lib/python${pymacrover}.${pyminiver}/site-packages/
+mkdir -p "${pkgprefix}"
 echo "${pkgprefix}" > ${pkgprefix}/tacc.pth
 
+##
+## Configure and install python
+##
 if [ ! -z "${installpython}" ] ; then 
 
+    if [ -z "${srcdir}" ] ; then echo "Zero variable srcdir" ; exit 1 ; fi
     cd ${srcdir}
 
     export CC=${TACC_CC} && export CXX=${TACC_CXX}
