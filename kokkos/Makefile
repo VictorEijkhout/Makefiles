@@ -38,15 +38,21 @@ HASBIN = 1
 CMAKEPREFIXPATHSET = 1
 SRCPATH = ${PACKAGEROOT}/kokkos/kokkos-${PACKAGEVERSION}
 cpu :
-	@make --no-print-directory PACKAGE_VERSION=${PACKAGE_VERSION} \
+	@make --no-print-directory \
 	    configure build \
 	    INSTALLVARIANT=omp INSTALLEXT=omp
 .PHONY: gpu configure_cuda 
 gpu : 
-	@make --no-print-directory PACKAGE_VERSION=${PACKAGE_VERSION} \
+	@make --no-print-directory \
 	    configure_cuda build \
 	    MODULES=cuda DEPENDSON=cuda/12 \
 	    INSTALLVARIANT=cuda INSTALLEXT=cuda
+ziplog_info :
+	@echo "Please explicit ziplog-cpu or ziplog-gpu:"
+	@echo make ziplog INSTALLVARIANT=omp INSTALLEXT=omp
+	@echo make ziplog INSTALLVARIANT=cuda INSTALLEXT=cuda
+## https://www.gnu.org/software/make/manual/html_node/Overriding-Makefiles.html
+
 # VOLTA70 ?
 configure_cuda :
 	@if [ -z "${TACC_CXX}" ] ; then \
@@ -54,12 +60,12 @@ configure_cuda :
 	@export NVCC_WRAPPER_DEFAULT_COMPILER=${TACC_CXX} \
 	 && make --no-print-directory configure \
 	    CMAKEFLAGS=" \
-	      -D CMAKE_CXX_COMPILER=${SRCPATH}/bin/nvcc_wrapper \
 	      -D Kokkos_ENABLE_SERIAL=ON -D Kokkos_ENABLE_CUDA=ON \
 	      -D Kokkos_ARCH_TURING75=ON -D Kokkos_ENABLE_CUDA_LAMBDA=ON \
-	      -D CMAKE_CXX_FLAGS=-allow-unsupported-compiler \
 	      " \
 	    MODULES=cuda  INSTALLVARIANT=cuda
+## NO LONGER (at least on vista)
+##	      -D CMAKE_CXX_COMPILER=${SRCPATH}/bin/nvcc_wrapper \
 ## 	      -D KOKKOS_CUDA_OPTIONS=-allow-unsupported-compiler \
 ##      
 ##   -D CMAKE_CXX_FLAGS=--gcc-toolchain=/opt/apps/gcc/12.2.0

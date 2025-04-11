@@ -12,7 +12,7 @@ URL = https://github.com/openmm/openmm
 PACKAGEVERSION = 8.2.0
 
 MODE = seq
-BASICMODULES = doxygen python swig 
+BASICMODULES = python swig 
 MODULES = ${BASICMODULES} cuda
 
 include ${MAKEINCLUDES}/Make.info
