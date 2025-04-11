@@ -48,7 +48,7 @@ package_location :
 	     && export libceed_extra="--download-libceed-commit=origin/main" \
 	     && export mumps_extra="--download-scalapack=yes --download-blacs=yes --download-parmetis=yes --download-metis=yes" \
 	     && export petsc4py_extra="--with-python=1 --with-python-exec=python3" \
-	     && export slepc_extra="--download-sowing --download-slepc=https://slepc.u\pv.es/download/distrib/slepc-3.22.0.tar.gz --with-arpack-dir=${TACC_ARPACK_DIR}" \
+	     && export slepc_extra="--download-sowing --download-slepc=https://slepc.u\pv.es/download/distrib/slepc-3.22.0.tar.gz --with-arpack-dir=${TACC_PARPACK_DIR}" \
 	     && export slepc4py_extra="--download-slepc-configure-arguments=--with-slepc4py" \
 	     && export superlu_extra="--with-superlu_dist=1 --download-superlu_dist=1 --with-cxx-dialect=C++11 --with-openmp=1" \
 	     && export strumpack_extra="--download-scalapack=yes --download-blacs=yes" \

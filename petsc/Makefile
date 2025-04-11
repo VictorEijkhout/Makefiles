@@ -363,8 +363,9 @@ biginstall :
 	      ; else \
 	        echo "Big install: $$cmdline"\
 	      ; fi \
-	   && set -e && set -o pipefail && eval $$cmdline 2>&1 | tee big.log \
-	   && echo && echo "See: big.log" && echo
+	   && installlog=install.log \
+	   && set -e && set -o pipefail && eval $${cmdline} 2>&1 | tee $${installlog} \
+	   && echo && echo "See: $${installlog}" && echo
 
 info ::
 	@echo "make config-help config-view"

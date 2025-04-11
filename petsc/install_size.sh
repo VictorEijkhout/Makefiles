@@ -3,7 +3,7 @@
 jcount=6
 pversion=
 function usage() {
-    echo "Usage: $0 [ -h ] [ -v (default: ${pversion} ]"
+    echo "Usage: $0 [ -h ] [ -v : leave null for default ]"
     echo "    [ -j jpar (default: ${jcount}) ]"
     echo "    [ -c : cuda build ]"
     echo "    [ -e customext ]"
@@ -104,8 +104,8 @@ else
     CHACO=1
 fi
 
-export biglog=install_big$( if [ ! -z "${customext}" ] ; then echo "-${customext}" ; fi ).log
-rm -f $biglog
+export sizelog=install_${size}$( if [ ! -z "${customext}" ] ; then echo "-${customext}" ; fi ).log
+rm -f $sizelog
 cmdline="\
 make --no-print-directory biginstall JCOUNT=${jcount} \
     $( if [ ! -z "${pversion}" ] ; then echo PACKAGEVERSION=${pversion} ; fi ) \
@@ -115,15 +115,15 @@ make --no-print-directory biginstall JCOUNT=${jcount} \
     CUDA=${cuda} FORTRAN=${fortran} \ 
     PETSC4PY=${p4p} SLEPC4PY=${p4p} \
 "
-echo "At $(date) cmdline: $cmdline" | tee -a ${biglog}
+echo "At $(date) cmdline: $cmdline" | tee -a ${sizelog}
 set -e
 set -o pipefail 
-eval $cmdline 2>&1 | tee -a ${biglog}
+eval $cmdline 2>&1 | tee -a ${sizelog}
 # if [ $retcode -gt 0 ] ; then
 #     echo "Make failed for EXT=${EXTENSION}" 
-#     echo && echo "See: ${biglog}" && echo
+#     echo && echo "See: ${sizelog}" && echo
 #     exit 1
 # else
-    echo && echo "See: ${biglog}" && echo
+    echo && echo "See: ${sizelog}" && echo
 ##fi
 
