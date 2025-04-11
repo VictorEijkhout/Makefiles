@@ -6,7 +6,7 @@
 
 PACKAGE = PETSC
 URL = https://petsc.org/release/install/download/
-PACKAGEVERSION = 3.22.4
+PACKAGEVERSION = 3.23.0
 MODE = mpi
 
 include ${MAKEINCLUDES}/Make.info

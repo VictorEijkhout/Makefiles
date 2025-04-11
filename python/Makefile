@@ -5,7 +5,7 @@
 ################################################################
 
 PACKAGE = python
-PACKAGEVERSION = 3.12.4
+PACKAGEVERSION = 3.12.5
 ## problems: 13.0
 URL = https://www.python.org/
 MODE = mpi
