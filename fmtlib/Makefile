@@ -6,7 +6,7 @@
 
 PACKAGE = fmtlib
 URL = https://github.com/fmtlib/fmt
-PACKAGEVERSION = 11.0.2
+PACKAGEVERSION = 11.1.4
 MODE = seq
 
 include ${MAKEINCLUDES}/Make.info
