@@ -1,1 +1,6 @@
-PACKAGEROOT=${WORK} make default_install INSTALLPATH=/scratch1/projects/tacc/python/312_intel23
+name=${TACC_FAMILY_COMPILER}
+cversion=${TACC_FAMILY_COMPILER_VERSION%%.*}
+pversion=$( make version } 
+pversion=${pversion%.*}
+pversion=$( echo $pversion | cut -c '.' )
+PACKAGEROOT=${WORK} make default_install INSTALLPATH=/scratch1/projects/tacc/python/${pversion}_${name}${cversion}

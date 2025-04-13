@@ -23,7 +23,7 @@ builddir=
 prefixdir=
 srcdir=
 
-pythonver=3.12.4
+pythonver=3.12.5
 
 while [ $# -gt 0 ] ; do
     if [ $1 = "-h" ] ; then
@@ -48,36 +48,58 @@ while [ $# -gt 0 ] ; do
 	echo "Unknown option: <<$1>>" && exit 1
     fi
 done
-
+if [ -z "${srcdir}" ] ; then 
+    srcdir=${STOCKYARD}/python/python-${pythonver}
+    if [ ! -d "${srcdir}" ]  ; then 
+	echo "Need to download python-${pythonver} first!" && exit 1
+    fi
+fi
 if [ -z "${TACC_HDF5_DIR}" ] ; then
     echo "Needs hdf5 module loaded" && exit 1
 fi
 
+##
+## Version handing
+##
 pymacrover=${pythonver%%.*}
 pyminiver=${pythonver#*.} && pyminiver=${pyminiver%.*}
 pymicrover=${pythonver##*.}
 echo && echo "Installing ${pymacrover}.${pyminiver}.${pymicrover}" && echo
 
+##
+## Prefix
+##
 if [ -z "${prefixdir}" ] ; then 
     # standard pythondir for local install only
     pythondir=${STOCKYARD}/python
     prefixdir=${pythondir}/installation-${pythonver}-${TACC_SYSTEM}-${TACC_FAMILY_COMPILER}-${TACC_FAMILY_COMPILER_VERSION}
+    mkdir -p "${prefixdir}"
 fi
 pkgprefix=${prefixdir}/lib/python${pymacrover}.${pyminiver}/site-packages/
+mkdir -p "${pkgprefix}"
 echo "${pkgprefix}" > ${pkgprefix}/tacc.pth
 
+##
+## Configure and install python
+##
 if [ ! -z "${installpython}" ] ; then 
 
+    if [ -z "${srcdir}" ] ; then echo "Zero variable srcdir" ; exit 1 ; fi
     cd ${srcdir}
 
     export CC=${TACC_CC} && export CXX=${TACC_CXX}
     if [ "${TACC_COMPILER_FAMILY}"  = "intel" ] ; then 
 	export LDFLAGS="-DLDFLAGS -L${TACC_MKL_LIB:?MISSING_MKL_LIB} -L${TACC_INTEL_LIB:?MISSING_INTEL_LIB}"
     else 
-	echo "find /opt/intel/oneapi/compiler/2024.0/lib/libintlc.so.5"
+	echo "find libintlc.so"
+	# /opt/intel/oneapi/compiler/2023.1.0/linux/compiler/lib/intel64_lin/libintlc.so
+	libintlc=$( find ${TACC_MKL_DIR}/../.. -name libintlc.so )
+	echo "found lib: ${libintlc}"
+	libintlc=${libintlc%%/libintlc.so}
+	echo "found dir: ${libintlc}"
 	export LDFLAGS="-DLDFLAGS \
--L${TACC_MKL_LIB:?MISSING_MKL_LIB}       -Wl,-rpath=${TACC_MKL_LIB} \
--L/opt/intel/oneapi/compiler/2024.0/lib  -Wl,-rpath=/opt/intel/oneapi/compiler/2024.0/lib \
+-L${TACC_MKL_LIB:?MISSING_MKL_LIB} -Wl,-rpath=${TACC_MKL_LIB} \
+-L${libintlc}                      -Wl,-rpath=${libintlc}     \
 -lintlc"
     fi
     echo && echo "Configuring" && echo
@@ -85,7 +107,9 @@ if [ ! -z "${installpython}" ] ; then
     ./configure --prefix=${prefixdir} \
 		--disable-test-modules \
 		--enable-optimizations \
-		--with-ensurepip=install
+		--with-ensurepip=install \
+	--with-openssl=/usr --with-openssl-rpath=/usr/lib64/openssl
+
     echo && echo "Making" && echo
     make -j 12
     echo && echo "Make install" && echo

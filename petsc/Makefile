@@ -6,7 +6,7 @@
 
 PACKAGE = PETSC
 URL = https://petsc.org/release/install/download/
-PACKAGEVERSION = 3.22.4
+PACKAGEVERSION = 3.23.0
 MODE = mpi
 
 include ${MAKEINCLUDES}/Make.info
@@ -363,8 +363,9 @@ biginstall :
 	      ; else \
 	        echo "Big install: $$cmdline"\
 	      ; fi \
-	   && set -e && set -o pipefail && eval $$cmdline 2>&1 | tee big.log \
-	   && echo && echo "See: big.log" && echo
+	   && installlog=install.log \
+	   && set -e && set -o pipefail && eval $${cmdline} 2>&1 | tee $${installlog} \
+	   && echo && echo "See: $${installlog}" && echo
 
 info ::
 	@echo "make config-help config-view"

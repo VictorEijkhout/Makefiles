@@ -13,6 +13,7 @@ MODULES =
 include ${MAKEINCLUDES}/Make.info
 
 PKGCONFIG = share/pkgconfig
+CMAKEPREFIXPATHSET = 1
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
 default_install : configure build 
