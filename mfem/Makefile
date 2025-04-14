@@ -6,12 +6,15 @@
 
 PACKAGE = mfem
 URL = https://github.com/mfem/mfem
-PACKAGEVERSION = 4.7
+PACKAGEVERSION = 4.8
 ## 4.5.2 has breaking changes for CHyPS.
-HYPREVERSION = 2.31.0
+
+# both i64
+HYPRELOAD = 2.31.0-i64
+PETSCLOAD = 3.22-i64
 
 MODE = mpi
-BASICMODULES = mkl adios2 hypre/${HYPREVERSION}-i64 metis petsc
+BASICMODULES = mkl adios2 hypre/${HYPRELOAD} metis petsc/${PETSCLOAD}
 MODULES = ${BASICMODULES}
 
 include ${MAKEINCLUDES}/Make.info
@@ -55,6 +58,7 @@ nopetsc = \
     -D DOXYGEN_EXECUTABLE=${TACC_DOXYGEN_BIN}/doxygen \
     -D foo=bar
 CMAKEPREFIXPATHSET=1
+CPTOINSTALLDIR = examples miniapps
 
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
@@ -63,16 +67,17 @@ info ::
 	@echo "make default_install : cpu version"
 .PHONY: default_install cpu gpu
 default_install : cpu
-cpu : configure build
+cpu : configure build public
 ## https://github.com/mfem/mfem/issues/4527
 CUDAFLAGS = -allow-unsupported-compiler -Xcompiler -std=gnu++14
 gpu :
 	@export CUDAFLAGS="${CUDAFLAGS}" \
 	 && export NVCC_APPEND_FLAGS="${CUDAFLAGS}" \
-	 && make --no-print-directory configure build \
+	 && make --no-print-directory configure build public \
 	    MODULES="${BASICMODULES} cuda" \
 	    USEGPU=YES \
-	    NVCCFLAGS="-D CMAKE_CUDA_FLAGS='${CUDAFLAGS}' "
+	    NVCCFLAGS="-D CMAKE_CUDA_FLAGS='${CUDAFLAGS}' " \
+	    INSTALLVARIANT=cuda MODULEVERSIONEXTRA=cuda
 
 TGZURL = https://github.com/mfem/mfem/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
