@@ -8,7 +8,8 @@ PACKAGE = MPUNITS
 PACKAGEVERSION = 2.4.0
 URL = https://github.com/mpusz/mp-units
 MODE = seq
-MODULES = catch2 gsllite
+MODULES = fmtlib gsllite
+# only needed for the full library install: catch2
 
 include ${MAKEINCLUDES}/Make.info
 
@@ -18,10 +19,9 @@ NOLIB = 1
 # there is a top level cmake setup but that bombs in all sorts of ways.
 CMAKESOURCE = src
 
-# attempt at using the top level cmake:
-# CMAKEFLAGS = \
-#     -D MP_UNITS_API_STD_FORMAT=OFF \
-#     -D MP_UNITS_LIBCXX=ON
+CMAKEFLAGS = \
+    -D MP_UNITS_API_STD_FORMAT=OFF \
+    -D MP_UNITS_LIBCXX=ON
 
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
