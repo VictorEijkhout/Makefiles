@@ -319,8 +319,8 @@ biginstall :
 	        echo " .. disable AMGX because no CUDA" && AMGX=0 \
 	      ; else AMGX=${AMGX} ; fi \
 	   && if [ "$${FORTRAN}" = "0" ] ; then \
-	        echo " .. disable MUMPS because no Fortran" \
-	         && MUMPS=0 \
+	        echo " .. disable MUMPS, STrumpack, Scalapack because no Fortran" \
+	         && MUMPS=0 && SCALAPACK=0 && STRUMPACK=0 \
 	      ; elif [ "$${PARMETIS}" = "1" ] ; then \
 	          MUMPS=1 \
 	      ; fi \
