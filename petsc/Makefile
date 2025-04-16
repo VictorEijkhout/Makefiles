@@ -50,13 +50,13 @@ DOWNLOADCMAKE =
 CUDA = 0
 info ::
 	@echo "     [CUDA=0/1 (default: ${CUDA})]"
-ifeq "${TACC_SYSTEM}" "vista"
-  CUDA_OPTIONS = --with-cuda=1 \
-	--with-cudac=nvcc --with-cuda-gencodearch=70
-else
-  CUDA_OPTIONS = --with-cuda=1 --with-cuda-dir=${TACC_CUDA_DIR} \
-	--with-cudac=nvcc --with-cuda-gencodearch=70
-endif
+# ifeq "${TACC_SYSTEM}" "vista"
+#   CUDA_OPTIONS = --with-cuda=1 \
+# 	--with-cudac='nvcc -allow-unsupported-compiler' --with-cuda-gencodearch=70
+# else
+#   CUDA_OPTIONS = --with-cuda=1 --with-cuda-dir=${TACC_CUDA_DIR} \
+# 	--with-cudac='nvcc -allow-unsupported-compiler' --with-cuda-gencodearch=70
+# endif
 
 TIME =
 
@@ -117,7 +117,7 @@ configurelog :
 	    "${PACKAGE}"  "${PACKAGEVERSION}"  "${PACKAGEBASENAME}" \
 	    "${DOWNLOADPATH}" "${SRCPATH}" \
 	 && cd $${srcdir} \
-	 && ( ls -l configure.log && cat ./configure.log )
+	 && ( ls -l $${srcdir}/configure.log && echo ">>>>>>>>>>>>>>>>" && cat ./configure.log )
 
 ####
 #### Packages
@@ -178,12 +178,20 @@ default_install :: modules
 	     && echo "Kludge: adding <<$${prefixdir}/lib>> to pythonpath" \
 	     && export PYTHONPATH=${PYTHONPATH}:$${prefixdir}/lib \
 	     && echo "PYTHONPATH=$${PYTHONPATH}" \
+	     && if [ ${CUDA} -eq 1 ] ; then \
+	          export CUDAFLAGS=-allow-unsupported-compiler \
+	           && export CUDAPPFLAGS=-allow-unsupported-compiler \
+	        ; fi \
 	     && echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> VLE configure" \
 	     && cmdline="${TIME} python3 ./configure --prefix=$${prefixdir} \
 	        ${DOWNLOADCMAKE} \
 	        CFLAGS=\"${OPTFLAGS}\" CXXFLAGS=\"${OPTFLAGS}\" \
 	        `if [ \"${FORTRAN}\" != \"0\" ] ; then echo FFLAGS=\"${OPTFLAGS}\" ; fi `\
-	        `if [ ${CUDA} -eq 1 ] ; then echo ${CUDA_OPTIONS} ; else echo --with-cudac=0 ; fi ` \
+	        `if [ ${CUDA} -eq 1 ] ; then \
+	                echo \"--with-cuda=1 --with-cuda-dir=${TACC_CUDA_DIR} \
+	                  --with-cudac=nvcc \
+	                  --with-cuda-gencodearch=70\" \
+	          ; else echo --with-cudac=0 ; fi ` \
 	        "${BLAS_FLAGS}" \
 	        $${package_options} $${param_settings} \
 	        " \
@@ -319,8 +327,8 @@ biginstall :
 	        echo " .. disable AMGX because no CUDA" && AMGX=0 \
 	      ; else AMGX=${AMGX} ; fi \
 	   && if [ "$${FORTRAN}" = "0" ] ; then \
-	        echo " .. disable MUMPS because no Fortran" \
-	         && MUMPS=0 \
+	        echo " .. disable MUMPS, STrumpack, Scalapack because no Fortran" \
+	         && MUMPS=0 && SCALAPACK=0 && STRUMPACK=0 \
 	      ; elif [ "$${PARMETIS}" = "1" ] ; then \
 	          MUMPS=1 \
 	      ; fi \
