@@ -178,11 +178,11 @@ default_install :: modules
 	     && echo "Kludge: adding <<$${prefixdir}/lib>> to pythonpath" \
 	     && export PYTHONPATH=${PYTHONPATH}:$${prefixdir}/lib \
 	     && echo "PYTHONPATH=$${PYTHONPATH}" \
-	     && if [ ${CUDA} -eq 1 ] ; then \
-	          export CUDAFLAGS=-allow-unsupported-compiler \
-	           && export CUDAPPFLAGS=-allow-unsupported-compiler \
-	        ; fi \
 	     && echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> VLE configure" \
+	     && if [ ${CUDA} -eq 1 ] ; then \
+	          export NVCC_APPEND_FLAGS=-allow-unsupported-compiler \
+	           && echo "Cuda environment:" && env | grep -i cuda \
+	        ; fi \
 	     && cmdline="${TIME} python3 ./configure --prefix=$${prefixdir} \
 	        ${DOWNLOADCMAKE} \
 	        CFLAGS=\"${OPTFLAGS}\" CXXFLAGS=\"${OPTFLAGS}\" \
@@ -190,6 +190,8 @@ default_install :: modules
 	        `if [ ${CUDA} -eq 1 ] ; then \
 	                echo \"--with-cuda=1 --with-cuda-dir=${TACC_CUDA_DIR} \
 	                  --with-cudac=nvcc \
+	                  --CUDAFLAGS=-allow-unsupported-compiler \
+	                  --CUDAPPFLAGS=-allow-unsupported-compiler \
 	                  --with-cuda-gencodearch=70\" \
 	          ; else echo --with-cudac=0 ; fi ` \
 	        "${BLAS_FLAGS}" \
