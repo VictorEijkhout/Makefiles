@@ -30,8 +30,8 @@ include ${MAKEINCLUDES}/Make.cbuild
 
 info ::
 	@echo "================ scotch rules"
-	@echo "make par : parallel installation"
-	@echo "make seq : sequential installation"
+	@echo "make seq32/64 : sequential version"
+	@echo "make par32/64 : sequential version"
 .PHONY: seq32 par32
 seq32 :
 	@make --no-print-directory configure build JCOUNT=${JCOUNT} \
