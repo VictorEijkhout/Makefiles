@@ -11,7 +11,7 @@ PACKAGEVERSION = 4.8
 
 # both i64
 HYPRELOAD = 2.31.0-i64
-PETSCLOAD = 3.22-i64
+PETSCLOAD = 3.23-i64
 
 MODE = mpi
 BASICMODULES = mkl adios2 hypre/${HYPRELOAD} metis petsc/${PETSCLOAD}
