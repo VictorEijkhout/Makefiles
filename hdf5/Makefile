@@ -6,6 +6,9 @@
 #### 
 #### see release_docs/INSTALL_CMake.txt
 #### 
+#### nvfortran real2 support missing
+#### https://hdfgroup.atlassian.net/servicedesk/customer/portal/6/HELP-2790?created=true
+#### 
 ################################################################
 
 PACKAGE = HDF5
