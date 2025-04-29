@@ -17,8 +17,12 @@ info ::
 .PHONY: system_test
 system_test :
 	@source ${MAKEINCLUDES}/names.sh \
-	 && export MODE=${MODE} && export INSTALLROOT=${INSTALLROOT} \
-	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" "${VARIANT}" "${MODULENAME}" "${MODE}" \
+	 && setnames \
+	    "${PACKAGE}" "${PACKAGEVERSION}" "${PACKAGEBASENAME}" \
+	    "${DOWNLOADPATH}" "${SRCPATH}" \
+	    "${INSTALLPATH}" "${INSTALLROOT}" "${INSTALLEXT}" "${INSTALLVARIANT}" \
+	    "${HOMEDIR}" "${BUILDDIRROOT}" "${MODE}" \
+	    "${PREFIXOPTION}" "${PREFIXEXTRA}" \
 	 && cd $${srcdir}/config &&  make -f Makefile.ini \
 	 && ./ymake -config `pwd` 2>&1 | tee parse \
 	 && if [ $$( cat parse | wc -l ) -gt 0 ] ; then \
@@ -27,33 +31,42 @@ system_test :
 	        echo "System recognized:" \
 	         && grep SYSTEM_INCLUDE Makefile \
 	    ; fi
+
 .PHONY: configure build
 configure : system_test
 	@source ${MAKEINCLUDES}/names.sh \
-	 && export MODE=${MODE} && export INSTALLROOT=${INSTALLROOT} \
-	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" "${VARIANT}" "${MODULENAME}" "${MODE}" \
+	 && setnames \
+	    "${PACKAGE}" "${PACKAGEVERSION}" "${PACKAGEBASENAME}" \
+	    "${DOWNLOADPATH}" "${SRCPATH}" \
+	    "${INSTALLPATH}" "${INSTALLROOT}" "${INSTALLEXT}" "${INSTALLVARIANT}" \
+	    "${HOMEDIR}" "${BUILDDIRROOT}" "${MODE}" \
+	    "${PREFIXOPTION}" "${PREFIXEXTRA}" \
 	 && source ${MAKEINCLUDES}/compilers.sh && setcompilers \
 	 && ( \
 	    cat Makefile.template \
-	            | sed -e 's?theinstalldir?'$${installdir}'?' \
-	            > $${srcdir}/common/Makefile \
+	            | sed -e 's?theinstalldir?'$${prefixdir}'?' \
+	            > $${srcdir}/Makefile \
 	     && cd $${srcdir} \
 	     && echo && echo "==== Using configuration:" && make Info \
 	    ) 2>&1 | tee $$configurelog
 build :
 	@source ${MAKEINCLUDES}/names.sh \
-	 && export MODE=${MODE} && export INSTALLROOT=${INSTALLROOT} \
-	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" "${VARIANT}" "${MODULENAME}" "${MODE}" \
+	 && setnames \
+	    "${PACKAGE}" "${PACKAGEVERSION}" "${PACKAGEBASENAME}" \
+	    "${DOWNLOADPATH}" "${SRCPATH}" \
+	    "${INSTALLPATH}" "${INSTALLROOT}" "${INSTALLEXT}" "${INSTALLVARIANT}" \
+	    "${HOMEDIR}" "${BUILDDIRROOT}" "${MODE}" \
+	    "${PREFIXOPTION}" "${PREFIXEXTRA}" \
 	 && source ${MAKEINCLUDES}/compilers.sh && setcompilers \
 	 \
-	 && mkdir -p $${installdir} \
+	 && mkdir -p $${prefixdir} \
 	 && ( \
 	    cd $${srcdir} \
 	     && echo && echo "==== Starting installation with:" \
 	     && make Info && echo \
 	     && make Makefiles clean includes depend all install \
 	    ) 2>&1 | tee $${installlog} \
-	 && echo && echo "Installation finished in: $$installdir" \
+	 && echo && echo "Installation finished in: $$prefixdir" \
 	 && echo "(see: $$installlog)" && echo
 
 NOLIB = 1
