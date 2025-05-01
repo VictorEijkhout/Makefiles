@@ -10,8 +10,10 @@ PACKAGEVERSION = 4.8
 ## 4.5.2 has breaking changes for CHyPS.
 
 # both i64
-HYPRELOAD = 2.31.0-i64
-PETSCLOAD = 3.23-i64
+HYPREVERSION = 2.31.0
+HYPRELOAD = ${HYPREVERSION}
+PETSCVERSION = 3.23
+PETSCLOAD = ${PETSCVERSION}
 
 MODE = mpi
 BASICMODULES = mkl adios2 hypre/${HYPRELOAD} metis petsc/${PETSCLOAD}
@@ -63,11 +65,18 @@ CPTOINSTALLDIR = examples miniapps
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
 info ::
-	@echo "make cpu, gpu"
+	@echo "make cpu32 cpu64, gpu, (cpu is cpu32)"
 	@echo "make default_install : cpu version"
 .PHONY: default_install cpu gpu
 default_install : cpu
-cpu : configure build public
+cpu : cpu32
+cpu32 : 
+	@make --no-print-directory configure build public 
+cpu64 :
+	@make --no-print-directory configure build public \
+	    INSTALLVARIANT=i64 MODULEVERSIONEXTRA=i64 \
+	    HYPRELOAD=${HYPREVERSION}-i64 PETSCLOAD=${PETSCVERSION}-i64
+
 ## https://github.com/mfem/mfem/issues/4527
 CUDAFLAGS = -allow-unsupported-compiler -Xcompiler -std=gnu++14
 gpu :
