@@ -7,7 +7,7 @@
 PACKAGE = KOKKOS
 URL = https://github.com/kokkos/kokkos \
     https://kokkos.github.io/kokkos-core-wiki/building.html
-PACKAGEVERSION = 4.5.01
+PACKAGEVERSION = 4.6.01
 MODE = seq
 MODULES = 
 MODULE_MINIMUM_VERSION_cuda = 12
