@@ -54,14 +54,18 @@ ziplog_info :
 ## https://www.gnu.org/software/make/manual/html_node/Overriding-Makefiles.html
 
 # VOLTA70 ?
+# https://kokkos.org/kokkos-core-wiki/get-started/configuration-guide.html
 configure_cuda :
 	@if [ -z "${TACC_CXX}" ] ; then \
 	    echo "No TACC_CXX defined" && exit 1 ; fi 
 	@export NVCC_WRAPPER_DEFAULT_COMPILER=${TACC_CXX} \
+	 && case ${TACC_SYSTEM} in \
+	    ( vista) GPUTYPE=HOPPER90 ;; ( * ) GPUTYPE=TURING75 ;; esac \
 	 && make --no-print-directory configure \
 	    CMAKEFLAGS=" \
-	      -D Kokkos_ENABLE_SERIAL=ON -D Kokkos_ENABLE_CUDA=ON \
-	      -D Kokkos_ARCH_TURING75=ON -D Kokkos_ENABLE_CUDA_LAMBDA=ON \
+	      -D Kokkos_ENABLE_SERIAL=ON \
+	      -D Kokkos_ENABLE_CUDA=ON -D Kokkos_ENABLE_CUDA_LAMBDA=ON \
+	      -D Kokkos_ARCH_$${GPUTYPE}=ON \
 	      " \
 	    MODULES=cuda  INSTALLVARIANT=cuda
 ## NO LONGER (at least on vista)

@@ -50,13 +50,6 @@ DOWNLOADCMAKE =
 CUDA = 0
 info ::
 	@echo "     [CUDA=0/1 (default: ${CUDA})]"
-# ifeq "${TACC_SYSTEM}" "vista"
-#   CUDA_OPTIONS = --with-cuda=1 \
-# 	--with-cudac='nvcc -allow-unsupported-compiler' --with-cuda-gencodearch=70
-# else
-#   CUDA_OPTIONS = --with-cuda=1 --with-cuda-dir=${TACC_CUDA_DIR} \
-# 	--with-cudac='nvcc -allow-unsupported-compiler' --with-cuda-gencodearch=70
-# endif
 
 TIME =
 
@@ -127,9 +120,9 @@ include Makefile.packages
 
 info ::
 	@echo "make default_install (there are no configure/install rules)"
-.PHONY: defaul_install
+.PHONY: default_install
 default_install :: modules
-	@if [ "${TACC_SYSTEM}" != "vista" -a ${CUDA} -eq 1 -a -z "${TACC_CUDA_DIR}" ] ; then \
+	@if [ "${CUDA}" -eq 1 -a -z "${TACC_CUDA_DIR}" ] ; then \
 	    echo && echo "Please load cuda module" && echo && exit 1 \
 	    ; fi
 	@source ${MAKEINCLUDES}/names.sh \
@@ -215,16 +208,6 @@ default_install :: modules
 	  ) 2>&1 | tee $${installlog}
 include ${MAKEINCLUDES}/Make.vars
 include ${MAKEINCLUDES}/Make.public
-## build :: installation_public
-
-     # && ( cd $${petscarch}/include \
-     #     && sed -i \
-     #            -e '/define PETSC_HAVE_I_MPI_NUMVERSION/s/define/undef/' \
-     #            petscconf.h \
-     #     && sed -i \
-     #            -e '/PETSC_HAVE_I_MPI_NUMVERSION/s/[0-9]\+//g' \
-     #            petscconf.h \
-     #    ) 
 
 info ::
 	@echo "make installation_public : open installation (also done as part of build)"
@@ -320,14 +303,18 @@ biginstall :
 	   && case $${ext} in ( *complex* ) SCALAR=complex ;; ( * ) SCALAR=real ;; esac \
 	   \
 	   && echo "Selecting packages" \
-	   && CHACO=${CHACO} && FFTW=${FFTW} && HDF5=${HDF5} && HYPRE=${HYPRE} && METIS=${METIS} \
+	   && AMGX=${AMGX} && CHACO=${CHACO} && CUDA=${CUDA} && FFTW=${FFTW} && HDF5=${HDF5} && HYPRE=${HYPRE} && METIS=${METIS} \
 	   && MUMPS=${MUMPS} && PARMETIS=${PARMETIS} && PTSCOTCH=${PTSCOTCH} \
 	   && STRUMPACK=${STRUMPACK} \
 	   && SUPERLU=${SUPERLU} && SUPERLU_DIST=${SUPERLU_DIST} \
 	   && SCALAPACK=${SCALAPACK} && ZOLTAN=${ZOLTAN} \
-	   && if [ "${CUDA}" != "1" -a "${AMGX}" = "1" ] ; then \
-	        echo " .. disable AMGX because no CUDA" && AMGX=0 \
-	      ; else AMGX=${AMGX} ; fi \
+	   && if [ "$${CUDA}" = "1" ] ; then \
+	        echo " .. disable STRUMPACK: don't work with cuda" && STRUMPACK=0 \
+	         && echo " .. disable PARMETIS, PTSCOTCH: something about 64 bit blas/lapack fftw" && PARMETIS=0 && PTSCOTCH=0 \
+	         && echo " .. disable AMGX: don't work with cuda, but should; investigate!" && AMGX=0 \
+	      ; else \
+	        echo " .. disable AMGX because no cuda" && AMGX=0 \
+	      ; fi \
 	   && if [ "$${FORTRAN}" = "0" ] ; then \
 	        echo " .. disable MUMPS, STrumpack, Scalapack because no Fortran" \
 	         && MUMPS=0 && SCALAPACK=0 && STRUMPACK=0 \
