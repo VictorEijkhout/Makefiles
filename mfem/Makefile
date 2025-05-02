@@ -72,6 +72,7 @@ default_install : cpu
 cpu : cpu32
 cpu32 : 
 	@make --no-print-directory configure build public 
+## https://github.com/mfem/mfem/issues/4844
 cpu64 :
 	@make --no-print-directory configure build public \
 	    INSTALLVARIANT=i64 MODULEVERSIONEXTRA=i64 \
