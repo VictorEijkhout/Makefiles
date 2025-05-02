@@ -2,11 +2,13 @@
 ####
 #### Makefile for swig
 ####
+#### https://github.com/swig/swig/issues/3171
+####
 ################################################################
 
 PACKAGE = swig
-URL = https://www.swig.org/
-PACKAGEVERSION = 4.2.1
+URL = https://www.swig.org/ https://github.com/swig/swig
+PACKAGEVERSION = 4.3.1
 MODE = seq
 MODULES = pcre2 bison
 
