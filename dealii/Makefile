@@ -6,9 +6,9 @@
 
 PACKAGE = DEALII
 URL = https://github.com/dealii/dealii https://dealii.org/developer/users/cmake_user.html
-PACKAGEVERSION = 9.5.2
+PACKAGEVERSION = 9.6.2
 MODE = mpi
-MODULES = p4est petsc trilinos
+MODULES = p4est petsc sundials trilinos
 # intel 23 problem solved in 24
 # support ticket 05936427
 
@@ -21,6 +21,7 @@ CMAKEFLAGS = \
     -D DEAL_II_WITH_TBB=OFF \
     -D DEAL_II_WITH_P4EST=ON    -D P4EST_DIR=${TACC_P4EST_DIR} \
     -D DEAL_II_WITH_PETSC=ON    -D PETSC_DIR=${PETSC_DIR} -D PETSC_ARCH=${PETSC_ARCH} \
+    -D DEAL_II_WITH_SUNDIALS=ON -D SUNDIALS_DIR=${TACC_SUNDIALS_DIR} \
     -D DEAL_II_WITH_TRILINOS=ON -D TRILINOS_DIR=${TACC_TRILINOS_DIR}
 ##    -D TBB_INCLUDE_DIR=/opt/intel//oneapi/tbb/latest/lib/pkgconfig/../../include/ \
 ##    -D DEAL_II_LINKER_FLAGS=-fuse-ld=bfd only for intel?
