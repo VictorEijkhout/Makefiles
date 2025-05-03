@@ -2,18 +2,20 @@
 ####
 #### Makefile for Sundials installation
 ####
-#### https://github.com/geodynamics/sundials
-####
 ################################################################
 
 PACKAGE = SUNDIALS
-URL = https://computing.llnl.gov/projects/sundials
+URL = https://computing.llnl.gov/projects/sundials \
+    https://github.com/LLNL/sundials \
+    https://sundials.readthedocs.io/en/latest/sundials/Install_link.html#installation-cmake
 PACKAGEVERSION = 7.3.0
 MODE = mpi
 
 include ${MAKEINCLUDES}/Make.info
 
-CMAKEFLAGS =
+CMAKEFLAGS = \
+    -D ENABLE_MPI=ON \
+    -D BUILD_FORTRAN_MODULE_INTERFACE=ON
 CMAKEPREFIXPATHSET = 1
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
