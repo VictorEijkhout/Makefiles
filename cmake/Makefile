@@ -17,6 +17,9 @@ NOINC = 1
 HASBIN = 1
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
+ifeq "${TACC_SYSTEM}" "frontera"
+  LDLIBRARYPATHADDABS = /home1/apps/gcc/13.2.0/lib64
+endif
 default_install : configure build 
 
 TGZURL = https://github.com/Kitware/CMake/releases/download/v${PACKAGEVERSION}/cmake-${PACKAGEVERSION}.tar.gz
