@@ -17,11 +17,14 @@ include ${MAKEINCLUDES}/Make.configure
 CONFIGUREFLAGS = \
     --with-pic \
     --enable-shared \
-    --disable-dependency-tracking 
+    --with-qt=no
 
-PKGCONFIGLIB = pkgconfig
 HASBIN = 1
+NOLIB = 1
+NOINC = 1
+CPTOINSTALLDIR = demo
 include ${MAKEINCLUDES}/Make.install
+
 .PHONY: default_install
 info ::
 	@echo "make default_install : configure build"
