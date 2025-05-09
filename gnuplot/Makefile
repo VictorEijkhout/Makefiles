@@ -17,7 +17,7 @@ include ${MAKEINCLUDES}/Make.configure
 CONFIGUREFLAGS = \
     --with-pic \
     --enable-shared \
-    --with-qt=no
+    --with-qt=qt5
 
 HASBIN = 1
 NOLIB = 1

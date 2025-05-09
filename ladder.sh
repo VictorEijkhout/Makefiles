@@ -8,7 +8,7 @@ version=${TACC_FAMILY_COMPILER_VERSION}
 version=${version%%.*}
 
 function usage() {
-    echo "Usage: $0 [ -h ] [ -x ] [ -l ] "
+    echo "Usage: $0 [ -h ] [ -x : setx ] [ -l : list ] "
     echo "    [ -j nnn (default: ${jcount}) ] "
     echo "    [ -c compiler (default ${TACC_FAMILY_COMPILER} ] "
     echo "    [ -v compiler_version (default ${TACC_FAMILY_COMPILER_VERSION} ] "
@@ -29,10 +29,14 @@ if [ $# -eq 0 ] ; then
 fi
 
 function module_avail {
-    module -t avail $1/$2 2>&1
-    # module avail $1/$2 2>&1 \
-    # | awk 'BEGIN {skip=0} /Where/ {skip=1} /No module/ {skip=1 } skip==0 {print}' \
-    # | sed -e 's/-//g'
+    # $1=package $2=test version $3=install version
+    if [ -z "$2" ] ; then 
+	echo "Available: $1/$3"
+	module -t avail $1/$3 2>&1
+    else
+	echo "Available: $1/$2"
+	module -t avail $1/$2 2>&1
+    fi
 }
 
 while [ $# -gt 0 ] ; do
@@ -66,7 +70,7 @@ if [ $setx -gt 0 ] ; then
 fi
 
 echo "================ Starting installation with modules:"
-module list
+module -t list 2>&1 | sort | tr '\n' ' ' && echo
 
 if [ "${packages}" = "0" -a -z "${list}" ] ; then 
   exit 0
@@ -81,27 +85,41 @@ ladderlog=ladder_${TACC_FAMILY_COMPILER}${TACC_FAMILY_COMPILER_VERSION}.log
 for m in $( echo ${packages} | tr , ' ' ) ; do
     for numpacver in ${numladder} \
 	       ; do \
+	# number in the list
 	num=${numpacver%%,*}
+	# package and optional version
 	pacver=${numpacver#*,}
-	pac=${pacver%,*}
-	ver=${pacver#*,}
-	eval fullver=\${${pac}_full_version}
-	if [ -z "$fullver" ] ; then fullver=${ver} ; fi
+	# package
+	package=${pacver%,*}
+	# version could be empty
+	version=$( pacver="${pacver}," && echo ${pacver#*,} | tr -d ',' )
+	if [ ! -z $version ] ; then 
+	    eval fullversion=\${${package}_full_version}
+	    if [ -z "$fullversion" ] ; then fullversion=${version} ; fi
+	else 
+	    # get default from makefile
+	    fullversion=$( cd ../${package} && make --no-print-directory version )
+	    version=${fullversion}
+	fi
 	echo "================"
-	echo "Package $num: $pac version $ver"
+	echo "Package $num: $package version $version"
 	if [ ! -z "${list}" ] ; then 
-	    module_avail $pac $ver
+	    module_avail "$package" "$version" "$fullversion"
 	elif [ $m -eq $num ] ; then 
 	    echo "Installing" && echo
-	    ( cd ../$pac \
-	       && make configure build public JCOUNT=${jcount} PACKAGEVERSION=$fullver \
+	    ( cd ../$package \
+	       && make configure build public \
+		    JCOUNT=${jcount} versionspec="PACKAGEVERSION=$fullversion" \
 	     )
 	    break
 	fi
 	if [ -z "${list}" ] ; then 
-	    module load $pac/$ver
-	    echo " .. loading"
-	    if [ $? -ne 0 ] ; then echo "Could not load $pac" && exit 1 ; fi
+	    module load $package/$version
+	    if [ $? -ne 0 ] ; then echo "Could not load $package" && exit 1 ; fi
+	    PACKAGE=$( echo ${package} | tr a-z -A-Z )
+	    module -t list $package/$version 
+	    module show $package/$version 2>&1 | \grep DIR
+	    eval echo " .. loaded ${package}/${version} at \${TACC_${PACKAGE}_DIR}"
 	fi
     done 
 done 2>&1 | tee ${ladderlog}
