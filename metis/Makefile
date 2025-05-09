@@ -26,10 +26,17 @@ include ${MAKEINCLUDES}/Make.info
 HASBIN = 1
 include ${MAKEINCLUDES}/Make.cmake
 WIDTH=32
-# posix source:
-# https://github.com/KarypisLab/GKlib/issues/24
+# 1. posix source:
+#    https://github.com/KarypisLab/GKlib/issues/24
+# 2. testing off to prevent sqrt@@GLIBC error
+# 3. copy-dt-needed-entries because 
+#    build-5.2.1.1-clx-gcc13.2-impi21.9.0-i32/_deps/gklib-build/libGKlib.so
+#    see https://stackoverflow.com/a/55086637/2044454
 CMAKEFLAGS = \
-    -D CMAKE_C_FLAGS='-DIDXTYPEWIDTH=${WIDTH} -DREALTYPEWIDTH=${WIDTH} -D_POSIX_C_SOURCE=200809L'
+    -D UNIX=ON \
+    -D BUILD_TESTING=OFF \
+    -D CMAKE_C_FLAGS='-DIDXTYPEWIDTH=${WIDTH} -DREALTYPEWIDTH=${WIDTH} \
+	-D_POSIX_C_SOURCE=200809L -Wl,--copy-dt-needed-entries'
 include ${MAKEINCLUDES}/Make.cbuild
 
 .PHONY: default_install i32 i64 i64-configure i64-build
@@ -70,4 +77,15 @@ ifdef TICKETS
 intel24 compilation S3
 /opt/apps/gcc/13.2.0/bin/ld: CMakeFiles/gpmetis.dir/gpmetis.c.o: undefined reference to symbol 'gk_GetCurMemoryUsed'
 /opt/apps/gcc/13.2.0/bin/ld: /work2/00434/eijkhout/metis/build-5.2.1.1-stampede3-intel24.2-impi21.13-i32/_deps/gklib-build/libGKlib.so: error adding symbols: DSO missing from command line
+
+Attempt to use our own gklib in CMakeLists.txt
+This does not work. Really needs the included gklib
+## FetchContent_Declare(GKlib
+## GIT_REPOSITORY https://github.com/scivision/GKlib.git
+## #GIT_TAG 44630ca
+## GIT_SHALLOW true
+## )
+## FetchContent_MakeAvailable(GKlib)
+find_package( GKlib REQUIRED ) # VLE
+
 endif
