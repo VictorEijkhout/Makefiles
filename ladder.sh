@@ -31,11 +31,16 @@ fi
 function module_avail {
     # $1=package $2=test version $3=install version
     if [ -z "$2" ] ; then 
-	echo "Available: $1/$3"
-	module -t avail $1/$3 2>&1
+	testversion="$1/$3"
     else
-	echo "Available: $1/$2"
-	module -t avail $1/$2 2>&1
+	testversion="$1/$2"
+    fi
+    avail=$( module -t avail ${testversion} 2>&1 )
+    if [ -z "${avail}" ] ; then 
+	echo "MISSING: $testversion:"
+    else
+	echo "Available: $testversion"
+	echo "${avail}"
     fi
 }
 
