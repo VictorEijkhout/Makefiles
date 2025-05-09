@@ -26,7 +26,10 @@ include ${MAKEINCLUDES}/Make.info
 HASBIN = 1
 include ${MAKEINCLUDES}/Make.cmake
 WIDTH=32
-CMAKEFLAGS = -DCMAKE_C_FLAGS='-DIDXTYPEWIDTH=${WIDTH} -DREALTYPEWIDTH=${WIDTH}'
+# posix source:
+# https://github.com/KarypisLab/GKlib/issues/24
+CMAKEFLAGS = \
+    -D CMAKE_C_FLAGS='-DIDXTYPEWIDTH=${WIDTH} -DREALTYPEWIDTH=${WIDTH} -D_POSIX_C_SOURCE=200809L'
 include ${MAKEINCLUDES}/Make.cbuild
 
 .PHONY: default_install i32 i64 i64-configure i64-build
