@@ -44,6 +44,18 @@ function module_avail {
     fi
 }
 
+function module_install {
+    package="$1"
+    echo " .. installing" && echo
+    eval packagetgt=\${${package}_tgt}
+    if [ -z "${packagetgt}" ] ; then packagetgt=default_install ; fi 
+    pushd ../${packagedir} \
+	&& make ${packagetgt} public \
+	JCOUNT=${jcount} versionspec="PACKAGEVERSION=$fullversion"
+    popd
+
+}
+
 while [ $# -gt 0 ] ; do
     if [ "$1" = "-h" ] ; then 
 	usage
@@ -96,6 +108,9 @@ for m in $( echo ${packages} | tr , ' ' ) ; do
 	pacver=${numpacver#*,}
 	# package
 	package=${pacver%,*}
+	# directory, could be package name or different
+	eval packagedir=\${${package}_dir}
+	if [ -z "${packagedir}" ] ; then packagedir=${package} ; fi
 	# version could be empty
 	version=$( pacver="${pacver}," && echo ${pacver#*,} | tr -d ',' )
 	if [ ! -z $version ] ; then 
@@ -103,7 +118,7 @@ for m in $( echo ${packages} | tr , ' ' ) ; do
 	    if [ -z "$fullversion" ] ; then fullversion=${version} ; fi
 	else 
 	    # get default from makefile
-	    fullversion=$( cd ../${package} && make --no-print-directory version )
+	    fullversion=$( cd ../${packagedir} && make --no-print-directory version )
 	    version=${fullversion}
 	fi
 	echo "================"
@@ -111,12 +126,7 @@ for m in $( echo ${packages} | tr , ' ' ) ; do
 	if [ ! -z "${list}" ] ; then 
 	    module_avail "$package" "$version" "$fullversion"
 	elif [ $m -eq $num ] ; then 
-	    echo "Installing" && echo
-	    ( cd ../$package \
-	       && make configure build public \
-		    JCOUNT=${jcount} versionspec="PACKAGEVERSION=$fullversion" \
-	     )
-	    break
+	    module_install "${package}"
 	fi
 	if [ -z "${list}" ] ; then 
 	    module load $package/$version

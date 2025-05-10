@@ -5,13 +5,15 @@ jcount=4
 list=
 packages=0
 
-hdf5_target=par
+phdf5_dir=hdf5
+phdf5_tgt=par
 PACKAGEOPTIONS_hdf5="HDFFORTRAN=OFF"
 
 petsc_version=3.23
 petsc_full_version=3.23.1
 
 trilinosversion=14.4.0
+# these are module names
 ladder="\
     zlib \
     petsc,3.23 \
@@ -20,10 +22,10 @@ ladder="\
     pcre2 \
     bison \
     swig \
-    hdf5 \
-    netcdf \
     gklib \
     metis \
+    phdf5 \
+    pnetcdf \
     trilinos \
     dealii \
     aspect \
