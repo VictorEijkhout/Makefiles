@@ -2,6 +2,7 @@
 numladder="\
     $( i=1 && for l in ${ladder} ; do echo $i,$l && i=$(( i+1 )) ; done ) \
     "
+export ladderlength=$( echo "${numladder}" | wc -w )
 
 compiler=${TACC_FAMILY_COMPILER}
 version=${TACC_FAMILY_COMPILER_VERSION}
@@ -12,7 +13,7 @@ function usage() {
     echo "    [ -j nnn (default: ${jcount}) ] "
     echo "    [ -c compiler (default ${TACC_FAMILY_COMPILER} ] "
     echo "    [ -v compiler_version (default ${TACC_FAMILY_COMPILER_VERSION} ] "
-    echo "    nnn"
+    echo "    nnn / all"
     echo "where nnn:"
     for ixy in ${numladder} ; do
 	n=${ixy%%,*}
@@ -21,6 +22,7 @@ function usage() {
 	y=${xy#*,}
 	echo " $n : $x / $y"
     done
+    echo " all : 1--${n}"
 }
 
 if [ $# -eq 0 ] ; then 
@@ -45,7 +47,7 @@ function module_avail {
 }
 
 function module_install {
-    package="$1"
+    package="$1" fullversion="$2"
     echo " .. installing" && echo
     eval packagetgt=\${${package}_tgt}
     if [ -z "${packagetgt}" ] ; then packagetgt=default_install ; fi 
@@ -71,7 +73,12 @@ while [ $# -gt 0 ] ; do
     elif [ "$1" = "-v" ] ; then 
 	shift; version=$1; shift
     else
-	packages=$1; shift
+	if [ "$1" = "all" ] ; then
+	    packages="$( seq 1 $ladderlength )"
+	else
+	    packages=$1
+	fi
+	shift
     fi
 done
 
@@ -99,7 +106,7 @@ else
     echo "---------------- listing packages"
 fi
 ladderlog=ladder_${TACC_FAMILY_COMPILER}${TACC_FAMILY_COMPILER_VERSION}.log
-for m in $( echo ${packages} | tr , ' ' ) ; do
+for m in $( echo "${packages}" | tr , ' ' ) ; do
     for numpacver in ${numladder} \
 	       ; do \
 	# number in the list
@@ -126,7 +133,9 @@ for m in $( echo ${packages} | tr , ' ' ) ; do
 	if [ ! -z "${list}" ] ; then 
 	    module_avail "$package" "$version" "$fullversion"
 	elif [ $m -eq $num ] ; then 
-	    module_install "${package}"
+	    module_install "${package}" "${fullversion}"
+	    # go to next installable
+	    break
 	fi
 	if [ -z "${list}" ] ; then 
 	    module load $package/$version

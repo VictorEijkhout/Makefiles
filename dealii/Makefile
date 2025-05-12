@@ -16,6 +16,7 @@ CONFIGURATION = default
 include ${MAKEINCLUDES}/Make.info
 
 CMAKEFLAGS = \
+    -D DEAL_II_CXX_FLAGS='-Wno-\#warnings -save-temps -v' \
     -D DEAL_II_WITH_MPI=ON \
     -D DEAL_II_COMPONENT_EXAMPLES=OFF \
     -D DEAL_II_WITH_TBB=OFF \

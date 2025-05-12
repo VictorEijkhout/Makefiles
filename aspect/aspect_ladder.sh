@@ -27,6 +27,7 @@ ladder="\
     pnetcdf \
     petsc,3.23 \
     trilinos \
+    sundials \
     dealii \
     aspect \
     "
