@@ -19,7 +19,7 @@ intelversion=25.0
 echo "loading intel ${intelversion}"
 
 export VICTOR_MODULEPATH_ROOT=${MODULEROOT}
-## 24.2 is on scratch
+## 25 is on scratch
 module use /scratch/projects/compilers/modulefiles
 module use ${VICTOR_MODULEPATH_ROOT}/Core
 
