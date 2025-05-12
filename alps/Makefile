@@ -13,7 +13,7 @@ MODULES = mkl
 
 include ${MAKEINCLUDES}/Make.info
 include ${MAKEINCLUDES}/Make.configure
-include ${MAKEINCLUDES}/Make.build
+include ${MAKEINCLUDES}/Make.install
 HASBIN=1
 
 .PHONY: default_install
