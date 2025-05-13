@@ -24,7 +24,10 @@ include ${MAKEINCLUDES}/Make.info
 # include ${MAKEINCLUDES}/Make.cbuild
 
 include ${MAKEINCLUDES}/Make.configure
+CONFIGUREFLAGS = \
+    --with-pcre2-prefix=${TACC_PCRE2_DIR}
 include ${MAKEINCLUDES}/Make.install
+
 .PHONY: default_install
 default_install : configure build
 HASBIN = 1

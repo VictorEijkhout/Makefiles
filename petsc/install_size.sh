@@ -66,10 +66,6 @@ case "${TACC_SYSTEM}" in
     fi ;;
 esac
 
-module load eigen
-## Note: petsc has "with-fftw", no 3.
-# module load fftw3
-
 if [ "${cuda}" = "1" -a "${TACC_SYSTEM}" != "vista" ] ; then 
     gcc_version=${TACC_FAMILY_COMPILER_VERSION}
     gcc_version=${gcc_version%%.*}

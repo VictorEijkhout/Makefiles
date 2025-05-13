@@ -129,9 +129,9 @@ cmdline="cmake \
      ; fi ) \
   -D Phalanx_INDEX_SIZE_TYPE:STRING='INT' \
   -D Phalanx_SHOW_DEPRECATED_WARNINGS:BOOL=OFF \
-  -D Kokkos_ENABLE_Serial:BOOL=ON \
+  -D Kokkos_ENABLE_SERIAL:BOOL=ON \
   -D Kokkos_ENABLE_OPENMP:BOOL=${HAS_OPENMP} \
-  -D Kokkos_ENABLE_Pthread:BOOL=OFF \
+  -D Kokkos_ENABLE_PTHREAD:BOOL=OFF \
   \
   -D Trilinos_ENABLE_STK:BOOL=${HAS_STK} \
       -D Trilinos_ENABLE_STKIO:BOOL=${HAS_STK} \
