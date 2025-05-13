@@ -16,7 +16,6 @@ trilinosversion=14.4.0
 # these are module names
 ladder="\
     zlib \
-    petsc,3.23 \
     p4est \
     boost \
     pcre2 \
@@ -26,6 +25,7 @@ ladder="\
     metis \
     phdf5 \
     pnetcdf \
+    petsc,3.23 \
     trilinos \
     sundials \
     dealii \
