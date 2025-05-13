@@ -6,11 +6,10 @@
 
 PACKAGE = p4est
 URL = http://p4est.org/ https://github.com/cburstedde/p4est
-PACKAGEVERSION = 2.8.6
-## PACKAGEVERSION = 2.8.5.5-9ddbb
+PACKAGEVERSION = 2.8.7
 
 MODE = mpi
-MODULES = petsc
+MODULES = 
 
 include ${MAKEINCLUDES}/Make.info
 

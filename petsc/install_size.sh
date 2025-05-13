@@ -58,23 +58,17 @@ echo " .. make thread count $jcount"
 
 set -e
 case "${TACC_SYSTEM}" in
-  ( "vista" )      module load nvpl ;;
+  ( "vista" )
+    module load nvpl ;;
   ( * )
     if [ "${TACC_FAMILY_COMPILER}" = "gcc" ] ; then
       module load mkl
     fi ;;
 esac
 
-module load eigen
-## Note: petsc has "with-fftw", no 3.
-module load fftw3
-
 if [ "${cuda}" = "1" -a "${TACC_SYSTEM}" != "vista" ] ; then 
     gcc_version=${TACC_FAMILY_COMPILER_VERSION}
     gcc_version=${gcc_version%%.*}
-    # if [ ${gcc_version} -gt 12 ] ; then 
-    # 	echo "ERROR can not deal with gcc > 12" && exit 1
-    # fi
     module load cuda/12
 fi
 

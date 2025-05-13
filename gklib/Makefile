@@ -10,15 +10,21 @@
 PACKAGE = gklib
 URL = https://github.com/scivision/GKlib.git
 PACKAGEVERSION = git
+GITDATE = 20250114
 MODE = mpi
-MODULES = 
+MODULES =
 
 include ${MAKEINCLUDES}/Make.info
 
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
 CMAKEPREFIXPATHSET = 1
-CMAKEFLAGS =
+# siginfo_t fix
+# disable testing to avoid missing sqrt@@GLIBC
+CMAKEFLAGS = \
+    -D UNIX=ON \
+    -D BUILD_TESTING=OFF \
+    -D CMAKE_C_FLAGS='-D_POSIX_C_SOURCE=200809L'
 # It says this in the github readme but does not work: --workflow --preset default
 
 .PHONY: default_install
@@ -27,6 +33,5 @@ info ::
 default_install : configure build
 
 GITREPO = https://github.com/scivision/GKlib.git
-GITDATE = today
 include ${MAKEINCLUDES}/Make.git
 

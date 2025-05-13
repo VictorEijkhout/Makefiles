@@ -11,8 +11,8 @@
 PACKAGE = trilinos
 URL = https://github.com/trilinos/Trilinos \
     https://www.docs.trilinos.org/files/TrilinosBuildReference.html
-PACKAGEVERSION = 16.0.0
-PACKAGEVERSION_DOWNLOAD = 16-0-0
+PACKAGEVERSION = 16.1.0
+PACKAGEVERSION_DOWNLOAD = 16-1-0
 #15-1-0
 MODE = hybrid
 MODULES = boost swig phdf5 pnetcdf mkl
@@ -26,7 +26,7 @@ info ::
 	@echo "    [ PACKAGEVERSION=... (default=${PACKAGEVERSION}) ]"
 	@echo "    [ PYTHON=ON/OFF (default: ${PYTHON} ) ]"
 	@echo "    [ TEUCHOS=ON/OFF (default: ${TEUCHOS} ) ]"
-PYTHON = ON
+PYTHON = OFF
 
 CMAKEPREFIXPATHSET = 1
 LANGUAGE = CXX
