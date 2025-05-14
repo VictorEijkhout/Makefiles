@@ -6,7 +6,7 @@
 
 PACKAGE = PETSC
 URL = https://petsc.org/release/install/download/
-PACKAGEVERSION = 3.23.1
+PACKAGEVERSION = 3.23.2
 MODE = mpi
 UPSTREAM = chyps dealii libmesh mfem p4est precice
 
@@ -179,13 +179,11 @@ default_install :: modules
 	        ; fi \
 	     && cmdline="${TIME} python3 ./configure --prefix=$${prefixdir} \
 	        ${DOWNLOADCMAKE} \
-	        CFLAGS=\"${OPTFLAGS}\" CXXFLAGS=\"${OPTFLAGS}\" \
-	        `if [ \"${FORTRAN}\" != \"0\" ] ; then echo FFLAGS=\"${OPTFLAGS}\" ; fi `\
+	        COPTFLAGS=\"${OPTFLAGS}\" CXXOPTFLAGS=\"${OPTFLAGS}\" \
+	        `if [ \"${FORTRAN}\" != \"0\" ] ; then echo FOPTFLAGS=\"${OPTFLAGS}\" ; fi `\
 	        `if [ ${CUDA} -eq 1 ] ; then \
 	                echo \"--with-cuda=1 --with-cuda-dir=${TACC_CUDA_DIR} \
 	                  --with-cudac=nvcc \
-	                  --CUDAFLAGS=-allow-unsupported-compiler \
-	                  --CUDAPPFLAGS=-allow-unsupported-compiler \
 	                  --with-cuda-gencodearch=70\" \
 	          ; else echo --with-cudac=0 ; fi ` \
 	        "${BLAS_FLAGS}" \
