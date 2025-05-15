@@ -10,13 +10,14 @@ module load TACC
 echo "module unload intel and others"
 module unload intel oneapi gcc impi mvapich2 python3 python2 2>/dev/null
 
+## 25 is on scratch
+module -T use /scratch/projects/compilers/modulefiles
+
 export VICTOR_WORK=/work2/00434/eijkhout/stampede3
 export MODULEROOT=${VICTOR_WORK}/modulefiles
 export VICTOR_MODULEPATH_ROOT=${VICTOR_WORK}/modulefiles
 
-## 25 is on scratch
-module use /scratch/projects/compilers/modulefiles
-module use ${VICTOR_MODULEPATH_ROOT}/Core
+module -T use ${VICTOR_MODULEPATH_ROOT}/Core
 export MODULEPATH=$( splitpath MODULEPATH | grep -v intel24 | assemblepath )
 # splitpath MODULEPATH
 
@@ -33,3 +34,4 @@ splitpath MODULEPATH
 echo && echo "Loaded:"
 module -t list 2>&1 | sort | tr '\n' ' ' 
 echo
+
