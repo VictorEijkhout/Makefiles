@@ -49,6 +49,7 @@ while [ $# -gt 0 ] ; do
 	echo "Error: unknown option <<$1>>" && exit 1
     fi
 done
+
 if [ $cuda -eq 1 ] ; then
     echo " .. disabling Fortran for Cuda"
     fortran=0
@@ -66,10 +67,11 @@ case "${TACC_SYSTEM}" in
     fi ;;
 esac
 
-if [ "${cuda}" = "1" -a "${TACC_SYSTEM}" != "vista" ] ; then 
+if [ "${cuda}" = "1" ] ; then 
     gcc_version=${TACC_FAMILY_COMPILER_VERSION}
     gcc_version=${gcc_version%%.*}
-    module load cuda/12
+    echo "Loading CUDA module"
+    module load cuda/12.8
 fi
 
 EXTENSION=
@@ -109,7 +111,7 @@ make --no-print-directory biginstall JCOUNT=${jcount} \
     CUDA=${cuda} FORTRAN=${fortran} \ 
     PETSC4PY=${p4p} SLEPC4PY=${p4p} \
 "
-echo "At $(date) cmdline: $cmdline" | tee -a ${sizelog}
+( echo "At $(date)" && echo "cmdline: $cmdline" ) | tee -a ${sizelog}
 set -e
 set -o pipefail 
 eval $cmdline 2>&1 | tee -a ${sizelog}
