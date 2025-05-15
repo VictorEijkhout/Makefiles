@@ -3,15 +3,23 @@
 ##
 module purge
 module reset
+module -t list 2>&1 \
+    | awk '{v=v " " $1} END { print "Initial modules: " v }'
 
 ##
 ## My modules
 ##
-export MODULEPATH=${WORK}/modulefiles/Core:${MODULEPATH}
+module unload nvidia openmpi cuda 2>/dev/null
+export MODULEPATH=${WORK}/modulefiles/Core\
+:${WORK}/modulefiles/Compiler/nvidia/25.3\
+:${MODULEPATH}
 module load nvidia/25.3
 module load openmpi/5.0.7
+module load cuda/12.8
 module load nvpl nvidia_math
 #module load nvhpc-hpcx
+module -t list 2>&1 \
+    | awk '{v=v " " $1} END { print "Modules: " v }'
 
 ##
 ## python hack

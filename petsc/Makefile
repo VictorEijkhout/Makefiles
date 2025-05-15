@@ -32,6 +32,9 @@ JCOUNT = 4
 
 OPTFLAGS=-O2 -fPIC
 LOPTFLAGS=-O1 -fPIC
+ifeq "${TACC_FAMILY_COMPILER}" "gcc"
+  OPTFLAGS +=  -fabi-version=16
+endif
 
 ifeq "${TACC_SYSTEM}" "vista"
   BLAS_FLAGS = "\
@@ -125,7 +128,16 @@ info ::
 default_install :: modules
 	@if [ "${CUDA}" -eq 1 -a -z "${TACC_CUDA_DIR}" ] ; then \
 	    echo && echo "Please load cuda module" && echo && exit 1 \
-	    ; fi
+	 ; else \
+	    taccver=${TACC_CUDA_VER} \
+	     && if [ ! -z "$${taccver}" ] ; then \
+	          vermin=$${taccver##*.} \
+	           && if [ $$vermin -lt 8 ] ; then \
+	                echo "CUDA version needs to be at least 12.8" \
+	                 && exit 1 \
+	              ; fi \
+	        ; fi \
+	 ; fi
 	@source ${MAKEINCLUDES}/names.sh \
 	 && export INSTALLROOT=${INSTALLROOT} \
 	 && export petscarch=`make --no-print-directory \
@@ -179,8 +191,9 @@ default_install :: modules
 	        ; fi \
 	     && cmdline="${TIME} python3 ./configure --prefix=$${prefixdir} \
 	        ${DOWNLOADCMAKE} \
-	        COPTFLAGS=\"${OPTFLAGS}\" CXXOPTFLAGS=\"${OPTFLAGS}\" \
-	        `if [ \"${FORTRAN}\" != \"0\" ] ; then echo FOPTFLAGS=\"${OPTFLAGS}\" ; fi `\
+	        COPTFLAGS=\"${OPTFLAGS}\" \
+	        COPTXXFLAGS=\"${OPTFLAGS}\" \
+	        FOPTFLAGS=\"${OPTFLAGS}\" \
 	        `if [ ${CUDA} -eq 1 ] ; then \
 	                echo \"--with-cuda=1 --with-cuda-dir=${TACC_CUDA_DIR} \
 	                  --with-cudac=nvcc \
@@ -302,15 +315,18 @@ biginstall :
 	   && case $${ext} in ( *complex* ) SCALAR=complex ;; ( * ) SCALAR=real ;; esac \
 	   \
 	   && echo "Selecting packages" \
-	   && AMGX=${AMGX} && CHACO=${CHACO} && CUDA=${CUDA} && FFTW=${FFTW} && HDF5=${HDF5} && HYPRE=${HYPRE} && METIS=${METIS} \
+	   && AMGX=${AMGX} && CHACO=${CHACO} && CUDA=${CUDA} && EIGEN=${EIGEN} && FFTW=${FFTW} && HDF5=${HDF5} && HYPRE=${HYPRE} && METIS=${METIS} \
 	   && MUMPS=${MUMPS} && PARMETIS=${PARMETIS} && PTSCOTCH=${PTSCOTCH} \
 	   && STRUMPACK=${STRUMPACK} \
 	   && SUPERLU=${SUPERLU} && SUPERLU_DIST=${SUPERLU_DIST} \
 	   && SCALAPACK=${SCALAPACK} && ZOLTAN=${ZOLTAN} \
 	   && if [ "$${CUDA}" = "1" ] ; then \
 	        echo " .. disable STRUMPACK: don't work with cuda" && STRUMPACK=0 \
-	         && echo " .. disable PARMETIS, PTSCOTCH: something about 64 bit blas/lapack fftw" && PARMETIS=0 && PTSCOTCH=0 \
+	         && echo " .. disable PARMETIS, PTSCOTCH: something about 64 bit blas/lapack fftw" \
+	         && PARMETIS=0 && PTSCOTCH=0 && METIS=0 && EIGEN=0 && CHACO=0 \
+	         && TRIANGLE=0 \
 	         && echo " .. disable AMGX: don't work with cuda, but should; investigate!" && AMGX=0 \
+	         && echo " .. more cuda disables" && HDF5=0 \
 	      ; else \
 	        echo " .. disable AMGX because no cuda" && AMGX=0 \
 	      ; fi \
@@ -343,7 +359,7 @@ biginstall :
 	      DEBUG=$${DEBUG} INT=$${INT} PRECISION=$${PRECISION} SCALAR=$${SCALAR} \
 	      $$( if [ ! -z ${CUSTOMEXT} ] ; then echo CUSTOMEXT=${CUSTOMEXT} ; fi ) \
 	      \
-	      AMGX=$${AMGX} CHACO=$${CHACO} EIGEN=${EIGEN} FFTW=$${FFTW} \
+	      AMGX=$${AMGX} CHACO=$${CHACO} EIGEN=$${EIGEN} FFTW=$${FFTW} \
 	      HDF5=$${HDF5} HYPRE=$${HYPRE} METIS=$${METIS} \
 	      MUMPS=$${MUMPS} PARMETIS=$${PARMETIS} PTSCOTCH=$${PTSCOTCH} \
 	      STRUMPACK=$${STRUMPACK} \
