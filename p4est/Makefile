@@ -15,6 +15,21 @@ include ${MAKEINCLUDES}/Make.info
 
 PKGCONFIGLIB = pkgconfig
 
+#ifeq "${TACC_FAMILY_COMPILER}" "gcc"
+ifeq "foo" "foo"
+
+##
+## cmake version
+##
+CMAKEFLAGS = \
+    -D SC_ENABLE_MPI=ON \
+    -D P4EST_ENABLE_MPI=ON \
+    -D P4EST_BUILD_EXAMPLES=OFF
+include ${MAKEINCLUDES}/Make.cmake
+include ${MAKEINCLUDES}/Make.cbuild
+
+else 
+
 ##
 ## configure version
 ##
@@ -22,18 +37,16 @@ CONFIGUREFLAGS=--enable-mpi
 include ${MAKEINCLUDES}/Make.configure
 include ${MAKEINCLUDES}/Make.install
 
+endif
+
 info ::
 	@echo "make default_install : configure build"
 .PHONY: default_install
 default_install : configure build
 
 ##
-## cmake version
+## download
 ##
-# CMAKEFLAGS=--enable-mpi
-# include ${MAKEINCLUDES}/Make.cmake
-# include ${MAKEINCLUDES}/Make.cbuild
-
 TGZURL = https://github.com/cburstedde/p4est/releases/download/v${PACKAGEVERSION}/p4est-${PACKAGEVERSION}.tar.gz
 ## https://p4est.github.io/release/p4est-${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
