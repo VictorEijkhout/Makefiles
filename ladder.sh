@@ -42,14 +42,14 @@ function parse_numpacver {
     eval packagedir=\${${package}_dir}
     if [ -z "${packagedir}" ] ; then packagedir=${package} ; fi
     # version could be empty
-    version=$( pacver="${pacver}," && echo ${pacver#*,} | tr -d ',' )
-    if [ ! -z $version ] ; then 
+    loadversion=$( pacver="${pacver}," && echo ${pacver#*,} | tr -d ',' )
+    if [ ! -z $loadversion ] ; then 
 	eval fullversion=\${${package}_full_version}
 	if [ -z "$fullversion" ] ; then fullversion=${version} ; fi
     else 
 	# get default from makefile
 	fullversion=$( cd ../${packagedir} && make --no-print-directory version )
-	version=${fullversion}
+	loadversion=${fullversion}
     fi
 }
 
@@ -72,13 +72,19 @@ function module_avail {
 function module_install {
     package="$1" fullversion="$2"
     echo " .. installing" && echo
-    eval packagetgt=\${${package}_tgt}
-    if [ -z "${packagetgt}" ] ; then packagetgt=default_install ; fi 
-    pushd ../${packagedir} \
-	&& make ${packagetgt} public \
-	JCOUNT=${jcount} versionspec="PACKAGEVERSION=$fullversion"
-    popd
-
+    eval packagecmdline=\${${package}_commandline}
+    if [ ! -z "${packagecmdline}" ] ; then
+	pushd ../${packagedir} 
+	eval ${packagecmdline} 
+	popd
+    else
+	eval packagetgt=\${${package}_tgt}
+	if [ -z "${packagetgt}" ] ; then packagetgt=default_install ; fi 
+	pushd ../${packagedir} \
+	    && make ${packagetgt} public \
+		    JCOUNT=${jcount} versionspec="PACKAGEVERSION=$fullversion"
+	popd
+    fi
 }
 
 while [ $# -gt 0 ] ; do
@@ -136,21 +142,20 @@ for m in $( echo "${packages}" | tr , ' ' ) ; do
 	       ; do \
 	parse_numpacver "${numpacver}"
 	echo "================"
-	echo "Package $num: $package version $version"
+	echo "Package $num: $package version $loadversion"
 	if [ ! -z "${list}" ] ; then 
-	    module_avail "$package" "$version" "$fullversion"
+	    module_avail "$package" "$loadversion" "$fullversion"
 	elif [ $m -eq $num ] ; then 
 	    module_install "${package}" "${fullversion}"
 	    # go to next installable
 	    break
 	fi
 	if [ -z "${list}" ] ; then 
-	    module load $package/$version
+	    module load $package/$loadversion
 	    if [ $? -ne 0 ] ; then echo "Could not load $package" && exit 1 ; fi
 	    PACKAGE=$( echo ${package} | tr a-z -A-Z )
-	    module -t list $package/$version 
-	    #module show $package/$version 2>&1 | \grep DIR
-	    eval echo " .. loaded ${package}/${version} at \${TACC_${package}_DIR}"
+	    module -t list $package/$loadversion 
+	    eval echo " .. loaded ${package}/${loadversion} at \${TACC_${package}_DIR}"
 	fi
     done 
 done 2>&1 | tee -a ${ladderlog}

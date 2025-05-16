@@ -18,11 +18,12 @@ export MODULEROOT=${VICTOR_WORK}/modulefiles
 export VICTOR_MODULEPATH_ROOT=${MODULEROOT}
 module use ${VICTOR_MODULEPATH_ROOT}/Core
 
-gccversion=git
+gccversion=15.1.0
 echo "loading gcc ${gccversion}"
 module load gcc/${gccversion}
 
 # module use ${VICTOR_MODULEPATH_ROOT}/Compiler/gcc/git/
-# module load impi/21.11
+module load impi
 
-module list
+module -t list 2>&1 | sort | awk '{v=v" "$0} END {print v}'
+
