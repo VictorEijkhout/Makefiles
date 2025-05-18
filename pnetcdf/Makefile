@@ -7,21 +7,20 @@
 PACKAGE = pnetcdf
 URL = https://parallel-netcdf.github.io/ \
     https://github.com/Parallel-NetCDF/PnetCDF
-PACKAGEVERSION = 1.13.0
+PACKAGEVERSION = 1.14.0
 MODE = mpi
 MODULES = 
 
 include ${MAKEINCLUDES}/Make.info
 CONFIGUREFLAGS = --enable-fortran --enable-shared
 FORCERECONF = 1
+include ${MAKEINCLUDES}/Make.configure
 HASBIN=1
 PKGCONFIGLIB = pkgconfig
-include ${MAKEINCLUDES}/Make.configure
-
 include ${MAKEINCLUDES}/Make.install
 
 info ::
-	@echo "make default_install : configure install )"
+	@echo "make default_install : configure install"
 .PHONY: default_install
 default_install : configure build
 
