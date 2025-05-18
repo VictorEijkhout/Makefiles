@@ -14,6 +14,10 @@ MODULES =
 include ${MAKEINCLUDES}/Make.info
 CONFIGUREFLAGS = --enable-fortran --enable-shared
 FORCERECONF = 1
+# WEIRD only for gcc15 in jail.
+ifeq "${TACC_FAMILY_COMPILER}" "gcc"
+  BEFORECONFIGURECMDS = export CFLAGS=\"-std=c99 -Wno-error -Wno-incompatible-pointer-types -Wno-implicit-function-declaration -Wno-int-conversion\"
+endif
 include ${MAKEINCLUDES}/Make.configure
 HASBIN=1
 PKGCONFIGLIB = pkgconfig
