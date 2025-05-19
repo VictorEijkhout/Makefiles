@@ -2,6 +2,9 @@
 ####
 #### Makefile for CXXOPTS installation
 ####
+#### gcc 15 problem
+#### https://github.com/jarro2783/cxxopts/issues/455
+####
 ################################################################
 
 PACKAGE = CXXOPTS
