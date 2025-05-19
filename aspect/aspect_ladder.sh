@@ -26,8 +26,9 @@ ladder="\
     gklib \
     metis \
     phdf5 \
+    autoconf,2.72 \
+    automake,1.16.5 \
     pnetcdf \
-    petsc,3.23 \
     trilinos \
     sundials \
     dealii \
