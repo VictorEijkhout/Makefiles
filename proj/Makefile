@@ -6,7 +6,7 @@
 ################################################################
 
 PACKAGE = PROJ
-URL = https://proj.org/en/9.3/download.html
+URL = https://github.com/OSGeo/PROJ
 PACKAGEVERSION = 9.6.0
 MODE = seq
 MODULES = sqlite
