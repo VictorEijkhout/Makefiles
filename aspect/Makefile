@@ -7,7 +7,8 @@
 ################################################################
 
 PACKAGE = ASPECT
-URL = https://aspect.geodynamics.org/
+URL = https://aspect.geodynamics.org/ \
+    https://github.com/geodynamics/aspect
 PACKAGEVERSION = 3.0.0
 #2.5.0
 MODE = mpi
