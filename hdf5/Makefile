@@ -87,9 +87,13 @@ default_install ::
 ##
 ## download
 ##
+
+# my own attempt at predictable naming
 TGZURL = https://github.com/VictorEijkhout/hdf5-with-predictable-naming/archive/refs/tags/${PACKAGEVERSION}.tar.gz
-## https://github.com/VictorEijkhout/hdf5-with-predictable-naming/releases/download/${PACKAGEVERSION}/hdf5-${PACKAGEVERSION}.tar.gz
+
+# if hdf group ever gets semantic versioning straightened out
 ## https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-${PACKAGESHORTVERSION}/hdf5-${PACKAGEVERSION}/src/hdf5-${PACKAGEVERSION}.tar.gz
+
 include ${MAKEINCLUDES}/Make.download
 
 ##
