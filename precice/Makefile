@@ -4,6 +4,9 @@
 ####
 #### only needed for the CHyPS CSA project
 ####
+#### build in jail fails:
+#### https://github.com/precice/precice/issues/2303
+####
 ################################################################
 
 PACKAGE = precice
