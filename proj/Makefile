@@ -6,8 +6,8 @@
 ################################################################
 
 PACKAGE = PROJ
-URL = https://proj.org/en/9.3/download.html
-PACKAGEVERSION = 9.3.1
+URL = https://github.com/OSGeo/PROJ
+PACKAGEVERSION = 9.6.0
 MODE = seq
 MODULES = sqlite
 
@@ -28,7 +28,8 @@ include ${MAKEINCLUDES}/Make.cbuild
 .PHONY: default_install
 default_install : configure build public
 
-TGZURL = https://download.osgeo.org/proj/proj-${PACKAGEVERSION}.tar.gz
+TGZURL = https://github.com/OSGeo/PROJ/archive/refs/tags/${PACKAGEVERSION}.tar.gz
+### https://download.osgeo.org/proj/proj-${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 
 GITREPO = https://github.com/OSGeo/PROJ.git

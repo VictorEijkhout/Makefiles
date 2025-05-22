@@ -5,7 +5,7 @@
 ################################################################
 
 PACKAGE = blis
-PACKAGEVERSION = 1.0
+PACKAGEVERSION = 1.1
 # git
 URL = https://github.com/flame/blis
 MODE = seq

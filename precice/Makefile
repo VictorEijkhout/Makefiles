@@ -4,11 +4,14 @@
 ####
 #### only needed for the CHyPS CSA project
 ####
+#### build in jail fails:
+#### https://github.com/precice/precice/issues/2303
+####
 ################################################################
 
 PACKAGE = precice
 URL = https://github.com/precice/precice
-PACKAGEVERSION = 3.1.2
+PACKAGEVERSION = 3.2.0
 # 2.5.0
 
 MODE = mpi

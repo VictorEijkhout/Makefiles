@@ -151,11 +151,19 @@ for m in $( echo "${packages}" | tr , ' ' ) ; do
 	    break
 	fi
 	if [ -z "${list}" ] ; then 
+	    echo "Loading package/version = $package/$loadversion"
 	    module load $package/$loadversion
 	    if [ $? -ne 0 ] ; then echo "Could not load $package" && exit 1 ; fi
-	    PACKAGE=$( echo ${package} | tr a-z -A-Z )
 	    module -t list $package/$loadversion 
-	    eval echo " .. loaded ${package}/${loadversion} at \${TACC_${package}_DIR}"
+	    PACKAGE=$( echo ${package} | tr a-z A-Z )
+	    eval packagedir=\${TACC_${PACKAGE}_DIR}
+	    if [ -z "${packagedir}" ] ; then 
+		echo "ERROR null packagedir variable for package=${package}"
+		exit 1
+	    elif [ ! -d "${packagedir}" ] ; then 
+		echo "ERROR no such packagedir: ${packagedir}"
+	    fi
+	    eval echo " .. loaded ${package}/${loadversion} at ${packagedir}"
 	fi
     done 
 done 2>&1 | tee -a ${ladderlog}
