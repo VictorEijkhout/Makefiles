@@ -14,6 +14,7 @@
 PACKAGE = siesta
 URL = https://siesta-project.org/siesta/index.html \
     https://gitlab.com/siesta-project/siesta/-/releases
+## see below if this ever reaches 5.4
 PACKAGEVERSION = 5.2.2
 
 MODE = mpi
@@ -67,6 +68,7 @@ endif
 ##
 ## Intel no xHost FFS
 ## https://gitlab.com/siesta-project/siesta/-/issues/501
+## will be fixed in 5.4
 ##
 ifeq "${TACC_FAMILY_COMPILER}" "intel"
   BOOTSTRAP = find . -type f -exec sed -e 's/-xHost//' -e 's/-xHOST//' -i {} \;
