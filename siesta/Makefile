@@ -12,7 +12,8 @@
 ################################################################
 
 PACKAGE = siesta
-URL = https://siesta-project.org/siesta/index.html
+URL = https://siesta-project.org/siesta/index.html \
+    https://gitlab.com/siesta-project/siesta/-/releases
 PACKAGEVERSION = 5.2.2
 
 MODE = mpi
@@ -38,6 +39,10 @@ CMAKEFLAGS =  \
     -D SIESTA_WITH_WANNIER90=ON \
     \
     -D SIESTA_WITH_FFTW=TRUE
+
+##
+## Where do we find scalapack?
+##
 ifdef TACC_SCALAPACK_DIR
   CMAKEFLAGS += \
     -D SCALAPACK_LIBRARY_DIR=${TACC_SCALAPACK_LIB} \
@@ -57,6 +62,15 @@ else ifdef TACC_NVPL_DIR
     -D LAPACK_LIBRARY='-L${TACC_NVPL_LIB} -lnvpl_lapack_lp64_seq -lnvpl_lapack_core -lnvpl_blas_lp64_seq -lnvpl_blas_core' \
     -D SCALAPACK_LIBRARY_DIR=${TACC_NVPL_LIB} \
     -D SCALAPACK_LIBRARY='-L${TACC_NVPL_LIB} -lnvpl_scalapack_lp64 -lnvpl_blacs_lp64_openmpi5'
+endif
+
+##
+## Intel no xHost FFS
+## https://gitlab.com/siesta-project/siesta/-/issues/501
+##
+ifeq "${TACC_FAMILY_COMPILER}" "intel"
+  BOOTSTRAP = find . -type f -exec sed -e 's/-xHost//' -e 's/-xHOST//' -i {} \;
+#sed -e 's/-xHost//' -e 's/-xHOST//' -i ./Config/cmake/toolchains/*.cmake
 endif
 
 HASBIN = 1

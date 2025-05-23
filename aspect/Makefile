@@ -18,9 +18,7 @@ MODULES = dealii
 include ${MAKEINCLUDES}/Make.info
 
 CMAKEFLAGS = \
-	-D CMAKE_BUILD_TYPE=Release \
-        -D DEAL_II_DIR=${LMOD_DEALII_DIR} \
-	-Wno-dev
+        -D DEAL_II_DIR=${TACC_DEALII_DIR}
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
 .PHONY: default_install
