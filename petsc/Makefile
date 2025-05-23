@@ -160,7 +160,7 @@ default_install :: modules
 	      AMGX=${AMGX} CHACO=${CHACO} EIGEN=${EIGEN} FFTW=${FFTW} HDF5=${HDF5} \
 	      HYPRE=${HYPRE} KOKKOS=${KOKKOS} LIBCEED=${LIBCEED} MPE=${MPE} \
 	      MUMPS=${MUMPS} PTSCOTCH=${PTSCOTCH} SLEPC=${SLEPC} \
-	      STRUMPACK=${STRUMPACK} SUPERLU=${SUPERLU} SUPERLU_DIST=${SUPERLU_DIST} \
+	      STRUMPACK=${STRUMPACK} SUPERLU=${SUPERLU} SUPERLUDIST=${SUPERLUDIST} \
 	      TRIANGLE=${TRIANGLE} \
 	      \
 	      PETSC4PY=${PETSC4PY} SLEPC4PY=${SLEPC4PY} \
@@ -318,8 +318,11 @@ biginstall :
 	   && AMGX=${AMGX} && CHACO=${CHACO} && CUDA=${CUDA} && EIGEN=${EIGEN} && FFTW=${FFTW} && HDF5=${HDF5} && HYPRE=${HYPRE} && METIS=${METIS} \
 	   && MUMPS=${MUMPS} && PARMETIS=${PARMETIS} && PTSCOTCH=${PTSCOTCH} \
 	   && STRUMPACK=${STRUMPACK} \
-	   && SUPERLU=${SUPERLU} && SUPERLU_DIST=${SUPERLU_DIST} \
+	   && SUPERLU=${SUPERLU} && SUPERLUDIST=${SUPERLUDIST} \
 	   && SCALAPACK=${SCALAPACK} && ZOLTAN=${ZOLTAN} \
+	   && compiler_major_version=${TACC_FAMILY_COMPILER_VERSION} \
+	       && compiler_major_version=$${compiler_major_version%%.*} \
+	   && echo "Incompatibilities mode/package:" \
 	   && if [ "$${CUDA}" = "1" ] ; then \
 	        echo " .. disable STRUMPACK: don't work with cuda" && STRUMPACK=0 \
 	         && echo " .. disable PARMETIS, PTSCOTCH: something about 64 bit blas/lapack fftw" \
@@ -327,6 +330,9 @@ biginstall :
 	         && TRIANGLE=0 \
 	         && echo " .. disable AMGX: don't work with cuda, but should; investigate!" && AMGX=0 \
 	         && echo " .. more cuda disables" && HDF5=0 \
+	      ; elif [ "${TACC_FAMILY_COMPILER}" = "gcc" -a "$${compiler_major_version}" = "15" ] ; then \
+	        echo " .. disable gcc15 stuff: CHACO HYPRE SUPERLUDIST" \
+	         && CHACO=0 && HYPRE=0 && SUPERLUDIST=0 \
 	      ; else \
 	        echo " .. disable AMGX because no cuda" && AMGX=0 \
 	      ; fi \
@@ -336,6 +342,7 @@ biginstall :
 	      ; elif [ "$${PARMETIS}" = "1" ] ; then \
 	          MUMPS=1 \
 	      ; fi \
+	   && AMGX=0 \
 	   && echo "Incompatibilities mode/package" \
 	   && case $${ext} in \
 	        ( *nohdf5* ) HDF5=0 ; PHDF5=0 ;; esac \
@@ -343,7 +350,7 @@ biginstall :
 	        ( *single* ) echo " .. disable fftw hdf5, Hypre, Mumps because single" \
 	                && FFTW=0 && HDF5=0 && PHDF5=0 && HYPRE=0 && MUMPS=0 ;; esac \
 	   && case $${ext} in \
-	        ( *i64* ) CHACO=0 && PARMETIS=0 && SUPERLU=0 SUPERLU_DIST=0 ;; esac \
+	        ( *i64* ) CHACO=0 && PARMETIS=0 && SUPERLU=0 SUPERLUDIST=0 ;; esac \
 	   && case $${ext} in \
 	        ( *complex* ) \
 	                echo " .. disable Hypre, Metis, Mumps because complex" \
@@ -363,7 +370,7 @@ biginstall :
 	      HDF5=$${HDF5} HYPRE=$${HYPRE} METIS=$${METIS} \
 	      MUMPS=$${MUMPS} PARMETIS=$${PARMETIS} PTSCOTCH=$${PTSCOTCH} \
 	      STRUMPACK=$${STRUMPACK} \
-	      SUPERLU=$${SUPERLU} SUPERLU_DIST=$${SUPERLU_DIST} \
+	      SUPERLU=$${SUPERLU} SUPERLUDIST=$${SUPERLUDIST} \
 	      TRIANGLE=$${TRIANGLE} \
 	      SCALAPACK=$${SCALAPACK} ZOLTAN=$${ZOLTAN} \
 	      \
