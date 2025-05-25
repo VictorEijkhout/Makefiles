@@ -9,7 +9,7 @@ version=${TACC_FAMILY_COMPILER_VERSION}
 version=${version%%.*}
 
 function usage() {
-    echo "Usage: $0 [ -h ] [ -x : setx ] [ -l : list ] "
+    echo "Usage: $0 [ -h ] [ -x : setx ] [ -l : list ] [ -t : trace ]"
     echo "    [ -j nnn (default: ${jcount}) ] "
     echo "    [ -c compiler (default ${TACC_FAMILY_COMPILER} ] "
     echo "    [ -v compiler_version (default ${TACC_FAMILY_COMPILER_VERSION} ] "
@@ -82,6 +82,7 @@ function module_install {
 	if [ -z "${packagetgt}" ] ; then packagetgt=default_install ; fi 
 	pushd ../${packagedir} \
 	    && make ${packagetgt} public \
+		    $( if [ "${trace}" = "1" ] ; then echo ECHO=1 ; fi ) \
 		    JCOUNT=${jcount} versionspec="PACKAGEVERSION=$fullversion"
 	popd
     fi
@@ -99,6 +100,8 @@ while [ $# -gt 0 ] ; do
 	shift; jcount=$1; shift
     elif [ "$1" = "-c" ] ; then 
 	shift; compiler=$1; shift
+    elif [ "$1" = "-t" ] ; then 
+	trace=1; shift
     elif [ "$1" = "-v" ] ; then 
 	shift; version=$1; shift
     else
