@@ -10,7 +10,6 @@ module load TACC
 
 echo "module unload intel and others"
 module unload intel oneapi gcc impi mvapich2 python3 python2 2>/dev/null
-# module list
 
 export VICTOR_WORK=/work2/00434/eijkhout/stampede3
 export MODULEROOT=${VICTOR_WORK}/modulefiles
@@ -22,7 +21,6 @@ gccversion=15.1.0
 echo "loading gcc ${gccversion}"
 module load gcc/${gccversion}
 
-# module use ${VICTOR_MODULEPATH_ROOT}/Compiler/gcc/git/
 module load impi
 
 module -t list 2>&1 | sort | awk '{v=v" "$0} END {print v}'
