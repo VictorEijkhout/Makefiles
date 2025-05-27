@@ -23,9 +23,16 @@ echo "==== loading intel ${intelversion}"
 module load intel/${intelversion}
 module load impi/21.12
 
+##
+## Python
+##
+
 ## let's see if this python is compatible enough
 ## module load oneapi22/python3/3.9.10
 module use /scratch/projects/compilers/modulefiles
 module load intel22/python3
+
+# get up to date c++ library, which is eff'ed up in the python module
+export LD_LIBRARY_PATH=/scratch/tacc/apps/gcc/13.2.0/lib64:${LD_LIBRARY_PATH}
 
 module -t list
