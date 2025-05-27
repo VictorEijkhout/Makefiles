@@ -21,9 +21,11 @@ CMAKEFLAGS = \
         -D DEAL_II_DIR=${TACC_DEALII_DIR}
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
-.PHONY: default_install
+CMAKEPREFIXPATHSET = 1
+
 info ::
 	@echo "make default_install : plain configure build"
+.PHONY: default_install
 default_install : configure build
 
 HASBIN = 1
