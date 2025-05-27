@@ -6,6 +6,7 @@
 
 PACKAGE = CXXOPTS
 PACKAGEVERSION = 3.2.0
+# 3.3.1 is out
 URL = https://github.com/jarro2783/cxxopts
 MODE = seq
 
