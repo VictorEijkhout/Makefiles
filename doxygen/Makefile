@@ -6,6 +6,7 @@
 
 PACKAGE = doxygen
 PACKAGEVERSION = 1.12.0
+# 1.14.0 is out
 PACKAGEVERSIONDOWNLOAD = 1_12_0
 URL = https://github.com/doxygen/doxygen
 MODE = core

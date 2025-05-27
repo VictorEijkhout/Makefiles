@@ -9,10 +9,8 @@ version=${TACC_FAMILY_COMPILER_VERSION}
 version=${version%%.*}
 
 function usage() {
-    echo "Usage: $0 [ -h ] [ -x : setx ] [ -l : list ] "
+    echo "Usage: $0 [ -h ] [ -x : setx ] [ -l : list ] [ -t : trace ]"
     echo "    [ -j nnn (default: ${jcount}) ] "
-    echo "    [ -c compiler (default ${TACC_FAMILY_COMPILER} ] "
-    echo "    [ -v compiler_version (default ${TACC_FAMILY_COMPILER_VERSION} ] "
     echo "    nnn / all"
     echo "where nnn:"
     for ixy in ${numladder} ; do
@@ -24,6 +22,8 @@ function usage() {
     done
     echo " all : 1--${n}"
 }
+    # echo "    [ -c compiler (default ${TACC_FAMILY_COMPILER} ] "
+    # echo "    [ -v compiler_version (default ${TACC_FAMILY_COMPILER_VERSION} ] "
 
 if [ $# -eq 0 ] ; then 
     usage
@@ -82,6 +82,7 @@ function module_install {
 	if [ -z "${packagetgt}" ] ; then packagetgt=default_install ; fi 
 	pushd ../${packagedir} \
 	    && make ${packagetgt} public \
+		    $( if [ "${trace}" = "1" ] ; then echo ECHO=1 ; fi ) \
 		    JCOUNT=${jcount} versionspec="PACKAGEVERSION=$fullversion"
 	popd
     fi
@@ -97,30 +98,39 @@ while [ $# -gt 0 ] ; do
 	setx=1; shift
     elif [ "$1" = "-j" ] ; then 
 	shift; jcount=$1; shift
+    elif [ "$1" = "-t" ] ; then 
+	trace=1; shift
     elif [ "$1" = "-c" ] ; then 
+	echo "Compiler option no longer supported: set compiler externally" && exit 1
 	shift; compiler=$1; shift
     elif [ "$1" = "-v" ] ; then 
 	shift; version=$1; shift
     else
-	if [ "$1" = "all" ] ; then
-	    packages="$( seq 1 $ladderlength )"
-	else
-	    packages=$1
-	fi
-	shift
+	break
     fi
 done
 
+if [ $# -eq 0 ] ; then
+    # this can only happen in list mode
+    if [ -z "${list}" ] ; then
+	usage && exit 0
+    fi
+    packages="$( seq 1 $ladderlength )"
+    echo "---------------- listing packages"
+elif [ "$1" = "all" ] ; then
+    packages="$( seq 1 $ladderlength )"
+    echo "---------------- installing packages: ${packages}"
+else
+    packages=$( echo $* | tr "," " " )
+    echo "---------------- installing packages: ${packages}"
+fi
+
 export TACC_FAMILY_COMPILER=${compiler}
 export TACC_FAMILY_COMPILER_VERSION=${version}
-settings=../env_${TACC_SYSTEM}_${TACC_FAMILY_COMPILER}${TACC_FAMILY_COMPILER_VERSION}.sh
-if [ ! -f "${settings}" ] ; then 
-    echo "Error: no such settings file <<${settings}>>" && exit 1 ; fi
-source ${settings} >/dev/null 2>&1
-
-if [ "${packages}" = "0" -a -z "${list}" ] ; then 
-  exit 0
-fi
+# settings=../env_${TACC_SYSTEM}_${TACC_FAMILY_COMPILER}${TACC_FAMILY_COMPILER_VERSION}.sh
+# if [ ! -f "${settings}" ] ; then 
+#     echo "Error: no such settings file <<${settings}>>" && exit 1 ; fi
+# source ${settings} >/dev/null 2>&1
 
 if [ $setx -gt 0 ] ; then 
     set -x
@@ -132,12 +142,7 @@ ladderlog=ladder_${TACC_FAMILY_COMPILER}${TACC_FAMILY_COMPILER_VERSION}.log
       && module -t list 2>&1 | sort | tr '\n' ' ' && echo \
   ) | tee ${ladderlog}
 
-if [ -z "${list}" ] ; then
-    echo "---------------- installing packages: ${packages}"
-else
-    echo "---------------- listing packages"
-fi
-for m in $( echo "${packages}" | tr , ' ' ) ; do
+for m in ${packages} ; do
     for numpacver in ${numladder} \
 	       ; do \
 	parse_numpacver "${numpacver}"
@@ -166,6 +171,7 @@ for m in $( echo "${packages}" | tr , ' ' ) ; do
 	    eval echo " .. loaded ${package}/${loadversion} at ${packagedir}"
 	fi
     done 
+    if [ ! -z "${list}" ] ; then break ; fi
 done 2>&1 | tee -a ${ladderlog}
 
 echo && echo "See: ${ladderlog}" && echo
