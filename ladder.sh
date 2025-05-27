@@ -11,8 +11,6 @@ version=${version%%.*}
 function usage() {
     echo "Usage: $0 [ -h ] [ -x : setx ] [ -l : list ] [ -t : trace ]"
     echo "    [ -j nnn (default: ${jcount}) ] "
-    echo "    [ -c compiler (default ${TACC_FAMILY_COMPILER} ] "
-    echo "    [ -v compiler_version (default ${TACC_FAMILY_COMPILER_VERSION} ] "
     echo "    nnn / all"
     echo "where nnn:"
     for ixy in ${numladder} ; do
@@ -24,6 +22,8 @@ function usage() {
     done
     echo " all : 1--${n}"
 }
+    # echo "    [ -c compiler (default ${TACC_FAMILY_COMPILER} ] "
+    # echo "    [ -v compiler_version (default ${TACC_FAMILY_COMPILER_VERSION} ] "
 
 if [ $# -eq 0 ] ; then 
     usage
@@ -98,10 +98,11 @@ while [ $# -gt 0 ] ; do
 	setx=1; shift
     elif [ "$1" = "-j" ] ; then 
 	shift; jcount=$1; shift
-    elif [ "$1" = "-c" ] ; then 
-	shift; compiler=$1; shift
     elif [ "$1" = "-t" ] ; then 
 	trace=1; shift
+    elif [ "$1" = "-c" ] ; then 
+	echo "Compiler option no longer supported: set compiler externally" && exit 1
+	shift; compiler=$1; shift
     elif [ "$1" = "-v" ] ; then 
 	shift; version=$1; shift
     else
@@ -126,10 +127,10 @@ fi
 
 export TACC_FAMILY_COMPILER=${compiler}
 export TACC_FAMILY_COMPILER_VERSION=${version}
-settings=../env_${TACC_SYSTEM}_${TACC_FAMILY_COMPILER}${TACC_FAMILY_COMPILER_VERSION}.sh
-if [ ! -f "${settings}" ] ; then 
-    echo "Error: no such settings file <<${settings}>>" && exit 1 ; fi
-source ${settings} >/dev/null 2>&1
+# settings=../env_${TACC_SYSTEM}_${TACC_FAMILY_COMPILER}${TACC_FAMILY_COMPILER_VERSION}.sh
+# if [ ! -f "${settings}" ] ; then 
+#     echo "Error: no such settings file <<${settings}>>" && exit 1 ; fi
+# source ${settings} >/dev/null 2>&1
 
 if [ $setx -gt 0 ] ; then 
     set -x
