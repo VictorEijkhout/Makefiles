@@ -13,7 +13,9 @@ MODULES =
 
 include ${MAKEINCLUDES}/Make.info
 
-PKGCONFIGLIB = pkgconfig
+# hack'y solution for:
+# https://github.com/cburstedde/p4est/issues/351
+PKGCONFIG = lib/pkgconfig
 
 #ifeq "${TACC_FAMILY_COMPILER}" "gcc"
 ifeq "foo" "foo"
