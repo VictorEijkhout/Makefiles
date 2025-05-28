@@ -2,6 +2,9 @@
 ####
 #### Makefile for Adios2 installation
 ####
+#### uint_ types:
+#### https://github.com/ornladios/ADIOS2/issues/4534
+####
 ################################################################
 
 PACKAGE = adios2
@@ -38,6 +41,7 @@ gpu :
 	  CMAKEFLAGS="${CMAKEFLAGS_BASIC} -D ADIOS2_USE_CUDA:BOOL=ON"
 
 TGZURL = https://github.com/ornladios/ADIOS2/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
+BOOTSTRAP = sed -i -e /iomanip/a\"\#include <cstdint>\" thirdparty/yaml-cpp/yaml-cpp/src/emitterutils.cpp
 include ${MAKEINCLUDES}/Make.download
 GITREPO = git@github.com:ornladios/ADIOS2.git
 include ${MAKEINCLUDES}/Make.git
