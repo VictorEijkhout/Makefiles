@@ -70,10 +70,10 @@ endif
 ## https://gitlab.com/siesta-project/siesta/-/issues/501
 ## will be fixed in 5.4
 ##
-ifeq "${TACC_FAMILY_COMPILER}" "intel"
-  BOOTSTRAP = find . -type f -exec sed -e 's/-xHost//' -e 's/-xHOST//' -i {} \;
-#sed -e 's/-xHost//' -e 's/-xHOST//' -i ./Config/cmake/toolchains/*.cmake
-endif
+# ifeq "${TACC_FAMILY_COMPILER}" "intel"
+#   BOOTSTRAP = find . -type f -exec sed -e 's/-xHost//' -e 's/-xHOST//' -i {} \;
+# #sed -e 's/-xHost//' -e 's/-xHOST//' -i ./Config/cmake/toolchains/*.cmake
+# endif
 
 HASBIN = 1
 CPTOINSTALLDIR = Examples
