@@ -16,6 +16,7 @@ URL = https://siesta-project.org/siesta/index.html \
     https://gitlab.com/siesta-project/siesta/-/releases
 ## see below if this ever reaches 5.4
 PACKAGEVERSION = 5.2.2
+# 5.4.0 is out
 
 MODE = mpi
 MODULES = fftw3 mkl 
