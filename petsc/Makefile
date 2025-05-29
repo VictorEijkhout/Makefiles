@@ -113,6 +113,8 @@ configurelog :
 	 && setnames \
 	    "${PACKAGE}"  "${PACKAGEVERSION}"  "${PACKAGEBASENAME}" \
 	    "${DOWNLOADPATH}" "${SRCPATH}" \
+	 && echo "$${srcdir}/configure.log"
+oldloglog :
 	 && cd $${srcdir} \
 	 && ( ls -l $${srcdir}/configure.log && echo ">>>>>>>>>>>>>>>>" && cat ./configure.log )
 
