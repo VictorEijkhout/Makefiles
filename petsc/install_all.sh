@@ -65,7 +65,7 @@ for debug in 0 1 ; do
 		fi
 		./install_big.sh -j ${jcount} \
 		    $( if [ ! -z "${pversion}" ] ; then echo "-v ${pversion}" ; fi ) \
-		    $( if [ ${p4p} -eq 0 ] ; then echo "-4" ; fi ) \
+		    $( if [ ${p4p} -eq 1 ] ; then echo "-4" ; fi ) \
 		    | tee -a ${alllog}
 	    done
 	done
@@ -85,7 +85,7 @@ for debug in 0 1 ; do
 	./install_big.sh -j ${jcount} \
 		    $( if [ ! -z "${pversion}" ] ; then echo "-v ${pversion}" ; fi ) \
     		    -5 \
-    		    $( if [ ${p4p} -eq 0 ] ; then echo "-4" ; fi ) \
+    		    $( if [ ${p4p} -eq 1 ] ; then echo "-4" ; fi ) \
 	    | tee -a ${alllog}
     done
 done
@@ -105,7 +105,8 @@ for debug in 0 1 ; do
 	echo ${arch} >> ${archs}
 	./install_big.sh -j ${jcount} \
 		     $( if [ ! -z "${pversion}" ] ; then echo "-v ${pversion}" ; fi ) \
-		     -5 -8 -4 \
+		     -5 -8 \
+    		    $( if [ ${p4p} -eq 1 ] ; then echo "-4" ; fi ) \
 	    | tee -a ${alllog}
 	if [ $? -gt 0 ] ; then exit 1 ; fi 
     done
@@ -127,6 +128,7 @@ if [ ! -z "${cuda}" ] ; then
 	echo ${arch} >> ${archs}
 	./install_small.sh -j ${jcount} \
 		   $( if [ ! -z "${pversion}" ] ; then echo "-v ${pversion}" ; fi ) \
+    		    $( if [ ${p4p} -eq 1 ] ; then echo "-4" ; fi ) \
 		   -c \
 	    | tee -a ${alllog}
 	if [ $? -gt 0 ] ; then exit 1 ; fi 
