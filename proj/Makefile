@@ -8,7 +8,7 @@
 PACKAGE = PROJ
 URL = https://github.com/OSGeo/PROJ
 PACKAGEVERSION = 9.6.0
-# 9.6.1 is out, fixes cstdint and others
+# 9.6.2 is out, fixes cstdint and others
 MODE = seq
 MODULES = sqlite
 

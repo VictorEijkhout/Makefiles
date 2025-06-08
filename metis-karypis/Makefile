@@ -71,14 +71,6 @@ info ::
 default_install : configure build module public
 include ${MAKEINCLUDES}/Make.vars
 
-clean ::
-	@source ${MAKEINCLUDES}/names.sh \
-	 && export MODE=${MODE} \
-	 && setnames ${PACKAGEROOT} ${PACKAGE} ${PACKAGEVERSION} "" ${PACKAGEBASENAME} \
-	 && setmodulenames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" \
-	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" \
-	 && cd $${srcdir} && make distclean
-
 GITREPO = git@github.com:KarypisLab/Metis.git
 include ${MAKEINCLUDES}/Make.git
 

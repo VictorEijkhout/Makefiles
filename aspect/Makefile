@@ -10,16 +10,16 @@ PACKAGE = ASPECT
 URL = https://aspect.geodynamics.org/ \
     https://github.com/geodynamics/aspect
 PACKAGEVERSION = 3.0.0
-#2.5.0
 MODE = mpi
 MODULES = dealii
 # dealii newer than 9.3
 
 include ${MAKEINCLUDES}/Make.info
 
+include ${MAKEINCLUDES}/Make.cmake
 CMAKEFLAGS = \
         -D DEAL_II_DIR=${TACC_DEALII_DIR}
-include ${MAKEINCLUDES}/Make.cmake
+CMAKEBUILDTYPE = DebugRelease
 include ${MAKEINCLUDES}/Make.cbuild
 CMAKEPREFIXPATHSET = 1
 

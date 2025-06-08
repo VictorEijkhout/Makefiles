@@ -17,6 +17,7 @@ include ${MAKEINCLUDES}/Make.info
 
 CMAKEFLAGS = \
     -D DEAL_II_WITH_MPI=ON \
+    -D DEAL_II_WITH_LAPACK=ON \
     -D DEAL_II_COMPONENT_EXAMPLES=OFF \
     -D DEAL_II_WITH_TBB=OFF \
     -D DEAL_II_WITH_P4EST=ON    -D P4EST_DIR=${TACC_P4EST_DIR} \
@@ -33,7 +34,7 @@ endif
 ## was this always wrong or did it go away? PKGCONFIG = lib/pkgconfig
 CMAKEPREFIXPATHSET = 1
 # https://github.com/dealii/dealii/issues/18254
-BUILDTYPE = DebugRelease
+CMAKEBUILDTYPE = DebugRelease
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
 .PHONY: real complex
