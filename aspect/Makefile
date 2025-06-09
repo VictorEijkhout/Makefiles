@@ -18,10 +18,16 @@ include ${MAKEINCLUDES}/Make.info
 
 include ${MAKEINCLUDES}/Make.cmake
 CMAKEFLAGS = \
-        -D DEAL_II_DIR=${TACC_DEALII_DIR}
+    -D CMAKE_EXE_LINKER_FLAGS=-Wl,-demangle \
+    -D DEAL_II_DIR=${TACC_DEALII_DIR}
 CMAKEBUILDTYPE = DebugRelease
 include ${MAKEINCLUDES}/Make.cbuild
 CMAKEPREFIXPATHSET = 1
+CPTOINSTALLDIR = cookbooks
+DEPENDSONCURRENT = boost
+
+# libWorldBuilder is in BIN
+# https://github.com/geodynamics/aspect/issues/6312
 
 info ::
 	@echo "make default_install : plain configure build"
