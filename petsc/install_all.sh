@@ -10,10 +10,12 @@ function usage() {
     echo "    [ -v (default: ${pversion} ]"
     echo "    [ -j jpar (default: ${jcount}) ]"
     echo "    [ -c : cuda build ]"
+    echo "    [ -f : skip fortran builds ]"
     echo "    [ -4 : include petsc/slepc4py ]"
 }
 
 cuda=
+fortran=1
 jcount=6
 p4p=0
 pversion=
@@ -24,6 +26,8 @@ while [ $# -gt 0 ] ; do
 	p4p=1 && shift
     elif [ $1 = "-c" ] ; then 
 	cuda=1 && shift
+    elif [ $1 = "-f" ] ; then 
+	fortran= && shift
     elif [ $1 = "-j" ] ; then
 	shift && jcount=$1 && shift
     elif [ $1  = "-v" ] ; then 
@@ -65,7 +69,8 @@ for debug in 0 1 ; do
 		fi
 		./install_big.sh -j ${jcount} \
 		    $( if [ ! -z "${pversion}" ] ; then echo "-v ${pversion}" ; fi ) \
-		    $( if [ ${p4p} -eq 0 ] ; then echo "-4" ; fi ) \
+		    $( if [ -z "${fortran}" ] ; then echo "-f" ; fi ) \
+		    $( if [ ${p4p} -eq 1 ] ; then echo "-4" ; fi ) \
 		    | tee -a ${alllog}
 	    done
 	done
@@ -84,8 +89,9 @@ for debug in 0 1 ; do
 	echo ${arch} >> ${archs}
 	./install_big.sh -j ${jcount} \
 		    $( if [ ! -z "${pversion}" ] ; then echo "-v ${pversion}" ; fi ) \
+		    $( if [ -z "${fortran}" ] ; then echo "-f" ; fi ) \
     		    -5 \
-    		    $( if [ ${p4p} -eq 0 ] ; then echo "-4" ; fi ) \
+    		    $( if [ ${p4p} -eq 1 ] ; then echo "-4" ; fi ) \
 	    | tee -a ${alllog}
     done
 done
@@ -105,7 +111,9 @@ for debug in 0 1 ; do
 	echo ${arch} >> ${archs}
 	./install_big.sh -j ${jcount} \
 		     $( if [ ! -z "${pversion}" ] ; then echo "-v ${pversion}" ; fi ) \
-		     -5 -8 -4 \
+		    $( if [ -z "${fortran}" ] ; then echo "-f" ; fi ) \
+		     -5 -8 \
+    		    $( if [ ${p4p} -eq 1 ] ; then echo "-4" ; fi ) \
 	    | tee -a ${alllog}
 	if [ $? -gt 0 ] ; then exit 1 ; fi 
     done
@@ -127,6 +135,8 @@ if [ ! -z "${cuda}" ] ; then
 	echo ${arch} >> ${archs}
 	./install_small.sh -j ${jcount} \
 		   $( if [ ! -z "${pversion}" ] ; then echo "-v ${pversion}" ; fi ) \
+		    $( if [ -z "${fortran}" ] ; then echo "-f" ; fi ) \
+    		    $( if [ ${p4p} -eq 1 ] ; then echo "-4" ; fi ) \
 		   -c \
 	    | tee -a ${alllog}
 	if [ $? -gt 0 ] ; then exit 1 ; fi 
