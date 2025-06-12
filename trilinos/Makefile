@@ -131,7 +131,6 @@ configure :: modules
 	     && export PYTHON_LOAD_FLAG=${TACC_PYTHON_LIB}/libpython$${PYTHON_VERSION}.so \
 	    ) 2>&1 | tee $$configurelog
 	@echo && echo "CMake configuration ended: $$( date )" && echo 
-##	 && make --no-print-directory varsmodule
 
 include ${MAKEINCLUDES}/Make.cbuild
 .PHONY: netcdfcopy notnetcdfcopy

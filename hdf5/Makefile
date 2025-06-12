@@ -17,6 +17,8 @@ URL = https://portal.hdfgroup.org/downloads/index.html \
 # there is a micro version but we ignore that for now.
 PACKAGESHORTVERSION = 1.14
 PACKAGEVERSION = 1.14.4
+# 1.14.6 is out:
+# https://support.hdfgroup.org/downloads/hdf5/hdf5_1_14_6.html
 MODE = mpi
 MODULES = zlib
 

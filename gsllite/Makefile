@@ -6,6 +6,7 @@
 
 PACKAGE = GSLLITE
 PACKAGEVERSION = 0.43.0
+# 1.0.1 is out
 URL = https://github.com/gsl-lite/gsl-lite
 MODE = seq
 

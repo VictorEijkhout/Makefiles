@@ -67,14 +67,6 @@ info ::
 	@echo "make default_install : configure build"
 default_install : configure build
 
-clean ::
-	@source ${MAKEINCLUDES}/names.sh \
-	 && export MODE=${MODE} \
-	 && setnames ${PACKAGEROOT} ${PACKAGE} ${PACKAGEVERSION} "" ${PACKAGEBASENAME} \
-	 && setmodulenames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" \
-	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" \
-	 && cd $${srcdir} && make distclean
-
 GITREPO = https://github.com/KarypisLab/GKlib.git
 ## git@github.com:KarypisLab/GKlib.git
 include ${MAKEINCLUDES}/Make.git

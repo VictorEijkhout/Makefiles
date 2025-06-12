@@ -39,14 +39,6 @@ build ::
 	    && make BUILDDIR=$${builddir} install \
 	    ) 2>&1 | tee $${installlog}
 
-clean ::
-	@source ${MAKEINCLUDES}/names.sh \
-	 && export MODE=${MODE} \
-	 && setnames ${PACKAGEROOT} ${PACKAGE} ${PACKAGEVERSION} "" ${PACKAGEBASENAME} \
-	 && setmodulenames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" \
-	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" \
-	 && cd $${srcdir} && make distclean
-
 TGZURL = http://glaros.dtc.umn.edu/gkhome/fetch/sw/parmetis/parmetis-${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 

@@ -10,18 +10,24 @@ PACKAGE = ASPECT
 URL = https://aspect.geodynamics.org/ \
     https://github.com/geodynamics/aspect
 PACKAGEVERSION = 3.0.0
-#2.5.0
 MODE = mpi
 MODULES = dealii
 # dealii newer than 9.3
 
 include ${MAKEINCLUDES}/Make.info
 
-CMAKEFLAGS = \
-        -D DEAL_II_DIR=${TACC_DEALII_DIR}
 include ${MAKEINCLUDES}/Make.cmake
+CMAKEFLAGS = \
+    -D CMAKE_EXE_LINKER_FLAGS=-Wl,-demangle \
+    -D DEAL_II_DIR=${TACC_DEALII_DIR}
+CMAKEBUILDTYPE = DebugRelease
 include ${MAKEINCLUDES}/Make.cbuild
 CMAKEPREFIXPATHSET = 1
+CPTOINSTALLDIR = cookbooks
+DEPENDSONCURRENT = boost
+
+# libWorldBuilder is in BIN
+# https://github.com/geodynamics/aspect/issues/6312
 
 info ::
 	@echo "make default_install : plain configure build"

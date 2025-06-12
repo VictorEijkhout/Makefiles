@@ -9,6 +9,7 @@
 PACKAGE = mapl
 URL = https://github.com/GEOS-ESM/MAPL
 PACKAGEVERSION = 2.56.0
+# 2.56.1 is out
 
 MODE = mpi
 MODULES = gftl gftlshared pflogger yafyaml \
