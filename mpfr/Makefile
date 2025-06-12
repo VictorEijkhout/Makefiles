@@ -5,8 +5,9 @@
 ################################################################
 
 PACKAGE = MPFR
-PACKAGEVERSION = 4.2.1
-URL = https://www.mpfr.org/
+PACKAGEVERSION = 4.2.2
+URL = https://www.mpfr.org/ \
+    https://gitlab.inria.fr/mpfr/mpfr
 MODE = seq
 
 include ${MAKEINCLUDES}/Make.info
