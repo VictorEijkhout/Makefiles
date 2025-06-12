@@ -10,7 +10,7 @@ PACKAGE = plumed
 URL = https://github.com/plumed/plumed2
 PACKAGEVERSION = 2.9.3
 
-MODE = mpi
+MODE = hybrid
 MODULES = fftw3 gsl zlib \
     mkl
 
@@ -35,6 +35,7 @@ CONFIGUREFLAGS = \
     --enable-zlib=yes
 CFLAGS   = -I${TACC_FFTW3_INC} -I${TACC_GSL_INC} -I${TACC_ZLIB_INC} -I${TACC_MKL_INC}
 CXXFLAGS = -I${TACC_FFTW3_INC} -I${TACC_GSL_INC} -I${TACC_ZLIB_INC} -I${TACC_MKL_INC}
+FCFLAGS  = -I${TACC_FFTW3_INC} -I${TACC_GSL_INC} -I${TACC_ZLIB_INC} -I${TACC_MKL_INC}
 CPPFLAGS = -I${TACC_FFTW3_INC} -I${TACC_GSL_INC} -I${TACC_ZLIB_INC} -I${TACC_MKL_INC}
 CONFIGUREENV = PYTHON_BIN=$$( which python3 )
 LIBS = \
