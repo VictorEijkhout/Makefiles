@@ -4,7 +4,7 @@
 
 echo "module reset"
 module purge
-module reset
+module reset 2>/dev/null
 module load TACC
 
 echo "module unload intel and others"
@@ -18,7 +18,7 @@ export VICTOR_WORK=/work2/00434/eijkhout/stampede3
 export MODULEROOT=${VICTOR_WORK}/modulefiles
 export VICTOR_MODULEPATH_ROOT=${VICTOR_WORK}/modulefiles
 
-module -T use ${VICTOR_MODULEPATH_ROOT}/Core
+module use ${VICTOR_MODULEPATH_ROOT}/Core
 export MODULEPATH=$( splitpath MODULEPATH | grep -v intel24 | assemblepath )
 # splitpath MODULEPATH
 

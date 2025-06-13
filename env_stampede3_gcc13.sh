@@ -21,7 +21,6 @@ module use ${VICTOR_MODULEPATH_ROOT}/Core
 gccversion=13.2.0
 echo "loading gcc ${gccversion}"
 module load gcc/${gccversion}
-export TACC_CC=
 module load impi/21.11
 
-module list
+module -t list | sort
