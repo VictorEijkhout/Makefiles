@@ -82,7 +82,8 @@ configure_cuda :
 	      -D Kokkos_ENABLE_CUDA=ON -D Kokkos_ENABLE_CUDA_LAMBDA=ON \
 	      -D Kokkos_ARCH_${COMPUTE}=ON \
 	      " \
-	    MODULES=cuda INSTALLVARIANT=cuda
+	    INSTALLVARIANT=cuda INSTALLEXT=cuda \
+	    MODULES=cuda
 
 ##
 ## SYCL
@@ -104,7 +105,7 @@ configure_sycl :
 	      -D CMAKE_CXX_COMPILER=icpx \
 	      -D Kokkos_ENABLE_SERIAL=ON -D Kokkos_ENABLE_SYCL=ON \
 	      " \
-	    INSTALLVARIANT=sycl
+	    INSTALLVARIANT=sycl INSTALLEXT=sycl
 
 info ::
 	@echo "make kokkoscore INSTALLVARIANT=..."
