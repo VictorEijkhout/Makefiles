@@ -41,6 +41,9 @@ default_install :
 	     && requirenonzero builddir && rm -rf $$builddir && mkdir -p $$builddir \
 	     && requirenonzero prefixdir && rm -rf $${prefixdir} && mkdir -p $${prefixdir} \
 	     && cd $$srcdir \
+	     && echo && echo "disable example making" && echo \
+	     && sed -i Makefile -e '/cd examples/s/;/; echo/p' \
+	     && grep examples Makefile \
 	     && cp $${scriptdir}/Make.inc.${TACC_FAMILY_COMPILER}.${PARMODE} ./Makefile.inc \
 	     && export DESTDIR="$${prefixdir}" && export PREFIX="" \
 	         && make -j ${JCOUNT} \
