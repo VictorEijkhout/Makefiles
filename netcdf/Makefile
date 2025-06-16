@@ -13,6 +13,7 @@ URL = https://netcdf.geodynamics.org/ \
     https://github.com/Unidata/netcdf-c \
     https://docs.unidata.ucar.edu/nug/current/getting_and_building_netcdf.html#configure_options
 PACKAGEVERSION = 4.9.2
+# 4.9.3 is out
 MODE = seq
 MODULES = 
 

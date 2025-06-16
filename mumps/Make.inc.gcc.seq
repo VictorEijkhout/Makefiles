@@ -20,7 +20,7 @@
 #
 
 SCOTCHDIR  = ${TACC_SCOTCH_DIR}
-ISCOTCH    = -I$(SCOTCHDIR)/include
+ISCOTCH    = -I${TACC_PTSCOTCH_INC}
 
 #
 # You have to choose one among the following two lines depending on
@@ -29,7 +29,7 @@ ISCOTCH    = -I$(SCOTCHDIR)/include
 # variable below); for both parallel and sequential analysis choose the second 
 # line (remember to add -Dptscotch in the ORDERINGSF variable below)
 
-LSCOTCH    = -L${libdir} -L$(SCOTCHDIR)/lib -lesmumps -lscotch -lscotcherr
+LSCOTCH    =  -L${TACC_SCOTCH_LIB} -lesmumps -lscotch -lscotcherr
 #LSCOTCH    = -L$(SCOTCHDIR)/lib -lptesmumps -lptscotch -lptscotcherr
 
 LPORDDIR = $(topdir)/PORD/lib/
@@ -37,7 +37,7 @@ IPORD    = -I$(topdir)/PORD/include/
 LPORD    = -L$(LPORDDIR) -lpord$(PLAT)
 
 #LMETISDIR = /opt/metis-5.1.0/build/Linux-x86_64/libmetis
-#IMETIS    = /opt/metis-5.1.0/include
+IMETIS    = -I${TACC_METIS_INC}
 
 # You have to choose one among the following two lines depending on
 # the type of analysis you want to perform. If you want to perform only
@@ -45,7 +45,7 @@ LPORD    = -L$(LPORDDIR) -lpord$(PLAT)
 # variable below); for both parallel and sequential analysis choose the second 
 # line (remember to add -Dparmetis in the ORDERINGSF variable below)
 
-#LMETIS    = -L$(LMETISDIR) -lmetis
+LMETIS    = -L${TACC_METIS_LIB} -lmetis
 #LMETIS    = -L$(LMETISDIR) -lparmetis -lmetis
 
 # The following variables will be used in the compilation process.
@@ -53,8 +53,7 @@ LPORD    = -L$(LPORDDIR) -lpord$(PLAT)
 # If you want to use Metis 4.X or an older version, you should use -Dmetis4 instead of -Dmetis
 # or in addition with -Dparmetis (if you are using parmetis 3.X or older).
 #ORDERINGSF = -Dscotch -Dmetis -Dpord -Dptscotch -Dparmetis
-ORDERINGSF  =
-#-Dpord
+ORDERINGSF  = -Dpord
 ORDERINGSC  = $(ORDERINGSF)
 
 LORDERINGS = $(LMETIS) $(LPORD) $(LSCOTCH)
