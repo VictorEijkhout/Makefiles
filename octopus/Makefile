@@ -7,8 +7,8 @@
 PACKAGE = Octopus
 URL = https://gitlab.com/octopus-code/octopus \
     https://www.octopus-code.org/documentation/15/manual/installation/cmake/
-PACKAGEVERSION = 15.1
-GITTAG = 15.1
+PACKAGEVERSION = 16.0
+GITTAG = 16.0
 
 MODE = mpi
 MODULES = gsl mkl 
@@ -51,7 +51,9 @@ SUBMODULE = 1
 # GITTAG with version number listed up top
 include ${MAKEINCLUDES}/Make.git
 
-TGZURL = https://octopus-code.org/download/${PACKAGEVERSION}/octopus-${PACKAGEVERSION}.tgz
+#TGZURL = https://octopus-code.org/download/${PACKAGEVERSION}/octopus-${PACKAGEVERSION}.tgz
+TGZURL = https://gitlab.com/octopus-code/octopus/-/archive/${PACKAGEVERSION}/octopus-${PACKAGEVERSION}.tar.gz
+#        https://gitlab.com/octopus-code/octopus/-/archive/16.0/octopus-16.0.tar.gz
 # this is the downloaded tar ball, which can not be used 
 # TXZURL = https://octopus-code.org/download/${PACKAGEVERSION}/octopus-${PACKAGEVERSION}.tar.xz
 include ${MAKEINCLUDES}/Make.download
