@@ -6,12 +6,9 @@
 
 PACKAGE = GDAL
 URL = https://gdal.org/index.html
-PACKAGEVERSION = 3.9.2
+PACKAGEVERSION = 3.11.0
 MODE = seq
-MODULES = jsonc proj zlib 
-ifeq "${TACC_SYSTEM}" "frontera"
- MODULE += swig
-endif
+MODULES = jsonc netcdf proj swig zlib 
 
 include ${MAKEINCLUDES}/Make.info
 
@@ -31,11 +28,14 @@ CMAKEFLAGS = \
     -D GDAL_USE_CRYPTOPP=OFF \
     -D GDAL_USE_OPENSSL=OFF \
     \
+    -D GDAL_USE_NETCDF=ON \
     -D ACCEPT_MISSING_SQLITE3_RTREE:BOOL=ON \
     -D GDAL_USE_JSONC_INTERNAL=OFF
 include ${MAKEINCLUDES}/Make.cmake
 EXTRAINSTALLVARS = GDAL_DATA=share/gdal
 include ${MAKEINCLUDES}/Make.cbuild
+DEPENDSON = zlib,jsonc,proj
+
 .PHONY: default_install
 default_install : configure build public
 
