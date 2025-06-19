@@ -34,7 +34,7 @@ CMAKEFLAGS = \
 include ${MAKEINCLUDES}/Make.cmake
 EXTRAINSTALLVARS = GDAL_DATA=share/gdal
 include ${MAKEINCLUDES}/Make.cbuild
-DEPENDSON = zlib,jsonc,proj
+DEPENDSON = jsonc,netcdf,proj,zlib
 
 .PHONY: default_install
 default_install : configure build public
