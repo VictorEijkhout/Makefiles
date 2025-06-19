@@ -7,6 +7,7 @@
 PACKAGE = OPENBLAS
 URL = https://github.com/OpenMathLib/OpenBLAS
 PACKAGEVERSION = 0.3.29
+# 0.3.30 out
 MODE = seq
 
 include ${MAKEINCLUDES}/Make.info
