@@ -30,5 +30,6 @@ DEPENDSON = gmp,mpfr
 
 TGZURL = https://github.com/DrTimothyAldenDavis/SuiteSparse/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
-include ${MAKEINCLUDES}/Make.clean
+BOOTSTRAP = sed -i -e '/\-O3/s/^/\#VLE/' LAGraph/CMakeLists.txt
 
+include ${MAKEINCLUDES}/Make.clean
