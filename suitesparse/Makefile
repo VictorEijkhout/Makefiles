@@ -17,8 +17,10 @@ include ${MAKEINCLUDES}/Make.cbuild
 
 CMAKEFLAGS=
 ifeq "${TACC_FAMILY_COMPILER}" "intel"
+CMAKEBUILDTYPE = Debug
 CMAKEFLAGS += \
-        -D CMAKE_C_FLAGS=-diag-disable=10441 -D CMAKE_CXX_FLAGS=-diag-disable=10441
+    -D CMAKE_C_FLAGS='  -diag-disable=10441 -g -O2' \
+    -D CMAKE_CXX_FLAGS='-diag-disable=10441 -g -O2'
 endif
 HASBIN = 1
 CMAKEPREFIXPATHSET = 1
