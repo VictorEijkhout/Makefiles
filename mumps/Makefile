@@ -39,7 +39,7 @@ default_install :
 	     echo "Start build with PARMODE=${PARMODE}" \
 	     && reportcompilers \
 	     && requirenonzero builddir && rm -rf $$builddir && mkdir -p $$builddir \
-	     && requirenonzero prefixdir && rm -rf $${prefixdir} && mkdir -p $${prefixdir} \
+	     && requirenonzero prefixdir && mkdir -p $${prefixdir} && rm -rf $${prefixdir}/* \
 	     && cd $$srcdir \
 	     && echo && echo "disable example making" && echo \
 	     && sed -i Makefile -e '/cd examples/s/;/; echo/p' \
