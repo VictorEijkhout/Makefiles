@@ -5,7 +5,8 @@
 ################################################################
 
 PACKAGE = GDAL
-URL = https://gdal.org/index.html
+URL = https://gdal.org/index.html \
+    https://github.com/OSGeo/GDAL
 PACKAGEVERSION = 3.11.0
 MODE = seq
 MODULES = jsonc netcdf proj swig zlib 
@@ -26,9 +27,10 @@ CMAKEFLAGS = \
     -D OGR_BUILD_OPTIONAL_DRIVERS=OFF \
     -D GDAL_USE_CURL=OFF \
     -D GDAL_USE_CRYPTOPP=OFF \
-    -D GDAL_USE_OPENSSL=OFF \
+    -D GDAL_USE_OPENSSL=ON \
     \
     -D GDAL_USE_NETCDF=ON \
+    -D GDAL_ENABLE_DRIVER_NETCDF=ON \
     -D ACCEPT_MISSING_SQLITE3_RTREE:BOOL=ON \
     -D GDAL_USE_JSONC_INTERNAL=OFF
 include ${MAKEINCLUDES}/Make.cmake
