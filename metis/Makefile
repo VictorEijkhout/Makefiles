@@ -19,7 +19,7 @@ PACKAGE = metis
 PACKAGEVERSION = 5.2.1.1
 ## 5.1.0.3
 URL = https://github.com/scivision/METIS
-MODE = mpi
+MODE = seq
 MODULES = 
 
 include ${MAKEINCLUDES}/Make.info
@@ -61,7 +61,9 @@ i64-configure :
 	    "${DOWNLOADPATH}" "${SRCPATH}" \
 	    "${INSTALLPATH}"  "${INSTALLROOT}"  "${INSTALLEXT}"  "i64" \
 	    "${HOMEDIR}"  "${BUILDDIRROOT}"  "${MODE}" \
-	    "${PREFIXOPTION}"  "${PREFIXEXTRA}" \
+	    "${PREFIXOPTION}"  "${PREFIXEXTRA}"
+i64-fix :
+	/bin/true \
 	 && sed -i $${builddir}/src/include/metis.h \
 	    -e '/define/s/WIDTH 32/WIDTH 64/'
 i64-build :
