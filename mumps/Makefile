@@ -57,6 +57,7 @@ default_install :
 	    ) 2>&1 | tee $$installlog \
 	 && make --no-print-directory varsmodule
 
+CPTOINSTALLDIR = Makefile.inc
 include ${MAKEINCLUDES}/Make.vars
 include ${MAKEINCLUDES}/Make.public
 
