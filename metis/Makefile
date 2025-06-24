@@ -19,7 +19,7 @@ PACKAGE = metis
 PACKAGEVERSION = 5.2.1.1
 ## 5.1.0.3
 URL = https://github.com/scivision/METIS
-MODE = mpi
+MODE = seq
 MODULES = 
 
 include ${MAKEINCLUDES}/Make.info
@@ -61,7 +61,9 @@ i64-configure :
 	    "${DOWNLOADPATH}" "${SRCPATH}" \
 	    "${INSTALLPATH}"  "${INSTALLROOT}"  "${INSTALLEXT}"  "i64" \
 	    "${HOMEDIR}"  "${BUILDDIRROOT}"  "${MODE}" \
-	    "${PREFIXOPTION}"  "${PREFIXEXTRA}" \
+	    "${PREFIXOPTION}"  "${PREFIXEXTRA}"
+i64-fix :
+	/bin/true \
 	 && sed -i $${builddir}/src/include/metis.h \
 	    -e '/define/s/WIDTH 32/WIDTH 64/'
 i64-build :
@@ -71,6 +73,10 @@ i64-build :
 	    INSTALLVARIANT=i64 MODULEVERSIONEXTRA=i64
 
 TGZURL = https://github.com/scivision/METIS/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
+BOOTSTRAP = sed -i \
+    -e '/GIT_TAG/s/6897bfe/078042614ff5192ab4c9bde0575bfef0d4572687/' \
+    -e '/GIT_TAG/s/44630ca/078042614ff5192ab4c9bde0575bfef0d4572687/' \
+    CMakeLists.txt
 include ${MAKEINCLUDES}/Make.download
 
 ifdef TICKETS

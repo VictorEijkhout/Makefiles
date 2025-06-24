@@ -5,16 +5,20 @@
 ################################################################
 
 PACKAGE = DEALII
-URL = https://github.com/dealii/dealii https://dealii.org/developer/users/cmake_user.html
+URL = https://github.com/dealii/dealii
 PACKAGEVERSION = 9.6.2
 MODE = mpi
-MODULES = p4est petsc sundials trilinos
+MODULES = p4est petsc sundials trilinos \
+    mkl
 # intel 23 problem solved in 24
 # support ticket 05936427
 
 CONFIGURATION = default
 include ${MAKEINCLUDES}/Make.info
 
+##
+## https://dealii.org/developer/readme.html
+##
 CMAKEFLAGS = \
     -D DEAL_II_WITH_MPI=ON \
     -D DEAL_II_WITH_LAPACK=ON \
@@ -25,11 +29,20 @@ CMAKEFLAGS = \
     -D DEAL_II_WITH_SUNDIALS=ON -D SUNDIALS_DIR=${TACC_SUNDIALS_DIR} \
     -D DEAL_II_WITH_TRILINOS=ON -D TRILINOS_DIR=${TACC_TRILINOS_DIR}
 
-ifeq "${TACC_FAMILY_COMPILER}" "intel"
-CMAKEFLAGS += \
-    -D DEAL_II_CXX_FLAGS='-Wno-\#warnings -save-temps -v' \
-    -D DEAL_II_LINKER_FLAGS=-fuse-ld=bfd 
+##
+## Lapack
+## https://dealii.org/developer/external-libs/lapack.html
+##
+ifdef TACC_MKL_DIR
+  CMAKEFLAGS += \
+    -D LAPACK_DIR=${TACC_MKL_LIB}
 endif
+
+# ifeq "${TACC_FAMILY_COMPILER}" "intel"
+# CMAKEFLAGS += \
+#     -D DEAL_II_CXX_FLAGS='-Wno-\#warnings -save-temps -v' \
+#     -D DEAL_II_LINKER_FLAGS=-fuse-ld=bfd 
+# endif
 
 ## was this always wrong or did it go away? PKGCONFIG = lib/pkgconfig
 CMAKEPREFIXPATHSET = 1

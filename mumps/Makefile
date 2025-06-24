@@ -8,8 +8,8 @@ PACKAGE = MUMPS
 PACKAGEVERSION = 5.8.0
 URL = https://www.mumps.org/
 MODE = mpi
-BASIC_MODULES = mkl
-MODULES = ${BASIC_MODULES} scotch metis
+BASIC_MODULES = metis mkl
+MODULES = ${BASIC_MODULES}
 
 include ${MAKEINCLUDES}/Make.info
 
@@ -19,8 +19,10 @@ info ::
 .PHONY: seq par default_install
 PARMODE = par
 seq :
+	@${MAKE} modules MODULES="${BASIC_MODULES} scotch"
 	@${MAKE} default_install MODE=seq PARMODE=seq
 par :
+	@${MAKE} modules MODULES="${BASIC_MODULES} ptscotch"
 	@${MAKE} default_install MODE=mpi PARMODE=par \
 	    MODULENAME=pmumps MODULEALTNAME=mumps \
 	    MODULES="${BASIC_MODULES} ptscotch parmetis"
@@ -39,7 +41,7 @@ default_install :
 	     echo "Start build with PARMODE=${PARMODE}" \
 	     && reportcompilers \
 	     && requirenonzero builddir && rm -rf $$builddir && mkdir -p $$builddir \
-	     && requirenonzero prefixdir && rm -rf $${prefixdir} && mkdir -p $${prefixdir} \
+	     && requirenonzero prefixdir && mkdir -p $${prefixdir} && rm -rf $${prefixdir}/* \
 	     && cd $$srcdir \
 	     && echo && echo "disable example making" && echo \
 	     && sed -i Makefile -e '/cd examples/s/;/; echo/p' \
@@ -55,6 +57,7 @@ default_install :
 	    ) 2>&1 | tee $$installlog \
 	 && make --no-print-directory varsmodule
 
+CPTOINSTALLDIR = Makefile.inc
 include ${MAKEINCLUDES}/Make.vars
 include ${MAKEINCLUDES}/Make.public
 
