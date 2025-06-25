@@ -9,14 +9,12 @@ URL = https://gnuplot.sourceforge.net \
     https://sourceforge.net/p/gnuplot/gnuplot-main/ci/master/tree/INSTALL
 PACKAGEVERSION = 6.0.2
 MODE = seq
-MODULES = 
+MODULES = qt5
 
 include ${MAKEINCLUDES}/Make.info
 
 include ${MAKEINCLUDES}/Make.configure
 CONFIGUREFLAGS = \
-    --with-pic \
-    --enable-shared \
     --with-qt=qt5
 
 HASBIN = 1
