@@ -12,6 +12,14 @@ PACKAGE = SCOTCH
 URL = https://www.labri.fr/perso/pelegrin/scotch/ \
     https://gitlab.inria.fr/scotch/scotch
 PACKAGEVERSION = 7.0.7
+# 7.0.8 is out
+# Packagers are  encouraged to configure SCOTCH  so as to make the  widest use
+# of threads, that is: -DCOMMON_PTHREAD -DSCOTCH_PTHREAD -DSCOTCH_PTHREAD_MPI,
+# and also -DCOMMON_PTHREAD_AFFINITY_LINUX whenever possible.  On Windows-like
+# environments, the -DCOMMON_THREAD_WIN32 flag is now available.
+# The  -DSCOTCH_DETERMINISTIC  flag  may be  set or not,  depending on  former
+# practice, given that users can now set this behavior at run time.
+# Please refer to the file INSTALL.txt in the root directory.
 MODE = mpi
 MODULES = 
 
