@@ -91,11 +91,11 @@ WITH_X = "--with-x=1"
 info ::
 	@echo "parameter_settings"
 .PHONY: param_settings
-PARAMETERLIST = ALIGN DEBUG INT PRECISION SCALAR
-parameterlist = align debug fortran int precision scalar
+PARAMETERLIST = ALIGN DEBUGGING INT PRECISION SCALAR
+parameterlist = align debugging fortran int precision scalar
 param_settings :
 	@export align=${ALIGN} \
-	 && export debug=${DEBUG} \
+	 && export debugging=${DEBUGGING} \
 	 && export fortran=${FORTRAN} \
 	     && export fortran_option_90="--with-fortran-bindings=1" \
 	     && export fortran_option_08="--with-fortran-bindings=1 --with-mpi-f90module-visibility=0" \

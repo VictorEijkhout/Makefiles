@@ -5,9 +5,10 @@
 ################################################################
 
 PACKAGE = libcurl
-PACKAGEVERSION = 8.11.0
-PACKAGEVERSIONDOWNLOAD = 8_11_0
-URL = https://curl.se/libcurl/
+PACKAGEVERSION = 8.14.1
+PACKAGEVERSIONDOWNLOAD = 8_14_1
+URL = https://curl.se/libcurl/ \
+    https://github.com/curl/curl
 MODE = core
 MODULE = 
 

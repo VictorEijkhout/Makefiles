@@ -6,6 +6,9 @@
 ####
 #### ExodusII / Seacas issue: https://github.com/trilinos/Trilinos/issues/12022
 ####
+#### S3 intel25 issue:
+#### https://github.com/trilinos/Trilinos/issues/14150
+####
 ################################################################
 
 PACKAGE = trilinos
