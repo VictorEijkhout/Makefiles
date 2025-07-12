@@ -38,6 +38,7 @@ endif
 ## https://github.com/mfem/mfem/issues/4526
 ##
 
+WIDTH = 32
 CMAKEFLAGS = -Wno-dev \
     -D CMAKE_BUILD_TYPE=Release \
     -D MFEM_USE_MPI=YES \
@@ -51,6 +52,9 @@ CMAKEFLAGS = -Wno-dev \
     -D BLAS_LIBRARIES=${BLASLIB} \
     -D MFEM_DEBUG=NO \
     -D HYPRE_DIR=${TACC_HYPRE_DIR} \
+    \
+    -D IDXTYPEWIDTH=${WIDTH} -D REALTYPEWIDTH=${WIDTH} \
+    -D CMAKE_C_FLAGS='-D IDXTYPEWIDTH=${WIDTH} -D REALTYPEWIDTH=${WIDTH}' \
     -D MFEM_USE_METIS_5=ON -D METIS_DIR=${TACC_METIS_DIR} \
     -D MFEM_USE_ADIOS2=ON -D ADIOS2_DIR=${TACC_ADIOS2_DIR}
 nopetsc = \
@@ -71,10 +75,12 @@ info ::
 default_install : cpu
 cpu : cpu32
 cpu32 : 
-	@make --no-print-directory configure build public 
+	@make --no-print-directory configure build public \
+	    WIDTH=32
 ## https://github.com/mfem/mfem/issues/4844
 cpu64 :
 	@make --no-print-directory configure build public \
+	    WIDTH=64 \
 	    INSTALLVARIANT=i64 MODULEVERSIONEXTRA=i64 \
 	    HYPRELOAD=${HYPREVERSION}-i64 PETSCLOAD=${PETSCVERSION}-i64
 
@@ -84,6 +90,7 @@ gpu :
 	@export CUDAFLAGS="${CUDAFLAGS}" \
 	 && export NVCC_APPEND_FLAGS="${CUDAFLAGS}" \
 	 && make --no-print-directory configure build public \
+	    WIDTH=64 \
 	    MODULES="${BASICMODULES} cuda" \
 	    USEGPU=YES \
 	    NVCCFLAGS="-D CMAKE_CUDA_FLAGS='${CUDAFLAGS}' " \
