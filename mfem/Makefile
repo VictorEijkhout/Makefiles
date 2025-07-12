@@ -89,6 +89,11 @@ gpu :
 	    NVCCFLAGS="-D CMAKE_CUDA_FLAGS='${CUDAFLAGS}' " \
 	    INSTALLVARIANT=cuda MODULEVERSIONEXTRA=cuda
 
+##
+## Module
+##
+DEPENDSONCURRENT = hypre
+
 TGZURL = https://github.com/mfem/mfem/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 GITREPO = git@github.com:mfem/mfem.git

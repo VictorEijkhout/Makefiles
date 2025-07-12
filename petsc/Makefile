@@ -6,7 +6,7 @@
 
 PACKAGE = PETSC
 URL = https://petsc.org/release/install/download/
-PACKAGEVERSION = 3.23.2
+PACKAGEVERSION = 3.23.4
 MODE = mpi
 UPSTREAM = chyps dealii libmesh mfem p4est precice
 
@@ -84,7 +84,7 @@ petscshortarch :
 	    export PETSC_EXT=$${PETSC_EXT}a${ALIGN} ; fi \
 	 && if [ "${CUDA}" = "1" ] ; then \
 	    export PETSC_EXT=$${PETSC_EXT}cuda ; fi \
-	 && if [ "${DEBUG}" = "1" ] ; then \
+	 && if [ "${DEBUGGING}" = "1" ] ; then \
 	    export PETSC_EXT=$${PETSC_EXT}debug ; fi \
 	  \
 	 && if [ ! -z "${CUSTOMEXT}" ] ; then \
@@ -145,7 +145,7 @@ default_install :: modules
 	 && export petscarch=`make --no-print-directory \
 	                SCALAR=${SCALAR} PRECISION=${PRECISION} INT=${INT} \
 	                ALIGN=${ALIGN} \
-	                CUDA=${CUDA} DEBUG=${DEBUG} CUSTOMEXT=${CUSTOMEXT} \
+	                CUDA=${CUDA} DEBUGGING=${DEBUGGING} CUSTOMEXT=${CUSTOMEXT} \
 	                petscarch` \
 	 && echo && echo "Deduce petc arch <<$$petscarch>>" && echo \
 	 && setnames \
@@ -168,7 +168,7 @@ default_install :: modules
 	      PETSC4PY=${PETSC4PY} SLEPC4PY=${SLEPC4PY} \
 	      )" \
 	 && export param_settings="$$( make --no-print-directory param_settings \
-	        DEBUG=${DEBUG} INT=${INT} PRECISION=${PRECISION} SCALAR=${SCALAR} \
+	        DEBUGGING=${DEBUGGING} INT=${INT} PRECISION=${PRECISION} SCALAR=${SCALAR} \
 		)" \
 	 && ( \
 	    if [ ! -d $$srcdir ] ; then \
@@ -202,7 +202,7 @@ default_install :: modules
 	                  --with-cuda-gencodearch=70\" \
 	          ; else echo --with-cudac=0 ; fi ` \
 	        "${BLAS_FLAGS}" \
-	        $${package_options} $${param_settings} \
+i	        $${package_options} $${param_settings} \
 	        " \
 	     && echo "Cmdline=$$cmdline" && retcode=0 && eval $$cmdline || retcode=$$? \
 	    \
@@ -232,7 +232,7 @@ installation_public :
 	@ export petscarch=`make --no-print-directory \
 	         SCALAR=${SCALAR} PRECISION=${PRECISION} INT=${INT} \
 	         ALIGN=${ALIGN} \
-	         CUDA=${CUDA} DEBUG=${DEBUG} CUSTOMEXT=${CUSTOMEXT} \
+	         CUDA=${CUDA} DEBUGGING=${DEBUGGING} CUSTOMEXT=${CUSTOMEXT} \
 	         petscarch` \
 	 && make public INSTALLEXT="" \
 	    $$( if [ ! -z ${CUSTOMEXT} ] ; then \
@@ -250,7 +250,7 @@ makemodule :
 	 && export petscarch=`make --no-print-directory \
 	                SCALAR=${SCALAR} PRECISION=${PRECISION} INT=${INT} \
 	                ALIGN=${ALIGN} \
-	                CUDA=${CUDA} DEBUG=${DEBUG} CUSTOMEXT=${CUSTOMEXT} \
+	                CUDA=${CUDA} DEBUGGING=${DEBUGGING} CUSTOMEXT=${CUSTOMEXT} \
 	                petscarch` \
 	 && setnames \
 	    "${PACKAGE}"  "${PACKAGEVERSION}"  "${PACKAGEBASENAME}" \
@@ -311,7 +311,7 @@ biginstall :
 	        ( gcc ) echo " .. no FORTRAN for gcc" && echo FORTRAN=0 ;; \
 	        esac \
 	   && echo "Selecting basic options for extension=$${ext}:" \
-	   && case $${ext} in ( *debug* ) DEBUG=1 ;; ( * ) DEBUG= ;; esac \
+	   && case $${ext} in ( *debug* ) DEBUGGING=1 ;; ( * ) DEBUGGING=0 ;; esac \
 	   && case $${ext} in ( *i64* ) INT=64 ;; ( * ) INT=32 ;; esac \
 	   && case $${ext} in ( *single* ) PRECISION=single ;; ( * ) PRECISION=double ;; esac \
 	   && case $${ext} in ( *complex* ) SCALAR=complex ;; ( * ) SCALAR=real ;; esac \
@@ -365,7 +365,7 @@ biginstall :
 	   && echo "Start configure/build at $$( date )" \
 	   && cmdline="make --no-print-directory default_install makemodule \
 	      PACKAGEVERSION=${PACKAGEVERSION} JCOUNT=${JCOUNT} \
-	      DEBUG=$${DEBUG} INT=$${INT} PRECISION=$${PRECISION} SCALAR=$${SCALAR} \
+	      DEBUGGING=$${DEBUGGING} INT=$${INT} PRECISION=$${PRECISION} SCALAR=$${SCALAR} \
 	      $$( if [ ! -z ${CUSTOMEXT} ] ; then echo CUSTOMEXT=${CUSTOMEXT} ; fi ) \
 	      \
 	      AMGX=$${AMGX} CHACO=$${CHACO} EIGEN=$${EIGEN} FFTW=$${FFTW} \
@@ -401,7 +401,7 @@ config-view :
 	 \
 	 && export petscarch=`make --no-print-directory \
 	                SCALAR=${SCALAR} INT=${INT} PRECISION=${PRECISION} ALIGN=${ALIGN} \
-	                CUDA=${CUDA} DEBUG=${DEBUG} CUSTOMEXT=${CUSTOMEXT} \
+	                CUDA=${CUDA} DEBUGGING=${DEBUGGING} CUSTOMEXT=${CUSTOMEXT} \
 	                petscarch` \
 	 && cat $$srcdir/configure.log
 log-view :
