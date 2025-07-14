@@ -11,11 +11,11 @@ module -t list 2>&1 \
 ##
 module unload nvidia openmpi cuda 2>/dev/null
 export MODULEPATH=${WORK}/modulefiles/Core\
-:${WORK}/modulefiles/Compiler/nvidia/25.3\
+:${WORK}/modulefiles/Compiler/nvidia/25.5\
 :${MODULEPATH}
-module load nvidia/25.3
-module load openmpi/5.0.7
-module load cuda/12.8
+module load nvidia/25.5
+module load openmpi/5.0.8
+module load cuda/12.9
 module load nvpl nvidia_math
 #module load nvhpc-hpcx
 module -t list 2>&1 \
