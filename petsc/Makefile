@@ -352,6 +352,9 @@ biginstall :
 	        ( *single* ) echo " .. disable fftw hdf5, Hypre, Mumps because single" \
 	                && FFTW=0 && HDF5=0 && PHDF5=0 && HYPRE=0 && MUMPS=0 ;; esac \
 	   && case $${ext} in \
+	        ( *complexsingle* ) echo " .. disable superlu_dist because complex single" \
+	                && SUPERLUDIST=0 ;; esac \
+	   && case $${ext} in \
 	        ( *i64* ) CHACO=0 && PARMETIS=0 && SUPERLU=0 SUPERLUDIST=0 ;; esac \
 	   && case $${ext} in \
 	        ( *complex* ) \
