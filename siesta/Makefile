@@ -15,11 +15,11 @@ PACKAGE = siesta
 URL = https://siesta-project.org/siesta/index.html \
     https://gitlab.com/siesta-project/siesta/-/releases
 ## see below if this ever reaches 5.4
-PACKAGEVERSION = 5.2.2
-# 5.4.0 is out
+PACKAGEVERSION = 5.4.0
 
 MODE = mpi
-MODULES = fftw3 mkl 
+MODULES = fftw3 parallelnetcdf \
+    mkl 
 
 include ${MAKEINCLUDES}/Make.info
 
@@ -39,6 +39,7 @@ CMAKEFLAGS =  \
     -D CMAKE_Fortran_FLAGS=-fPIE \
     \
     -D SIESTA_WITH_WANNIER90=ON \
+    -D NETCDF_ROOT=${TACC_PARALLELNETCDF_DIR} \
     \
     -D SIESTA_WITH_FFTW=TRUE
 
