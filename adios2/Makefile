@@ -21,6 +21,7 @@ include ${MAKEINCLUDES}/Make.info
 ##
 ## cmake 
 ##
+# https://adios2.readthedocs.io/en/latest/setting_up/setting_up.html#cmake-options
 USEFORTRAN = ON
 CMAKEFLAGS_BASIC = -D CMAKE_BUILD_TYPE=Release \
     -D ADIOS2_USE_Fortran=${USEFORTRAN} \
