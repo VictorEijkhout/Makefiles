@@ -12,17 +12,16 @@ URL = https://github.com/ornladios/ADIOS2
 PACKAGEVERSION = 2.10.2
 
 MODE = mpi
-MODULES_BASIC = phdf5 
+MODULES_BASIC = phdf5
 MODULES = ${MODULES_BASIC} 
 ## can use hdf5, kokkos, zlib
 
 include ${MAKEINCLUDES}/Make.info
 
-## PKGCONFIGLIB = pkgconfig
-
 ##
 ## cmake 
 ##
+# https://adios2.readthedocs.io/en/latest/setting_up/setting_up.html#cmake-options
 USEFORTRAN = ON
 CMAKEFLAGS_BASIC = -D CMAKE_BUILD_TYPE=Release \
     -D ADIOS2_USE_Fortran=${USEFORTRAN} \
