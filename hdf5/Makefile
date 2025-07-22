@@ -16,7 +16,7 @@ URL = https://portal.hdfgroup.org/downloads/index.html \
     https://support.hdfgroup.org/ftp/HDF5/releases/
 # there is a micro version but we ignore that for now.
 PACKAGESHORTVERSION = 1.14
-PACKAGEVERSION = 1.14.4
+PACKAGEVERSION = 1.14.6
 # 1.14.6 is out:
 # https://support.hdfgroup.org/downloads/hdf5/hdf5_1_14_6.html
 MODE = mpi
@@ -34,12 +34,6 @@ include ${MAKEINCLUDES}/Make.info
 HDF5PARALLEL = ON
 HDFFORTRAN = ON
 
-ifeq "${TACC_SYSTEM}" "macbookair"
-  LIBEXT = dylib
-else
-  LIBEXT = so
-endif
-
 #### test failure with NVidia compiler:
 #### https://hdfgroup.atlassian.net/servicedesk/customer/portal/6/HELP-2539
 TESTING = ON
@@ -50,9 +44,10 @@ CMAKEFLAGS = \
   -D BUILD_TESTING:BOOL=${TESTING} \
   -D ZLIB_DIR:PATH=${TACC_ZLIB_DIR} \
   -D ZLIB_INCLUDE_DIR:PATH=${TACC_ZLIB_INC} \
-  -D ZLIB_LIBRARY:PATH=${TACC_ZLIB_LIB}/libz.${LIBEXT} \
+  -D ZLIB_LIBRARY:PATH=${TACC_ZLIB_LIB}/libz.so \
   \
   -D HDF5_BUILD_FORTRAN:BOOL=${HDFFORTRAN} \
+  -D HDF5_BUILD_CPP_LIB:BOOL=ON \
   -D HDF5_ENABLE_PARALLEL:BOOL=${HDF5PARALLEL}
 
 include ${MAKEINCLUDES}/Make.cmake

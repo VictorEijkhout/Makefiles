@@ -23,7 +23,6 @@ ladder="\
     pcre2 \
     bison \
     swig \
-    gklib \
     metis \
     phdf5 \
     autoconf,2.72 \
