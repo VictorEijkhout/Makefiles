@@ -1,0 +1,132 @@
+autoconf
+automake
+benchpro
+bison
+    swig
+        gdal
+            delft3d
+            fillspillmerge
+        openmm
+        trilinos
+            dealii
+                aspect
+blaspp
+    lapackpp
+blis
+boost
+    adaptivecpp
+    enzo
+    highfive
+    hpx
+    libmesh
+    peridigm
+    precice
+        chyps
+catch2
+cesm
+cfitsio
+charmpp
+cmake
+    foam
+cxxopts
+doxygen
+ecbuild
+    mapl
+eigen
+    arpack
+expat
+facebook_nle
+fargparse
+ffmpeg
+fftw2
+fftw3
+    conquest
+    octopus-auto
+    plumed
+    siesta
+fmtlib
+    mpunits
+geos
+gftl
+    gftl-shared
+gklib
+    metis-karypis
+gklib-karypis
+gmp
+    suitesparse
+grackle
+gsl
+    corrfunc
+    octopus
+gsllite
+gtest
+hypre
+json
+jsonc
+julia
+kokkos
+libcurl
+libisl
+libtool
+libxc
+m4
+mdspan
+meson
+metis
+    mfem
+    mumps
+moose
+mpfr
+mpich
+mpl
+msgsl
+mutationpp
+nanobind
+ncl
+nclncarg
+netcdf
+    cdo
+    ncview
+    netcdff
+netcdfx
+nethack
+ninja
+openblas
+osubench
+p4est
+parmetis
+parmetis-git
+patchelf
+    p7zip
+pcre2
+pdtoolkit
+    tau
+petsc
+    libceed
+        ratel
+petscchaco
+pnetcdf
+rangev3
+rmt
+roms
+scalapack
+scotch
+sfml
+sonic
+sqlite
+    proj
+sundials
+sz
+szip
+testing
+testprograms
+udunits
+wannier
+warpx
+yafyaml
+    pflogger
+zlib
+    hdf5
+        neural-fortran
+        silo
+zoltan
