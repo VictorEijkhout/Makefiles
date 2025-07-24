@@ -137,28 +137,31 @@ for m in \
 	parse_numpacver "${numpacver}"
 	echo "================"
 	echo "Package $num: $package version $loadversion"
-	if [[ ${packages_to_exclude} = *${package}* ] ; then continue ; fi
 	if [ ! -z "${list}" ] ; then 
 	    module_avail "$package" "$loadversion" "$fullversion"
-	elif [ $m -eq $num ] ; then 
-	    module_install "${package}" "${fullversion}"
-	    # go to next installable
-	    break
-	fi
-	if [ -z "${list}" ] ; then 
-	    echo "Loading package/version = $package/$loadversion"
-	    module load $package/$loadversion
-	    if [ $? -ne 0 ] ; then echo "Could not load $package" && exit 1 ; fi
-	    module -t list $package/$loadversion 
-	    PACKAGE=$( echo ${package} | tr a-z A-Z )
-	    eval packagedir=\${TACC_${PACKAGE}_DIR}
-	    if [ -z "${packagedir}" ] ; then 
-		echo "ERROR null packagedir variable for package=${package}"
-		exit 1
-	    elif [ ! -d "${packagedir}" ] ; then 
-		echo "ERROR no such packagedir: ${packagedir}"
+	else
+	    # system-dependent exclude
+	    if [[ ${packages_to_exclude} = *${package}* ]] ; then continue ; fi
+	    # otherwise install or load
+	    if [ $m -eq $num ] ; then 
+		module_install "${package}" "${fullversion}"
+		# go to next installable
+		break
+	    else
+		echo "Loading package/version = $package/$loadversion"
+		module load $package/$loadversion
+		if [ $? -ne 0 ] ; then echo "Could not load $package" && exit 1 ; fi
+		module -t list $package/$loadversion 
+		PACKAGE=$( echo ${package} | tr a-z A-Z )
+		eval packagedir=\${TACC_${PACKAGE}_DIR}
+		if [ -z "${packagedir}" ] ; then 
+		    echo "ERROR null packagedir variable for package=${package}"
+		    exit 1
+		elif [ ! -d "${packagedir}" ] ; then 
+		    echo "ERROR no such packagedir: ${packagedir}"
+		fi
+		eval echo " .. loaded ${package}/${loadversion} at ${packagedir}"
 	    fi
-	    eval echo " .. loaded ${package}/${loadversion} at ${packagedir}"
 	fi
     done 
     if [ ! -z "${list}" ] ; then break ; fi

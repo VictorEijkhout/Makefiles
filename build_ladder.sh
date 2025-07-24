@@ -15,7 +15,7 @@ ignored_packages = \
       "benchpro", "demangle", "demangler", "testing",
       # system stuff:
       "clang", "gcc", "intel", "intel-mpi-binding-kit", "cuda", "mkl", "mpich",
-      "gtest", "tau",
+      "gtest", "julia", "tau",
       # stuff I'm not building:
       "adaptivecpp", "foam", "mapl", "nethack", "netcdfx", "facebook-nle", 
       "opensycl", "python", "pylauncher", "wannier",
