@@ -37,12 +37,7 @@ function parse_numpacver {
     # version could be empty
     loadversion=$( pacver="${pacver}," && echo ${pacver#*,} | tr -d ',' )
     if [ ! -z $loadversion ] ; then 
-	eval fullversion=\${${package}_full_version}
-	if [ -z "$fullversion" ] ; then fullversion=${version} ; fi
-    else 
-	# get default from makefile
-	fullversion=$( cd ../${packagedir} && make --no-print-directory version )
-	loadversion=${fullversion}
+	loadversion=$( cd ../${packagedir} && make --no-print-directory loadversion )
     fi
 }
 
@@ -123,7 +118,14 @@ ladderlog=ladder_${TACC_FAMILY_COMPILER}${TACC_FAMILY_COMPILER_VERSION}.log
       && module -t list 2>&1 | sort | tr '\n' ' ' && echo \
   ) | tee ${ladderlog}
 
-for m in ${packages} ; do
+for m in \
+    $( for p in ${packages} ; do 
+        if [[ $p = *\-* ]] ; then 
+	    echo $( seq $( echo $p | cut -d '-' -f 1 ) $( echo $p | cut -d '-' -f 2 ) )
+	else
+	    echo $p
+	fi
+       done ) ; do
     for numpacver in ${numladder} \
 	       ; do \
 	parse_numpacver "${numpacver}"

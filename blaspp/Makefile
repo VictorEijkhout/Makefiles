@@ -17,6 +17,10 @@ LIBDIR = lib64
 CMAKEPREFIXPATHSET = lib64/blaspp
 
 include ${MAKEINCLUDES}/Make.cbuild
+info ::
+	@echo "make default_install : configure build"
+.PHONY: default_install
+default_install : configure build
 
 GITREPO= git@github.com:icl-utk-edu/blaspp.git
 include ${MAKEINCLUDES}/Make.git

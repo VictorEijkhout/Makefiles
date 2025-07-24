@@ -7,6 +7,7 @@
 PACKAGE = PETSC
 URL = https://petsc.org/release/install/download/
 PACKAGEVERSION = 3.23.4
+LOADVERSION = 3.23
 MODE = mpi
 UPSTREAM = chyps dealii libmesh mfem p4est precice
 

@@ -6,8 +6,8 @@
 
 PACKAGE = entity
 URL = https://github.com/entity-toolkit/entity
-PACKAGEVERSION = git
-## 1.1.1
+PACKAGEVERSION = 1.2.0
+# git
 
 MODE = mpi
 MODULES_BASIC = adios2 phdf5
@@ -18,8 +18,10 @@ include ${MAKEINCLUDES}/Make.info
 ##
 ## cmake version
 ##
+# see `pgens' directory for choices
 CMAKEFLAGS_BASIC =  \
     -D output=ON -D mpi=ON \
+    -D pgen=shock \
     -D HDF5_ROOT=${TACC_PHDF5_DIR}
 CMAKEFLAGS = ${CMAKEFLAGS_BASIC}
 
