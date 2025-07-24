@@ -112,6 +112,12 @@ if [ $setx -gt 0 ] ; then
     set -x
 fi
 
+##
+## Exceptions
+##
+vista_exclude=fftw2
+eval packages_to_exclude=\${${TACC_SYSTEM}_exclude}
+
 ladderlog=ladder_${TACC_FAMILY_COMPILER}${TACC_FAMILY_COMPILER_VERSION}.log
 ( \
   echo "================ Starting installation with modules:" \
@@ -131,6 +137,7 @@ for m in \
 	parse_numpacver "${numpacver}"
 	echo "================"
 	echo "Package $num: $package version $loadversion"
+	if [[ ${packages_to_exclude} = *${package}* ] ; then continue ; fi
 	if [ ! -z "${list}" ] ; then 
 	    module_avail "$package" "$loadversion" "$fullversion"
 	elif [ $m -eq $num ] ; then 
