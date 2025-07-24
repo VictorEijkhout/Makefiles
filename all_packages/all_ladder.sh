@@ -16,7 +16,6 @@ hypre
 catch2
 petsc
 cfitsio
-gnuplot
 rangev3
 libcurl
 fftw2
