@@ -14,13 +14,13 @@ ignored_packages = \
     [ ".git", "a1example", "all_packages", 
       "benchpro", "demangle", "demangler", "testing",
       # system stuff:
-      "clang", "gcc", "intel", "intel-mpi-binding-kit", "cuda", "mkl", 
+      "clang", "gcc", "intel", "intel-mpi-binding-kit", "cuda", "mkl", "mpich",
       "gtest", "tau",
       # stuff I'm not building:
       "adaptivecpp", "foam", "mapl", "nethack", "netcdfx", "facebook-nle", 
       "opensycl", "python", "pylauncher", "wannier",
       # stuff I should build
-      "blaspp", "claymore", "qt5", "nanobind", "osubenchmark",
+      "blaspp", "claymore", "qt5", "nanobind", "osubenchmark", "yafyaml",
     ]
 for package in packages:
     if package in ignored_packages: continue
