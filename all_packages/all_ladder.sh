@@ -19,7 +19,6 @@ cfitsio
 rangev3
 libcurl
 fftw2
-gmp
 sfml
 udunits
 bison
