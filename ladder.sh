@@ -76,6 +76,9 @@ function module_install {
     fi
 }
 
+##
+## Commandline options
+##
 while [ $# -gt 0 ] ; do
     if [ "$1" = "-h" ] ; then 
 	usage

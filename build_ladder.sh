@@ -24,13 +24,22 @@ ignored_packages = \
       "qt5", "gnuplot", # gnuplot dpeneds on qt5
       "nanobind", "openblas", "osubenchmark", "rmp", "yafyaml",
     ]
+packagedirs = { "parallelnetcdf":"netcdf", "phdf5":"hdf5", }
+packagetgts = { "parallelnetcdf":"par", "phdf5":"par", }
 for package in packages:
     if package in ignored_packages: continue
-    if not os.path.isdir(package): continue
     all_packages.append(package)
+    if os.path.isdir(package):
+        # there is a directory for this package
+        packagedir = package
+        packagetgt = ""
+    else:
+        # this package is built from a different directory
+        packagedir = packagedirs[package]
+        packagetgt = f"TARGET={packagetgt[package]}"
     # find prerequisites by running "make listmodules"
     list_prereqs = subprocess.Popen\
-        ( f"cd {package}/ && make listmodules",
+        ( f"cd {packagedir}/ && make listmodules {packagetgt}",
           shell=True,env=os.environ,
           stdout=subprocess.PIPE, stderr=subprocess.STDOUT )
     prereqs = list_prereqs.communicate()[0].strip().decode("utf-8").split()

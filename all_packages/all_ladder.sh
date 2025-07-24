@@ -33,6 +33,7 @@ gsl
 grackle
 mdspan
 automake
+phdf5
 pnetcdf
 parallelnetcdf
 m4
@@ -73,7 +74,6 @@ parmetis
 arpack
 hpx
 hdf5
-phdf5
 lapackpp
 p7zip
 libceed
