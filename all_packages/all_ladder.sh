@@ -32,6 +32,7 @@ doxygen
 gsl
 grackle
 mdspan
+automake
 pnetcdf
 nclncarg
 parallelnetcdf
@@ -41,7 +42,6 @@ geos
 fftw3
 p4est
 kokkos
-automake
 ecbuild
 scalapack
 cccl
