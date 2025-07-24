@@ -23,7 +23,6 @@ ladder="\
     pcre2 \
     bison \
     swig \
-    gklib \
     metis \
     phdf5 \
     autoconf,2.72 \
@@ -34,6 +33,7 @@ ladder="\
     dealii \
     aspect \
     "
+#     gklib is maybe no needed
 
 source ../ladder.sh
 
