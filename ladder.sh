@@ -132,6 +132,9 @@ for m in \
 	    echo $p
 	fi
        done ) ; do
+    echo "================================================================"
+    echo "==== Load or build: $m"
+    echo "================================================================"
     for numpacver in ${numladder} \
 	       ; do \
 	parse_numpacver "${numpacver}"
@@ -141,14 +144,18 @@ for m in \
 	    module_avail "$package" "$loadversion" "$fullversion"
 	else
 	    # system-dependent exclude
-	    if [[ ${packages_to_exclude} = *${package}* ]] ; then continue ; fi
 	    # otherwise install or load
 	    if [ $m -eq $num ] ; then 
-		module_install "${package}" "${fullversion}"
+		if [[ ${packages_to_exclude} != *${package}* ]] ; then 
+		    module_install "${package}" "${fullversion}"
+		fi
 		# go to next installable
 		break
 	    else
 		echo "Loading package/version = $package/$loadversion"
+		if [[ ${packages_to_exclude} = *${package}* ]] ; then
+		    echo " .. ignore load" && continue
+		fi
 		module load $package/$loadversion
 		if [ $? -ne 0 ] ; then echo "Could not load $package" && exit 1 ; fi
 		module -t list $package/$loadversion 
