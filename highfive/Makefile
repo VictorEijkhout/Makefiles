@@ -10,7 +10,9 @@ URL = https://github.com/BlueBrain/HighFive
 DOCURL = https://bluebrain.github.io/HighFive/
 MODE = mpi
 ## note: modules needs hdf5 or phdf5 depending
-MODULES = boost eigen 
+MODULES_seq = boost eigen hdf5
+MODULES_par = boost eigen phdf5
+MODULES = ${MODULES_seq}
 
 include ${MAKEINCLUDES}/Make.info
 
@@ -37,11 +39,11 @@ info ::
 seq :
 	make configure build JCOUNT=${JCOUNT} \
 	    PACKAGEVERSION=${PACKAGEVERSION} \
-	    HDF5PARALLEL=OFF MODE=seq MODULES="${MODULES} hdf5" MODULENAME=highfive
+	    HDF5PARALLEL=OFF MODE=seq MODULENAME=highfive
 par :
 	make configure build JCOUNT=${JCOUNT} \
 	    PACKAGEVERSION=${PACKAGEVERSION} \
-	    HDF5PARALLEL=ON  MODE=mpi MODULES="${MODULES} phdf5" MODULENAME=phighfive
+	    HDF5PARALLEL=ON  MODE=mpi MODULES="${MODULES_par}" MODULENAME=phighfive
 info ::
 	@echo "make default_install : sequential version"
 default_install :: 

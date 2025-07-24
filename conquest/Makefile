@@ -9,7 +9,8 @@
 PACKAGE = CONQUEST
 PACKAGEVERSION = git
 MODE = mpi
-MODULES = fftw3 xclib
+MODULES = fftw3 
+# xclib
 
 include ${MAKEINCLUDES}/Make.info
 

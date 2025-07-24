@@ -21,6 +21,11 @@ PKGCONFIGLIB = pkgconfig
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
 
+info ::
+	@echo "make default_install : configure build"
+.PHONY: default_install
+default_install : configure build
+
 TGZURL = https://github.com/SFML/SFML/archive/refs/tags/${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 GITREPO = https://github.com/SFML/SFML.git

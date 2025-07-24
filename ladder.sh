@@ -37,12 +37,7 @@ function parse_numpacver {
     # version could be empty
     loadversion=$( pacver="${pacver}," && echo ${pacver#*,} | tr -d ',' )
     if [ ! -z $loadversion ] ; then 
-	eval fullversion=\${${package}_full_version}
-	if [ -z "$fullversion" ] ; then fullversion=${version} ; fi
-    else 
-	# get default from makefile
-	fullversion=$( cd ../${packagedir} && make --no-print-directory version )
-	loadversion=${fullversion}
+	loadversion=$( cd ../${packagedir} && make --no-print-directory loadversion )
     fi
 }
 
@@ -117,13 +112,29 @@ if [ $setx -gt 0 ] ; then
     set -x
 fi
 
+##
+## Exceptions
+##
+vista_exclude="fftw2 sfml"
+eval packages_to_exclude=\${${TACC_SYSTEM}_exclude}
+
 ladderlog=ladder_${TACC_FAMILY_COMPILER}${TACC_FAMILY_COMPILER_VERSION}.log
 ( \
   echo "================ Starting installation with modules:" \
       && module -t list 2>&1 | sort | tr '\n' ' ' && echo \
   ) | tee ${ladderlog}
 
-for m in ${packages} ; do
+for m in \
+    $( for p in ${packages} ; do 
+        if [[ $p = *\-* ]] ; then 
+	    echo $( seq $( echo $p | cut -d '-' -f 1 ) $( echo $p | cut -d '-' -f 2 ) )
+	else
+	    echo $p
+	fi
+       done ) ; do
+    echo "================================================================"
+    echo "==== Load or build: $m"
+    echo "================================================================"
     for numpacver in ${numladder} \
 	       ; do \
 	parse_numpacver "${numpacver}"
@@ -131,25 +142,33 @@ for m in ${packages} ; do
 	echo "Package $num: $package version $loadversion"
 	if [ ! -z "${list}" ] ; then 
 	    module_avail "$package" "$loadversion" "$fullversion"
-	elif [ $m -eq $num ] ; then 
-	    module_install "${package}" "${fullversion}"
-	    # go to next installable
-	    break
-	fi
-	if [ -z "${list}" ] ; then 
-	    echo "Loading package/version = $package/$loadversion"
-	    module load $package/$loadversion
-	    if [ $? -ne 0 ] ; then echo "Could not load $package" && exit 1 ; fi
-	    module -t list $package/$loadversion 
-	    PACKAGE=$( echo ${package} | tr a-z A-Z )
-	    eval packagedir=\${TACC_${PACKAGE}_DIR}
-	    if [ -z "${packagedir}" ] ; then 
-		echo "ERROR null packagedir variable for package=${package}"
-		exit 1
-	    elif [ ! -d "${packagedir}" ] ; then 
-		echo "ERROR no such packagedir: ${packagedir}"
+	else
+	    # system-dependent exclude
+	    # otherwise install or load
+	    if [ $m -eq $num ] ; then 
+		if [[ ${packages_to_exclude} != *${package}* ]] ; then 
+		    module_install "${package}" "${fullversion}"
+		fi
+		# go to next installable
+		break
+	    else
+		echo "Loading package/version = $package/$loadversion"
+		if [[ ${packages_to_exclude} = *${package}* ]] ; then
+		    echo " .. ignore load" && continue
+		fi
+		module load $package/$loadversion
+		if [ $? -ne 0 ] ; then echo "Could not load $package" && exit 1 ; fi
+		module -t list $package/$loadversion 
+		PACKAGE=$( echo ${package} | tr a-z A-Z )
+		eval packagedir=\${TACC_${PACKAGE}_DIR}
+		if [ -z "${packagedir}" ] ; then 
+		    echo "ERROR null packagedir variable for package=${package}"
+		    exit 1
+		elif [ ! -d "${packagedir}" ] ; then 
+		    echo "ERROR no such packagedir: ${packagedir}"
+		fi
+		eval echo " .. loaded ${package}/${loadversion} at ${packagedir}"
 	    fi
-	    eval echo " .. loaded ${package}/${loadversion} at ${packagedir}"
 	fi
     done 
     if [ ! -z "${list}" ] ; then break ; fi
