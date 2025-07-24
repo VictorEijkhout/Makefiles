@@ -20,7 +20,7 @@ ignored_packages = \
       "adaptivecpp", "foam", "mapl", "nethack", "netcdfx", "facebook-nle", 
       "opensycl", "python", "pylauncher", "wannier",
       # stuff I should build
-      "blaspp", "cesm", "claymore", "fargparse", "gftl", "gmp", "moose", "ncl",
+      "blaspp", "cesm", "claymore", "fargparse", "gftl", "gmp", "moose", "ncl", "nclncarg",
       "qt5", "gnuplot", # gnuplot dpeneds on qt5
       "nanobind", "openblas", "osubenchmark", "rmp", "yafyaml",
     ]

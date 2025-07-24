@@ -118,12 +118,26 @@ fi
 vista_exclude="fftw2 json sfml"
 eval packages_to_exclude=\${${TACC_SYSTEM}_exclude}
 
+##
+## Modules without directory
+##
+phdf5_dir=hdf5
+phdf5_tgt=par
+parallelnetcdf_dir=netcdf
+parallelnetcdf_tgt=par
+
+##
+## Log
+##
 ladderlog=ladder_${TACC_FAMILY_COMPILER}${TACC_FAMILY_COMPILER_VERSION}.log
 ( \
   echo "================ Starting installation with modules:" \
       && module -t list 2>&1 | sort | tr '\n' ' ' && echo \
   ) | tee ${ladderlog}
 
+##
+## Install loop
+##
 for m in \
     $( for p in ${packages} ; do 
         if [[ $p = *\-* ]] ; then 

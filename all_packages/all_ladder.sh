@@ -34,7 +34,6 @@ grackle
 mdspan
 automake
 pnetcdf
-nclncarg
 parallelnetcdf
 m4
 blis
