@@ -22,7 +22,6 @@ fftw2
 sfml
 udunits
 bison
-moose
 metis
 mpl
 pdtoolkit
