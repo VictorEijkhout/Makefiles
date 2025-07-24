@@ -115,7 +115,7 @@ fi
 ##
 ## Exceptions
 ##
-vista_exclude="fftw2 sfml"
+vista_exclude="fftw2 json sfml"
 eval packages_to_exclude=\${${TACC_SYSTEM}_exclude}
 
 ladderlog=ladder_${TACC_FAMILY_COMPILER}${TACC_FAMILY_COMPILER_VERSION}.log

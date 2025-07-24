@@ -27,8 +27,6 @@ mpl
 pdtoolkit
 json
 szip
-rmt
-cesm
 warpx
 doxygen
 gsl

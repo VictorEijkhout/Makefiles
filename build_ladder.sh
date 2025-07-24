@@ -20,9 +20,9 @@ ignored_packages = \
       "adaptivecpp", "foam", "mapl", "nethack", "netcdfx", "facebook-nle", 
       "opensycl", "python", "pylauncher", "wannier",
       # stuff I should build
-      "blaspp", "claymore", "fargparse", "gftl", "gmp", "moose", "ncl",
+      "blaspp", "cesm", "claymore", "fargparse", "gftl", "gmp", "moose", "ncl",
       "qt5", "gnuplot", # gnuplot dpeneds on qt5
-      "nanobind", "openblas", "osubenchmark", "yafyaml",
+      "nanobind", "openblas", "osubenchmark", "rmp", "yafyaml",
     ]
 for package in packages:
     if package in ignored_packages: continue
