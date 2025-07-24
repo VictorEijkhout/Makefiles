@@ -25,7 +25,6 @@ bison
 metis
 mpl
 pdtoolkit
-ncl
 json
 szip
 rmt
