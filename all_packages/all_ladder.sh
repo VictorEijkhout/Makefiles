@@ -15,12 +15,7 @@ netcdf
 hypre
 catch2
 petsc
-yafyaml
 cfitsio
-facebook_nle
-gftl
-mpich
-fargparse
 gnuplot
 rangev3
 libcurl
