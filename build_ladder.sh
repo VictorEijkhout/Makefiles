@@ -22,7 +22,7 @@ ignored_packages = \
       # stuff I should build
       "blaspp", "claymore", "fargparse", "gftl",
       "qt5", "gnuplot", # gnuplot dpeneds on qt5
-      "nanobind", "osubenchmark", "yafyaml",
+      "nanobind", "openblas", "osubenchmark", "yafyaml",
     ]
 for package in packages:
     if package in ignored_packages: continue
