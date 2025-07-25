@@ -1,18 +1,19 @@
 #!/usr/bin/env python3
 # -*- python -*-
 
+import re
 import os
 import subprocess
 
 print( "inventory" )
-packages = os.listdir(".")
+packages = [ d for d in os.listdir(".") if os.path.isdir(d) ]
 all_packages = []
 after = {}
 before = {}
 top = []
 ignored_packages = \
-    [ ".git", "a1example", "all_packages", 
-      "benchpro", "demangle", "demangler", "testing",
+    [ ".git", ".gitignore", "a1example", "all_packages", 
+      "benchpro", "demangle", "demangler", "testing", "Makefile",
       # system stuff:
       "clang", "gcc", "intel", "intel-mpi-binding-kit", "cuda", "mkl", "mpich",
       "gtest", "julia", "tau",
@@ -24,10 +25,20 @@ ignored_packages = \
       "qt5", "gnuplot", # gnuplot dpeneds on qt5
       "nanobind", "openblas", "osubenchmark", "rmp", "yafyaml",
     ]
-packagedirs = { "parallelnetcdf":"netcdf", "phdf5":"hdf5", }
-packagetgts = { "parallelnetcdf":"par", "phdf5":"par", }
-for package in packages:
-    if package in ignored_packages: continue
+##
+## modules that are built from a different directory
+##
+variants = ["parallelnetcdf", "parpack", "phdf5",
+            ]
+packagedirs = { "parallelnetcdf":"netcdf", "parpack":"arpack", "phdf5":"hdf5", }
+packagetgts = { "parallelnetcdf":"par", "parpack":"par", "phdf5":"par", }
+packages = packages+variants
+
+##
+## Loop over package directorie and variants
+##
+for package in packages :
+    if package in ignored_packages : continue
     all_packages.append(package)
     if os.path.isdir(package):
         # there is a directory for this package
@@ -36,7 +47,7 @@ for package in packages:
     else:
         # this package is built from a different directory
         packagedir = packagedirs[package]
-        packagetgt = f"TARGET={packagetgt[package]}"
+        packagetgt = f"TARGET={packagetgts[package]}"
     # find prerequisites by running "make listmodules"
     list_prereqs = subprocess.Popen\
         ( f"cd {packagedir}/ && make listmodules {packagetgt}",
