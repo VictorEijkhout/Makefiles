@@ -18,10 +18,11 @@ ignored_packages = \
       "clang", "gcc", "intel", "intel-mpi-binding-kit", "cuda", "mkl", "mpich",
       "gtest", "julia", "tau",
       # stuff I'm not building:
-      "adaptivecpp", "foam", "mapl", "nethack", "netcdfx", "facebook-nle", 
+      "adaptivecpp", "foam", "mapl", "nethack", "netcdfx", "facebook_nle", 
       "opensycl", "python", "pylauncher", "wannier",
       # stuff I should build
-      "alps", "blaspp", "cesm", "claymore", "fargparse", "gftl", "gmp", "moose", "ncl", "nclncarg",
+      "alps", "blaspp", "cesm", "claymore", "ecbuild",
+      "fargparse", "geos", "gftl", "gmp", "moose", "ncl", "nclncarg",
       "qt5", "gnuplot", # gnuplot dpeneds on qt5
       "nanobind", "openblas", "osubenchmark", "petscchaco", "rmp", "yafyaml",
     ]

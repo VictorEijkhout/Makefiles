@@ -8,7 +8,7 @@
 
 PACKAGE = SFML
 URL = https://github.com/SFML/SFML
-PACKAGEVERSION = 3.1.0
+PACKAGEVERSION = 3.0.1
 MODE = seq
 
 include ${MAKEINCLUDES}/Make.info

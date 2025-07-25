@@ -11,12 +11,10 @@ cxxopts
 doxygen
 eigen
 expat
-facebook_nle
 ffmpeg
 fftw2
 fftw3
 fmtlib
-geos
 gftl-shared
 gklib
 gklib-karypis
