@@ -23,7 +23,6 @@ hypre
 json
 jsonc
 kokkos
-lapackpp
 libcurl
 libisl
 libtool

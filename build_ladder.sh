@@ -22,7 +22,9 @@ ignored_packages = \
       "gklib-karypis", "metis-karypis", # karypis stuff is abandonware
       "opensycl", "python", "pylauncher", "wannier",
       # stuff I should build
-      "alps", "blaspp", "cesm", "claymore", "ecbuild", "fargparse", "geos",
+      "alps",
+      "blaspp", "lapackpp", # cuda only?
+      "cesm", "claymore", "ecbuild", "fargparse", "geos",
       "gftl", "gftlshared", # these go together
       "gmp", "moose", "ncl", "nclncarg",
       "qt5", "gnuplot", # gnuplot dpeneds on qt5
