@@ -118,7 +118,7 @@ fi
 ##
 ## Exceptions
 ##
-vista_exclude="fftw2 json sfml"
+vista_exclude="fftw2 json m4 pflogger sfml"
 eval packages_to_exclude=\${${TACC_SYSTEM}_exclude}
 
 ##
