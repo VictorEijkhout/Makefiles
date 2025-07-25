@@ -11,15 +11,11 @@ cxxopts
 doxygen
 eigen
 expat
-facebook_nle
 ffmpeg
 fftw2
 fftw3
 fmtlib
-geos
-gftl-shared
 gklib
-gklib-karypis
 grackle
 gsl
 gsllite
@@ -27,7 +23,6 @@ hypre
 json
 jsonc
 kokkos
-lapackpp
 libcurl
 libisl
 libtool
@@ -73,7 +68,6 @@ hpx
 arpack
 parpack
 conquest
-metis-karypis
 corrfunc
 octopus
 mpunits

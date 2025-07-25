@@ -19,10 +19,14 @@ ignored_packages = \
       "gtest", "julia", "tau",
       # stuff I'm not building:
       "adaptivecpp", "foam", "mapl", "nethack", "netcdfx", "facebook_nle", 
+      "gklib-karypis", "metis-karypis", # karypis stuff is abandonware
       "opensycl", "python", "pylauncher", "wannier",
       # stuff I should build
-      "alps", "blaspp", "cesm", "claymore", "ecbuild",
-      "fargparse", "gftl", "gmp", "moose", "ncl", "nclncarg",
+      "alps",
+      "blaspp", "lapackpp", # cuda only?
+      "cesm", "claymore", "ecbuild", "fargparse", "geos",
+      "gftl", "gftlshared", # these go together
+      "gmp", "moose", "ncl", "nclncarg",
       "qt5", "gnuplot", # gnuplot dpeneds on qt5
       "nanobind", "openblas", "osubenchmark", "petscchaco", "rmp", "yafyaml",
     ]
