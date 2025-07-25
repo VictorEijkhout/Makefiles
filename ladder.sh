@@ -79,6 +79,7 @@ function module_install {
 ##
 ## Commandline options
 ##
+exclude=
 while [ $# -gt 0 ] ; do
     if [ "$1" = "-h" ] ; then 
 	usage
@@ -89,8 +90,10 @@ while [ $# -gt 0 ] ; do
 	setx=1; shift
     elif [ "$1" = "-j" ] ; then 
 	shift; jcount=$1; shift
-    elif [ "$1" = "-t" ] ; then 
+    elif [ "$1" = "-t" ] ; then
 	trace=1; shift
+    elif [[ $1 = \~* ]]; then 
+	exclude=$1 && exclude=${exclude#~} && shift
     else
 	break
     fi
@@ -139,27 +142,37 @@ ladderlog=ladder_${TACC_FAMILY_COMPILER}${TACC_FAMILY_COMPILER_VERSION}.log
   ) | tee ${ladderlog}
 
 ##
-## Install loop
+## Install loop:
+## `m' runs over commandline arguments
 ##
 for m in \
     $( for p in ${packages} ; do 
         if [[ $p = *\-* ]] ; then 
 	    # expand rangers
 	    echo $( seq $( echo $p | cut -d '-' -f 1 ) $( echo $p | cut -d '-' -f 2 ) )
-	elif [[ $p != \~* ]] ; then
-	    # list number if not negated
+	else
 	    echo $p
 	fi
        done ) ; do
     echo "================================================================"
     echo "==== Load or build: $m"
     echo "================================================================"
+    ##
+    ## go down the ladder,
+    ## - if it's `m', install, then break this loop
+    ## - otherwise module load
     for numpacver in ${numladder} \
 	       ; do \
 	parse_numpacver "${numpacver}"
-	echo "================"
 	echo "Package $num: $package version $loadversion"
-	if [ ! -z "${list}" ] ; then 
+	if [[ $exclude = *${package}* ]] ; then
+	    echo " .. excluded"
+	    if [ $m -eq $num ] ; then
+		break # go to next installable
+	    else
+		continue # go to next build/loadable
+	    fi
+	elif [ ! -z "${list}" ] ; then 
 	    module_avail "$package" "$loadversion" "$fullversion"
 	else
 	    # system-dependent exclude
