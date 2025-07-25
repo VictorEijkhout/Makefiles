@@ -15,7 +15,7 @@ ffmpeg
 fftw2
 fftw3
 fmtlib
-gftl-shared
+gftlshared
 gklib
 gklib-karypis
 grackle
