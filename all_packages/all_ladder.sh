@@ -9,7 +9,6 @@ charmpp
 cmake
 cxxopts
 doxygen
-ecbuild
 eigen
 expat
 facebook_nle
