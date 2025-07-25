@@ -19,6 +19,7 @@ ignored_packages = \
       "gtest", "julia", "tau",
       # stuff I'm not building:
       "adaptivecpp", "foam", "mapl", "nethack", "netcdfx", "facebook_nle", 
+      "gklib-karypis", "metis-karypis", # karypis stuff is abandonware
       "opensycl", "python", "pylauncher", "wannier",
       # stuff I should build
       "alps", "blaspp", "cesm", "claymore", "ecbuild", "fargparse", "geos",

@@ -16,7 +16,6 @@ fftw2
 fftw3
 fmtlib
 gklib
-gklib-karypis
 grackle
 gsl
 gsllite
@@ -70,7 +69,6 @@ hpx
 arpack
 parpack
 conquest
-metis-karypis
 corrfunc
 octopus
 mpunits
