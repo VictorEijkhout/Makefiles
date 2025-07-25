@@ -24,6 +24,7 @@ PKGCONFIGLIB = pkgconfig
 CMAKEPREFIXPATHSET = 1
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
+CPTOINSTALLDIR = EXAMPLES
 
 info ::
 	@echo "make par : parallel installation"
