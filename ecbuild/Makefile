@@ -18,14 +18,22 @@ HASBIN = 1
 NOLIB = 1
 build :
 	@source ${MAKEINCLUDES}/names.sh \
-	 && export MODE=${MODE} && export INSTALLROOT=${INSTALLROOT} \
-	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" "${VARIANT}" "${MODULENAME}" \
+	 && setnames \
+	    "${PACKAGE}" "${PACKAGEVERSION}" "${PACKAGEBASENAME}" \
+	    "${DOWNLOADPATH}" "${SRCPATH}" \
+	    "${INSTALLPATH}" "${INSTALLROOT}" "${INSTALLEXT}" "${INSTALLVARIANT}" \
+	    "${HOMEDIR}" "${BUILDDIRROOT}" "${MODE}" \
+	    "${PREFIXOPTION}" "${PREFIXEXTRA}" \
+	 && source ${MAKEINCLUDES}/compilers.sh && setcompilers \
 	 \
-	 && cd $${srcdir} \
-	 && mkdir -p bootstrap && cd bootstrap \
-	 && ../bin/ecbuild --prefix=$${installdir} .. \
-	 && echo "no ctest" >/dev/null \
-	 && make install
+	 && ( \
+	    cd $${srcdir} \
+	     && mkdir -p bootstrap && cd bootstrap \
+	     && buildline="../bin/ecbuild --prefix=$${prefixdir} .. " \
+	     && echo "buildline=$$buildline" \
+	     && echo "no ctest" >/dev/null \
+	     && make install \
+	    )  2>&1 | tee $$installlog
 EXTRAINSTALLPATHS = CMAKE_MODULE_PATH=share/ecbuild/cmake
 include ${MAKEINCLUDES}/Make.vars
 
