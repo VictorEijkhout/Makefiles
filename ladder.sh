@@ -144,8 +144,10 @@ ladderlog=ladder_${TACC_FAMILY_COMPILER}${TACC_FAMILY_COMPILER_VERSION}.log
 for m in \
     $( for p in ${packages} ; do 
         if [[ $p = *\-* ]] ; then 
+	    # expand rangers
 	    echo $( seq $( echo $p | cut -d '-' -f 1 ) $( echo $p | cut -d '-' -f 2 ) )
-	else
+	elif [[ $p != \~* ]] ; then
+	    # list number if not negated
 	    echo $p
 	fi
        done ) ; do

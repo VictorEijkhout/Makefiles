@@ -1,11 +1,9 @@
-alps
 autoconf
 automake
 bison
 blis
 boost
 catch2
-cccl
 cfitsio
 charmpp
 cmake
@@ -52,7 +50,6 @@ patchelf
 pcre2
 pdtoolkit
 petsc
-petscchaco
 pflogger
 pgplot
 rangev3
