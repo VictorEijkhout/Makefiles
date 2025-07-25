@@ -22,7 +22,7 @@ ignored_packages = \
       "opensycl", "python", "pylauncher", "wannier",
       # stuff I should build
       "alps", "blaspp", "cesm", "claymore", "ecbuild",
-      "fargparse", "gftl", "gmp", "moose", "ncl", "nclncarg",
+      "fargparse", "geos", "gftl", "gmp", "moose", "ncl", "nclncarg",
       "qt5", "gnuplot", # gnuplot dpeneds on qt5
       "nanobind", "openblas", "osubenchmark", "petscchaco", "rmp", "yafyaml",
     ]
