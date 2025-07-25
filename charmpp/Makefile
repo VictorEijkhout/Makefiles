@@ -17,8 +17,8 @@ include ${MAKEINCLUDES}/Make.info
 .PHONY: default_install
 # Vista Intel build fails
 # https://github.com/charmplusplus/charm/issues/3851
-# problem with old configuations:
-# https://github.com/charmplusplus/charm/issues/3900
+# intel 25 problem:
+# https://github.com/charmplusplus/charm/issues/3901
 default_install :
 	@source ${MAKEINCLUDES}/names.sh \
 	 && setnames \
@@ -33,8 +33,9 @@ default_install :
 	     && setcompilers && reportcompilers \
 	     && ./build charm++ \
 	            $$( if [ "${TACC_SYSTEM}" = "vista" ] ; then echo mpi-linux-arm8 ; else echo mpi-linux-x86_64 ; fi ) \
+	            --install-prefix=$${prefixdir} \
+	            $$( if [ "${TACC_FAMILY_COMPILER}" = "intel" ] ; then echo ${TACC_FC} ; fi ) \
 	            --with-production --enable-tracing --force \
-	            --install-prefix=$${prefixdir} --force \
 	    ) 2>&1 | tee $$installlog \
 	 && make --no-print-directory varsmodule
 include ${MAKEINCLUDES}/Make.vars
