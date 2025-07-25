@@ -20,15 +20,16 @@ ignored_packages = \
       # stuff I'm not building:
       "adaptivecpp", "foam", "mapl", "nethack", "netcdfx", "facebook_nle", 
       "gklib-karypis", "metis-karypis", # karypis stuff is abandonware
-      "opensycl", "python", "pylauncher", "wannier",
+      "opensycl", "parmetis-git", "python", "pylauncher", "wannier",
       # stuff I should build
       "alps",
-      "blaspp", "lapackpp", # cuda only?
+      "blaspp", "lapackpp", "mfemcuda", # cuda stuff
       "cesm", "claymore", "ecbuild", "fargparse", "geos",
       "gftl", "gftlshared", # these go together
       "gmp", "moose", "ncl", "nclncarg",
       "qt5", "gnuplot", # gnuplot dpeneds on qt5
-      "nanobind", "openblas", "osubenchmark", "petscchaco", "rmp", "yafyaml",
+      "nanobind", "openblas", "osubenchmark", "petscchaco", "rmp",
+      "yafyaml", "pflogger", # go together
     ]
 ##
 ## modules that are built from a different directory
