@@ -13,7 +13,7 @@ before = {}
 top = []
 ignored_packages = \
     [ ".git", ".gitignore", "a1example", "all_packages", 
-      "benchpro", "demangle", "demangler", "testing", "Makefile",
+      "benchpro", "demangle", "demangler", "testing", "
       # system stuff:
       "clang", "gcc", "intel", "intel-mpi-binding-kit", "cuda", "mkl", "mpich",
       "gtest", "julia", "tau",
@@ -30,6 +30,7 @@ ignored_packages = \
       "qt5", "gnuplot", # gnuplot dpeneds on qt5
       "nanobind", "openblas", "osubenchmark", "petscchaco", "rmp",
       "yafyaml", "pflogger", # go together
+      "zoltan", # whole build seems sick
     ]
 
 ##
