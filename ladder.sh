@@ -60,20 +60,24 @@ function module_avail {
 function module_install {
     package="$1" fullversion="$2"
     echo " .. installing" && echo
+    #
     eval packagecmdline=\${${package}_commandline}
+    #
+    eval packagedir=\${${package}_dir}
+    if [ -z "${packagedir}" ] ; then packagedir=${package} ; fi 
+    #
+    eval packagetgt=\${${package}_tgt}
+    if [ -z "${packagetgt}" ] ; then packagetgt=default_install ; fi
+    #
+    pushd ../${packagedir} 
     if [ ! -z "${packagecmdline}" ] ; then
-	pushd ../${packagedir} 
 	eval ${packagecmdline} 
-	popd
     else
-	eval packagetgt=\${${package}_tgt}
-	if [ -z "${packagetgt}" ] ; then packagetgt=default_install ; fi 
-	pushd ../${packagedir} \
-	    && make ${packagetgt} public \
-		    $( if [ "${trace}" = "1" ] ; then echo ECHO=1 ; fi ) \
-		    JCOUNT=${jcount} versionspec="PACKAGEVERSION=$fullversion"
-	popd
+	make ${packagetgt}
+	# $( if [ "${trace}" = "1" ] ; then echo ECHO=1 ; fi ) \
+	#     JCOUNT=${jcount} versionspec="PACKAGEVERSION=$fullversion"
     fi
+    popd
 }
 
 ##
@@ -127,6 +131,8 @@ eval packages_to_exclude=\${${TACC_SYSTEM}_exclude}
 ##
 ## Modules without directory
 ##
+parpack_dir=arpack
+parpack_tgt=par
 phdf5_dir=hdf5
 phdf5_tgt=par
 parallelnetcdf_dir=netcdf

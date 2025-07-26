@@ -20,7 +20,7 @@ ignored_packages = \
       # stuff I'm not building:
       "adaptivecpp", "foam", "mapl", "nethack", "netcdfx", "facebook_nle", 
       "gklib-karypis", "metis-karypis", # karypis stuff is abandonware
-      "opensycl", "parmetis-git", "python", "pylauncher", "wannier",
+      "octopus-auto", "opensycl", "parmetis-git", "python", "pylauncher", "wannier",
       # stuff I should build
       "alps",
       "blaspp", "lapackpp", "mfemcuda", # cuda stuff
@@ -31,11 +31,11 @@ ignored_packages = \
       "nanobind", "openblas", "osubenchmark", "petscchaco", "rmp",
       "yafyaml", "pflogger", # go together
     ]
+
 ##
 ## modules that are built from a different directory
 ##
-variants = ["parallelnetcdf", "parpack", "phdf5",
-            ]
+variants = ["parallelnetcdf", "parpack", "phdf5", ]
 packagedirs = { "parallelnetcdf":"netcdf", "parpack":"arpack", "phdf5":"hdf5", }
 packagetgts = { "parallelnetcdf":"par", "parpack":"par", "phdf5":"par", }
 packages = packages+variants

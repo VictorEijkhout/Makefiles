@@ -48,6 +48,11 @@ build :
 include ${MAKEINCLUDES}/Make.vars
 include ${MAKEINCLUDES}/Make.public
 
+info ::
+	@echo "make default_install : build"
+.PHONY: default_install
+default_install : build public
+
 GITREPO = https://github.com/OrderN/CONQUEST-release
 include ${MAKEINCLUDES}/Make.git
 
