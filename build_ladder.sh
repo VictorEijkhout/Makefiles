@@ -26,7 +26,7 @@ ignored_packages = \
       "blaspp", "lapackpp", "mfemcuda", # cuda stuff
       "cesm", "claymore", "ecbuild", "fargparse", "geos",
       "gftl", "gftlshared", # these go together
-      "gmp", "moose", "hpx", "ncl", "nclncarg",
+      "gmp", "libceed", "moose", "hpx", "ncl", "nclncarg",
       "qt5", "gnuplot", # gnuplot dpeneds on qt5
       "nanobind", "openblas", "osubenchmark", "petscchaco", "rmp",
       "yafyaml", "pflogger", # go together
