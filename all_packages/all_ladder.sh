@@ -78,10 +78,8 @@ openmm
 enzo
 highfive
 netcdf
-neural-fortran
 silo
 adios2
-athenapk
 libmesh
 netcdfc
 plascom

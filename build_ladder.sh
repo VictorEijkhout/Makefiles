@@ -22,7 +22,7 @@ ignored_packages = \
       "gklib-karypis", "metis-karypis", # karypis stuff is abandonware
       "octopus-auto", "opensycl", "parmetis-git", "python", "pylauncher", "wannier",
       # stuff I should build
-      "alps",
+      "alps", "athenapk",
       "blaspp", "lapackpp", "mfemcuda", # cuda stuff
       "cesm", "claymore", "ecbuild", "fargparse", "geos",
       "gftl", "gftlshared", # these go together
