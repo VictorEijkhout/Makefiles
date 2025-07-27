@@ -70,7 +70,6 @@ suitesparse
 p7zip
 swig
 precice
-ratel
 proj
 hdf5
 plumed
