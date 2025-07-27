@@ -46,11 +46,13 @@ package_location :
 	@export p=${PACKAGE} && export P=$$( echo $$p | tr a-z A-Z ) \
 	     && export hdf5_extra="--download-hdf5-configure-arguments=\"--with-zlib=yes\" --download-hdf5-fortran-bindings=0" \
 	     && export libceed_extra="--download-libceed-commit=origin/main" \
+	     && export metis_extra="--download-metis=yes" \
+	     && export parmetis_extra="--download-parmetis=yes" \
 	     && export mumps_extra="--download-scalapack=yes --download-blacs=yes --download-parmetis=yes --download-metis=yes" \
 	     && export petsc4py_extra="--with-python=1 --with-python-exec=python3" \
 	     && export slepc_extra="\
 	        --download-slepc-commit=ed0d6013375c6ab8a2f79ff52b7796826dc00c68 \
-	        --download-sowing --with-arpack-dir=${TACC_PARPACK_DIR}" \
+	        --download-sowing -download-arpack" \
 	     && /bin/true =https://slepc.upv.es/download/distrib/slepc-3.23.0.tar.gz \
 	     && export slepc4py_extra="--download-slepc-configure-arguments=--with-slepc4py" \
 	     && export superludist_extra="--with-superlu_dist=1 --download-superlu_dist=1 --with-cxx-dialect=C++11 --with-openmp=1" \
@@ -61,6 +63,10 @@ package_location :
 	      taccvarname=TACC_$${P}_DIR ; fi \
 	 && eval taccvar=\$${$${taccvarname}} \
 	 && echo "tacc var $${taccvarname} = $${taccvar}" >/dev/null \
+	 && eval echo "--download-$${p}=1 \$${$${p}_extra}"
+# we should really download everything
+use_tacc_package :
+	echo \
 	 && if [ ! -z "$${taccvar}" ] ; then \
 	        echo "--with-$${p}-dir=$${taccvar}" \
 	    ; else \
