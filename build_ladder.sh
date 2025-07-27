@@ -29,7 +29,7 @@ ignored_packages = \
       "libceed", "ratel", # go together
       "gmp", "moose", "hpx", "ncl", "nclncarg",
       "qt5", "gnuplot", # gnuplot dpeneds on qt5
-      "nanobind", "openblas", "osubenchmark", "petscchaco", "ratel", "rmp",
+      "nanobind", "openblas", "osubenchmark", "plastcom", "petscchaco", "ratel", "rmp",
       "yafyaml", "pflogger", # go together
       "zoltan", # whole build seems sick
     ]

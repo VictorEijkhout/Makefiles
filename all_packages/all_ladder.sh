@@ -81,7 +81,6 @@ netcdf
 silo
 adios2
 libmesh
-plascom
 trilinos
 vtkhdf
 parallelnetcdf
