@@ -23,10 +23,11 @@ include ${MAKEINCLUDES}/Make.info
 ##
 # https://adios2.readthedocs.io/en/latest/setting_up/setting_up.html#cmake-options
 USEFORTRAN = ON
-CMAKEFLAGS_BASIC = --debug-find \
+# --debug-find to see cmake in action
+CMAKEFLAGS_BASIC =  \
     -D ADIOS2_USE_Fortran=${USEFORTRAN} \
-    -D ADIOS2_USE_FORTRAN=${USEFORTRAN} \
-    -D ADIOS2_USE_AWSSDK=OFF
+    -D ADIOS2_USE_AWSSDK=OFF \
+    -D CMAKE_EXE_LINKER_FLAGS=-lfabric
 CMAKEFLAGS = ${CMAKEFLAGS_BASIC}
 HASBIN = 1
 include ${MAKEINCLUDES}/Make.cmake
