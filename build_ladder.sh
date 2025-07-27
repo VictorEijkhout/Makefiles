@@ -13,7 +13,7 @@ before = {}
 top = []
 ignored_packages = \
     [ ".git", ".gitignore", "a1example", "all_packages", 
-      "benchpro", "demangle", "demangler", "testing", "
+      "benchpro", "demangle", "demangler", "testing",
       # system stuff:
       "clang", "gcc", "intel", "intel-mpi-binding-kit", "cuda", "mkl", "mpich",
       "gtest", "julia", "tau",
