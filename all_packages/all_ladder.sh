@@ -82,7 +82,6 @@ silo
 adios2
 libmesh
 trilinos
-vtkhdf
 parallelnetcdf
 gdal
 ncview
