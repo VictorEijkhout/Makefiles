@@ -1,0 +1,1 @@
+gcc 15 : all_build.sh ~roms,scalapack,szip,testprograms,wannier90,zoltan,hpx,conquest,corrfunc,octopus,gmp,suitesparse,plumed,openmm,enzo
