@@ -75,6 +75,12 @@ function module_install {
     if [ -z "${packagetgt}" ] ; then packagetgt=default_install ; fi
     #
     pushd ../${packagedir} 
+    # load prerequisites
+    modules=$( make modules )
+    for m in ${modules} ; do
+	echo " .. load prerequisite: $m" && module load $m
+    done
+    # and now the actual install
     if [ ! -z "${packagecmdline}" ] ; then
 	eval ${packagecmdline} 
     else
