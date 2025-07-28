@@ -45,6 +45,8 @@ package_options :
 package_location :
 	@export p=${PACKAGE} && export P=$$( echo $$p | tr a-z A-Z ) \
 	     && export hdf5_extra="--download-hdf5-configure-arguments=\"--with-zlib=yes\" --download-hdf5-fortran-bindings=0" \
+	     && echo "hypre commit for gcc15" \
+	         && export hypre_extra="--download-hypre-commit=v2.33.0" \
 	     && export libceed_extra="--download-libceed-commit=origin/main" \
 	     && export metis_extra="--download-metis=yes" \
 	     && export parmetis_extra="--download-parmetis=yes" \
