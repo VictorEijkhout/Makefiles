@@ -9,7 +9,7 @@ URL = https://parallel-netcdf.github.io/ \
     https://github.com/Parallel-NetCDF/PnetCDF
 PACKAGEVERSION = 1.14.0
 MODE = mpi
-MODULES = 
+MODULES = automake
 
 include ${MAKEINCLUDES}/Make.info
 CONFIGUREFLAGS = --enable-fortran --enable-shared

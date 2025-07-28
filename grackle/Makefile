@@ -9,7 +9,7 @@ URL = https://github.com/grackle-project/grackle
 PACKAGEVERSION = git
 # 3.3.0 does not have cmakelists. Hm.
 MODE = seq
-MODULES = 
+MODULES = hdf5
 
 include ${MAKEINCLUDES}/Make.info
 

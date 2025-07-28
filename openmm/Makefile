@@ -10,7 +10,7 @@
 PACKAGE = openmmcuda
 URL = https://github.com/openmm/openmm
 PACKAGEVERSION = 8.2.0
-# 8.3.0 is out
+# 8.3.1 is out
 
 MODE = seq
 BASICMODULES = python swig 

@@ -9,16 +9,20 @@
 #### nvfortran real2 support missing
 #### https://hdfgroup.atlassian.net/servicedesk/customer/portal/6/HELP-2790?created=true
 #### 
+#### cmake DEPENDS keyword
+#### https://github.com/HDFGroup/hdf5/issues/5682
+#### 
 ################################################################
 
 PACKAGE = HDF5
-URL = https://portal.hdfgroup.org/downloads/index.html \
-    https://support.hdfgroup.org/ftp/HDF5/releases/
+URL = https://github.com/HDFGroup/hdf5
+# https://github.com/HDFGroup/hdf5
+# https://support.hdfgroup.org/ftp/HDF5/releases/
+
 # there is a micro version but we ignore that for now.
 PACKAGESHORTVERSION = 1.14
-PACKAGEVERSION = 1.14.4
-# 1.14.6 is out:
-# https://support.hdfgroup.org/downloads/hdf5/hdf5_1_14_6.html
+PACKAGEVERSION = 1.14.6
+
 MODE = mpi
 MODULES = zlib
 
@@ -31,14 +35,11 @@ MODULES = zlib
 
 include ${MAKEINCLUDES}/Make.info
 
+# parallel & c++ incompatible?!
+# set the ALLOW_UNSUPPORTED option to fix
+# 
 HDF5PARALLEL = ON
 HDFFORTRAN = ON
-
-ifeq "${TACC_SYSTEM}" "macbookair"
-  LIBEXT = dylib
-else
-  LIBEXT = so
-endif
 
 #### test failure with NVidia compiler:
 #### https://hdfgroup.atlassian.net/servicedesk/customer/portal/6/HELP-2539
@@ -50,9 +51,11 @@ CMAKEFLAGS = \
   -D BUILD_TESTING:BOOL=${TESTING} \
   -D ZLIB_DIR:PATH=${TACC_ZLIB_DIR} \
   -D ZLIB_INCLUDE_DIR:PATH=${TACC_ZLIB_INC} \
-  -D ZLIB_LIBRARY:PATH=${TACC_ZLIB_LIB}/libz.${LIBEXT} \
+  -D ZLIB_LIBRARY:PATH=${TACC_ZLIB_LIB}/libz.so \
   \
+  -D ALLOW_UNSUPPORTED=ON \
   -D HDF5_BUILD_FORTRAN:BOOL=${HDFFORTRAN} \
+  -D HDF5_BUILD_CPP_LIB:BOOL=ON \
   -D HDF5_ENABLE_PARALLEL:BOOL=${HDF5PARALLEL}
 
 include ${MAKEINCLUDES}/Make.cmake

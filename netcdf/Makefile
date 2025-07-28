@@ -15,7 +15,9 @@ URL = https://netcdf.geodynamics.org/ \
 PACKAGEVERSION = 4.9.2
 # 4.9.3 is out
 MODE = seq
-MODULES = 
+MODULES_seq = hdf5
+MODULES_par = pnetcdf phdf5
+MODULES = ${MODULES_seq}
 
 include ${MAKEINCLUDES}/Make.info
 
@@ -44,11 +46,11 @@ seq :
 	@if [ ! -z "${TACC_PHDF5_DIR}" ] ; then \
 	    echo "Load sequential hdf5 instead of parallel" && exit 1 ; fi
 	@make --no-print-directory configure build JCOUNT=${JCOUNT} \
-	    MODE=seq MODULES=hdf5 NETCDF_PARALLEL=OFF \
+	    MODE=seq MODULES="${MODULES_seq}" NETCDF_PARALLEL=OFF \
 	    MODULENAME=netcdf DEPENDSON=hdf5
 par :
 	@make --no-print-directory configure build JCOUNT=${JCOUNT} \
-	    MODE=mpi MODULES="phdf5 pnetcdf" NETCDF_PARALLEL=ON \
+	    MODE=mpi MODULES="${MODULES_par}" NETCDF_PARALLEL=ON \
 	    CMAKE_C_EXTRA_FLAGS="-D CMAKE_C_FLAGS='-I${TACC_PHDF5_INC} -I${TACC_PNETCDF_INC}' -D CMAKE_LINKER_FLAGS='-L${TACC_PNETCDF_LIB} -lpnetcdf'" \
 	    MODULENAME=parallel-netcdf MODULEVARNAME=parallelnetcdf DEPENDSON=phdf5
 .PHONY: default_install

@@ -17,6 +17,8 @@ include ${MAKEINCLUDES}/Make.install
 CMAKEPREFIXPATHSET = 1
 PKGCONFIGLIB = pkgconfig
 
+info ::
+	@echo "make default_install : configure build"
 .PHONY: default_install
 default_install : configure build 
 

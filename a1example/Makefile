@@ -84,8 +84,8 @@ LINKLIB64toLIB = 1
 ## Autotools uses the lines
 ## !! incompatible with cmake: use one or the other !!
 ##
-include ${MAKEINCLUDES}/Make.configure
-include ${MAKEINCLUDES}/Make.install
+# include ${MAKEINCLUDES}/Make.configure
+# include ${MAKEINCLUDES}/Make.install
 
 ##
 ## if configure / make files are not at root level:

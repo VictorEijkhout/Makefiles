@@ -8,19 +8,24 @@
 
 PACKAGE = SFML
 URL = https://github.com/SFML/SFML
-PACKAGEVERSION = 2.6.0
+PACKAGEVERSION = 3.0.1
 MODE = seq
 
 include ${MAKEINCLUDES}/Make.info
-info ::
-	@echo "================" \
-	 && echo "NOTE: on MacOS only clang supported" \
-	 && echo "================"
 
 PKGCONFIGLIB = pkgconfig
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
 
+info ::
+	@echo "make default_install : configure build"
+.PHONY: default_install
+default_install : configure build
+
+##
+## download or clone
+##
+# https://github.com/SFML/SFML/archive/refs/tags/3.0.1.tar.gz
 TGZURL = https://github.com/SFML/SFML/archive/refs/tags/${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 GITREPO = https://github.com/SFML/SFML.git

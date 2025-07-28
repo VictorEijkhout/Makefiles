@@ -7,8 +7,8 @@
 PACKAGE = PETSC
 URL = https://petsc.org/release/install/download/
 PACKAGEVERSION = 3.23.4
+LOADVERSION = 3.23
 MODE = mpi
-UPSTREAM = chyps dealii libmesh mfem p4est precice
 
 include ${MAKEINCLUDES}/Make.info
 list_installations ::
@@ -334,7 +334,7 @@ biginstall :
 	         && echo " .. more cuda disables" && HDF5=0 \
 	      ; elif [ "${TACC_FAMILY_COMPILER}" = "gcc" -a "$${compiler_major_version}" = "15" ] ; then \
 	        echo " .. disable gcc15 stuff: CHACO HYPRE SUPERLUDIST" \
-	         && CHACO=0 && HYPRE=0 && SUPERLUDIST=0 \
+	         && CHACO=0 && SUPERLUDIST=0 \
 	      ; else \
 	        echo " .. disable AMGX because no cuda" && AMGX=0 \
 	      ; fi \

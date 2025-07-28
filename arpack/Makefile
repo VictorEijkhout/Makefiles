@@ -8,11 +8,7 @@ PACKAGE = ARPACK
 URL = https://github.com/opencollab/arpack-ng
 PACKAGEVERSION = 3.9.1
 MODE = seq
-ifeq "${TACC_SYSTEM}" "vista"
-  MODULES = eigen nvpl
-else
-  MODULES = eigen
-endif
+MODULES = eigen mkl
 
 include ${MAKEINCLUDES}/Make.info
 
@@ -28,6 +24,7 @@ PKGCONFIGLIB = pkgconfig
 CMAKEPREFIXPATHSET = 1
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
+CPTOINSTALLDIR = EXAMPLES
 
 info ::
 	@echo "make par : parallel installation"
@@ -43,8 +40,8 @@ par :
 	    CMAKEFLAGS="${CMAKEFLAGSBASIC} -D MPI=ON" \
 	    ARPACKPARALLEL=ON  MODE=mpi MODULENAME=parpack MODULENAMEALT=arpack
 info ::
-	@echo "make default_install : sequential and parallel versions"
-default_install :: seq par
+	@echo "make default_install : sequential version"
+default_install :: seq 
 
 ##
 ## download
