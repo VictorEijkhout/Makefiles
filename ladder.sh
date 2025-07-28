@@ -57,6 +57,11 @@ function module_avail {
     fi
 }
 
+
+##
+## Installation
+##
+petsc_commandline="./install_big.sh -f"
 function module_install {
     package="$1" fullversion="$2"
     echo " .. installing" && echo
