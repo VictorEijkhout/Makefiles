@@ -8,8 +8,9 @@ PACKAGE = MUMPS
 PACKAGEVERSION = 5.8.0
 URL = https://www.mumps.org/
 MODE = mpi
-BASIC_MODULES = metis mkl
-MODULES = ${BASIC_MODULES}
+MODULES_seq = metis scotch mkl
+MODULES_par = parmetis ptscotch mkl
+MODULES = ${MODULES_par}
 
 include ${MAKEINCLUDES}/Make.info
 
@@ -20,12 +21,13 @@ info ::
 PARMODE = par
 seq :
 	@${MAKE} modules MODULES="${BASIC_MODULES} scotch"
-	@${MAKE} default_install MODE=seq PARMODE=seq
+	@${MAKE} default_install MODE=seq PARMODE=seq \
+	    MODULES="${MODULES_seq}"
 par :
 	@${MAKE} modules MODULES="${BASIC_MODULES} ptscotch"
 	@${MAKE} default_install MODE=mpi PARMODE=par \
 	    MODULENAME=pmumps MODULEALTNAME=mumps \
-	    MODULES="${BASIC_MODULES} ptscotch parmetis"
+	    MODULES="${MODULES_par}"
 default_install :
 	@scriptdir=$$(pwd) \
 	 && source ${MAKEINCLUDES}/names.sh \
