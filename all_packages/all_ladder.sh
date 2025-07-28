@@ -57,6 +57,7 @@ udunits
 wannier90
 warpx
 zlib
+ptscotch
 pnetcdf
 arpack
 parpack
@@ -64,7 +65,6 @@ conquest
 corrfunc
 octopus
 mpunits
-mumps
 suitesparse
 p7zip
 swig
@@ -73,6 +73,7 @@ proj
 hdf5
 plumed
 phdf5
+mumps
 openmm
 grackle
 highfive

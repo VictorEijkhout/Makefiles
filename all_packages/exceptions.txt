@@ -1,1 +1,3 @@
-gcc 15 : all_build.sh ~roms,scalapack,szip,testprograms,wannier90,zoltan,hpx,conquest,corrfunc,octopus,gmp,suitesparse,plumed,openmm,enzo
+vista gcc 15 : roms,scalapack,szip,testprograms,wannier90,zoltan,hpx,conquest,corrfunc,octopus,gmp,suitesparse,plumed,openmm,enzo
+
+stampede3 intel 25 : charmpp ~json,charmpp,pgplot,roms,scalapack,sfml,conquest,corrfunc,suitesparse,precice,openmm,enzo,silo

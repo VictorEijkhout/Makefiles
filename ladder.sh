@@ -142,12 +142,18 @@ eval packages_to_exclude=\${${TACC_SYSTEM}_exclude}
 ##
 ## Modules without directory
 ##
+
 parpack_dir=arpack
 parpack_tgt=par
+
 phdf5_dir=hdf5
 phdf5_tgt=par
+
 parallelnetcdf_dir=netcdf
 parallelnetcdf_tgt=par
+
+ptscotch_dir=scotch
+ptscotch_tgt=par32
 
 ##
 ## Log
