@@ -16,6 +16,8 @@ fftw2
 fftw3
 fmtlib
 gklib
+zlib
+hdf5
 grackle
 gsl
 gsllite
@@ -57,7 +59,6 @@ szip
 udunits
 wannier90
 warpx
-zlib
 pnetcdf
 arpack
 parpack
@@ -71,7 +72,6 @@ p7zip
 swig
 precice
 proj
-hdf5
 plumed
 phdf5
 openmm
