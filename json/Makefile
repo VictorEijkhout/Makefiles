@@ -2,12 +2,11 @@
 ####
 #### Makefile for JSON installation
 ####
-#### https://github.com/nlohmann/json
-####
 ################################################################
 
 PACKAGE = json
-PACKAGEVERSION = 3.11.2
+PACKAGEVERSION = 3.12.0
+URL = https://github.com/nlohmann/json
 MODE = seq
 
 include ${MAKEINCLUDES}/Make.info
