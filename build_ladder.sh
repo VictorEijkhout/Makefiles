@@ -21,7 +21,7 @@ ignored_packages = \
       "adaptivecpp", "foam", "mapl", "nethack", "netcdfc", "netcdfx", "facebook_nle", 
       "gklib-karypis", "metis-karypis", # karypis stuff is abandonware
       "octopus-auto", "opensycl", "parmetis-git", "python", "pylauncher",
-      "vtkhdf", "wannier",
+      "roms", "vtkhdf", "wannier",
       # stuff I should build
       "alps", "athenapk",
       "blaspp", "lapackpp", "mfemcuda", # cuda stuff
