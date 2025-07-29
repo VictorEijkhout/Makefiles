@@ -77,7 +77,6 @@ openmm
 grackle
 highfive
 netcdf
-neuralfortran
 silo
 adios2
 libmesh
