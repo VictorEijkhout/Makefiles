@@ -173,6 +173,8 @@ for m in \
         if [[ $p = *\-* ]] ; then 
 	    # expand rangers
 	    echo $( seq $( echo $p | cut -d '-' -f 1 ) $( echo $p | cut -d '-' -f 2 ) )
+	elif [[ $p = [a-z][a-z0-9]* ]] ; then
+	    echo $( ./all_build.sh | grep $p | awk '{print $1}' )
 	else
 	    echo $p
 	fi
