@@ -21,7 +21,7 @@ ignored_packages = \
       "adaptivecpp", "foam", "mapl", "nethack", "netcdfc", "netcdfx", "facebook_nle", 
       "gklib-karypis", "metis-karypis", # karypis stuff is abandonware
       "octopus-auto", "opensycl", "parmetis-git", "python", "pylauncher",
-      "vtkhdf", "wannier",
+      "roms", "vtkhdf", "wannier",
       # stuff I should build
       "alps", "athenapk",
       "blaspp", "lapackpp", "mfemcuda", # cuda stuff
@@ -38,9 +38,12 @@ ignored_packages = \
 ##
 ## modules that are built from a different directory
 ##
-variants = ["parallelnetcdf", "parpack", "phdf5", ]
-packagedirs = { "parallelnetcdf":"netcdf", "parpack":"arpack", "phdf5":"hdf5", }
-packagetgts = { "parallelnetcdf":"par", "parpack":"par", "phdf5":"par", }
+variants = ["parallelnetcdf", "parpack", "phdf5",
+            "ptscotch", ]
+packagedirs = { "parallelnetcdf":"netcdf", "parpack":"arpack", "phdf5":"hdf5",
+                "ptscotch":"scotch", }
+packagetgts = { "parallelnetcdf":"par", "parpack":"par", "phdf5":"par",
+                "ptscotch":"par32", }
 packages = packages+variants
 
 ##
@@ -67,7 +70,7 @@ for package in packages :
     prereqs = set(prereqs) - set(ignored_packages)
     # remove explicit version numbers
     prereqs = [ p.split("/")[0] for p in prereqs ]
-    # print( f"Package: {package}, prereqs: {prereqs}" )
+    print( f"Package: {package}, prereqs: {prereqs}" )
     before[package] = prereqs
     if len(prereqs)==0:
         top.append(package)
@@ -77,9 +80,9 @@ for package in packages :
                 after[p] = []
             after[p].append(package)
 
-print( f"Top: {top}" )
 print( f"Before: {before}" )
-print( f"After: {after}" )
+#print( f"Top: {top}" )
+#print( f"After: {after}" )
 
 from collections import defaultdict, deque
 
@@ -94,12 +97,14 @@ def topological_sort(strings, before):
 
     # Add edges based on the 'before' relationships
     for s1, predecessors in before.items():
+        #print( f"{s1} <= {predecessors}" )
         for s2 in predecessors:
             graph[s2].append(s1)   # s2 -> s1 (s2 must come before s1)
             in_degree[s1] += 1     # s1 has one more dependency
 
     # Start with all nodes that have no incoming edges
     queue = deque([s for s in strings if in_degree[s] == 0])
+    #print( f"start queue: {queue}" )
     sorted_strings = []
 
     while queue:

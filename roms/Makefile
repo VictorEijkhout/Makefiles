@@ -2,11 +2,14 @@
 ####
 #### Makefile for ROMS installation
 ####
+#### does not compile with intel 24
+#### support only for registered users
+####
 ################################################################
 
 PACKAGE = ROMS
-URL = https://roms.org/index.html
-PACKAGEVERSION = 4.1
+URL = https://github.com/myroms/roms
+PACKAGEVERSION = 4.2
 MODE = seq
 MODULES = 
 
