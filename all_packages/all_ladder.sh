@@ -80,7 +80,6 @@ netcdf
 silo
 adios2
 libmesh
-plascom
 trilinos
 parallelnetcdf
 enzo
