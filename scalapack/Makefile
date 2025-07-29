@@ -5,7 +5,10 @@
 ################################################################
 
 PACKAGE = SCALAPACK
-PACKAGEVERSION = 2.2.2
+PACKAGEVERSION = git
+# 2.2.2
+# release can not be compiled, waitinf for new:
+# https://github.com/Reference-ScaLAPACK/scalapack.git
 URL = https://github.com/Reference-ScaLAPACK/scalapack
 MODE = mpi
 
@@ -24,5 +27,6 @@ default_install : configure build
 # to have an empty "Requires:" line
 
 GITREPO = https://github.com/Reference-ScaLAPACK/scalapack.git
+include ${MAKEINCLUDES}/Make.git
 TGZURL = https://github.com/Reference-ScaLAPACK/scalapack/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
