@@ -44,7 +44,6 @@ petsc
 pgplot
 rangev3
 rmt
-roms
 scalapack
 scotch
 sfml
