@@ -180,7 +180,7 @@ for m in \
 	fi
        done ) ; do
     echo "================================================================"
-    echo "==== Load or build: $m"
+    echo "==== Load or build: $( echo $numladder | cut -d ' ' -f $m )"
     echo "================================================================"
     ##
     ## go down the ladder,
