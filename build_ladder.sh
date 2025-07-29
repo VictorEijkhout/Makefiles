@@ -20,7 +20,7 @@ ignored_packages = \
       # stuff I'm not building:
       "adaptivecpp", "foam", "mapl", "nethack", "netcdfc", "netcdfx", "facebook_nle", 
       "gklib-karypis", "metis-karypis", # karypis stuff is abandonware
-      "octopus-auto", "opensycl", "parmetis-git", "python", "pylauncher",
+      "neuralfortran", "octopus-auto", "opensycl", "parmetis-git", "python", "pylauncher",
       "roms", "vtkhdf", "wannier",
       # stuff I should build
       "alps", "athenapk",
