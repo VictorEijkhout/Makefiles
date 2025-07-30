@@ -52,7 +52,6 @@ function module_avail {
     if [ -z "${avail}" ] ; then 
 	echo "MISSING: $testversion:"
     else
-	echo "Available: $testversion"
 	echo "${avail}"
     fi
 }
@@ -188,8 +187,9 @@ for m in \
     ## - otherwise module load
     for numpacver in ${numladder} \
 	       ; do \
+	echo ## blank line for spacing
 	parse_numpacver "${numpacver}"
-	echo "Package $num: $package version $loadversion"
+	echo "Package $num: $package version $fullversion / $loadversion"
 	if [[ $exclude = *${package}* ]] ; then
 	    echo " .. excluded"
 	    if [ $m -eq $num ] ; then
