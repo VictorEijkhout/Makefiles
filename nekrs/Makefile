@@ -17,8 +17,19 @@ include ${MAKEINCLUDES}/Make.info
 ##
 ## Cmake 
 ##
-USEFORTRAN = ON
-CMAKEFLAGS_BASIC = 
+ifeq "${TACC_SYSTEM}" "vista"
+  BLASLIB=${TACC_NVPL_LIB}/libnvpl_blas_lp64_seq.so 
+  LAPACKLIB=${TACC_NVPL_LIB}/libnvpl_lapack_lp64_seq.so
+else
+  # mkl_intel_lp64;mkl_sequential;mkl_core;iomp5;pthread"
+  BLASLIB=${TACC_MKL_LIB}/libmkl_intel_lp64.so ${TACC_MKL_LIB}/libmkl_core.so 
+  LAPACKLIB=${BLASLIB}
+endif
+CMAKEFLAGS_BASIC = \
+    -D USE_OPTIMIZED_BLAS=ON \
+    -D BLAS_LIBRARIES='${BLASLIB}' \
+    -D USE_OPTIMIZED_LAPACK=ON \
+    -D LAPACK_LIBRARIES='${LAPACKLIB}'
 CMAKEFLAGS = ${CMAKEFLAGS_BASIC}
 HASBIN = 1
 include ${MAKEINCLUDES}/Make.cmake

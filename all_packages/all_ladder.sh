@@ -85,7 +85,6 @@ parallelnetcdf
 enzo
 gdal
 ncview
-netcdff
 entity
 mfem
 dealii
