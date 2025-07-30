@@ -128,10 +128,11 @@ info ::
 	@echo "make default_install (there are no configure/install rules)"
 .PHONY: default_install
 default_install :: modules
-	@if [ "${CUDA}" -eq 1 -a -z "${TACC_CUDA_DIR}" ] ; then \
-	    echo && echo "Please load cuda module" && echo && exit 1 \
-	 ; else \
-	    taccver=${TACC_CUDA_VER} \
+	@if [ "${CUDA}" -eq 1 ] ; then \
+	    if [ -z "${TACC_CUDA_DIR}" ] ; then \
+	      echo && echo "Please load cuda module" && echo && exit 1 \
+	    ; fi \
+	     && taccver=${TACC_CUDA_VER} \
 	     && if [ ! -z "$${taccver}" ] ; then \
 	          vermin=$${taccver##*.} \
 	           && if [ $$vermin -lt 8 ] ; then \
@@ -199,7 +200,9 @@ default_install :: modules
 	        `if [ ${CUDA} -eq 1 ] ; then \
 	                echo \"--with-cuda=1 --with-cuda-dir=${TACC_CUDA_DIR} \
 	                  --with-cudac=nvcc \
-	                  --with-cuda-gencodearch=70\" \
+	                  --with-cuda-gencodearch=70 \
+	                  --with-kokkos=1 --download-kokkos=1 --with-kokkos-kernels=1 \
+	                  \" \
 	          ; else echo --with-cudac=0 ; fi ` \
 	        "${BLAS_FLAGS}" \
 i	        $${package_options} $${param_settings} \

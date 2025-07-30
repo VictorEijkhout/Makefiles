@@ -5,10 +5,10 @@ pversion=
 function usage() {
     echo "Usage: $0 [ -h ] [ -v : leave null for default ]"
     echo "    [ -j jpar (default: ${jcount}) ]"
-    echo "    [ -c : cuda build ]"
     echo "    [ -e customext ]"
     echo "    [ -4 : include petsc/slepc4py ] [ -5 : skip hdf5 ]"
     echo "    [ -f : skip fortran ] [ -8 : f08 support ]"
+    echo "    [ -u : cuda build ]"
     echo "    environment: DEBUG INT PRECISION SCALAR"
 }
 
@@ -32,9 +32,6 @@ while [ $# -gt 0 ] ; do
     elif [ $1 = "-8" ] ; then 
 	echo " .. enable f08"
 	fortran=08 && shift
-    elif [ $1 = "-c" ] ; then 
-	echo " .. using CUDA"
-	cuda=1 && shift
     elif [ $1 = "-e" ] ; then 
 	shift && customext=$1 && shift
 	echo " .. custom extension: $customext"
@@ -43,6 +40,9 @@ while [ $# -gt 0 ] ; do
 	fortran=0 && shift
     elif [ $1 = "-j" ] ; then
 	shift && jcount=$1 && shift
+    elif [ $1 = "-u" ] ; then 
+	echo " .. using CUDA"
+	cuda=1 && shift
     elif [ $1  = "-v" ] ; then 
 	shift && pversion=$1 && shift
     else 
