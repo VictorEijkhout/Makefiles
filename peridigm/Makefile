@@ -10,15 +10,22 @@ PACKAGE = PERIDIGM
 URL = https://github.com/peridigm/peridigm
 PACKAGEVERSION = git
 MODE = mpi
-MODULES = trilinos/13.0.0 boost pnetcdf
+MODULES = trilinos boost pnetcdf
+# trilinos needs to be /13.0.0 ???
 
 include ${MAKEINCLUDES}/Make.info
 
 CMAKEFLAGS = \
     -D CMAKE_BUILD_TYPE:STRING=Release \
     -D Trilinos_DIR:PATH=${TACC_TRILINOS_DIR} \
-    -D Trilinos_INCLUDE_DIRS=${TACC_TRILINOS_INC} \
+    -D Trilinos_INCLUDE_DIRS=${TACC_TRILINOS_INC}
+ifeq "${TACC_FAMILY_COMPILER}" "gcc"
+CMAKEFLAGS += \
+    -D CMAKE_CXX_FLAGS=\"-fopenmp -std=c++17\"
+else
+CMAKEFLAGS += \
     -D CMAKE_CXX_FLAGS=\"-qopenmp -std=c++17\"
+endif
 
 #     -D Trilinos_INCLUDE_DIRS='${TACC_TRILINOS_INC};${TACC_NETCDF_INC}'
 
