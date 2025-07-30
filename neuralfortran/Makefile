@@ -10,6 +10,7 @@
 PACKAGE = neuralfortran
 URL = https://github.com/modern-fortran/neural-fortran
 PACKAGEVERSION = 0.17.0
+# 0.22.0 is out
 
 MODE = mpi
 MODULES = hdf5

@@ -27,6 +27,7 @@ ignored_packages = \
       # stuff I should build
       "alps", "athenapk",
       "blaspp", "lapackpp", "mfemcuda", # cuda stuff
+      "corrfunc", # needs python
       "cesm", "claymore", "ecbuild", "fargparse", "geos",
       "gftl", "gftlshared", # these go together
       "libceed", "ratel", # go together

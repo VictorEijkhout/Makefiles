@@ -61,7 +61,6 @@ pnetcdf
 arpack
 parpack
 conquest
-corrfunc
 octopus
 mpunits
 suitesparse
