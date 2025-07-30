@@ -29,11 +29,15 @@ export TACC_FC=gfortran
 module load impi
 module load mkl
 
+##
+## Python
+##
+
 # module load python3/3.9.7
 export TACC_PYTHON_DIR=/opt/apps/gcc11_2/python3/3.9.7
-export TACC_PYTHON3_DIR=/opt/apps/gcc11_2/python3/3.9.7
+export TACC_PYTHON3_DIR=${TACC_PYTHON_DIR}
 export PATH=${TACC_PYTHON_DIR}/bin:${PATH}
 export TACC_INTEL_LIB=/scratch/projects/compilers/intel24.1/oneapi/2024.1/lib
 export LD_LIBRARY_PATH=${TACC_PYTHON_DIR}/lib:${LD_LIBRARY_PATH}:${TACC_INTEL_LIB}
 
-module list
+module -t list

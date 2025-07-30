@@ -23,7 +23,6 @@ MODE = seq
 MODULES = 
 
 include ${MAKEINCLUDES}/Make.info
-HASBIN = 1
 include ${MAKEINCLUDES}/Make.cmake
 WIDTH=32
 # 1. posix source:
@@ -35,13 +34,14 @@ WIDTH=32
 CMAKEFLAGS = \
     -D UNIX=ON \
     -D BUILD_TESTING=OFF \
-    -D CMAKE_C_FLAGS='-DIDXTYPEWIDTH=${WIDTH} -DREALTYPEWIDTH=${WIDTH} \
-	-D_POSIX_C_SOURCE=200809L -Wl,--copy-dt-needed-entries'
+    -D IDXTYPEWIDTH=${WIDTH} -D REALTYPEWIDTH=${WIDTH} \
+    -D CMAKE_C_FLAGS='-D_POSIX_C_SOURCE=200809L -Wl,--copy-dt-needed-entries'
 include ${MAKEINCLUDES}/Make.cbuild
 
 .PHONY: default_install i32 i64 i64-configure i64-build
 info ::
 	@echo "make default_install : i32; also i64 target"
+HASBIN = 1
 default_install : i32
 i32 : 
 	@make --no-print-directory \
@@ -55,22 +55,15 @@ i64-configure :
 	    configure \
 	    WIDTH=64 \
 	    INSTALLVARIANT=i64 MODULEVERSIONEXTRA=i64
-	@source ${MAKEINCLUDES}/names.sh \
-	 && setnames \
-	    "${PACKAGE}"  "${PACKAGEVERSION}"  "${PACKAGEBASENAME}" \
-	    "${DOWNLOADPATH}" "${SRCPATH}" \
-	    "${INSTALLPATH}"  "${INSTALLROOT}"  "${INSTALLEXT}"  "i64" \
-	    "${HOMEDIR}"  "${BUILDDIRROOT}"  "${MODE}" \
-	    "${PREFIXOPTION}"  "${PREFIXEXTRA}"
-i64-fix :
-	/bin/true \
-	 && sed -i $${builddir}/src/include/metis.h \
-	    -e '/define/s/WIDTH 32/WIDTH 64/'
 i64-build :
 	@make --no-print-directory \
 	    build public \
 	    WIDTH=64 \
 	    INSTALLVARIANT=i64 MODULEVERSIONEXTRA=i64
+i64-fix :
+	/bin/true \
+	 && sed -i $${builddir}/src/include/metis.h \
+	    -e '/define/s/WIDTH 32/WIDTH 64/'
 
 TGZURL = https://github.com/scivision/METIS/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
 BOOTSTRAP = sed -i \

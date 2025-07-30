@@ -18,7 +18,8 @@ ignored_packages = \
       "clang", "gcc", "intel", "intel-mpi-binding-kit", "cuda", "mkl", "mpich",
       "gtest", "julia", "tau",
       # stuff I'm not building:
-      "adaptivecpp", "foam", "mapl", "nethack", "netcdfc", "netcdfx", "facebook_nle", 
+      "adaptivecpp", "foam", "mapl", "facebook_nle",
+      "nethack", "netcdfc", "netcdfx", "netcdff",
       "gklib-karypis", "metis-karypis", # karypis stuff is abandonware
       "neuralfortran", "octopus-auto", "opensycl", "parmetis-git", "plascom",
       "python", "pylauncher",
