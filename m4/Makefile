@@ -6,7 +6,7 @@
 
 PACKAGE = M4
 URL = https://ftp.gnu.org/gnu/m4/
-PACKAGEVERSION = 1.4.19
+PACKAGEVERSION = 1.4.20
 MODE = seq
 MODULES = 
 
