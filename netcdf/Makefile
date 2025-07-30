@@ -52,7 +52,7 @@ par :
 	@make --no-print-directory configure build JCOUNT=${JCOUNT} \
 	    MODE=mpi MODULES="${MODULES_par}" NETCDF_PARALLEL=ON \
 	    CMAKE_C_EXTRA_FLAGS="-D CMAKE_C_FLAGS='-I${TACC_PHDF5_INC} -I${TACC_PNETCDF_INC}' -D CMAKE_LINKER_FLAGS='-L${TACC_PNETCDF_LIB} -lpnetcdf'" \
-	    MODULENAME=parallel-netcdf MODULEVARNAME=parallelnetcdf DEPENDSON=phdf5
+	    MODULENAME=parallelnetcdf DEPENDSON=phdf5
 .PHONY: default_install
 info ::
 	@echo "make default_install: sequential version, also available: par"

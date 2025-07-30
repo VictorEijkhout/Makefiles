@@ -31,9 +31,22 @@ info ::
 	@echo "make default_install : cpu, also gpu"
 .PHONY: default_install cpu gpu
 default_install : cpu
+NOINSTALL = 1
+HASBIN = 1
+NOINC = 1
+NOLIB = 1
 cpu :
 	@export HDF5_ROOT=${TACC_PHDF5_DIR} \
 	 && make --no-print-directory configure build
+	@source ${MAKEINCLUDES}/names.sh \
+	 && setnames \
+	    "${PACKAGE}" "${PACKAGEVERSION}" "${PACKAGEBASENAME}" \
+	    "${DOWNLOADPATH}" "${SRCPATH}" \
+	    "${INSTALLPATH}" "${INSTALLROOT}" "${INSTALLEXT}" "${INSTALLVARIANT}" \
+	    "${HOMEDIR}" "${BUILDDIRROOT}" "${MODE}" \
+	    "${PREFIXOPTION}" "${PREFIXEXTRA}" \
+	 && mkdir -p $${prefixdir}/bin \
+	 && cp $${builddir}/src/entity.xc $${prefixdir}/bin
 gpu :
 	@export HDF5_ROOT=${TACC_PHDF5_DIR} \
 	 && export NVCC_APPEND_FLAGS='-allow-unsupported-compiler' \

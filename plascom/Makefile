@@ -7,6 +7,7 @@
 ################################################################
 
 PACKAGE = plascom2
+# page is 404
 URL = https://github.com/chess-uiuc/plascom2
 PACKAGEVERSION = git
 
