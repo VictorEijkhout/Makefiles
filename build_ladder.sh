@@ -18,7 +18,8 @@ ignored_packages = \
       "clang", "gcc", "intel", "intel-mpi-binding-kit", "cuda", "mkl", "mpich",
       "gtest", "julia", "tau",
       # stuff I'm not building:
-      "adaptivecpp", "foam", "mapl", "nethack", "netcdfc", "netcdfx", "facebook_nle", 
+      "adaptivecpp", "foam", "mapl", "facebook_nle",
+      "nethack", "netcdfc", "netcdfx", "netcdff",
       "gklib-karypis", "metis-karypis", # karypis stuff is abandonware
       "neuralfortran", "octopus-auto", "opensycl", "parmetis-git", "plascom",
       "python", "pylauncher",
@@ -26,6 +27,7 @@ ignored_packages = \
       # stuff I should build
       "alps", "athenapk",
       "blaspp", "lapackpp", "mfemcuda", # cuda stuff
+      "corrfunc", # needs python
       "cesm", "claymore", "ecbuild", "fargparse", "geos",
       "gftl", "gftlshared", # these go together
       "libceed", "ratel", # go together

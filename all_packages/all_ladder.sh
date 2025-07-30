@@ -61,7 +61,6 @@ pnetcdf
 arpack
 parpack
 conquest
-corrfunc
 octopus
 mpunits
 suitesparse
@@ -85,7 +84,6 @@ parallelnetcdf
 enzo
 gdal
 ncview
-netcdff
 entity
 mfem
 dealii

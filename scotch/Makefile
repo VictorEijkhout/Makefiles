@@ -75,8 +75,6 @@ par64 :
 info ::
 	@echo "make default_install : sequential version"
 default_install : seq32
-	@make --no-print-directory JCOUNT=${JCOUNT} PACKAGEVERSION=${PACKAGEVERSION} \
-	     seq32 par32
 
 ##
 ## download
