@@ -5,8 +5,8 @@
 ################################################################
 
 PACKAGE = Octopus
-URL = https://gitlab.com/octopus-code/octopus \
-    https://www.octopus-code.org/documentation/15/manual/installation/cmake/
+URL = https://gitlab.com/octopus-code/octopus
+DOCURL = https://www.octopus-code.org/documentation/15/manual/installation/cmake/
 PACKAGEVERSION = 16.0
 GITTAG = 16.0
 
@@ -28,13 +28,21 @@ include ${MAKEINCLUDES}/Make.info
 ## https://www.octopus-code.org/documentation/15/manual/installation/cmake/
 ##
 OCTOPUS_MPI = ON
+ifeq "${TACC_SYSTEM}" "vista"
+  # cmake 4.1 should be able to find nvpl
+  USEMKL=OFF
+  DEFINE_LAPACK="-DBLA_VENDOR=NVPL"
+else
+  USEMKL=ON
+  DEFINE_LAPACK="-D OCTOPUS_MKL=ON"
+endif
 include ${MAKEINCLUDES}/Make.cmake
 CMAKEFLAGS = \
     -D CMAKE_DISABLE_FIND_PACKAGE_Libxc=On \
     -D CMAKE_DISABLE_FIND_PACKAGE_METIS=On \
     -D OCTOPUS_OpenMP=ON \
     -D OCTOPUS_MPI=${OCTOPUS_MPI} \
-    -D OCTOPUS_MKL=ON  \
+    ${DEFINE_LAPACK} \
     -D OCTOPUS_ScaLAPACK=ON
 ## Note: there are also "--preset stufstufstuf" flags for cmake. See ticket 1158.
 
