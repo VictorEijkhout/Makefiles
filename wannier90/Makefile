@@ -13,7 +13,7 @@ URL = https://github.com/wannier-developers/wannier90
 PACKAGEVERSION = 3.1.0
 
 MODE = mpi
-MODULES = 
+MODULES = mkl
 
 include ${MAKEINCLUDES}/Make.info
 
