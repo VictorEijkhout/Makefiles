@@ -47,8 +47,9 @@ else
   BLAS_FLAGS=--with-blas-lapack-dir=${TACC_MKL_DIR}
 endif
 
-DOWNLOADCMAKE =
-## --download-cmake
+DOWNLOADCMAKE = --download-cmake
+## --with-cmake=1 --with-cmake-dir=${TACC_CMAKE_DIR}
+## 
 
 
 CUDA = 0
@@ -201,7 +202,7 @@ default_install :: modules
 	                echo \"--with-cuda=1 --with-cuda-dir=${TACC_CUDA_DIR} \
 	                  --with-cudac=nvcc \
 	                  --with-cuda-gencodearch=70 \
-	                  --with-kokkos=1 --download-kokkos=1 --with-kokkos-kernels=1 \
+	                  --with-kokkos=1 --download-kokkos=1 --with-kokkos-kernels=1 --download-kokkos-kernels=1 \
 	                  \" \
 	          ; else echo --with-cudac=0 ; fi ` \
 	        "${BLAS_FLAGS}" \
