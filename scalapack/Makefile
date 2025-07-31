@@ -17,6 +17,7 @@ include ${MAKEINCLUDES}/Make.info
 CMAKEFLAGS = 
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
+NOINC = 1
 PKGCONFIGLIB = pkgconfig
 CMAKEPREFIXPATHSET = 1
 info ::
