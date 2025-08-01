@@ -22,12 +22,16 @@ configure :
 	@echo && echo "there is no configure rule" && echo
 build :
 	@source ${MAKEINCLUDES}/names.sh \
-	 && export MODE=${MODE} \
-	 && setnames ${PACKAGEROOT} ${PACKAGE} ${PACKAGEVERSION} "" ${PACKAGEBASENAME} \
+	 && setnames \
+	    "${PACKAGE}" "${PACKAGEVERSION}" "${PACKAGEBASENAME}" \
+	    "${DOWNLOADPATH}" "${SRCPATH}" \
+	    "${INSTALLPATH}" "${INSTALLROOT}" "${INSTALLEXT}" "${INSTALLVARIANT}" \
+	    "${HOMEDIR}" "${BUILDDIRROOT}" "${MODE}" \
+	    "${PREFIXOPTION}" "${PREFIXEXTRA}" \
 	 && source ${MAKEINCLUDES}/compilers.sh \
 	 && setmpicompilers \
 	    \
-	 && rm -rf $$installdir \
+	 && rm -rf $$prefixdir \
 	 && cp system.make.${TACC_SYSTEM} $$srcdir/src/system.make \
 	 && cp system.make.${TACC_SYSTEM} $$srcdir/tools/BasisGeneration/system.make \
 	 && ( \
@@ -38,11 +42,11 @@ build :
 	            make very_clean && ( cd ../tools/BasisGeneration && make clean ) \
 	        ; fi \
 	     && make \
-	     && mkdir -p $$installdir/bin \
-	     && cp Conquest $$installdir/bin \
+	     && mkdir -p $$prefixdir/bin \
+	     && cp Conquest $$prefixdir/bin \
 	     \
 	     && ( cd ../tools/BasisGeneration && make ) \
-	     && cp ../bin/* $$installdir/bin \
+	     && cp ../bin/* $$prefixdir/bin \
 	    ) 2>&1 | tee $$installlog \
 	 && make --no-print-directory varsmodule
 include ${MAKEINCLUDES}/Make.vars
