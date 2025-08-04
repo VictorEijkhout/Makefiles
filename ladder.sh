@@ -75,7 +75,7 @@ function module_install {
     #
     pushd ../${packagedir} 
     # load prerequisites
-    modules=$( make modules )
+    modules=$( make listmodules )
     for m in ${modules} ; do
 	echo " .. load prerequisite: $m" && module load $m
     done
