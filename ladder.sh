@@ -135,8 +135,12 @@ fi
 ##
 ## Exceptions
 ##
-vista_exclude="fftw2 json m4 pgplot sfml"
-eval packages_to_exclude=\${${TACC_SYSTEM}_exclude}
+if [ "${TACC_SYSTEM}" = "vista" ] ; then 
+    for p in fftw2 json m4 pgplot sfml ; do packages_to_exclude="${packages_to_exclude} $p" ; done
+fi
+if [ "${TACC_FAMILY_COMPILER}" = "gcc" ] ; then
+    for p in siesta ; do packages_to_exclude="${packages_to_exclude} $p" ; done
+fi
 
 ##
 ## Modules without directory
@@ -158,10 +162,14 @@ ptscotch_tgt=par32
 ## Log
 ##
 ladderlog=ladder_${TACC_FAMILY_COMPILER}${TACC_FAMILY_COMPILER_VERSION}.log
-( \
-  echo "================ Starting installation with modules:" \
-      && module -t list 2>&1 | sort | tr '\n' ' ' && echo \
-  ) | tee ${ladderlog}
+( 
+  echo "================ Starting installation with modules:" 
+  ( module -t list 2>&1 | sort | tr '\n' ' '  )
+) | tee ${ladderlog}
+(
+  echo "specific excludes: ${packages_to_exclude}" 
+  echo 
+) | tee ${ladderlog}
 
 ##
 ## Install loop:
