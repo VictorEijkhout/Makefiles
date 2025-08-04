@@ -5,8 +5,7 @@
 ################################################################
 
 PACKAGE = SUITESPARSE
-PACKAGEVERSION = 7.9.0
-# 7.11.0 is out
+PACKAGEVERSION = 7.11.0
 URL = https://github.com/DrTimothyAldenDavis/SuiteSparse
 MODE = seq
 MODULES = gmp mpfr mkl

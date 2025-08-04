@@ -11,7 +11,11 @@ PACKAGEVERSION = 16.0
 GITTAG = 16.0
 
 MODE = mpi
-MODULES = gsl mkl 
+MODULES = gsl scalapack \
+    mkl 
+ifeq "${TACC_FAMILY_COMPILER}" "gcc"
+  MODULES += ninja
+endif
 #  fftw3 not needed because MKL
 
 # Note: metis is included https://www.octopus-code.org/documentation/15/faq/
@@ -34,16 +38,19 @@ ifeq "${TACC_SYSTEM}" "vista"
   DEFINE_LAPACK="-DBLA_VENDOR=NVPL"
 else
   USEMKL=ON
-  DEFINE_LAPACK="-D OCTOPUS_MKL=ON"
+  DEFINE_LAPACK='-D OCTOPUS_MKL=ON'
 endif
 include ${MAKEINCLUDES}/Make.cmake
+CMAKEUSENINJA = 1
 CMAKEFLAGS = \
+    -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
     -D CMAKE_DISABLE_FIND_PACKAGE_Libxc=On \
     -D CMAKE_DISABLE_FIND_PACKAGE_METIS=On \
     -D OCTOPUS_OpenMP=ON \
     -D OCTOPUS_MPI=${OCTOPUS_MPI} \
     ${DEFINE_LAPACK} \
-    -D OCTOPUS_ScaLAPACK=ON
+    -D OCTOPUS_ScaLAPACK=ON \
+    -D BUFFER=ON
 ## Note: there are also "--preset stufstufstuf" flags for cmake. See ticket 1158.
 
 include ${MAKEINCLUDES}/Make.cbuild
