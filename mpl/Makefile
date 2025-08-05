@@ -5,6 +5,7 @@
 ################################################################
 
 PACKAGE = MPL
+ABOUT = A C++17 message passing library based on MPI
 PACKAGEVERSION = 0.3.0
 URL = https://github.com/rabauke/mpl
 MODE = mpi

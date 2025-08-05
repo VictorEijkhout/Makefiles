@@ -5,6 +5,7 @@
 ################################################################
 
 PACKAGE = GMP
+ABOUT = GNU Multiple Precision Arithmetic Library
 URL = https://gmplib.org/
 PACKAGEVERSION = 6.3.0
 MODE = core

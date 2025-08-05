@@ -5,6 +5,7 @@
 ################################################################
 
 PACKAGE = MDSPAN
+ABOUT = Reference implementation of mdspan targeting C++23
 URL = https://github.com/kokkos/mdspan
 PACKAGEVERSION = git
 MODE = seq

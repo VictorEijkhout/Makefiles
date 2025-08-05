@@ -7,6 +7,7 @@
 ################################################################
 
 PACKAGE = PGPLOT
+ABOUT = Graphics Subroutine Library
 URL = https://sites.astro.caltech.edu/~tjp/pgplot/
 PACKAGEVERSION = 5.2
 MODE = seq

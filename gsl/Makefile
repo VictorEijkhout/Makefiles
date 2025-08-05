@@ -5,6 +5,7 @@
 ################################################################
 
 PACKAGE = GSL
+ABOUT = GNU Scientific Library
 URL = http://www.gnu.org/software/gsl
 PACKAGEVERSION = 2.8
 MODE = seq

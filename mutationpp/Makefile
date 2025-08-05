@@ -7,6 +7,7 @@
 ################################################################
 
 PACKAGE = mutationpp
+ABOUT = The MUlticomponent Thermodynamic And Transport library for IONized gases in C++
 URL = https://github.com/mutationpp/Mutationpp
 PACKAGEVERSION = git
 

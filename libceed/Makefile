@@ -5,6 +5,7 @@
 ################################################################
 
 PACKAGE = LIBCEED
+ABOUT = Code for Efficient Extensible Discretizations
 URL = https://github.com/ceed/libceed
 PACKAGEVERSION = git
 CHMODR = 1

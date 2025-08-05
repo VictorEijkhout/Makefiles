@@ -6,6 +6,7 @@
 ################################################################
 
 PACKAGE = PROJ
+ABOUT = Cartographic Projections and Coordinate Transformations Library
 URL = https://github.com/OSGeo/PROJ
 PACKAGEVERSION = 9.6.0
 # 9.6.2 is out, fixes cstdint and others

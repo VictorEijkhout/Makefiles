@@ -16,6 +16,7 @@
 ################################################################
 
 PACKAGE = metis
+ABOUT = CMake enhanced Karypis METIS library
 PACKAGEVERSION = 5.2.1.1
 ## 5.1.0.3
 URL = https://github.com/scivision/METIS

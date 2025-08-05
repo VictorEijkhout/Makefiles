@@ -5,6 +5,7 @@
 ################################################################
 
 PACKAGE = python
+ABOUT = programming language
 PACKAGEVERSION = 3.12.5
 ## problems: 13.0
 URL = https://www.python.org/

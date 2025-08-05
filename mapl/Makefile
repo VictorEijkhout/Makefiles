@@ -7,6 +7,7 @@
 ################################################################
 
 PACKAGE = mapl
+ABOUT = Foundation layer of the GEOS architecture
 URL = https://github.com/GEOS-ESM/MAPL
 PACKAGEVERSION = 2.56.0
 # 2.58.1 is out

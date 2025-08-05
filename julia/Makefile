@@ -8,6 +8,7 @@
 ################################################################
 
 PACKAGE = JULIA
+ABOUT = Dynamically types programming language
 URL = https://julialang.org/
 PACKAGEVERSION = git
 MODE = seq

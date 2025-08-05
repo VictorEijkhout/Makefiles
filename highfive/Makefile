@@ -5,6 +5,7 @@
 ################################################################
 
 PACKAGE = highfive
+ABOUT = Header-only C++ HDF5 interface
 PACKAGEVERSION = 2.10.1
 URL = https://github.com/BlueBrain/HighFive
 DOCURL = https://bluebrain.github.io/HighFive/

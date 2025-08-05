@@ -7,6 +7,7 @@
 ################################################################
 
 PACKAGE = pcre2
+ABOUT = Perl-compatible Regular Expressions
 URL = https://github.com/PCRE2Project/pcre2
 PACKAGEVERSION = 10.43
 MODE = seq

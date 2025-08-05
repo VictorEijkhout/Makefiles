@@ -5,6 +5,7 @@
 ################################################################
 
 PACKAGE = jsonc
+ABOUT = A JSON implementation in C
 URL = https://github.com/json-c/json-c
 PACKAGEVERSION = 0.18
 PACKAGEVERSION_DOWNLOAD = 0.18-20240915

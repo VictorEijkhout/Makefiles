@@ -5,6 +5,7 @@
 ################################################################
 
 PACKAGE = libisl
+ABOUT = Integer Set Library
 PACKAGEVERSION = 0.27
 URL = https://libisl.sourceforge.io/
 MODE = seq

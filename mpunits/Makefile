@@ -5,6 +5,7 @@
 ################################################################
 
 PACKAGE = MPUNITS
+ABOUT = The quantities and units library for C++
 PACKAGEVERSION = 2.4.0
 URL = https://github.com/mpusz/mp-units
 MODE = seq

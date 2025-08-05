@@ -14,6 +14,7 @@
 ################################################################
 
 PACKAGE = P7ZIP
+ABOUT = A new p7zip fork with additional codecs and improvements
 URL = https://github.com/p7zip-project/p7zip
 PACKAGEVERSION = git
 ## 17.05

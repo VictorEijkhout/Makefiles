@@ -5,6 +5,7 @@
 ################################################################
 
 PACKAGE = p4est
+ABOUT = Parallel AMR on Forests of Octrees
 URL = http://p4est.org/ https://github.com/cburstedde/p4est
 PACKAGEVERSION = 2.8.7
 

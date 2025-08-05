@@ -9,6 +9,7 @@
 ################################################################
 
 PACKAGE = NETCDF
+ABOUT = Network Common Data Format
 URL = https://netcdf.geodynamics.org/ \
     https://github.com/Unidata/netcdf-c \
     https://docs.unidata.ucar.edu/nug/current/getting_and_building_netcdf.html#configure_options

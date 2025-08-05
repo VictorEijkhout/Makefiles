@@ -5,6 +5,7 @@
 ################################################################
 
 PACKAGE = MPFR
+ABOUT = Efficient arbitrary-precision floating-point library
 PACKAGEVERSION = 4.2.2
 URL = https://www.mpfr.org/ \
     https://gitlab.inria.fr/mpfr/mpfr

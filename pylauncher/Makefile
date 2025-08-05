@@ -5,6 +5,7 @@
 ################################################################
 
 PACKAGE = PYLAUNCHER
+ABOUT = Python-based job launcher
 PACKAGEVERSION = 5.3.1
 URL = https://github.com/TACC/pylauncher
 MODE = core

@@ -5,6 +5,7 @@
 ################################################################
 
 PACKAGE = PETSC
+ABOUT = Portable, Extensible Toolkit for Scientific Computation
 URL = https://petsc.org/release/install/download/
 PACKAGEVERSION = 3.23.4
 LOADVERSION = 3.23

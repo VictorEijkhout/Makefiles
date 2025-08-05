@@ -5,6 +5,7 @@
 ################################################################
 
 PACKAGE = HPX
+ABOUT = C++ Standard Library for Concurrency and Parallelism
 URL = https://hpx.stellar-group.org/ \
     https://github.com/STEllAR-GROUP/hpx \
     https://hpx-docs.stellar-group.org/branches/master/html/index.html

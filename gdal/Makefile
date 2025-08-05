@@ -5,6 +5,7 @@
 ################################################################
 
 PACKAGE = GDAL
+ABOUT = Translator library for raster and vector geospatial data formats
 URL = https://gdal.org/index.html \
     https://github.com/OSGeo/GDAL
 PACKAGEVERSION = 3.11.0
