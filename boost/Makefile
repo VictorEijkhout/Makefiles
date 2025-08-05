@@ -29,11 +29,14 @@ build ::
 	    "${INSTALLPATH}" "${INSTALLROOT}" "${INSTALLEXT}" "${INSTALLVARIANT}" \
 	    "${HOMEDIR}" "${BUILDDIRROOT}" "${MODE}" \
 	    "${PREFIXOPTION}" "${PREFIXEXTRA}" \
+	 && requirenonzero prefixdir && mkdir -p $${prefixdir} && rm -rf $${prefixdir}/* \
+	 && requirenonzero builddir && rm -rf $$builddir && mkdir -p $$builddir \
+	 && requirenonzero logfilesdir \
+	 && echo "logfiles dir: $${logfilesdir}." \
+	 && mkdir -p $${logfilesdir} \
 	 && source ${MAKEINCLUDES}/compilers.sh && setcompilers \
 	 && ( \
-	    requirenonzero builddir && rm -rf $$builddir && mkdir -p $$builddir \
-	     && requirenonzero prefixdir && mkdir -p $$prefixdir && rm -rf $$prefixdir/* \
-	     && cd $$srcdir \
+	    cd $${srcdir} \
 	     && ./bootstrap.sh --prefix=$$prefixdir \
 	     && ./b2 toolset=${TOOLSET} \
 	          variant=release link=shared debug-symbols=off inlining=full \
@@ -50,6 +53,8 @@ build ::
 	            --prefix=$${prefixdir} --build-dir=$${builddir} \
 	     && echo "inoperative option: link=shared" >/dev/null \
 	    ) 2>&1 | tee $$installlog \
+	 && requirenonzero logfilesdir \
+	 && cp $${installlog} $${logfilesdir}/ \
 	 && make --no-print-directory varsmodule \
 	      CMAKEPREFIXPATHSET=1
 
