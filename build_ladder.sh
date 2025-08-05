@@ -31,7 +31,7 @@ ignored_packages = \
       "cesm", "claymore", "ecbuild", "fargparse", "geos",
       "gftl", "gftlshared", # these go together
       "libceed", "ratel", # go together
-      "gmp", "moose", "hpx", "ncl", "nclncarg",
+      "moose", "hpx", "ncl", "nclncarg",
       "qt5", "gnuplot", # gnuplot dpeneds on qt5
       "nanobind", "openblas", "osubenchmark", "plastcom", "petscchaco", "ratel", "rmp",
       "yafyaml", "pflogger", # go together
