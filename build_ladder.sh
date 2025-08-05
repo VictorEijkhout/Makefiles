@@ -23,7 +23,7 @@ ignored_packages = \
       "gklib-karypis", "metis-karypis", # karypis stuff is abandonware
       "neuralfortran", "octopus-auto", "opensycl", "parmetis-git", "plascom",
       "python", "pylauncher",
-      "roms", "vtkhdf", "wannier",
+      "rangev3", "roms", "vtkhdf", "wannier",
       # stuff I should build
       "alps", "athenapk",
       "blaspp", "lapackpp", "mfemcuda", # cuda stuff

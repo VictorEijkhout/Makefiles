@@ -42,7 +42,6 @@ pcre2
 pdtoolkit
 petsc
 pgplot
-rangev3
 rmt
 scalapack
 scotch
