@@ -5,6 +5,7 @@
 ################################################################
 
 PACKAGE = EXPAT
+ABOUT = stream-oriented XML parser library written in C.
 PACKAGEVERSION = 2.6.2
 PACKAGEVERSIONDOWNLOAD = 2_6_2
 URL = https://libexpat.github.io/

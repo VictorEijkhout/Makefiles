@@ -5,6 +5,7 @@
 ################################################################
 
 PACKAGE = CORRFUNC
+ABOUT = Blazing fast correlation functions on the CPU.
 PACKAGEVERSION = 2.5.3
 URL = https://github.com/manodeep/Corrfunc
 MODULES = gsl

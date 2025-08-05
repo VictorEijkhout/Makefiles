@@ -7,6 +7,7 @@
 PACKAGE = athenak
 URL = https://github.com/IAS-Astrophysics/athenak
 # parthenon-hpc-lab/athenapk
+ABOUT = Performance-portable version of the Athena++ astrophysical AMR-MHD code using Kokkos
 PACKAGEVERSION = git
 
 MODE = mpi

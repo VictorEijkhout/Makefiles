@@ -5,6 +5,7 @@
 ################################################################
 
 PACKAGE = adaptivecpp
+ABOUT = The independent, community-driven compiler for C++-based heterogeneous programming models.
 URL = https://github.com/AdaptiveCpp/AdaptiveCpp
 PACKAGEVERSION = 23.10.0
 MODULES = boost clang

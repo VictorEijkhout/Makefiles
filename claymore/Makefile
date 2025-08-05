@@ -5,6 +5,7 @@
 ################################################################
 
 PACKAGE = claymore
+ABOUT = Claymore code for MPM improved by Justin Bonus UW 
 URL = https://github.com/Javiermro/claymore_JLM
 PACKAGEVERSION = git
 

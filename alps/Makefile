@@ -7,6 +7,7 @@
 ################################################################
 
 PACKAGE = ALPS
+ABOUT = The Arbitrary Linear Plasma Solver
 URL = http://alps.space/ \
     https://github.com/danielver02/ALPS
 PACKAGEVERSION = 1.1.0
