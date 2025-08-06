@@ -7,6 +7,7 @@
 ################################################################
 
 PACKAGE = yafyaml
+ABOUT = Yet Another Fortran YAML
 URL = https://github.com/Goddard-Fortran-Ecosystem/yaFyaml
 PACKAGEVERSION = 1.2.0
 PACKAGEVERSION_MAJORMINOR = 1.2

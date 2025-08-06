@@ -5,6 +5,7 @@
 ################################################################
 
 PACKAGE = SUNDIALS
+ABOUT = SUite of Nonlinear and DIfferential/ALgebraic equation Solvers.
 URL = https://computing.llnl.gov/projects/sundials \
     https://github.com/LLNL/sundials \
     https://sundials.readthedocs.io/en/latest/sundials/Install_link.html#installation-cmake

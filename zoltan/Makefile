@@ -7,6 +7,7 @@
 ################################################################
 
 PACKAGE = ZOLTAN
+ABOUT = Parallel Partitioning, Load Balancing and Data-Management Services
 URL = https://sandialabs.github.io/Zoltan/
 PACKAGEVERSION = git
 MODE = mpi

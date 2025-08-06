@@ -9,6 +9,7 @@
 ################################################################
 
 PACKAGE = SCOTCH
+ABOUT = Package for graph and mesh/hypergraph partitioning, graph clustering, and sparse matrix ordering.
 URL = https://www.labri.fr/perso/pelegrin/scotch/ \
     https://gitlab.inria.fr/scotch/scotch
 PACKAGEVERSION = 7.0.7

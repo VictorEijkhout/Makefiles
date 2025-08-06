@@ -8,6 +8,7 @@ BUILD = 4
 # or BUILD=git
 
 PACKAGE = SILO
+ABOUT = File-based, scientific data exchange and software interoperability
 URL = http://software.llnl.gov/Silo/
 ifeq "${BUILD}" "git"
   PACKAGEVERSION = git

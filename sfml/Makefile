@@ -7,6 +7,7 @@
 ################################################################
 
 PACKAGE = SFML
+ABOUT  = Simple and Fast Multimedia Library
 URL = https://github.com/SFML/SFML
 PACKAGEVERSION = 3.0.1
 MODE = seq

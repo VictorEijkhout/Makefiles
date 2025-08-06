@@ -12,6 +12,7 @@
 ################################################################
 
 PACKAGE = trilinos
+ABOUT = Collection of reusable scientific software libraries
 URL = https://github.com/trilinos/Trilinos \
     https://www.docs.trilinos.org/files/TrilinosBuildReference.html
 PACKAGEVERSION = 16.1.0

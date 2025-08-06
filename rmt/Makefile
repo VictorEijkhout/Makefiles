@@ -5,6 +5,7 @@
 ################################################################
 
 PACKAGE = rmt
+ABOUT = RMT (R-matrix with time-dependence) is part of the UK-AMOR suite of codes for tackling problems in Atomic Molecular and Optical physics problems with the Rmatrix approach.
 URL = https://gitlab.com/Uk-amor/RMT/rmt
 PACKAGEVERSION = git
 

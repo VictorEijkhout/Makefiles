@@ -8,6 +8,7 @@
 ################################################################
 
 PACKAGE = ROMS
+ABOUT = Regional Ocean Modeling System
 URL = https://github.com/myroms/roms
 PACKAGEVERSION = 4.2
 MODE = seq
