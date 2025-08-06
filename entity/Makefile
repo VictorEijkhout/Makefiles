@@ -7,7 +7,11 @@
 PACKAGE = entity
 ABOUT = New generation astrophysical plasma simulation code with CPU/GPU portability
 URL = https://github.com/entity-toolkit/entity
-PACKAGEVERSION = 1.2.0
+# I'm assuming issue:
+# https://github.com/entity-toolkit/entity/issues/129
+# will be resolved in a 1.2.1 release
+# 1.2.0 needs the exctra handling of the bin directory
+PACKAGEVERSION = 1.2.1
 # git
 
 MODE = mpi
@@ -32,13 +36,14 @@ info ::
 	@echo "make default_install : cpu, also gpu"
 .PHONY: default_install cpu gpu
 default_install : cpu
-NOINSTALL = 1
+#NOINSTALL = 1
 HASBIN = 1
 NOINC = 1
 NOLIB = 1
 cpu :
 	@export HDF5_ROOT=${TACC_PHDF5_DIR} \
-	 && make --no-print-directory configure build
+	 && ${MAKE} --no-print-directory configure build 
+oldcpu :
 	@source ${MAKEINCLUDES}/names.sh \
 	 && setnames \
 	    "${PACKAGE}" "${PACKAGEVERSION}" "${PACKAGEBASENAME}" \
