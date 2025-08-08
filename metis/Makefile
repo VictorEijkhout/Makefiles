@@ -17,7 +17,10 @@
 
 PACKAGE = metis
 ABOUT = CMake enhanced Karypis METIS library
-PACKAGEVERSION = 5.2.1.1
+PACKAGEVERSION = 5.2.1.2
+# wtill problems with 5.2.1.2:
+## https://github.com/scivision/METIS/issues/8
+
 ## 5.1.0.3
 URL = https://github.com/scivision/METIS
 MODE = seq
@@ -67,10 +70,10 @@ i64-fix :
 	    -e '/define/s/WIDTH 32/WIDTH 64/'
 
 TGZURL = https://github.com/scivision/METIS/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
-BOOTSTRAP = sed -i \
-    -e '/GIT_TAG/s/6897bfe/078042614ff5192ab4c9bde0575bfef0d4572687/' \
-    -e '/GIT_TAG/s/44630ca/078042614ff5192ab4c9bde0575bfef0d4572687/' \
-    CMakeLists.txt
+# BOOTSTRAP = sed -i \
+#     -e '/GIT_TAG/s/6897bfe/078042614ff5192ab4c9bde0575bfef0d4572687/' \
+#     -e '/GIT_TAG/s/44630ca/078042614ff5192ab4c9bde0575bfef0d4572687/' \
+#     CMakeLists.txt
 include ${MAKEINCLUDES}/Make.download
 
 ifdef TICKETS
