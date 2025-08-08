@@ -12,9 +12,12 @@ MODE = seq
 
 include ${MAKEINCLUDES}/Make.info
 
+ifeq "${TACC_FAMILY_COMPILER}" "nvidia"
+else
 CMAKFLAGS=\
   -D CMAKE_C_FLAGS=-fPIC \
   -D CMAKE_CXX_FLAGS=-fPIC
+endif
 include ${MAKEINCLUDES}/Make.cmake
 PKGCONFIG = share/pkgconfig
 include ${MAKEINCLUDES}/Make.cbuild
