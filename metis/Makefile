@@ -52,8 +52,6 @@ i32 :
 	    configure build public \
 	    INSTALLVARIANT=i32 
 i64 : i64-configure i64-build
-# stupid post-processing:
-# https://github.com/scivision/METIS/issues/7
 i64-configure :
 	@make --no-print-directory \
 	    configure \
@@ -64,6 +62,8 @@ i64-build :
 	    build public \
 	    WIDTH=64 \
 	    INSTALLVARIANT=i64 MODULEVERSIONEXTRA=i64
+# stupid post-processing is solved in the 5.2.1.2 release:
+# https://github.com/scivision/METIS/issues/7
 i64-fix :
 	/bin/true \
 	 && sed -i $${builddir}/src/include/metis.h \
