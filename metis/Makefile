@@ -76,6 +76,9 @@ TGZURL = https://github.com/scivision/METIS/archive/refs/tags/v${PACKAGEVERSION}
 #     CMakeLists.txt
 include ${MAKEINCLUDES}/Make.download
 
+GITREPO = https://github.com/scivision/METIS.git
+include ${MAKEINCLUDES}/Make.git
+
 ifdef TICKETS
 intel24 compilation S3
 /opt/apps/gcc/13.2.0/bin/ld: CMakeFiles/gpmetis.dir/gpmetis.c.o: undefined reference to symbol 'gk_GetCurMemoryUsed'
