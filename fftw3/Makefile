@@ -5,8 +5,9 @@
 ################################################################
 
 PACKAGE = FFTW3
-URL = http://fftw.org/ \
-    http://www.fftw.org/fftw3_doc/Installation-on-Unix.html
+ABOUT = Fastest Fourier Transform in the West, version 3
+URL = http://fftw.org/
+DOCURL = http://www.fftw.org/fftw3_doc/Installation-on-Unix.html
 PACKAGEVERSION = 3.3.10
 MODE = mpi
 MODULES = 

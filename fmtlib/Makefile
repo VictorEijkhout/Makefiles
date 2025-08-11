@@ -5,6 +5,7 @@
 ################################################################
 
 PACKAGE = fmtlib
+ABOUT = A modern formatting library
 URL = https://github.com/fmtlib/fmt
 PACKAGEVERSION = 11.1.4
 MODE = seq

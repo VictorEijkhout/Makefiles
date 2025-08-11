@@ -9,6 +9,7 @@
 ################################################################
 
 PACKAGE = NCVIEW
+ABOUT = NetCDF viewer
 URL = https://cirrus.ucsd.edu/ncview/
 PACKAGEVERSION = 2.1.9
 MODE = core

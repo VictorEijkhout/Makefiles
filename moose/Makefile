@@ -5,6 +5,7 @@
 ################################################################
 
 PACKAGE = moose
+ABOUT = Multiphysics Object-Oriented Simulation Environment
 URL = https://mooseframework.inl.gov/
 PACKAGEVERSION = git
 

@@ -5,6 +5,7 @@
 ################################################################
 
 PACKAGE = DEALII
+ABOUT = Finite Element Library
 URL = https://github.com/dealii/dealii
 PACKAGEVERSION = 9.6.2
 MODE = mpi

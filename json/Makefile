@@ -5,6 +5,7 @@
 ################################################################
 
 PACKAGE = json
+ABOUT = JSON for Modern C++
 PACKAGEVERSION = 3.12.0
 URL = https://github.com/nlohmann/json
 MODE = seq

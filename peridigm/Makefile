@@ -7,6 +7,7 @@
 ################################################################
 
 PACKAGE = PERIDIGM
+ABOUT = Peridigm peridynamics code.
 URL = https://github.com/peridigm/peridigm
 PACKAGEVERSION = git
 MODE = mpi

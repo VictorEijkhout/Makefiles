@@ -5,6 +5,7 @@
 ################################################################
 
 PACKAGE = blis
+ABOUT = BLAS-like Library Instantiation Software Framework
 PACKAGEVERSION = 1.1
 # git
 URL = https://github.com/flame/blis

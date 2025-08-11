@@ -21,6 +21,9 @@ nvversion=25.3
 echo "loading nvidia ${nvversion}"
 module load nvidia/${nvversion}
 
+# for libisl
+export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/opt/apps/gcc/15.1.0/lib
+
 module load openmpi
 
 module -t list 2>&1 | sort | awk '{v=v" "$0} END {print v}'

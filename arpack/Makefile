@@ -5,6 +5,7 @@
 ################################################################
 
 PACKAGE = ARPACK
+ABOUT = Collection of Fortran77 subroutines designed to solve large scale eigenvalue problems.
 URL = https://github.com/opencollab/arpack-ng
 PACKAGEVERSION = 3.9.1
 MODE = seq

@@ -5,6 +5,7 @@
 ################################################################
 
 PACKAGE = Octopus
+ABOUT = Real-space Time-Dependent Density Functional Theory code
 URL = https://gitlab.com/octopus-code/octopus
 DOCURL = https://www.octopus-code.org/documentation/15/manual/installation/cmake/
 PACKAGEVERSION = 16.0

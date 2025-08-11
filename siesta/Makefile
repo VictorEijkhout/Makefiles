@@ -12,6 +12,7 @@
 ################################################################
 
 PACKAGE = siesta
+ABOUT = A first-principles materials simulation code using DFT
 URL = https://siesta-project.org/siesta/index.html \
     https://gitlab.com/siesta-project/siesta/-/releases
 ## see below if this ever reaches 5.4

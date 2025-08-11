@@ -5,6 +5,7 @@
 ################################################################
 
 PACKAGE = googletest
+ABOUT = Google Testing and Mocking Framework
 URL = https://github.com/google/googletest
 PACKAGEVERSION = 1.14.0
 MODE = seq

@@ -5,6 +5,7 @@
 ################################################################
 
 PACKAGE = UDUNITS
+ABOUT = Units of physical quantities
 URL = https://www.unidata.ucar.edu/software/udunits/
 PACKAGEVERSION = 2.2.28
 MODE = seq

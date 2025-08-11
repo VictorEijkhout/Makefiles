@@ -5,6 +5,7 @@
 ################################################################
 
 PACKAGE = SCALAPACK
+ABOUT  = Scalable parallel lapack
 PACKAGEVERSION = git
 # 2.2.2
 # release can not be compiled, waitinf for new:

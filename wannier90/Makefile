@@ -9,6 +9,7 @@
 ################################################################
 
 PACKAGE = wannier90
+ABOUT = Maximally-localised Wannier functions
 URL = https://github.com/wannier-developers/wannier90
 PACKAGEVERSION = 3.1.0
 

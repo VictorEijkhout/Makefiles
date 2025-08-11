@@ -5,6 +5,7 @@
 ################################################################
 
 PACKAGE = CXXOPTS
+ABOUT = Lightweight C++ command line option parser
 PACKAGEVERSION = 3.3.1
 URL = https://github.com/jarro2783/cxxopts
 MODE = seq

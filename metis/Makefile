@@ -16,7 +16,11 @@
 ################################################################
 
 PACKAGE = metis
-PACKAGEVERSION = 5.2.1.1
+ABOUT = CMake enhanced Karypis METIS library
+PACKAGEVERSION = 5.2.1.2
+# wtill problems with 5.2.1.2:
+## https://github.com/scivision/METIS/issues/8
+
 ## 5.1.0.3
 URL = https://github.com/scivision/METIS
 MODE = seq
@@ -48,8 +52,6 @@ i32 :
 	    configure build public \
 	    INSTALLVARIANT=i32 
 i64 : i64-configure i64-build
-# stupid post-processing:
-# https://github.com/scivision/METIS/issues/7
 i64-configure :
 	@make --no-print-directory \
 	    configure \
@@ -60,17 +62,22 @@ i64-build :
 	    build public \
 	    WIDTH=64 \
 	    INSTALLVARIANT=i64 MODULEVERSIONEXTRA=i64
+# stupid post-processing is solved in the 5.2.1.2 release:
+# https://github.com/scivision/METIS/issues/7
 i64-fix :
 	/bin/true \
 	 && sed -i $${builddir}/src/include/metis.h \
 	    -e '/define/s/WIDTH 32/WIDTH 64/'
 
 TGZURL = https://github.com/scivision/METIS/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
-BOOTSTRAP = sed -i \
-    -e '/GIT_TAG/s/6897bfe/078042614ff5192ab4c9bde0575bfef0d4572687/' \
-    -e '/GIT_TAG/s/44630ca/078042614ff5192ab4c9bde0575bfef0d4572687/' \
-    CMakeLists.txt
+# BOOTSTRAP = sed -i \
+#     -e '/GIT_TAG/s/6897bfe/078042614ff5192ab4c9bde0575bfef0d4572687/' \
+#     -e '/GIT_TAG/s/44630ca/078042614ff5192ab4c9bde0575bfef0d4572687/' \
+#     CMakeLists.txt
 include ${MAKEINCLUDES}/Make.download
+
+GITREPO = https://github.com/scivision/METIS.git
+include ${MAKEINCLUDES}/Make.git
 
 ifdef TICKETS
 intel24 compilation S3

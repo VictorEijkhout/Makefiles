@@ -7,6 +7,7 @@
 ################################################################
 
 PACKAGE = ASPECT
+ABOUT = Advanced Solver for Planetary Evolution, Convection, and Tectonics
 URL = https://aspect.geodynamics.org/ \
     https://github.com/geodynamics/aspect
 PACKAGEVERSION = 3.0.0

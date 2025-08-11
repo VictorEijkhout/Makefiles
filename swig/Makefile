@@ -5,6 +5,7 @@
 ################################################################
 
 PACKAGE = swig
+ABOUT = software development tool that connects programs written in C and C++ with a variety of high-level programming languages
 URL = https://www.swig.org/ https://github.com/swig/swig
 PACKAGEVERSION = 4.3.1
 MODE = seq

@@ -7,6 +7,7 @@
 ################################################################
 
 PACKAGE = plumed
+ABOUT = The community-developed PLUgin for MolEcular Dynamics
 URL = https://github.com/plumed/plumed2
 PACKAGEVERSION = 2.9.3
 

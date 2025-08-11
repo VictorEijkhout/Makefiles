@@ -5,6 +5,7 @@
 ################################################################
 
 PACKAGE = libcurl
+ABOUT = A command line tool and library for transferring data with URL syntax.
 PACKAGEVERSION = 8.14.1
 PACKAGEVERSIONDOWNLOAD = 8_14_1
 URL = https://curl.se/libcurl/ \

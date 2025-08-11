@@ -5,6 +5,7 @@
 ################################################################
 
 PACKAGE = SQLITE
+ABOUT = SQL database engine
 URL = https://www.sqlite.org https://github.com/sqlite/sqlite
 ## version could be newer:
 ## I don't know how to download a specific version

@@ -84,7 +84,10 @@ echo "${pkgprefix}" > ${pkgprefix}/tacc.pth
 ##
 if [ ! -z "${installpython}" ] ; then 
 
+    echo && echo "================ Install basic python ================" && echo
+
     if [ -z "${srcdir}" ] ; then echo "Zero variable srcdir" ; exit 1 ; fi
+    echo "Using srcdir=${srcdir}"
     cd ${srcdir}
 
     export CC=${TACC_CC} && export CXX=${TACC_CXX}
@@ -93,9 +96,10 @@ if [ ! -z "${installpython}" ] ; then
     else 
 	echo "find libintlc.so"
 	# /opt/intel/oneapi/compiler/2023.1.0/linux/compiler/lib/intel64_lin/libintlc.so
-	libintlc=$( find ${TACC_MKL_DIR}/../.. -name libintlc.so )
+	if [ -z "${TACC_MKL_DIR}" ] ; then echo "Please load MKL" && exit 1 ; fi
+	libintlc=$( find ${TACC_MKL_DIR}/../.. -name libintlc.so 2>/dev/null | cut -d ' ' -f 1 )
 	echo "found lib: ${libintlc}"
-	libintlc=${libintlc%%/libintlc.so}
+	libintlc=${libintlc%%libintlc.so*}
 	echo "found dir: ${libintlc}"
 	export LDFLAGS="-DLDFLAGS \
 -L${TACC_MKL_LIB:?MISSING_MKL_LIB} -Wl,-rpath=${TACC_MKL_LIB} \
@@ -111,6 +115,12 @@ if [ ! -z "${installpython}" ] ; then
 	--with-openssl=/usr --with-openssl-rpath=/usr/lib64/openssl
 
     echo && echo "Making" && echo
+
+    echo " .. WARNING weird libgdbm patch"
+    mkdir -p lib64 && ln -s /usr/lib64/libgdbm.so.6 ./lib64/libgdbm.so
+    export LD_LIBRARY_PATH=$(pwd)/lib64:${LD_LIBRARY_PATH}
+
+    echo " .. parallel make"
     make -j 12
     echo && echo "Make install" && echo
     make -j 5 install

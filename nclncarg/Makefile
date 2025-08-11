@@ -5,6 +5,7 @@
 ################################################################
 
 PACKAGE = ncl
+ABOUT = NCAR Command Language
 PACKAGEVERSION = 6.6.2
 PACKAGEVERSION_NODOT = 662
 URL = https://www.ncl.ucar.edu/ https://www.ncl.ucar.edu/Download/build_from_src.shtml

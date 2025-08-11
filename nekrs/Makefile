@@ -5,6 +5,7 @@
 ################################################################
 
 PACKAGE = nekRS
+ABOUT = Next generation fast and scalable CFD code
 URL = https://github.com/Nek5000/nekRS
 PACKAGEVERSION = git
 # 23.0

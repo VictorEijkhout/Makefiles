@@ -5,6 +5,7 @@
 ################################################################
 
 PACKAGE = CMAKE
+ABOUT = Powerful Software Build System
 PACKAGEVERSION = 3.31.5
 # 4.1-rc4
 URL = https://cmake.org/

@@ -7,6 +7,7 @@
 ################################################################
 
 PACKAGE = cfitsio
+ABOUT = C and Fortran library for reading and writing FITS files
 URL = https://github.com/HEASARC/cfitsio
 PACKAGEVERSION = 4.6.2
 MODE = seq

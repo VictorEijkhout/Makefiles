@@ -5,6 +5,7 @@
 ################################################################
 
 PACKAGE = boost
+ABOUT = C++ Libraries
 PACKAGEVERSION = 1.86.0
 PACKAGEVERSION_DOWNLOAD = 1_86_0
 URL = https://www.boost.org/ \

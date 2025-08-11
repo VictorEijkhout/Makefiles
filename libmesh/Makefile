@@ -7,6 +7,7 @@
 ################################################################
 
 PACKAGE = libmesh
+ABOUT = Framework for the numerical simulation of partial differential equations
 URL = http://libmesh.github.io/ \
     https://github.com/libMesh/libmesh
 PACKAGEVERSION = 1.8.0

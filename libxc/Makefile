@@ -7,6 +7,7 @@
 ################################################################
 
 PACKAGE = LIBXC
+ABOUT = Library of exchange-correlation functionals for density-functional theory.
 PACKAGEVERSION = 7.0.0
 # 6.2.2
 # 5.2.3

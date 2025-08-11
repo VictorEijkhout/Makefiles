@@ -5,6 +5,7 @@
 ################################################################
 
 PACKAGE = NANOBIND
+ABOUT = Tiny and efficient C++/Python bindings
 URL = https://github.com/wjakob/nanobind \
     https://nanobind.readthedocs.io/en/latest/
 PACKAGEVERSION = git

@@ -8,6 +8,7 @@
 ################################################################
 
 PACKAGE = precice
+ABOUT = coupling library for partitioned multi-physics simulations
 URL = https://github.com/precice/precice
 PACKAGEVERSION = 3.2.0
 # 2.5.0

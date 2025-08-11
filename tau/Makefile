@@ -5,6 +5,7 @@
 ################################################################
 
 PACKAGE = tau
+ABOUT = Tuning and Analysis Utilities
 URL = https://www.cs.uoregon.edu/research/tau/home.php
 PACKAGEVERSION = 2.33
 MODE = mpi

@@ -5,6 +5,7 @@
 ################################################################
 
 PACKAGE = FFTW2
+ABOUT = Fastest Fourier Transform in the West, version 2
 URL = http://fftw.org/
 PACKAGEVERSION = 2.1.5
 MODE = mpi

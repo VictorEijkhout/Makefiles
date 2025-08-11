@@ -5,6 +5,7 @@
 ################################################################
 
 PACKAGE = ninja
+ABOUT = A small build system with a focus on speed
 PACKAGEVERSION = 1.12.1
 URL = https://github.com/ninja-build/ninja
 MODULES = 

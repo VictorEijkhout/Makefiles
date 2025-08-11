@@ -7,6 +7,7 @@
 ################################################################
 
 PACKAGE = pflogger
+ABOUT = A parallel Fortran logger
 URL = https://github.com/Goddard-Fortran-Ecosystem/pFlogger
 PACKAGEVERSION = 1.12.0
 PACKAGEVERSION_MAJORMINOR = 1.12

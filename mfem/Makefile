@@ -5,6 +5,7 @@
 ################################################################
 
 PACKAGE = mfem
+ABOUT = Lightweight, general, scalable C++ library for finite element methods
 URL = https://github.com/mfem/mfem
 PACKAGEVERSION = 4.8
 ## 4.5.2 has breaking changes for CHyPS.
