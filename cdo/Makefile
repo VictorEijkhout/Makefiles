@@ -10,7 +10,7 @@ URL = https://code.mpimet.mpg.de/projects/cdo/wiki/Cdo#Download-Compile-Install
 PACKAGEVERSION = 2.5.0
 ## note: version is not enough for the download url
 MODE = seq
-MODULES = netcdff netcdf
+MODULES = netcdf
 
 include ${MAKEINCLUDES}/Make.info
 
