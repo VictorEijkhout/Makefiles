@@ -117,11 +117,11 @@ if [ ! -z "${installpython}" ] ; then
     echo && echo "Making" && echo
 
     echo " .. WARNING weird libgdbm patch"
-    mkdir -p lib64 && ln -s /usr/lib64/libgdbm.so.6 ./lib64/libgdbm.so
+    rm -rf $(pwd)/lib64 && mkdir -p lib64 && ln -s /usr/lib64/libgdbm.so.6 ./lib64/libgdbm.so
     export LD_LIBRARY_PATH=$(pwd)/lib64:${LD_LIBRARY_PATH}
 
     echo " .. parallel make"
-    make -j 12
+    make -j 12 LDFLAGS_NODIST=-L$( pwd )/lib64
     echo && echo "Make install" && echo
     make -j 5 install
 fi
