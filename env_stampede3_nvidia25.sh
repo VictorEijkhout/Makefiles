@@ -21,7 +21,9 @@ nvversion=25.3
 echo "loading nvidia ${nvversion}"
 module load nvidia/${nvversion}
 
-# for libisl
+# prepend for a modern libstdc++
+export LD_LIBRARY_PATH=/opt/apps/gcc/15.1.0/lib64/:${LD_LIBRARY_PATH}
+# append for libisl
 export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/opt/apps/gcc/15.1.0/lib
 
 module load openmpi

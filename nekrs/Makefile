@@ -28,13 +28,18 @@ else
   LAPACKLIB=${BLASLIB}
 endif
 OPTIMIZEDLBAS = OFF
-CMAKEFLAGS_BASIC = \
+
+USECUDA = OFF
+# cuda fails on hypre:
+# https://github.com/Nek5000/nekRS/issues/648
+CMAKEFLAGS = \
     -D USE_OPTIMIZED_BLAS=${OPTIMIZEDLBAS} \
     -D BLAS_LIBRARIES='${BLASLIB}' \
     -D USE_OPTIMIZED_LAPACK=${OPTIMIZEDLBAS} \
     -D LAPACK_LIBRARIES='${LAPACKLIB}' \
+    -D NEKRS_USE_CUDA:BOOL=${USECUDA} \
+    -D OCCA_ENABLE_CUDA=${USECUDA} \
     -D NEKRS_GPU_MPI=OFF
-CMAKEFLAGS = ${CMAKEFLAGS_BASIC} -D NEKRS_USE_CUDA:BOOL=OFF
 HASBIN = 1
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
@@ -45,8 +50,7 @@ default_install : cpu
 cpu : configure build
 gpu :
 	@make --no-print-directory configure build \
-	  MODULES="${MODULES_gpu}" INSTALLVARIANT=cuda MODULEVERSIONEXTRA=cuda \
-	  CMAKEFLAGS="${CMAKEFLAGS_BASIC} -D NEKRS_USE_CUDA:BOOL=ON"
+	  MODULES="${MODULES_gpu}" INSTALLVARIANT=cuda MODULEVERSIONEXTRA=cuda 
 
 ##
 ## Download
