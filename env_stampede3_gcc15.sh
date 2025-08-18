@@ -22,6 +22,7 @@ echo "loading gcc ${gccversion}"
 module load gcc/${gccversion}
 module load mkl
 module load impi
+export PATH=${HOME}/bin/gcc15:${PATH}
 
 module -t list 2>&1 | sort | awk '{v=v" "$0} END {print v}'
 
