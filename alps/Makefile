@@ -8,7 +8,7 @@ PACKAGE = ALPS
 ABOUT = The Arbitrary Linear Plasma Solver
 URL = http://alps.space/ \
     https://github.com/danielver02/ALPS
-PACKAGEVERSION = 1.1.0
+PACKAGEVERSION = 1.1.1
 # 1.1.0-fixes : https://github.com/VictorEijkhout/ALPS-1.1.0-fixes
 MODE = mpi
 MODULES = mkl
