@@ -8,6 +8,7 @@ PACKAGE = GDAL
 ABOUT = Translator library for raster and vector geospatial data formats
 URL = https://gdal.org/index.html \
     https://github.com/OSGeo/GDAL
+DOCURL = https://gdal.org/en/stable/development/building_from_source.html
 PACKAGEVERSION = 3.11.0
 MODE = seq
 MODULES = jsonc netcdf proj swig zlib 
@@ -28,6 +29,7 @@ CMAKEFLAGS = \
     -D OGR_BUILD_OPTIONAL_DRIVERS=OFF \
     -D GDAL_USE_CURL=OFF \
     -D GDAL_USE_CRYPTOPP=OFF \
+    -D GDAL_USE_ODBC=OFF \
     -D GDAL_USE_OPENSSL=OFF \
     \
     -D GDAL_USE_NETCDF=ON \
