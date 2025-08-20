@@ -48,12 +48,12 @@ seq :
 	    echo "Load sequential hdf5 instead of parallel" && exit 1 ; fi
 	@make --no-print-directory configure build JCOUNT=${JCOUNT} \
 	    MODE=seq MODULES="${MODULES_seq}" NETCDF_PARALLEL=OFF \
-	    MODULENAME=netcdf DEPENDSON=hdf5
+	    MODULENAME=netcdf DEPENDSONCURRENT=hdf5
 par :
 	@make --no-print-directory configure build JCOUNT=${JCOUNT} \
 	    MODE=mpi MODULES="${MODULES_par}" NETCDF_PARALLEL=ON \
 	    CMAKE_C_EXTRA_FLAGS="-D CMAKE_C_FLAGS='-I${TACC_PHDF5_INC} -I${TACC_PNETCDF_INC}' -D CMAKE_LINKER_FLAGS='-L${TACC_PNETCDF_LIB} -lpnetcdf'" \
-	    MODULENAME=parallelnetcdf DEPENDSON=phdf5
+	    MODULENAME=parallelnetcdf DEPENDSONCURRENT=phdf5
 .PHONY: default_install
 info ::
 	@echo "make default_install: sequential version, also available: par"

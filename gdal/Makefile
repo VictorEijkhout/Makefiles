@@ -39,7 +39,9 @@ CMAKEFLAGS = \
 include ${MAKEINCLUDES}/Make.cmake
 EXTRAINSTALLVARS = GDAL_DATA=share/gdal
 include ${MAKEINCLUDES}/Make.cbuild
-DEPENDSON = jsonc,netcdf,proj,zlib
+DEPENDSON = jsonc,proj,zlib
+# need current netcdf so that we get current hdf5
+DEPENDSONCURRENT = netcdf
 
 .PHONY: default_install
 default_install : configure build public
