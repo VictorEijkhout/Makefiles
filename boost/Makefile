@@ -21,7 +21,11 @@ info ::
 .PHONY: configure build
 configure :: modules
 	@echo "there is no configure rule"
-TOOLSET = ${TACC_FAMILY_COMPILER}
+ifeq "${TACC_FAMILY_COMPILER}" "nvidia"
+  TOOLSET = nvcc
+else
+  TOOLSET = ${TACC_FAMILY_COMPILER}
+endif
 build ::
 	@source ${MAKEINCLUDES}/names.sh \
 	 && setnames \
@@ -36,6 +40,7 @@ build ::
 	 && echo "logfiles dir: $${logfilesdir}." \
 	 && mkdir -p $${logfilesdir} \
 	 && source ${MAKEINCLUDES}/compilers.sh && setcompilers \
+	 && cp boost-build-nvcc/nvcc.jam $${srcdir}/tools/build/src/tools \
 	 && ( \
 	    cd $${srcdir} \
 	     && ./bootstrap.sh --prefix=$$prefixdir \
