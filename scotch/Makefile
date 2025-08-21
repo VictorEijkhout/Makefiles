@@ -75,7 +75,8 @@ par64 :
 	    MODULENAME=ptscotch 
 info ::
 	@echo "make default_install : sequential version"
-default_install : seq32
+.PHONY: default_install seq
+default_install seq : seq32
 
 ##
 ## download
