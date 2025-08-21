@@ -93,7 +93,7 @@ function module_install {
 ##
 ## Commandline options
 ##
-exclude="rangev3"
+exclude="demangle rangev3"
 while [ $# -gt 0 ] ; do
     if [ "$1" = "-h" ] ; then 
 	usage
