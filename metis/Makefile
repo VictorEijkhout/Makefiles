@@ -17,12 +17,15 @@
 
 PACKAGE = metis
 ABOUT = CMake enhanced Karypis METIS library
-PACKAGEVERSION = 5.2.1.2
-# wtill problems with 5.2.1.2:
+URL = https://github.com/scivision/METIS/
+
+# PACKAGEVERSION = 5.2.1.2
+# still problems with 5.2.1.2:
 ## https://github.com/scivision/METIS/issues/8
 
-## 5.1.0.3
-URL = https://github.com/scivision/METIS
+PACKAGEVERSION=git
+GITDATE=20250821
+
 MODE = seq
 MODULES = 
 
@@ -35,11 +38,16 @@ WIDTH=32
 # 3. copy-dt-needed-entries because 
 #    build-5.2.1.1-clx-gcc13.2-impi21.9.0-i32/_deps/gklib-build/libGKlib.so
 #    see https://stackoverflow.com/a/55086637/2044454
+ifeq "${TACC_FAMILY_COMPILER}" "nvidia"
+  EXTRA_C_FLAGS = -D_POSIX_C_SOURCE=200809L
+else
+  EXTRA_C_FLAGS = -D_POSIX_C_SOURCE=200809L -Wl,--copy-dt-needed-entries
+endif
 CMAKEFLAGS = \
     -D UNIX=ON \
     -D BUILD_TESTING=OFF \
     -D IDXTYPEWIDTH=${WIDTH} -D REALTYPEWIDTH=${WIDTH} \
-    -D CMAKE_C_FLAGS='-D_POSIX_C_SOURCE=200809L -Wl,--copy-dt-needed-entries'
+    -D CMAKE_C_FLAGS='${EXTRA_C_FLAGS}'
 include ${MAKEINCLUDES}/Make.cbuild
 
 .PHONY: default_install i32 i64 i64-configure i64-build
