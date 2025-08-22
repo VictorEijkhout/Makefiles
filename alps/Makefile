@@ -28,6 +28,7 @@ CONFIGUREFLAGS = \
     --with-lapack='-L${TACC_MKL_LIB} -lmkl_intel_lp64 -lmkl_sequential -lmkl_core -lpthread'
 
 include ${MAKEINCLUDES}/Make.install
+NOINC=1
 NOLIB=1
 HASBIN=1
 

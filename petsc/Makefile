@@ -364,7 +364,6 @@ biginstall :
 	   && case $${ext} in \
 	        ( *complex* ) \
 	                echo " .. disable Hypre, Metis, Mumps because complex" \
-	                 && HYPRE=0 \
 	      ;; esac \
 	   \
 	   && if [ "$${METIS}" = "0" ] ; then PARMETIS=0 && PTSCOTCH=0 ; fi \
