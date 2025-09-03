@@ -8,7 +8,7 @@ function usage() {
     echo "    [ -e customext ]"
     echo "    [ -4 : include petsc/slepc4py ] [ -5 : skip hdf5 ]"
     echo "    [ -f : skip fortran ] [ -8 : f08 support ]"
-    echo "    [ -u : cuda build ]"
+    echo "    [ -k : kokkos support ] [ -u : cuda build ]"
     echo "    environment: DEBUG INT PRECISION SCALAR"
 }
 
@@ -19,6 +19,7 @@ fortran=90
 hdf5=1
 p4p=0
 cuda=0
+kokkos=0
 customext=
 while [ $# -gt 0 ] ; do
     if [ $1 = "-h" ] ; then
@@ -40,6 +41,8 @@ while [ $# -gt 0 ] ; do
 	fortran=0 && shift
     elif [ $1 = "-j" ] ; then
 	shift && jcount=$1 && shift
+    elif [ $1 = "-k" ] ; then
+	kokkos=1 && shift
     elif [ $1 = "-u" ] ; then 
 	echo " .. using CUDA"
 	cuda=1 && shift
@@ -108,7 +111,7 @@ make --no-print-directory biginstall JCOUNT=${jcount} \
     EXT=${EXTENSION} \
     $( if [ ! -z "${customext}" ] ; then echo CUSTOMEXT=${customext} ; fi ) \
     PKGSTART=1 $( cat ${size}.sh ) PKGSTOP=1 \
-    CUDA=${cuda} FORTRAN=${fortran} \ 
+    CUDA=${cuda} FORTRAN=${fortran} KOKKOS=${kokkos} \
     PETSC4PY=${p4p} SLEPC4PY=${p4p} \
 "
 ( echo "At $(date)" && echo "cmdline: $cmdline" ) | tee -a ${sizelog}

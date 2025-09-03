@@ -6,8 +6,8 @@
 
 PACKAGE = KOKKOS
 ABOUT = C++ Performance Portability Programming Ecosystem
-URL = https://github.com/kokkos/kokkos \
-    https://kokkos.github.io/kokkos-core-wiki/building.html
+URL = https://github.com/kokkos/kokkos
+DOCURL = https://kokkos.github.io/kokkos-core-wiki/building.html
 PACKAGEVERSION = 4.6.01
 # 4.7.00 is out
 MODE = seq

@@ -26,18 +26,19 @@ info ::
 	@echo "make cpu  ( configure build )"
 	@echo "make cuda ( configure_cuda build_cuda ) : cuda version in separate install dir"
 	@echo "make sycl ( configure_sycl build_sycl ) : sycl version in separate install dir"
-.PHONY: cpu 
-.PHONY: default_install
 info ::
-	@echo "make default_install : omp only, do make gpu for cuda backend"
+	@echo "make default_install, omp, cpu : omp only, do make gpu for cuda backend"
+.PHONY: default_install
 default_install : cpu
 CMAKEFLAGS = \
-    -D Ginkgo_ENABLE_SERIAL=ON -D Ginkgo_ENABLE_OPENMP=ON 
+    -D GINKGO_BUILD_TESTS=OFF \
+    -D GINKGO_BUILD_OMP=ON
 HASBIN = 1
 ## we need this so that we can override it in jail
 CMAKEPREFIXPATHSET = 1
 SRCPATH = ${PACKAGEROOT}/ginkgo/ginkgo-${PACKAGEVERSION}
-cpu :
+.PHONY: cpu omp
+cpu omp :
 	@make --no-print-directory \
 	    configure build \
 	    INSTALLVARIANT=omp INSTALLEXT=omp
