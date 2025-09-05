@@ -7,7 +7,7 @@
 PACKAGE = DEALII
 ABOUT = Finite Element Library
 URL = https://github.com/dealii/dealii
-PACKAGEVERSION = 9.6.2
+PACKAGEVERSION = 9.7.0
 MODE = mpi
 MODULES = p4est petsc sundials trilinos \
     mkl
@@ -66,6 +66,8 @@ complex :
 info ::
 	@echo "make default_install : real version, there is also complex"
 default_install : real
+# need to make sure we load real/complex petsc
+DEPENDSONCURRENT = petsc
 
 GITREPO = https://github.com/dealii/dealii/archive/v${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.git

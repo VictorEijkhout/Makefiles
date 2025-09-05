@@ -13,7 +13,7 @@ ABOUT = Package for graph and mesh/hypergraph partitioning, graph clustering, an
 URL = https://www.labri.fr/perso/pelegrin/scotch/ \
     https://gitlab.inria.fr/scotch/scotch
 PACKAGEVERSION = 7.0.7
-# 7.0.8 is out
+# 7.0.9 is almost out
 # Packagers are  encouraged to configure SCOTCH  so as to make the  widest use
 # of threads, that is: -DCOMMON_PTHREAD -DSCOTCH_PTHREAD -DSCOTCH_PTHREAD_MPI,
 # and also -DCOMMON_PTHREAD_AFFINITY_LINUX whenever possible.  On Windows-like
@@ -75,7 +75,8 @@ par64 :
 	    MODULENAME=ptscotch 
 info ::
 	@echo "make default_install : sequential version"
-default_install : seq32
+.PHONY: default_install seq
+default_install seq : seq32
 
 ##
 ## download

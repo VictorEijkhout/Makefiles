@@ -1,0 +1,295 @@
+# Boost.Build support for the NVIDIA C/C++ Compiler.
+
+import testing ;
+import generators ;
+import type ;
+import toolset ;
+import feature ;
+import common ;
+import errors ;
+import os ;
+
+local gpu-architectures =
+  compute_10
+  compute_11
+  compute_12
+  compute_13
+  compute_20
+  compute_21
+  compute_30
+  compute_32
+  compute_35
+  compute_37
+  compute_50
+  compute_52
+  compute_53
+  compute_60
+  compute_61
+  compute_62
+  compute_70
+  compute_72
+  sm_10
+  sm_11
+  sm_12
+  sm_13
+  sm_20
+  sm_21
+  sm_30
+  sm_32
+  sm_35
+  sm_37
+  sm_50
+  sm_52
+  sm_53
+  sm_60
+  sm_61
+  sm_62
+  sm_70
+  sm_72
+  ;
+local gpu-codes =
+  compute_10
+  compute_11
+  compute_12
+  compute_13
+  compute_20
+  compute_21
+  compute_30
+  compute_32
+  compute_35
+  compute_37
+  compute_50
+  compute_52
+  compute_53
+  compute_60
+  compute_61
+  compute_62
+  compute_70
+  compute_72
+  sm_10
+  sm_11
+  sm_12
+  sm_13
+  sm_20
+  sm_21
+  sm_30
+  sm_32
+  sm_35
+  sm_37
+  sm_50
+  sm_52
+  sm_53
+  sm_60
+  sm_61
+  sm_62
+  sm_70
+  sm_72
+  ;
+
+if [ MATCH (--debug-configuration) : [ modules.peek : ARGV ] ]
+{
+  .debug-configuration = true ;
+}
+
+feature.extend toolset : nvcc ;
+
+feature.feature gpu-architecture : $(gpu-architectures) : propagated optional ;
+feature.feature gpu-code : $(gpu-codes) : propagated optional ;
+
+type.register CU : cu : CPP ;
+type.register CUH : cuh : HPP ;
+#type.register GPU : gpu : CPP ;
+type.register PTX : ptx : ASM ;
+
+type.set-generated-target-suffix EXE : <toolset>nvcc : "" ;
+type.set-generated-target-suffix OBJ : <toolset>nvcc : o ;
+type.set-generated-target-suffix STATIC_LIB : <toolset>nvcc : a ;
+type.set-generated-target-prefix IMPORT_LIB : <toolset>nvcc : "" ;
+type.set-generated-target-suffix IMPORT_LIB : <toolset>nvcc : a ;
+
+generators.register-linker nvcc.link : OBJ STATIC_LIB IMPORT_LIB : EXE : <toolset>nvcc ;
+generators.register-archiver nvcc.archive : OBJ : STATIC_LIB : <toolset>nvcc ;
+generators.register-c-compiler nvcc.compile.c++ : CPP : OBJ : <toolset>nvcc ;
+generators.register-c-compiler nvcc.compile.c : C : OBJ : <toolset>nvcc ;
+generators.register-standard nvcc.asm : ASM : OBJ : <toolset>nvcc ;
+
+rule init ( version ? : command * : options * )
+{
+  local possible-paths = ;
+  if ! $(command)
+  {
+    local possible-roots = ;
+    if [ os.name ] = NT
+    {
+      local program-files-roots = "C:/Program Files" "C:/Program Files (x86)" ;
+
+      possible-roots = [ GLOB $(program-files-roots)/"NVIDIA GPU Computing Toolkit/CUDA" : "v*" : true ] ;
+    }
+    else if [ os.name ] = MACOSX
+    {
+      possible-roots = [ GLOB "/Developer/NVIDIA" : "CUDA-*" : true ] ;
+    }
+
+    possible-paths = $(possible-roots)/bin ;
+  }
+
+  command = [ common.get-invocation-command nvcc : nvcc : $(command) : $(possible-paths) ] ;
+
+  if $(command)
+  {
+    local output-lines = [ SPLIT_BY_CHARACTERS [ SHELL "\"$(command)\" --version" ] : "\n" ] ;
+
+    local detected-version-components = [ MATCH "([0-9]+\\.[0-9]+), V([0-9]+\\.[0-9]+\\.[0-9]+)" : $(output-lines[4]) ] ;
+    local detected-version = $(detected-version-components[1]) ;
+
+    if ! $(detected-version)
+    {
+      errors.user-error "nvcc: no version detected" ;
+    }
+
+    if $(version)
+    {
+      if $(detected-version) != $(version)
+      {
+        errors.user-error "nvcc: detected version (" $(detected-version) ") does not match desired (" $(version) ")" ;
+      }
+    }
+
+    if $(detected-version)
+    {
+      version = $(detected-version) ;
+    }
+  }
+  else
+  {
+    errors.user-error "nvcc: nvcc not found at" $(command) ;
+  }
+
+  if $(.debug-configuration)
+  {
+    echo "nvcc: supported GPU architectures: " $(gpu-architectures) ;
+    echo "nvcc: supported GPU codes: " $(gpu-codes) ;
+  }
+
+  root = [ common.get-absolute-tool-path $(command[-1]) ] ;
+  root = $(root:P) ;
+
+  local condition = [ common.check-init-parameters nvcc : version $(version) ] ;
+
+  common.handle-options nvcc : $(condition) : $(command) : $(options) ;
+
+  toolset.add-requirements <toolset>nvcc:<testing.launcher>"nvcc --run" ;
+
+  if $(.debug-configuration)
+  {
+    ECHO "nvcc: using compiler" $(version) "at" $(root) ;
+  }
+
+  # Declare flags
+
+  toolset.flags nvcc.link OPTIONS $(condition)/<strip>off : ;
+  toolset.flags nvcc.link OPTIONS $(condition)/<strip>on : ;
+
+  toolset.flags nvcc.compile OPTIONS $(condition)/<debug-symbols>off : ;
+  toolset.flags nvcc.compile OPTIONS $(condition)/<debug-symbols>on : -g -G ;
+
+  toolset.flags nvcc.asm OPTIONS $(condition)/<debug-symbols>on : -g ;
+
+  toolset.flags nvcc.compile OPTIONS $(condition)/<optimization>off : ;
+  toolset.flags nvcc.compile OPTIONS $(condition)/<optimization>speed : -O3 ;
+  toolset.flags nvcc.compile OPTIONS $(condition)/<optimization>space : -O0 ;
+
+  toolset.flags nvcc.compile OPTIONS $(condition)/<profiling>off : ;
+  toolset.flags nvcc.compile OPTIONS $(condition)/<profiling>on : -pg ;
+
+  toolset.flags nvcc.compile OPTIONS $(condition)/<inlining>off : ;
+  toolset.flags nvcc.compile OPTIONS $(condition)/<inlining>on : ;
+  toolset.flags nvcc.compile OPTIONS $(condition)/<inlining>full : ;
+
+  toolset.flags nvcc.compile.c++ OPTIONS $(condition)/<rtti>off : ;
+  toolset.flags nvcc.compile.c++ OPTIONS $(condition)/<rtti>on : ;
+
+  # toolset.flags nvcc.compile.c++ OPTIONS $(condition)/<exceptions>off : --no_exceptions ;
+  # toolset.flags nvcc.compile.c++ OPTIONS $(condition)/<exceptions>on : ;
+
+  toolset.flags nvcc.compile.c++ OPTIONS $(condition)/<exception-handling>off : ;
+  toolset.flags nvcc.compile.c++ OPTIONS $(condition)/<exception-handling>on : ;
+
+  toolset.flags nvcc.compile OPTIONS $(condition)/<warnings>off : -w ;
+  toolset.flags nvcc.compile OPTIONS $(condition)/<warnings>all : ;
+
+  toolset.flags nvcc.compile OPTIONS $(condition)/<warnings-as-errors>off : ;
+  toolset.flags nvcc.compile OPTIONS $(condition)/<warnings-as-errors>on : -Werror ;
+
+  toolset.flags nvcc.link OPTIONS $(condition) : <linkflags> ;
+  toolset.flags nvcc.archive OPTIONS $(condition) : <archiveflags> ;
+  toolset.flags nvcc.compile OPTIONS $(condition) : <compileflags> ;
+
+  toolset.flags nvcc.link GPU_ARCHITECTURE $(condition) : <gpu-architecture> ;
+  toolset.flags nvcc.link GPU_CODE $(condition) : <gpu-code> ;
+  toolset.flags nvcc.archive GPU_ARCHITECTURE $(condition) : <gpu-architecture> ;
+  toolset.flags nvcc.archive GPU_CODE $(condition) : <gpu-code> ;
+  toolset.flags nvcc.compile GPU_ARCHITECTURE $(condition) : <gpu-architecture> ;
+  toolset.flags nvcc.compile GPU_CODE $(condition) : <gpu-code> ;
+  toolset.flags nvcc.asm GPU_ARCHITECTURE $(condition) : <gpu-architecture> ;
+  toolset.flags nvcc.asm GPU_CODE $(condition) : <gpu-code> ;
+
+  toolset.flags nvcc.compile.c OPTIONS $(condition) : <cflags> ;
+  toolset.flags nvcc.compile.c++ OPTIONS $(condition) : <cxxflags> ;
+  toolset.flags nvcc.compile.asm OPTIONS $(condition) : <asmflags> ;
+  toolset.flags nvcc.compile STDHDRS $(condition) : ;
+  toolset.flags nvcc.compile DEFINES $(condition) : <define> ;
+  toolset.flags nvcc.compile UNDEFINES $(condition) : <undef> ;
+  toolset.flags nvcc.compile INCLUDES $(condition) : <include> ;
+
+  toolset.flags nvcc.compile DEFINE_OPTION $(condition) : -D : unchecked ;
+  toolset.flags nvcc.compile UNDEFINE_OPTION $(condition) : -U : unchecked ;
+  toolset.flags nvcc.compile INCLUDE_PATH_OPTION $(condition) : -I : unchecked ;
+  toolset.flags nvcc.compile SYSTEM_INCLUDE_PATH_OPTION $(condition) : -isystem : unchecked ;
+
+  toolset.flags nvcc.link DEFAULTS $(condition) : ;
+  toolset.flags nvcc.compile DEFAULTS $(condition) : ;
+  toolset.flags nvcc.compile.c DEFAULTS $(condition) : ;
+  toolset.flags nvcc.compile.c++ DEFAULTS $(condition) : ;
+  toolset.flags nvcc.asm DEFAULTS $(condition) : ;
+
+  toolset.flags nvcc.link DEFINES $(condition) : <define> ;
+  toolset.flags nvcc.link UNDEFINES $(condition) : <undef> ;
+  # toolset.flags nvcc.link DEFINE_OPTION $(condition) : --config_def= : unchecked ;
+  # toolset.flags nvcc.link UNDEFINE_OPTION $(condition) : --config_undef= : unchecked ;
+  toolset.flags nvcc.link LIBRARY_PATH <library-path> ;
+  toolset.flags nvcc.link FINDLIBS_ST <find-static-library> ;
+  toolset.flags nvcc.link FINDLIBS_SA <find-shared-library> ;
+  toolset.flags nvcc.link LIBRARIES <library-file> ;
+  toolset.flags nvcc.link LIBRARY_PATH_OPTION  : -L : unchecked ;
+  toolset.flags nvcc.link LIBRARY_OPTION  : -l : unchecked ;
+  toolset.flags nvcc.link STDLIBPATH $(condition) : ;
+  toolset.flags nvcc.link RUN_PATH $(condition) : $(root)/bin ;
+}
+
+# @todo put all these options in a variable or a response file.
+# @todo library configuration needs to be configurable
+actions compile.c
+{
+  "$(CONFIG_COMMAND)" $(DEFAULTS) --gpu-architecture=$(GPU_ARCHITECTURE) --gpu-code=$(GPU_CODE) $(OPTIONS) $(DEFINE_OPTION)"$(DEFINES)" $(SYSTEM_INCLUDE_PATH_OPTION)"$(STDHDRS)" $(INCLUDE_PATH_OPTION)"$(INCLUDES)" -c -o "$(<:W)" "$(>:W)"
+}
+
+actions compile.c++
+{
+  "$(CONFIG_COMMAND)" $(DEFAULTS) --gpu-architecture=$(GPU_ARCHITECTURE) --gpu-code=$(GPU_CODE) $(OPTIONS) $(DEFINE_OPTION)"$(DEFINES)" $(INCLUDE_PATH_OPTION)"$(STDHDRS)" $(INCLUDE_PATH_OPTION)"$(INCLUDES)" -c -o "$(<:W)" "$(>:W)"
+}
+
+actions compile.asm
+{
+  "$(CONFIG_COMMAND)" $(DEFAULTS) --gpu-architecture=$(GPU_ARCHITECTURE) --gpu-code=$(GPU_CODE) $(OPTIONS) $(DEFINE_OPTION)"$(DEFINES)" $(INCLUDE_PATH_OPTION)"$(INCLUDES)" $(INCLUDE_PATH_OPTION)"$(STDHDRS)" -c -o "$(<:W)" "$(>:W)"
+}
+
+actions link
+{
+  "$(CONFIG_COMMAND)" $(DEFAULTS) --gpu-architecture=$(GPU_ARCHITECTURE) --gpu-code=$(GPU_CODE) $(OPTIONS) $(LIBRARY_PATH_OPTION)"$(LIBRARY_PATH:W)" $(LIBRARY_PATH_OPTION)"$(STDLIBPATH:W)" $(LIBRARY_OPTION)"$(LIBRARIES:W)" $(LIBRARY_OPTION)"$(STDLIBRARIES:W)" --link -o "$(<:W)" "$(>:W)"
+}
+
+actions together piecemeal archive
+{
+  "$(CONFIG_COMMAND)" $(DEFAULTS) --gpu-architecture=$(GPU_ARCHITECTURE) --gpu-code=$(GPU_CODE) $(OPTIONS) --lib -o "$(<:W)" "$(>:W)"
+}
