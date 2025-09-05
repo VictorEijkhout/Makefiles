@@ -7,8 +7,8 @@
 PACKAGE = GRACKLE
 ABOUT = The Grackle chemistry and cooling library for astrophysical simulations and models.
 URL = https://github.com/grackle-project/grackle
-PACKAGEVERSION = git
-# 3.3.0 does not have cmakelists. Hm.
+PACKAGEVERSION = 3.4.0
+# 3.4.1 announced 
 MODE = seq
 MODULES = hdf5
 

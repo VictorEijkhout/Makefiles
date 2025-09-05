@@ -2,6 +2,8 @@
 ####
 #### Makefile for Libisl installation
 ####
+#### nvidia does not understand -fomit-frame-pointer
+####
 ################################################################
 
 PACKAGE = libisl
@@ -14,7 +16,6 @@ include ${MAKEINCLUDES}/Make.info
 
 PKGCONFIG = lib/pkgconfig
 include ${MAKEINCLUDES}/Make.configure
-HASBIN =
 include ${MAKEINCLUDES}/Make.install
 
 .PHONY: default_install

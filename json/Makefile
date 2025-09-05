@@ -2,6 +2,9 @@
 ####
 #### Makefile for JSON installation
 ####
+#### Nvidia problem:
+#### https://github.com/nlohmann/json/discussions/4899
+####
 ################################################################
 
 PACKAGE = json

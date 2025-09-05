@@ -5,7 +5,7 @@ numladder="\
 export ladderlength=$( echo "${numladder}" | wc -w )
 
 function usage() {
-    echo "Usage: $0 [ -h ] [ -x : setx ] [ -l : list ] [ -t : trace ]"
+    echo "Usage: $0 [ -h ] [ -c compiler ] [ -x : setx ] [ -l : list ] [ -t : trace ]"
     echo "    [ -j nnn (default: ${jcount}) ] "
     echo "    nnn / all"
     echo "where nnn:"
@@ -93,11 +93,13 @@ function module_install {
 ##
 ## Commandline options
 ##
-exclude="rangev3"
+exclude="demangle rangev3"
 while [ $# -gt 0 ] ; do
     if [ "$1" = "-h" ] ; then 
 	usage
 	exit 0
+    elif [ "$1" = "-c" ] ; then 
+	shift && compiler=1; shift
     elif [ "$1" = "-l" ] ; then 
 	list=1; shift
     elif [ "$1" = "-x" ] ; then 

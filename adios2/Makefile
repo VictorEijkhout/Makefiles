@@ -42,6 +42,7 @@ gpu :
 	@make --no-print-directory configure build \
 	  MODULES="${MODULES_BASIC} cuda" INSTALLVARIANT=cuda MODULEVERSIONEXTRA=cuda \
 	  CMAKEFLAGS="${CMAKEFLAGS_BASIC} -D ADIOS2_USE_CUDA:BOOL=ON"
+DEPENDSONCURRENT = phdf5
 
 TGZURL = https://github.com/ornladios/ADIOS2/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
 BOOTSTRAP = sed -i -e /iomanip/a\"\#include <cstdint>\" thirdparty/yaml-cpp/yaml-cpp/src/emitterutils.cpp
