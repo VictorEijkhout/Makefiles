@@ -25,13 +25,13 @@ ifeq "${TACC_SYSTEM}" "vista"
   LAPACKLIB=${TACC_NVPL_LIB}/libnvpl_lapack_lp64_seq.so
 else
   # mkl_intel_lp64;mkl_sequential;mkl_core;iomp5;pthread"
-  BLASLIB=${TACC_MKL_LIB}/libmkl_sequential.so 
-  LAPACKLIB=${TACC_MKL_LIB}/libmkl_intel_lp64.so
+  BLASLIB=${TACC_MKL_LIB}/libmkl_sequential.so ${TACC_MKL_LIB}/libmkl_core.so 
+  LAPACKLIB=${TACC_MKL_LIB}/libmkl_intel_lp64.so ${TACC_MKL_LIB}/libmkl_sequential.so 
 endif
 
 CMAKEFLAGS = -Wno-dev \
-    -D LAPACK_LIBRARIES=${LAPACKLIB} \
-    -D BLAS_LIBRARIES=${BLASLIB}
+    -D LAPACK_LIBRARIES='${LAPACKLIB}' \
+    -D BLAS_LIBRARIES='${BLASLIB}'
 
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild

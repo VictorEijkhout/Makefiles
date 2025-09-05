@@ -5,19 +5,16 @@
 ################################################################
 
 PACKAGE = GINKGO
-ABOUT = C++ Performance Portability Programming Ecosystem
+ABOUT = High-Performance Linear Algebra Library for Manycore Systems
 URL = https://github.com/ginkgo-project/ginkgo
+DOCURL = https://github.com/ginkgo-project/ginkgo/blob/develop/INSTALL.md
 PACKAGEVERSION = 1.10.0
-MODE = seq
+MODE = mpi
 MODULES = 
 MODULE_MINIMUM_VERSION_cuda = 12
 
 include ${MAKEINCLUDES}/Make.info
 
-CMAKE_BASIC_FLAGS = 
-
-## VARSPROCESS = | sed -e 's/lib/lib64/'
-## incompatible with openmp -D Ginkgo_ENABLE_THREADS=ON
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
 DEPENDSON = 
@@ -30,8 +27,13 @@ info ::
 	@echo "make default_install, omp, cpu : omp only, do make gpu for cuda backend"
 .PHONY: default_install
 default_install : cpu
+# disabling anything involving linking
+# https://github.com/ginkgo-project/ginkgo/issues/1928
+LINKEDSTUFF = ON
 CMAKEFLAGS = \
-    -D GINKGO_BUILD_TESTS=OFF \
+    -D GINKGO_BUILD_BENCHMARKS=${LINKEDSTUFF} \
+    -D GINKGO_BUILD_EXAMPLES=${LINKEDSTUFF} \
+    -D GINKGO_BUILD_TESTS=${LINKEDSTUFF} \
     -D GINKGO_BUILD_OMP=ON
 HASBIN = 1
 ## we need this so that we can override it in jail
@@ -63,28 +65,25 @@ COMPUTE = ${COMPUTE_${TACC_SYSTEM}}
 ## CUDA
 ##
 
-.PHONY: cuda gpu configure_cuda 
-gpu cuda : configure_cuda
-	@make --no-print-directory \
-	    build public \
-	    MODULES=cuda DEPENDSON=cuda/12 \
-	    INSTALLVARIANT=cuda INSTALLEXT=cuda \
-	    EXTRAVARS="Ginkgo_ENABLE_CUDA=ON Ginkgo_ARCH_${COMPUTE}=ON Ginkgo_ARCH_${HOST}=ON"
-
-# VOLTA70 ?
-# https://ginkgo.org/ginkgo-core-wiki/get-started/configuration-guide.html
+.PHONY: cuda gpu configure_cuda build_cuda
+gpu cuda : configure_cuda build_cuda
 configure_cuda :
-	@if [ -z "${TACC_CXX}" ] ; then \
-	    echo "No TACC_CXX defined" && exit 1 ; fi 
-	@export NVCC_WRAPPER_DEFAULT_COMPILER=${TACC_CXX} \
-	 && make --no-print-directory configure \
+	@make --no-print-directory configure \
 	    CMAKEFLAGS=" \
-	      -D Ginkgo_ENABLE_SERIAL=ON \
-	      -D Ginkgo_ENABLE_CUDA=ON -D Ginkgo_ENABLE_CUDA_LAMBDA=ON \
-	      -D Ginkgo_ARCH_${COMPUTE}=ON \
+	        ${CMAKEFLAGS} \
+	        -D GINKGO_BUILD_CUDA=ON \
 	      " \
 	    INSTALLVARIANT=cuda INSTALLEXT=cuda \
 	    MODULES=cuda
+build_cuda :
+	@make --no-print-directory \
+	    build public \
+	    CMAKEFLAGS=" \
+	        ${CMAKEFLAGS} \
+	        -D GINKGO_BUILD_CUDA=ON \
+	      " \
+	    MODULES=cuda DEPENDSON=cuda/12 \
+	    INSTALLVARIANT=cuda INSTALLEXT=cuda
 
 ##
 ## SYCL
