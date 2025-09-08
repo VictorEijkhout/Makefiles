@@ -8,8 +8,9 @@ PACKAGE = CANTERA
 ABOUT = 
 PACKAGEVERSION = 3.1.0
 URL = https://github.com/Cantera/cantera
+DOCURL = https://cantera.org/stable/install/index.html
 MODE = seq
-MODULES = boost mkl
+MODULES = boost eigen hdf5 highfive sundials mkl
 
 include ${MAKEINCLUDES}/Make.info
 
@@ -17,6 +18,8 @@ include ${MAKEINCLUDES}/Make.info
 ## CMake
 ##
 
+# something missing
+# https://github.com/Cantera/cantera/issues/1971
 CMAKESUBDIR = interfaces/python_sdist
 
 # Blas / Lapack
@@ -40,6 +43,30 @@ info ::
 	@echo "make default_install : configure build"
 .PHONY: default_install
 default_install : configure build public
+cons_install :
+	@source ${MAKEINCLUDES}/names.sh \
+	 && setnames \
+	    "${PACKAGE}" "${PACKAGEVERSION}" "${PACKAGEBASENAME}" \
+	    "${DOWNLOADPATH}" "${SRCPATH}" \
+	    "${INSTALLPATH}" "${INSTALLROOT}" "${INSTALLEXT}" "${INSTALLVARIANT}" \
+	    "${HOMEDIR}" "${BUILDDIRROOT}" "${MODE}" \
+	    "${PREFIXOPTION}" "${PREFIXEXTRA}" \
+	 && requirenonzero prefixdir && mkdir -p $${prefixdir} && rm -rf $${prefixdir}/* \
+	 && requirenonzero builddir && rm -rf $$builddir && mkdir -p $$builddir \
+	 && requirenonzero logfilesdir \
+	 && echo "logfiles dir: $${logfilesdir}." \
+	 && mkdir -p $${logfilesdir} \
+	 && source ${MAKEINCLUDES}/compilers.sh && setcompilers \
+	 && cp boost-build-nvcc/nvcc.jam $${srcdir}/tools/build/src/tools \
+	 && ( \
+	    cd $${srcdir} \
+	    scons build env_vars=all CC=icx CXX=icpx FORTRAN=ifx blas_lapack_libs=mkl_rt blas_lapack_dir=$(MKLROOT)/lib/intel64 \
+	    ) 2>&1 | tee $$installlog \
+	 && requirenonzero logfilesdir \
+	 && cp $${installlog} $${logfilesdir}/ \
+	 && make --no-print-directory varsmodule \
+	      CMAKEPREFIXPATHSET=1
+# configure build public
 
 ####
 #### Download
