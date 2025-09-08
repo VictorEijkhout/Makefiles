@@ -23,7 +23,7 @@ module load intel/${intelversion}
 export TACC_CC=icx
 export TACC_CXX=icpx
 export TACC_FC=ifx
-module load impi/21.13
+module load impi/21.9
 
 echo "Loaded:"
 module -t list
