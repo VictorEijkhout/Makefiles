@@ -21,9 +21,10 @@ HASBIN = 1
 # include ${MAKEINCLUDES}/Make.cbuild
 
 info ::
-	@echo "make default_install : configure build"
-.PHONY: default_install
-default_install : 
+	@echo "make default_install : build varsmodule public"
+.PHONY: build default_install
+default_install : build varsmodule public
+build ::
 	@source ${MAKEINCLUDES}/names.sh \
 	 && setnames \
 	    "${PACKAGE}" "${PACKAGEVERSION}" "${PACKAGEBASENAME}" \
@@ -38,8 +39,11 @@ default_install :
 	 && mkdir -p $${logfilesdir} \
 	 && source ${MAKEINCLUDES}/compilers.sh && setcompilers \
 	 \
-	 && python -m pip install --user --target "$${prefixdir}" \
+	 && echo "using python3=$$( which python3 )" \
+	 && python3 -m pip install --target "$${prefixdir}" \
 	      scons
+PYTHONPATHADDREL = 1
+include ${MAKEINCLUDES}/Make.vars
 
 TGZURL = https://github.com/SCons/scons/archive/refs/tags/${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download

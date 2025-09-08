@@ -8,7 +8,8 @@ PACKAGE = ncl
 ABOUT = NCAR Command Language
 PACKAGEVERSION = 6.6.2
 PACKAGEVERSION_NODOT = 662
-URL = https://www.ncl.ucar.edu/ https://www.ncl.ucar.edu/Download/build_from_src.shtml
+URL = https://www.ncl.ucar.edu/
+DOCURL = https://www.ncl.ucar.edu/Download/build_from_src.shtml
 MODE = seq
 
 include ${MAKEINCLUDES}/Make.info
@@ -18,8 +19,16 @@ info ::
 .PHONY: system_test
 system_test :
 	@source ${MAKEINCLUDES}/names.sh \
-	 && export MODE=${MODE} && export INSTALLROOT=${INSTALLROOT} \
-	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" "${VARIANT}" "${MODULENAME}" "${MODE}" \
+	 && setnames \
+	    "${PACKAGE}" "${PACKAGEVERSION}" "${PACKAGEBASENAME}" \
+	    "${DOWNLOADPATH}" "${SRCPATH}" \
+	    "${INSTALLPATH}" "${INSTALLROOT}" "${INSTALLEXT}" "${INSTALLVARIANT}" \
+	    "${HOMEDIR}" "${BUILDDIRROOT}" "${MODE}" \
+	    "${PREFIXOPTION}" "${PREFIXEXTRA}" \
+	 && requirenonzero prefixdir && mkdir -p $${prefixdir} && rm -rf $${prefixdir}/* \
+	 && requirenonzero builddir && rm -rf $$builddir && mkdir -p $$builddir \
+	 && requirenonzero logfilesdir \
+	 \
 	 && cd $${srcdir}/config &&  make -f Makefile.ini \
 	 && ./ymake -config `pwd` 2>&1 | tee parse \
 	 && if [ $$( cat parse | wc -l ) -gt 0 ] ; then \
@@ -31,30 +40,48 @@ system_test :
 .PHONY: configure build
 configure : system_test
 	@source ${MAKEINCLUDES}/names.sh \
-	 && export MODE=${MODE} && export INSTALLROOT=${INSTALLROOT} \
-	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" "${VARIANT}" "${MODULENAME}" "${MODE}" \
+	 && setnames \
+	    "${PACKAGE}" "${PACKAGEVERSION}" "${PACKAGEBASENAME}" \
+	    "${DOWNLOADPATH}" "${SRCPATH}" \
+	    "${INSTALLPATH}" "${INSTALLROOT}" "${INSTALLEXT}" "${INSTALLVARIANT}" \
+	    "${HOMEDIR}" "${BUILDDIRROOT}" "${MODE}" \
+	    "${PREFIXOPTION}" "${PREFIXEXTRA}" \
+	 && requirenonzero prefixdir && mkdir -p $${prefixdir} && rm -rf $${prefixdir}/* \
+	 && requirenonzero builddir && rm -rf $$builddir && mkdir -p $$builddir \
+	 && requirenonzero logfilesdir \
 	 && source ${MAKEINCLUDES}/compilers.sh && setcompilers \
+	 \
 	 && ( \
 	    cat Makefile.template \
-	            | sed -e 's?theinstalldir?'$${installdir}'?' \
+	            | sed -e 's?theinstalldir?'$${prefixdir}'?' \
 	            > $${srcdir}/common/Makefile \
-	     && cd $${srcdir} \
+	     && cd $${srcdir}/common \
 	     && echo && echo "==== Using configuration:" && make Info \
 	    ) 2>&1 | tee $$configurelog
 build :
 	@source ${MAKEINCLUDES}/names.sh \
-	 && export MODE=${MODE} && export INSTALLROOT=${INSTALLROOT} \
-	 && setdirlognames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" "${PACKAGEBASENAME}" "${VARIANT}" "${MODULENAME}" "${MODE}" \
+	 && setnames \
+	    "${PACKAGE}" "${PACKAGEVERSION}" "${PACKAGEBASENAME}" \
+	    "${DOWNLOADPATH}" "${SRCPATH}" \
+	    "${INSTALLPATH}" "${INSTALLROOT}" "${INSTALLEXT}" "${INSTALLVARIANT}" \
+	    "${HOMEDIR}" "${BUILDDIRROOT}" "${MODE}" \
+	    "${PREFIXOPTION}" "${PREFIXEXTRA}" \
+	 && requirenonzero prefixdir && mkdir -p $${prefixdir} && rm -rf $${prefixdir}/* \
+	 && requirenonzero builddir && rm -rf $$builddir && mkdir -p $$builddir \
+	 && requirenonzero logfilesdir \
 	 && source ${MAKEINCLUDES}/compilers.sh && setcompilers \
 	 \
-	 && mkdir -p $${installdir} \
+	 && mkdir -p $${prefixdir} \
 	 && ( \
-	    cd $${srcdir} \
-	     && echo && echo "==== Starting installation with:" \
-	     && make Info && echo \
+	    cd $${srcdir}/common \
+	     && echo && echo "==== Starting installation into $${prefixdir} with:" \
+	     && make Info \
+	          INSTALLDIR=$${prefixdir} \
+	     && echo \
 	     && make Makefiles clean includes depend all install \
+	          INSTALLDIR=$${prefixdir} \
 	    ) 2>&1 | tee $${installlog} \
-	 && echo && echo "Installation finished in: $$installdir" \
+	 && echo && echo "Installation finished in: $$prefixdir" \
 	 && echo "(see: $$installlog)" && echo
 
 NOLIB = 1
