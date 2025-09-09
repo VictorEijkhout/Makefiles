@@ -10,7 +10,8 @@ PACKAGEVERSION = 3.1.0
 URL = https://github.com/Cantera/cantera
 DOCURL = https://cantera.org/stable/install/index.html
 MODE = seq
-MODULES = boost eigen hdf5 highfive sundials mkl
+MODULES = boost eigen hdf5 highfive sundials yamlcpp \
+    mkl
 
 include ${MAKEINCLUDES}/Make.info
 
@@ -18,9 +19,9 @@ include ${MAKEINCLUDES}/Make.info
 ## CMake
 ##
 
-# something missing
+# CMake build seems not supoprted
 # https://github.com/Cantera/cantera/issues/1971
-CMAKESUBDIR = interfaces/python_sdist
+# CMAKESUBDIR = interfaces/python_sdist
 
 # Blas / Lapack
 ifeq "${TACC_SYSTEM}" "vista"
@@ -42,8 +43,9 @@ include ${MAKEINCLUDES}/Make.cbuild
 info ::
 	@echo "make default_install : configure build"
 .PHONY: default_install
-default_install : configure build public
-cons_install :
+SCONS_EXTRA_INCS = ${TACC_EIGEN_INC}:${TACC_FMTLIB_INC}:${TACC_YAMLCPP_INC}
+SCONS_EXTRA_LIBS = ${TACC_EIGEN_LIB}:${TACC_FMTLIB_LIB}:${TACC_YAMLCPP_LIB}
+default_install : modules
 	@source ${MAKEINCLUDES}/names.sh \
 	 && setnames \
 	    "${PACKAGE}" "${PACKAGEVERSION}" "${PACKAGEBASENAME}" \
@@ -57,16 +59,30 @@ cons_install :
 	 && echo "logfiles dir: $${logfilesdir}." \
 	 && mkdir -p $${logfilesdir} \
 	 && source ${MAKEINCLUDES}/compilers.sh && setcompilers \
-	 && cp boost-build-nvcc/nvcc.jam $${srcdir}/tools/build/src/tools \
 	 && ( \
 	    cd $${srcdir} \
-	    scons build env_vars=all CC=icx CXX=icpx FORTRAN=ifx blas_lapack_libs=mkl_rt blas_lapack_dir=$(MKLROOT)/lib/intel64 \
+	     && echo "Cons install" \
+	     && scons build env_vars=all \
+	          CC=icx CXX=icpx FORTRAN=ifx \
+	          system_fmt='y' system_yamlcpp='y' \
+	          extra_inc_dirs=${SCONS_EXTRA_INCS} \
+	          extra_lib_dirs=${SCONS_EXTRA_LIBS} \
+	          blas_lapack_libs=mkl_rt blas_lapack_dir=$(MKLROOT)/lib/intel64 \
 	    ) 2>&1 | tee $$installlog \
 	 && requirenonzero logfilesdir \
 	 && cp $${installlog} $${logfilesdir}/ \
 	 && make --no-print-directory varsmodule \
-	      CMAKEPREFIXPATHSET=1
-# configure build public
+.PHONY: configlog
+configlog :
+	@source ${MAKEINCLUDES}/names.sh \
+	 && setnames \
+	    "${PACKAGE}" "${PACKAGEVERSION}" "${PACKAGEBASENAME}" \
+	    "${DOWNLOADPATH}" "${SRCPATH}" \
+	    "${INSTALLPATH}" "${INSTALLROOT}" "${INSTALLEXT}" "${INSTALLVARIANT}" \
+	    "${HOMEDIR}" "${BUILDDIRROOT}" "${MODE}" \
+	    "${PREFIXOPTION}" "${PREFIXEXTRA}" \
+	 && ls $${srcdir}/config.log
+
 
 ####
 #### Download
