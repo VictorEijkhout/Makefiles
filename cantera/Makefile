@@ -10,7 +10,7 @@ PACKAGEVERSION = 3.1.0
 URL = https://github.com/Cantera/cantera
 DOCURL = https://cantera.org/stable/install/index.html
 MODE = seq
-MODULES = boost eigen hdf5 highfive sundials yamlcpp \
+MODULES = boost eigen fmtlib hdf5 highfive sundials yamlcpp \
     mkl
 
 include ${MAKEINCLUDES}/Make.info
@@ -43,8 +43,8 @@ include ${MAKEINCLUDES}/Make.cbuild
 info ::
 	@echo "make default_install : configure build"
 .PHONY: default_install
-SCONS_EXTRA_INCS = ${TACC_EIGEN_INC}:${TACC_FMTLIB_INC}:${TACC_YAMLCPP_INC}
-SCONS_EXTRA_LIBS = ${TACC_EIGEN_LIB}:${TACC_FMTLIB_LIB}:${TACC_YAMLCPP_LIB}
+SCONS_EXTRA_INCS = ${TACC_EIGEN_INC}:${TACC_FMTLIB_INC}:${TACC_HIGHFIVEINC}:${TACC_SUNDIALS_INC}:${TACC_YAMLCPP_INC}
+SCONS_EXTRA_LIBS = ${TACC_EIGEN_LIB}:${TACC_FMTLIB_LIB}:${TACC_HIGHFIVELIB}:${TACC_SUNDIALS_LIB}:${TACC_YAMLCPP_LIB}
 default_install : modules
 	@source ${MAKEINCLUDES}/names.sh \
 	 && setnames \
@@ -64,9 +64,14 @@ default_install : modules
 	     && echo "Cons install" \
 	     && scons build env_vars=all \
 	          CC=icx CXX=icpx FORTRAN=ifx \
-	          system_fmt='y' system_yamlcpp='y' \
+	          system_eigen='y' system_fmt='y' system_highfive='y' \
+	          system_sundials='y' system_yamlcpp='y' \
 	          extra_inc_dirs=${SCONS_EXTRA_INCS} \
 	          extra_lib_dirs=${SCONS_EXTRA_LIBS} \
+	          boost_inc_dir=${TACC_BOOST_INC} \
+	          \
+	          hdf_support='y' hdf_include=${TACC_HDF5_INC} hdf_libdir=${TACC_HDF5_LIB} \
+	          googletest='none' \
 	          blas_lapack_libs=mkl_rt blas_lapack_dir=$(MKLROOT)/lib/intel64 \
 	    ) 2>&1 | tee $$installlog \
 	 && requirenonzero logfilesdir \
