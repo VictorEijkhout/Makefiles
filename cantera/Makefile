@@ -2,6 +2,9 @@
 ####
 #### Makefile for CANTERA installation
 ####
+#### user group:
+#### https://groups.google.com/g/cantera-users?pli=1
+####
 ################################################################
 
 PACKAGE = CANTERA
@@ -43,9 +46,11 @@ include ${MAKEINCLUDES}/Make.cbuild
 info ::
 	@echo "make default_install : configure build"
 .PHONY: default_install
-SCONS_EXTRA_INCS = ${TACC_EIGEN_INC}:${TACC_FMTLIB_INC}:${TACC_HIGHFIVEINC}:${TACC_SUNDIALS_INC}:${TACC_YAMLCPP_INC}
-SCONS_EXTRA_LIBS = ${TACC_EIGEN_LIB}:${TACC_FMTLIB_LIB}:${TACC_HIGHFIVELIB}:${TACC_SUNDIALS_LIB}:${TACC_YAMLCPP_LIB}
-default_install : modules
+SCONS_EXTRA_INCS = ${TACC_EIGEN_INC}:${TACC_FMTLIB_INC}:${TACC_HIGHFIVE_INC}:${TACC_SUNDIALS_INC}:${TACC_YAMLCPP_INC}
+SCONS_EXTRA_LIBS = ${TACC_EIGEN_LIB}:${TACC_FMTLIB_LIB}:${TACC_HIGHFIVE_LIB}:${TACC_SUNDIALS_LIB}:${TACC_YAMLCPP_LIB}
+default_install : modules scons_config scons_build
+.PHONY: scons_config scons_build
+scons_config:
 	@source ${MAKEINCLUDES}/names.sh \
 	 && setnames \
 	    "${PACKAGE}" "${PACKAGEVERSION}" "${PACKAGEBASENAME}" \
@@ -75,7 +80,8 @@ default_install : modules
 	          blas_lapack_libs=mkl_rt blas_lapack_dir=$(MKLROOT)/lib/intel64 \
 	    ) 2>&1 | tee $$installlog \
 	 && requirenonzero logfilesdir \
-	 && cp $${installlog} $${logfilesdir}/ \
+	 && cp $${installlog} $${logfilesdir}/
+scons_build :
 	 && make --no-print-directory varsmodule \
 .PHONY: configlog
 configlog :
