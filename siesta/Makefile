@@ -50,8 +50,8 @@ CMAKEFLAGS =  \
 ifdef TACC_SCALAPACK_DIR
   CMAKEFLAGS += \
     -D SCALAPACK_LIBRARY_DIR=${TACC_SCALAPACK_LIB} \
-    -D SCALAPACK_LIBRARY='-L${TACC_SCALAPACK_LIB} -lscalapack -lmkl_gf_lp64 -lmkl_sequential -lmkl_core -lpthread -lm -ldl' \
-    -D LAPACK_LIBRARY='-L${TACC_MKL_LIB} -lmkl_gf_lp64 -lmkl_sequential -lmkl_core -lpthread -lm -ldl'
+    -D SCALAPACK_LIBRARY='-L${TACC_SCALAPACK_LIB} -lscalapack -lmkl_intel_lp64 -lmkl_sequential -lmkl_core -lpthread -lm -ldl' \
+    -D LAPACK_LIBRARY='-L${TACC_MKL_LIB} -lmkl_intel_lp64 -lmkl_sequential -lmkl_core -lpthread -lm -ldl'
 
 else ifdef TACC_MKL_DIR
   CMAKEFLAGS += \
