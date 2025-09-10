@@ -8,7 +8,7 @@
 ################################################################
 
 PACKAGE = CANTERA
-ABOUT = 
+ABOUT = Chemical kinetics, thermodynamics, and transport tool suite
 PACKAGEVERSION = 3.1.0
 URL = https://github.com/Cantera/cantera
 DOCURL = https://cantera.org/stable/install/index.html
@@ -24,7 +24,6 @@ include ${MAKEINCLUDES}/Make.info
 
 # CMake build seems not supoprted
 # https://github.com/Cantera/cantera/issues/1971
-# CMAKESUBDIR = interfaces/python_sdist
 
 # Blas / Lapack
 ifeq "${TACC_SYSTEM}" "vista"
@@ -36,12 +35,8 @@ else
   LAPACKLIB=${TACC_MKL_LIB}/libmkl_intel_lp64.so ${TACC_MKL_LIB}/libmkl_sequential.so 
 endif
 
-CMAKEFLAGS = -Wno-dev \
-    -D LAPACK_LIBRARIES='${LAPACKLIB}' \
-    -D BLAS_LIBRARIES='${BLASLIB}'
-
-include ${MAKEINCLUDES}/Make.cmake
-include ${MAKEINCLUDES}/Make.cbuild
+# include ${MAKEINCLUDES}/Make.cmake
+# include ${MAKEINCLUDES}/Make.cbuild
 
 info ::
 	@echo "make default_install : configure build"
@@ -66,9 +61,9 @@ scons_config:
 	 && source ${MAKEINCLUDES}/compilers.sh && setcompilers \
 	 && ( \
 	    cd $${srcdir} \
-	     && echo "Cons install" \
+	     && echo "Cons build" \
 	     && scons build env_vars=all \
-	          CC=icx CXX=icpx FORTRAN=ifx \
+	          CC=icx CXX=icpx FORTRAN=ifx prefix=$${prefixdir} \
 	          system_eigen='y' system_fmt='y' system_highfive='y' \
 	          system_sundials='y' system_yamlcpp='y' \
 	          extra_inc_dirs=${SCONS_EXTRA_INCS} \
@@ -82,7 +77,28 @@ scons_config:
 	 && requirenonzero logfilesdir \
 	 && cp $${installlog} $${logfilesdir}/
 scons_build :
-	 && make --no-print-directory varsmodule \
+	@source ${MAKEINCLUDES}/names.sh \
+	 && setnames \
+	    "${PACKAGE}" "${PACKAGEVERSION}" "${PACKAGEBASENAME}" \
+	    "${DOWNLOADPATH}" "${SRCPATH}" \
+	    "${INSTALLPATH}" "${INSTALLROOT}" "${INSTALLEXT}" "${INSTALLVARIANT}" \
+	    "${HOMEDIR}" "${BUILDDIRROOT}" "${MODE}" \
+	    "${PREFIXOPTION}" "${PREFIXEXTRA}" \
+	 && requirenonzero prefixdir && mkdir -p $${prefixdir} && rm -rf $${prefixdir}/* \
+	 && requirenonzero builddir && rm -rf $$builddir && mkdir -p $$builddir \
+	 && requirenonzero logfilesdir \
+	 && echo "logfiles dir: $${logfilesdir}." \
+	 && mkdir -p $${logfilesdir} \
+	 && source ${MAKEINCLUDES}/compilers.sh && setcompilers \
+	 && ( \
+	    cd $${srcdir} \
+	     && echo "Cons install" \
+	     && scons install \
+	    ) \
+	 && make --no-print-directory varsmodule
+include ${MAKEINCLUDES}/Make.vars
+HASBIN = 1
+PKGCONFIGLIB = pkgconfiglib
 .PHONY: configlog
 configlog :
 	@source ${MAKEINCLUDES}/names.sh \
