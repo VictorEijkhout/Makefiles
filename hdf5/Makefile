@@ -64,6 +64,8 @@ CMAKEFLAGS = \
   -D HDF5_ENABLE_PARALLEL:BOOL=${HDF5PARALLEL}
 ifeq "${TACC_FAMILY_COMPILER}" "gcc"
   CMAKEFLAGS += -DCMAKE_EXE_LINKER_FLAGS='-lpthread -lgfortran'
+else
+  CMAKEFLAGS += -DCMAKE_EXE_LINKER_FLAGS='-lpthread'
 endif
 
 include ${MAKEINCLUDES}/Make.cmake
