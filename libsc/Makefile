@@ -1,18 +1,18 @@
 ################################################################
 ####
-#### Makefile for P4est installation
+#### Makefile for Libsc installation
 ####
 #### This is needed for p4est, but should be included
 ####
 ################################################################
 
-PACKAGE = p4est
+PACKAGE = libsc
 ABOUT = The "sc" auxiliary library
 URL = https://github.com/cburstedde/libsc
 PACKAGEVERSION = 2.8.7
 SKIPPACKAGE = 1
 
-MODE = mpi
+MODE = seq
 MODULES = 
 
 include ${MAKEINCLUDES}/Make.info

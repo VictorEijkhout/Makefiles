@@ -8,6 +8,7 @@ PACKAGE = DEALII
 ABOUT = Finite Element Library
 URL = https://github.com/dealii/dealii
 PACKAGEVERSION = 9.7.0
+# 9.7.1
 MODE = mpi
 MODULES = p4est petsc sundials trilinos \
     mkl
