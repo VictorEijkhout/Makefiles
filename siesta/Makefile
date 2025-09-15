@@ -14,7 +14,7 @@
 PACKAGE = siesta
 ABOUT = A first-principles materials simulation code using DFT
 URL = https://siesta-project.org/siesta/index.html \
-    https://gitlab.com/siesta-project/siesta/-/releases
+    https://gitlab.com/siesta-project/siesta
 ## see below if this ever reaches 5.4
 PACKAGEVERSION = 5.4.0
 
@@ -79,7 +79,7 @@ endif
 # endif
 
 HASBIN = 1
-CPTOINSTALLDIR = Examples
+CPTOINSTALLDIR = Examples Tests
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
 info ::
