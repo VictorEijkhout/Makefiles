@@ -13,7 +13,7 @@ PACKAGEVERSION = 3.1.0
 URL = https://github.com/Cantera/cantera
 DOCURL = https://cantera.org/stable/install/index.html
 MODE = seq
-MODULES = boost eigen fmtlib hdf5 highfive sundials yamlcpp \
+MODULES = boost eigen fmtlib hdf5 highfive ssundials yamlcpp \
     mkl
 
 include ${MAKEINCLUDES}/Make.info

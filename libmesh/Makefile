@@ -12,7 +12,7 @@ URL = http://libmesh.github.io/ \
     https://github.com/libMesh/libmesh
 PACKAGEVERSION = 1.8.0
 PACKAGEVERSIONDOWNLOAD = 1.8.0-rc2
-# 1.7.6
+# 1.8.2
 ## git
 
 MODE = mpi
