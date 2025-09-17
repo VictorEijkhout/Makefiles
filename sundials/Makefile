@@ -5,9 +5,10 @@
 ################################################################
 
 PACKAGE = SUNDIALS
-ABOUT = SUite of Nonlinear and DIfferential/ALgebraic equation Solvers.
+ABOUT = SUite of Nonlinear and DIfferential/ALgebraic equation Solvers
 URL = https://computing.llnl.gov/projects/sundials \
-    https://github.com/LLNL/sundials \
+    https://github.com/LLNL/sundials
+DOCURL = \
     https://sundials.readthedocs.io/en/latest/sundials/Install_link.html#installation-cmake
 PACKAGEVERSION = 7.4.0
 MODE = mpi
@@ -30,7 +31,8 @@ seq :
 	@make --no-print-directory configure build \
 	    JCOUNT=${JCOUNT} PACKAGEVERSION=${PACKAGEVERSION} \
 	    MODE=seq PARALLEL=OFF \
-	    MODULENAME=ssundials MODULENAMEALT=sundials
+	    MODULENAME=ssundials MODULENAMEALT=sundials \
+	    ABOUT="${ABOUT}, sequential version"
 
 HASBIN = 1
 
