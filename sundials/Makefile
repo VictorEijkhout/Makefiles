@@ -34,8 +34,6 @@ seq :
 	    MODULENAME=ssundials MODULENAMEALT=sundials \
 	    ABOUT="${ABOUT}, sequential version"
 
-HASBIN = 1
-
 TGZURL = https://github.com/LLNL/sundials/releases/download/v${PACKAGEVERSION}/sundials-${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 include ${MAKEINCLUDES}/Make.clean
