@@ -7,7 +7,8 @@
 PACKAGE = DEALII
 ABOUT = Finite Element Library
 URL = https://github.com/dealii/dealii
-PACKAGEVERSION = 9.6.2
+PACKAGEVERSION = 9.7.0
+# 9.7.1
 MODE = mpi
 MODULES = p4est petsc sundials trilinos \
     mkl
@@ -47,6 +48,7 @@ endif
 
 ## was this always wrong or did it go away? PKGCONFIG = lib/pkgconfig
 CMAKEPREFIXPATHSET = 1
+CPTOINSTALLDIR = 1
 # https://github.com/dealii/dealii/issues/18254
 CMAKEBUILDTYPE = DebugRelease
 include ${MAKEINCLUDES}/Make.cmake
@@ -66,6 +68,8 @@ complex :
 info ::
 	@echo "make default_install : real version, there is also complex"
 default_install : real
+# need to make sure we load real/complex petsc
+DEPENDSONCURRENT = petsc
 
 GITREPO = https://github.com/dealii/dealii/archive/v${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.git

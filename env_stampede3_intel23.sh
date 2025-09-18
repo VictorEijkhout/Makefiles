@@ -20,10 +20,10 @@ intelversion=23.1
 echo "loading intel ${intelversion}"
 
 module load intel/${intelversion}
-export TACC_CC=icx
-export TACC_CXX=icpx
-export TACC_FC=ifx
-module load impi/21.13
+export TACC_CC=icc
+export TACC_CXX=icpc
+export TACC_FC=ifort
+module load impi/21.9
 
 echo "Loaded:"
 module -t list

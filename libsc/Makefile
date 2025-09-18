@@ -1,23 +1,27 @@
 ################################################################
 ####
-#### Makefile for JSON installation
+#### Makefile for Libsc installation
 ####
-#### Nvidia problem:
-#### https://github.com/nlohmann/json/discussions/4899
+#### This is needed for p4est, but should be included
 ####
 ################################################################
 
-PACKAGE = json
-ABOUT = JSON for Modern C++
-PACKAGEVERSION = 3.12.0
-URL = https://github.com/nlohmann/json
+PACKAGE = libsc
+ABOUT = The "sc" auxiliary library
+URL = https://github.com/cburstedde/libsc
+PACKAGEVERSION = 2.8.7
+SKIPPACKAGE = 1
+
 MODE = seq
+MODULES = 
 
 include ${MAKEINCLUDES}/Make.info
 
-PKGCONFIG = share/pkgconfig
+##
+## Cmake
+##
+CMAKEFLAGS =
 include ${MAKEINCLUDES}/Make.cmake
-NOLIB = 1
 include ${MAKEINCLUDES}/Make.cbuild
 
 info ::
@@ -25,6 +29,8 @@ info ::
 .PHONY: default_install
 default_install : configure build
 
-TGZURL = https://github.com/nlohmann/json/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
+##
+## download
+##
+TGZURL = https://github.com/cburstedde/libsc/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
-

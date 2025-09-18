@@ -7,15 +7,11 @@
 PACKAGE = entity
 ABOUT = New generation astrophysical plasma simulation code with CPU/GPU portability
 URL = https://github.com/entity-toolkit/entity
-# I'm assuming issue:
-# https://github.com/entity-toolkit/entity/issues/129
-# will be resolved in a 1.2.1 release
-# 1.2.0 needs the exctra handling of the bin directory
 PACKAGEVERSION = 1.2.1
-# git
+# 1.2.3
 
 MODE = mpi
-MODULES_BASIC = adios2 phdf5
+MODULES_BASIC = kokkos adios2 phdf5
 MODULES = ${MODULES_BASIC}
 
 include ${MAKEINCLUDES}/Make.info
@@ -36,23 +32,12 @@ info ::
 	@echo "make default_install : cpu, also gpu"
 .PHONY: default_install cpu gpu
 default_install : cpu
-#NOINSTALL = 1
 HASBIN = 1
 NOINC = 1
 NOLIB = 1
 cpu :
 	@export HDF5_ROOT=${TACC_PHDF5_DIR} \
 	 && ${MAKE} --no-print-directory configure build 
-oldcpu :
-	@source ${MAKEINCLUDES}/names.sh \
-	 && setnames \
-	    "${PACKAGE}" "${PACKAGEVERSION}" "${PACKAGEBASENAME}" \
-	    "${DOWNLOADPATH}" "${SRCPATH}" \
-	    "${INSTALLPATH}" "${INSTALLROOT}" "${INSTALLEXT}" "${INSTALLVARIANT}" \
-	    "${HOMEDIR}" "${BUILDDIRROOT}" "${MODE}" \
-	    "${PREFIXOPTION}" "${PREFIXEXTRA}" \
-	 && mkdir -p $${prefixdir}/bin \
-	 && cp $${builddir}/src/entity.xc $${prefixdir}/bin
 gpu :
 	@export HDF5_ROOT=${TACC_PHDF5_DIR} \
 	 && export NVCC_APPEND_FLAGS='-allow-unsupported-compiler' \

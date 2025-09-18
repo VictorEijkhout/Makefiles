@@ -7,7 +7,7 @@
 PACKAGE = PETSC
 ABOUT = Portable, Extensible Toolkit for Scientific Computation
 URL = https://petsc.org/release/install/download/
-PACKAGEVERSION = 3.23.4
+PACKAGEVERSION = 3.23.6
 LOADVERSION = 3.23
 MODE = mpi
 
@@ -48,7 +48,9 @@ else
   BLAS_FLAGS=--with-blas-lapack-dir=${TACC_MKL_DIR}
 endif
 
-DOWNLOADCMAKE = --download-cmake
+DOWNLOADCMAKE =
+## THIS IS SLOW. ONLY DO WHEN NEEDED
+## --download-cmake
 ## --with-cmake=1 --with-cmake-dir=${TACC_CMAKE_DIR}
 ## 
 
@@ -206,6 +208,11 @@ default_install :: modules
 	                  --with-kokkos=1 --download-kokkos=1 --with-kokkos-kernels=1 --download-kokkos-kernels=1 \
 	                  \" \
 	          ; else echo --with-cudac=0 ; fi ` \
+	        `if [ ${KOKKOS} -eq 1 ] ; then \
+	            echo \"\
+	                  --with-kokkos=1 --download-kokkos=1 --with-kokkos-kernels=1 --download-kokkos-kernels=1 \
+	                  \" \
+	          ; else echo --with-kokkos=0 ; fi` \
 	        "${BLAS_FLAGS}" \
 i	        $${package_options} $${param_settings} \
 	        " \
@@ -364,7 +371,6 @@ biginstall :
 	   && case $${ext} in \
 	        ( *complex* ) \
 	                echo " .. disable Hypre, Metis, Mumps because complex" \
-	                 && HYPRE=0 \
 	      ;; esac \
 	   \
 	   && if [ "$${METIS}" = "0" ] ; then PARMETIS=0 && PTSCOTCH=0 ; fi \

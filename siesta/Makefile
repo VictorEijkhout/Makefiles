@@ -14,9 +14,9 @@
 PACKAGE = siesta
 ABOUT = A first-principles materials simulation code using DFT
 URL = https://siesta-project.org/siesta/index.html \
-    https://gitlab.com/siesta-project/siesta/-/releases
+    https://gitlab.com/siesta-project/siesta
 ## see below if this ever reaches 5.4
-PACKAGEVERSION = 5.4.0
+PACKAGEVERSION = 5.4.1
 
 MODE = mpi
 MODULES = fftw3 parallelnetcdf \
@@ -50,13 +50,13 @@ CMAKEFLAGS =  \
 ifdef TACC_SCALAPACK_DIR
   CMAKEFLAGS += \
     -D SCALAPACK_LIBRARY_DIR=${TACC_SCALAPACK_LIB} \
-    -D SCALAPACK_LIBRARY='-L${TACC_SCALAPACK_LIB} -lscalapack -lmkl_gf_lp64 -lmkl_sequential -lmkl_core -lpthread -lm -ldl' \
-    -D LAPACK_LIBRARY='-L${TACC_MKL_LIB} -lmkl_gf_lp64 -lmkl_sequential -lmkl_core -lpthread -lm -ldl'
+    -D SCALAPACK_LIBRARY='-L${TACC_SCALAPACK_LIB} -lscalapack -lmkl_intel_lp64 -lmkl_sequential -lmkl_core -lpthread -lm -ldl' \
+    -D LAPACK_LIBRARY='-L${TACC_MKL_LIB} -lmkl_intel_lp64 -lmkl_sequential -lmkl_core -lpthread -lm -ldl'
 
 else ifdef TACC_MKL_DIR
   CMAKEFLAGS += \
-    -D LAPACK_LIBRARY='-L${TACC_MKL_LIB} -lmkl_gf_lp64 -lmkl_sequential -lmkl_core -lpthread -lm -ldl' \
-    -D SCALAPACK_LIBRARY='-L${TACC_MKL_LIB} -lmkl_scalapack_lp64 -Wl,--start-group -lmkl_gf_lp64 -lmkl_sequential -lmkl_core -lmkl_blacs_intelmpi_lp64 -Wl,--end-group -lpthread -lm -ldl'
+    -D LAPACK_LIBRARY='-L${TACC_MKL_LIB} -lmkl_sequential -lmkl_core -lpthread -lm -ldl' \
+    -D SCALAPACK_LIBRARY='-L${TACC_MKL_LIB} -lmkl_scalapack_lp64 -Wl,--start-group -lmkl_sequential -lmkl_core -lmkl_blacs_intelmpi_lp64 -Wl,--end-group -lpthread -lm -ldl'
 
 else ifdef TACC_NVPL_DIR
   CMAKEFLAGS += \
@@ -79,7 +79,7 @@ endif
 # endif
 
 HASBIN = 1
-CPTOINSTALLDIR = Examples
+CPTOINSTALLDIR = Examples Tests
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
 info ::

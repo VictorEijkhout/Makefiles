@@ -17,9 +17,15 @@
 
 PACKAGE = metis
 ABOUT = CMake enhanced Karypis METIS library
-PACKAGEVERSION = 5.2.1.1
-## 5.1.0.3
-URL = https://github.com/scivision/METIS
+URL = https://github.com/scivision/METIS/
+
+# PACKAGEVERSION = 5.2.1.2
+# still problems with 5.2.1.2:
+## https://github.com/scivision/METIS/issues/8
+
+PACKAGEVERSION=git
+GITDATE=20250821
+
 MODE = seq
 MODULES = 
 
@@ -32,11 +38,16 @@ WIDTH=32
 # 3. copy-dt-needed-entries because 
 #    build-5.2.1.1-clx-gcc13.2-impi21.9.0-i32/_deps/gklib-build/libGKlib.so
 #    see https://stackoverflow.com/a/55086637/2044454
+ifeq "${TACC_FAMILY_COMPILER}" "nvidia"
+  EXTRA_C_FLAGS = -D_POSIX_C_SOURCE=200809L
+else
+  EXTRA_C_FLAGS = -D_POSIX_C_SOURCE=200809L -Wl,--copy-dt-needed-entries
+endif
 CMAKEFLAGS = \
     -D UNIX=ON \
     -D BUILD_TESTING=OFF \
     -D IDXTYPEWIDTH=${WIDTH} -D REALTYPEWIDTH=${WIDTH} \
-    -D CMAKE_C_FLAGS='-D_POSIX_C_SOURCE=200809L -Wl,--copy-dt-needed-entries'
+    -D CMAKE_C_FLAGS='${EXTRA_C_FLAGS}'
 include ${MAKEINCLUDES}/Make.cbuild
 
 .PHONY: default_install i32 i64 i64-configure i64-build
@@ -49,8 +60,6 @@ i32 :
 	    configure build public \
 	    INSTALLVARIANT=i32 
 i64 : i64-configure i64-build
-# stupid post-processing:
-# https://github.com/scivision/METIS/issues/7
 i64-configure :
 	@make --no-print-directory \
 	    configure \
@@ -61,17 +70,22 @@ i64-build :
 	    build public \
 	    WIDTH=64 \
 	    INSTALLVARIANT=i64 MODULEVERSIONEXTRA=i64
+# stupid post-processing is solved in the 5.2.1.2 release:
+# https://github.com/scivision/METIS/issues/7
 i64-fix :
 	/bin/true \
 	 && sed -i $${builddir}/src/include/metis.h \
 	    -e '/define/s/WIDTH 32/WIDTH 64/'
 
 TGZURL = https://github.com/scivision/METIS/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
-BOOTSTRAP = sed -i \
-    -e '/GIT_TAG/s/6897bfe/078042614ff5192ab4c9bde0575bfef0d4572687/' \
-    -e '/GIT_TAG/s/44630ca/078042614ff5192ab4c9bde0575bfef0d4572687/' \
-    CMakeLists.txt
+# BOOTSTRAP = sed -i \
+#     -e '/GIT_TAG/s/6897bfe/078042614ff5192ab4c9bde0575bfef0d4572687/' \
+#     -e '/GIT_TAG/s/44630ca/078042614ff5192ab4c9bde0575bfef0d4572687/' \
+#     CMakeLists.txt
 include ${MAKEINCLUDES}/Make.download
+
+GITREPO = https://github.com/scivision/METIS.git
+include ${MAKEINCLUDES}/Make.git
 
 ifdef TICKETS
 intel24 compilation S3

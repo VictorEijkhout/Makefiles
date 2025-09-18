@@ -27,6 +27,11 @@ CMAKEFLAGS = \
     -D HIGHFIVE_USE_EIGEN=ON \
     -D HIGHFIVE_USE_XTENSOR=OFF \
     -D HIGHFIVE_USE_HALF_FLOAT=OFF
+ifeq "${TACC_FAMILY_COMPILER}" "gcc"
+  CMAKEFLAGS += -DCMAKE_EXE_LINKER_FLAGS='-lpthread -lgfortran'
+else
+  CMAKEFLAGS += -DCMAKE_EXE_LINKER_FLAGS='-lpthread'
+endif
 CMAKEPREFIXPATHSET = 1
 include ${MAKEINCLUDES}/Make.cmake
 ## .cmake files in share/HighFive/CMake/
@@ -48,7 +53,15 @@ par :
 info ::
 	@echo "make default_install : sequential version"
 default_install :: seq
+#
+# module stuff
+#
+DEPENDSONCURRENT=hdf5
+DEPENDSON = boost eigen
 
+#
+# Download
+#
 TGZURL = https://github.com/BlueBrain/HighFive/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 

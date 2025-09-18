@@ -9,6 +9,7 @@ ABOUT = Translator library for raster and vector geospatial data formats
 URL = https://gdal.org/index.html \
     https://github.com/OSGeo/GDAL
 PACKAGEVERSION = 3.11.4
+DOCURL = https://gdal.org/en/stable/development/building_from_source.html
 MODE = seq
 MODULES = jsonc netcdf proj swig zlib 
 
@@ -28,6 +29,7 @@ CMAKEFLAGS = \
     -D OGR_BUILD_OPTIONAL_DRIVERS=OFF \
     -D GDAL_USE_CURL=OFF \
     -D GDAL_USE_CRYPTOPP=OFF \
+    -D GDAL_USE_ODBC=OFF \
     -D GDAL_USE_OPENSSL=OFF \
     \
     -D GDAL_USE_NETCDF=ON \
@@ -37,7 +39,9 @@ CMAKEFLAGS = \
 include ${MAKEINCLUDES}/Make.cmake
 EXTRAINSTALLVARS = GDAL_DATA=share/gdal
 include ${MAKEINCLUDES}/Make.cbuild
-DEPENDSON = jsonc,netcdf,proj,zlib
+DEPENDSON = jsonc,proj,zlib
+# need current netcdf so that we get current hdf5
+DEPENDSONCURRENT = netcdf
 
 .PHONY: default_install
 default_install : configure build public

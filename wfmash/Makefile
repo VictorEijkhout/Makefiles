@@ -1,34 +1,34 @@
 ################################################################
 ####
-#### Makefile for SFML installation
+#### Makefile for Wfmash installation
 ####
-#### NOTE on MacOS only clang support
+#### THIS DOES NOT BUILD
 ####
 ################################################################
 
-PACKAGE = SFML
-ABOUT  = Simple and Fast Multimedia Library
-URL = https://github.com/SFML/SFML
-PACKAGEVERSION = 3.0.1
-# 3.0.2
+PACKAGE = wfmash
+SKIPPACKAGE = 1
+ABOUT = Wfmash
+PACKAGEVERSION = 0.24.1
+URL = https://github.com/waveygang/wfmash
 MODE = seq
+MODULE = 
 
 include ${MAKEINCLUDES}/Make.info
 
 PKGCONFIGLIB = pkgconfig
+CMAKEPREFIXPATHSET = 1
+NOLIB = 1
+HASBIN = 1
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
-
 info ::
 	@echo "make default_install : configure build"
 .PHONY: default_install
 default_install : configure build
 
-##
-## download or clone
-##
-# https://github.com/SFML/SFML/archive/refs/tags/3.0.1.tar.gz
-TGZURL = https://github.com/SFML/SFML/archive/refs/tags/${PACKAGEVERSION}.tar.gz
+TGZURL = https://github.com/waveygang/wfmash/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
-GITREPO = https://github.com/SFML/SFML.git
+GITREPO = https://github.com/waveygang/wfmash.git
+SUBMODULE = 1
 include ${MAKEINCLUDES}/Make.git
