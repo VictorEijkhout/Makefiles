@@ -95,10 +95,9 @@ everything :
 	 \
 	 && mkdir -p $${prefixdir} \
 	 && ( \
-	    cd $${srcdir} && make Everything \
+	    cd $${srcdir} && make Everything install \
 	    ) 2>&1 | tee $${installlog}
 
-NOLIB = 1
 HASBIN = 1
 include ${MAKEINCLUDES}/Make.vars
 
