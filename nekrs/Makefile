@@ -7,8 +7,9 @@
 PACKAGE = nekRS
 ABOUT = Next generation fast and scalable CFD code
 URL = https://github.com/Nek5000/nekRS
-PACKAGEVERSION = git
-# 23.0
+PACKAGEVERSION = 23.0
+## hypre complicatin problem is fixed in repo;
+## waiting for 25 release
 
 MODE = mpi
 MODULES_BASIC = 
