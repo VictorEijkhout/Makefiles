@@ -29,7 +29,9 @@ system_test :
 	 && requirenonzero builddir && rm -rf $$builddir && mkdir -p $$builddir \
 	 && requirenonzero logfilesdir \
 	 \
-	 && cd $${srcdir}/config &&  make -f Makefile.ini \
+	 && cd $${srcdir}/config \
+	     && make CFLAGS="-Wold-style-definition -Wbuiltin-declaration-m\ismatch" \
+	             -f Makefile.ini \
 	 && ./ymake -config `pwd` 2>&1 | tee parse \
 	 && if [ $$( cat parse | wc -l ) -gt 0 ] ; then \
 	        echo "System not recognized" && cat parse && exit 1 \
