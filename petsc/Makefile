@@ -42,8 +42,11 @@ ifeq "${TACC_SYSTEM}" "vista"
     --with-lapack-lib=[${TACC_NVPL_LIB}/libnvpl_lapack_lp64_seq.so,libnvpl_lapack_core.so] \
     --with-blas-lib=[${TACC_NVPL_LIB}/libnvpl_blas_lp64_seq.so,libnvpl_blas_core.so] \
     "
-else ifeq "${TACC_SYSTEM}" "macbookair"
-  BLAS_FLAGS= --download-fblaslapack=yes
+# else ifeq "${TACC_FAMILY_COMPILER}" "nvidia"
+#   BLAS_FLAGS = "\
+#     --with-lapack-lib=[${TACC_NVPL_LIB}/libnvpl_lapack_lp64_seq.so,libnvpl_lapack_core.so] \
+#     --with-blas-lib=[${TACC_NVPL_LIB}/libnvpl_blas_lp64_seq.so,libnvpl_blas_core.so] \
+#     "
 else
   BLAS_FLAGS=--with-blas-lapack-dir=${TACC_MKL_DIR}
 endif
@@ -212,9 +215,10 @@ default_install :: modules
 	            echo \"\
 	                  --with-kokkos=1 --download-kokkos=1 --with-kokkos-kernels=1 --download-kokkos-kernels=1 \
 	                  \" \
-	          ; else echo --with-kokkos=0 ; fi` \
-	        "${BLAS_FLAGS}" \
-i	        $${package_options} $${param_settings} \
+	          ; else echo --with-kokkos=0 \
+	          ; fi` \
+	        --blas-flags '${BLAS_FLAGS}' \
+	        --package-flags $${package_options} $${param_settings} \
 	        " \
 	     && echo "Cmdline=$$cmdline" && retcode=0 && eval $$cmdline || retcode=$$? \
 	    \

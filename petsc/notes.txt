@@ -1,2 +1,0 @@
-ls6 Braden Pecora:
-./install_small.sh -u -e pecora
