@@ -5,8 +5,8 @@
 ################################################################
 
 PACKAGE = MUMPS
-PACKAGEVERSION = 5.8.0
-URL = https://www.mumps.org/
+PACKAGEVERSION = 5.8.1
+URL = https://www.mumps-solver.org/
 MODE = mpi
 MODULES_seq = metis scotch mkl
 MODULES_par = parmetis ptscotch mkl
@@ -22,11 +22,12 @@ PARMODE = par
 seq :
 	@${MAKE} modules MODULES="${BASIC_MODULES} scotch"
 	@${MAKE} default_install MODE=seq PARMODE=seq \
+	    MODULENAME=smumps MODULEALTNAME=mumps \
 	    MODULES="${MODULES_seq}"
 par :
 	@${MAKE} modules MODULES="${BASIC_MODULES} ptscotch"
 	@${MAKE} default_install MODE=mpi PARMODE=par \
-	    MODULENAME=pmumps MODULEALTNAME=mumps \
+	    MODULENAME=mumps \
 	    MODULES="${MODULES_par}"
 default_install :
 	@scriptdir=$$(pwd) \
@@ -50,7 +51,7 @@ default_install :
 	     && grep examples Makefile \
 	     && cp $${scriptdir}/Make.inc.${TACC_FAMILY_COMPILER}.${PARMODE} ./Makefile.inc \
 	     && export DESTDIR="$${prefixdir}" && export PREFIX="" \
-	         && make -j ${JCOUNT} \
+	         && make -j ${JCOUNT} allshared \
 	         && cp Makefile.inc    $${prefixdir}/ \
 	         && cp -r include lib  $${prefixdir}/ \
 	         && ( cd examples && make --no-print-directory clean ) \
