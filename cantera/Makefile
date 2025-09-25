@@ -99,6 +99,8 @@ scons_build :
 include ${MAKEINCLUDES}/Make.vars
 HASBIN = 1
 PKGCONFIGLIB = pkgconfiglib
+DEPENDSON = fmtlib hdf5 ssundials yamlcpp
+EXTRAINSTALLPATHS = PYTHONPATH=lib/python3.9/site-packages
 .PHONY: configlog
 configlog :
 	@source ${MAKEINCLUDES}/names.sh \

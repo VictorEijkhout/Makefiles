@@ -87,7 +87,7 @@ seq :
 	    MODULENAME=hdf5
 par :
 	@if [ "${TACC_FAMILY_COMPILER}" = "gcc" ] ; then \
-	    export I_MPI_FCFLAGS="-I${TACC_IMPI_INC}/mpi/gfortran/11.1.0" \
+	    export I_MPI_FCFLAGS="-I${TACC_IMPI_INC}/mpi/gfortran/11.1.0 -I${TACC_IMPI_INC}/gfortran/11.1.0" \
 	 ; fi \
 	 && make --no-print-directory configure build JCOUNT=${JCOUNT} \
 	    PACKAGEVERSION=${PACKAGEVERSION} \
