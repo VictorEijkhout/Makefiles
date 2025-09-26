@@ -11,7 +11,7 @@ PACKAGE = CANTERA
 ABOUT = Chemical kinetics, thermodynamics, and transport tool suite
 PACKAGEVERSION = 3.1.0
 URL = https://github.com/Cantera/cantera
-DOCURL = https://cantera.org/stable/install/index.html
+DOCURL = https://cantera.org/stable/develop/index.html#sec-compiling
 MODE = seq
 MODULES = boost eigen fmtlib hdf5 highfive ssundials yamlcpp \
     mkl
@@ -71,7 +71,7 @@ scons_config:
 	          boost_inc_dir=${TACC_BOOST_INC} \
 	          \
 	          hdf_support='y' hdf_include=${TACC_HDF5_INC} hdf_libdir=${TACC_HDF5_LIB} \
-	          googletest='none' \
+	          googletest='n' \
 	          blas_lapack_libs=mkl_rt blas_lapack_dir=$(MKLROOT)/lib/intel64 \
 	    ) 2>&1 | tee $$installlog \
 	 && requirenonzero logfilesdir \

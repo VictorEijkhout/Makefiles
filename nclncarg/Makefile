@@ -11,6 +11,7 @@ PACKAGEVERSION_NODOT = 662
 URL = https://www.ncl.ucar.edu/
 DOCURL = https://www.ncl.ucar.edu/Download/build_from_src.shtml
 MODE = seq
+MODULES = netcdf
 
 include ${MAKEINCLUDES}/Make.info
 
@@ -97,8 +98,11 @@ everything :
 	 \
 	 && mkdir -p $${prefixdir} \
 	 && ( \
-	    cd $${srcdir} && make Everything install \
-	    ) 2>&1 | tee $${installlog}
+            cd $${srcdir} \
+             && make Everything \
+             && echo " .. installing" \
+             && make  install \
+            ) 2>&1 | tee $${installlog}
 
 HASBIN = 1
 include ${MAKEINCLUDES}/Make.vars

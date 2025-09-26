@@ -57,7 +57,8 @@ package_location :
 	        --download-sowing -download-arpack" \
 	     && /bin/true =https://slepc.upv.es/download/distrib/slepc-3.23.0.tar.gz \
 	     && export slepc4py_extra="--download-slepc-configure-arguments=--with-slepc4py" \
-	     && export superludist_extra="--with-superlu_dist=1 --download-superlu_dist=1 --with-cxx-dialect=C++11 --with-openmp=1" \
+	     && export superludist_extra="--with-superlu_dist=1 --download-superlu_dist=1 --with-openmp=1" \
+	     && echo "superludist no longer --with-cxx-dialect=C++11" >/dev/null \
 	     && export strumpack_extra="--download-scalapack=yes --download-blacs=yes" \
 	 && if [ "$${p}" = "hdf5" ] ; then \
 	      taccvarname=TACC_PHDF5_DIR \

@@ -7,3 +7,8 @@ I've tried
              && echo PATH=$${PATH}
 
 in the build rule but to no avail
+
+################################################################
+
+Stampede3 Braden Pecora:
+./install_small.sh -u -e pecora

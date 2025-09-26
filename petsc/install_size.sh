@@ -111,7 +111,8 @@ make --no-print-directory biginstall JCOUNT=${jcount} \
     EXT=${EXTENSION} \
     $( if [ ! -z "${customext}" ] ; then echo CUSTOMEXT=${customext} ; fi ) \
     PKGSTART=1 $( cat ${size}.sh ) PKGSTOP=1 \
-    CUDA=${cuda} FORTRAN=${fortran} KOKKOS=${kokkos} \
+    CUDA=${cuda} FORTRAN=${fortran} \
+    $( if [ "${kokkos}" = "1" -o "${KOKKOS}" = "1" ] ; then echo KOKKOS=1 ; fi ) \
     PETSC4PY=${p4p} SLEPC4PY=${p4p} \
 "
 ( echo "At $(date)" && echo "cmdline: $cmdline" ) | tee -a ${sizelog}

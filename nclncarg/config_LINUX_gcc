@@ -22,8 +22,12 @@
 #define FCompiler   gfortran
 #define CtoFLibraries   -lgfortran -lm
 #define CtoFLibrariesUser  -lgfortran -lm
-#define CcOptions      -fPIC -fopenmp -std=c99 -Wold-style-definition -Wbuiltin-declaration-m\ismatch
-#define FcOptions      -fPIC -fno-second-underscore -fno-range-check -fopenmp
+#define CcOptions       -fPIC -fopenmp -std=c99 -ansi \
+    -Wold-style-definition -Wbuiltin-declaration-mismatch -Wimplicit-function-declaration \
+    -Wimplicit-int
+#define FcOptions      -fPIC -fno-second-underscore -fno-range-check -fopenmp \
+    -fallow-argument-mismatch
+
 #define XToolLibrary    -lXt -lSM -lICE
 #define BuildShared NO
 #define XLibrary      -lX11 -lXext
