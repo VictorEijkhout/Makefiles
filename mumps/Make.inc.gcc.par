@@ -87,7 +87,7 @@ RANLIB  = echo
 INCSEQ = -I$(topdir)/libseq
 LIBSEQ  = $(LAPACK) -L$(topdir)/libseq -lmpiseq$(PLAT)
 
-LIBBLAS = -L${TACC_MKL_DIR} -lmkl_intel_lp64 -lmkl_sequential -lmkl_core
+LIBBLAS = -L${TACC_MKL_LIB} -lmkl_intel_lp64 -lmkl_sequential -lmkl_core
 LAPACK  = ${LIBBLAS}
 LIBOTHERS = -lpthread -lmpi
 
