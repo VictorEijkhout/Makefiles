@@ -360,6 +360,9 @@ biginstall :
 	      ; elif [ "$${PARMETIS}" = "1" ] ; then \
 	          MUMPS=1 \
 	      ; fi \
+	   && if [ "${TACC_FAMILY_COMPILER}" = "nvidia" ] ; then \
+	        echo " .. disable STRUMPACK because nvidia fortran" \
+	         && STRUMPACK=0 ; fi \
 	   && AMGX=0 \
 	   && echo "Incompatibilities mode/package" \
 	   && case $${ext} in \

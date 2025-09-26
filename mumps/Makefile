@@ -24,7 +24,7 @@ seq :
 	@${MAKE} default_install MODE=seq PARMODE=seq \
 	    MODULENAME=smumps MODULEALTNAME=mumps \
 	    MODULES="${MODULES_seq}" \
-	    DEPENDSON=scotch
+	    DEPENDSON="metis scotch"
 par :
 	@${MAKE} modules MODULES="${BASIC_MODULES} ptscotch"
 	@${MAKE} default_install MODE=mpi PARMODE=par \
