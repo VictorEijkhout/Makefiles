@@ -23,12 +23,14 @@ seq :
 	@${MAKE} modules MODULES="${BASIC_MODULES} scotch"
 	@${MAKE} default_install MODE=seq PARMODE=seq \
 	    MODULENAME=smumps MODULEALTNAME=mumps \
-	    MODULES="${MODULES_seq}"
+	    MODULES="${MODULES_seq}" \
+	    DEPENDSON=scotch
 par :
 	@${MAKE} modules MODULES="${BASIC_MODULES} ptscotch"
 	@${MAKE} default_install MODE=mpi PARMODE=par \
 	    MODULENAME=mumps \
-	    MODULES="${MODULES_par}"
+	    MODULES="${MODULES_par}" \
+	    DEPENDSON=ptscotch
 default_install :
 	@scriptdir=$$(pwd) \
 	 && source ${MAKEINCLUDES}/names.sh \
