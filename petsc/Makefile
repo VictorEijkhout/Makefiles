@@ -100,7 +100,7 @@ petscshortarch :
 petscarch :
 	@source ${MAKEINCLUDES}/names.sh \
 	 && systemnames && compilernames \
-	 && notetoself "TODO dir names are no needed?" \
+	 && notetoself "TODO dir names are not needed?" \
 	 && compilernames && requirenonzero compilercode && requirenonzero mpicode \
 	 && systemnames \
 	 && petscarch=$${taccsystemcode}-$${compilercode}$${compilershortversion}-$${mpicode} \
@@ -150,12 +150,14 @@ default_install :: modules
 	 ; fi
 	@source ${MAKEINCLUDES}/names.sh \
 	 && export INSTALLROOT=${INSTALLROOT} \
+	 && echo \
+	 && echo "Deducing petsc arch from <<${TACC_FAMILY_COMPILER}/${TACC_FAMILY_MPI}>>" \
 	 && export petscarch=`make --no-print-directory \
 	                SCALAR=${SCALAR} PRECISION=${PRECISION} INT=${INT} \
 	                ALIGN=${ALIGN} \
 	                CUDA=${CUDA} DEBUGGING=${DEBUGGING} CUSTOMEXT=${CUSTOMEXT} \
 	                petscarch` \
-	 && echo && echo "Deduce petc arch <<$$petscarch>>" && echo \
+	 && echo " .. deduced petc arch: <<$$petscarch>>" && echo \
 	 && setnames \
 	    "${PACKAGE}"  "${PACKAGEVERSION}"  "${PACKAGEBASENAME}" \
 	    "${DOWNLOADPATH}" "${SRCPATH}" \
@@ -323,8 +325,8 @@ biginstall :
 	   && FORTRAN=${FORTRAN} && SLEPC=${SLEPC} \
 	   && if [ -z "${TACC_FAMILY_COMPILER}}" ] ; then \
 	        echo "ERROR compiler does not define the usual variables" && exit 1 ; fi \
-	   && case ${TACC_FAMILY_COMPILER} in \
-	        ( gcc ) echo " .. no FORTRAN for gcc" && echo FORTRAN=0 ;; \
+	   && case "${TACC_FAMILY_COMPILER}" in \
+	        ( "gcc" ) echo " .. no FORTRAN for gcc" && echo FORTRAN=0 ;; \
 	        esac \
 	   && echo "Selecting basic options for extension=$${ext}:" \
 	   && case $${ext} in ( *debug* ) DEBUGGING=1 ;; ( * ) DEBUGGING=0 ;; esac \
