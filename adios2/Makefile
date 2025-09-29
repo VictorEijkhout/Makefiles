@@ -23,6 +23,7 @@ include ${MAKEINCLUDES}/Make.info
 ## cmake 
 ##
 # https://adios2.readthedocs.io/en/latest/setting_up/setting_up.html#cmake-options
+# https://github.com/ornladios/ADIOS2/issues/4585
 USEFORTRAN = ON
 # --debug-find to see cmake in action
 CMAKEFLAGS_BASIC =  \
