@@ -7,6 +7,7 @@
 PACKAGE = CMAKE
 ABOUT = Powerful Software Build System
 PACKAGEVERSION = 4.1.1
+# 4.1.2
 URL = https://cmake.org/ \
     https://github.com/Kitware/CMake
 MODE = core
