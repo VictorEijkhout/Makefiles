@@ -71,7 +71,7 @@ scons_config:
 	          boost_inc_dir=${TACC_BOOST_INC} \
 	          \
 	          hdf_support='y' hdf_include=${TACC_HDF5_INC} hdf_libdir=${TACC_HDF5_LIB} \
-	          googletest='n' \
+	          googletest='none' \
 	          blas_lapack_libs=mkl_rt blas_lapack_dir=$(MKLROOT)/lib/intel64 \
 	    ) 2>&1 | tee $$installlog \
 	 && requirenonzero logfilesdir \
