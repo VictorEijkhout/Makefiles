@@ -18,13 +18,21 @@ export VICTOR_MODULEPATH_ROOT=${VICTOR_WORK}/modulefiles
 module use ${VICTOR_MODULEPATH_ROOT}/Core
 
 intelversion=24.0
-echo "loading intel ${intelversion}"
+echo "Available intel/${intelversion}:"
+module -t avail intel/${intelversion}
+echo " .. loading intel ${intelversion}"
 
 module load intel/${intelversion}
+module -t show intel
+
 export TACC_CC=icx
 export TACC_CXX=icpx
 export TACC_FC=ifx
 module load impi/21.11
 
+echo "Module path:"
+echo $MODULEPATH | tr ':' '\n'
 echo "Loaded:"
 module -t list
+echo "Intel:"
+module -t show intel
