@@ -8,7 +8,7 @@ PACKAGE = entity
 ABOUT = New generation astrophysical plasma simulation code with CPU/GPU portability
 URL = https://github.com/entity-toolkit/entity
 PACKAGEVERSION = 1.2.1
-# 1.2.3
+# 1.2.4
 
 MODE = mpi
 MODULES_BASIC = kokkos adios2 phdf5
