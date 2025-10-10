@@ -68,7 +68,7 @@ info ::
 	@echo "make default_install : real version, there is also complex"
 default_install : real
 # need to make sure we load real/complex petsc
-DEPENDSONCURRENT = petsc
+DEPENDSON = petsc
 
 GITREPO = https://github.com/dealii/dealii/archive/v${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.git
