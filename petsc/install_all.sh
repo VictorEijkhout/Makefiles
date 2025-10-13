@@ -77,6 +77,9 @@ for debugging in 0 1 ; do
     done
 done
 
+##
+## Without HDF5
+##
 export NOHDF5=1
 for debugging in 0 1 ; do 
     for int in 32 64 ; do 
@@ -97,6 +100,9 @@ for debugging in 0 1 ; do
 done
 export NOHDF5=0
 
+##
+## Explicit Fortran2008 bindings
+##
 export FORTRAN=08
 # problem with hdf5, so skip
 # also skip p4p, even though only complexf08debug bombs
@@ -117,6 +123,29 @@ for debugging in 0 1 ; do
 	    | tee -a ${alllog}
 	if [ $? -gt 0 ] ; then exit 1 ; fi 
     done
+done
+
+##
+## Kokkos
+## just debug/non for now
+##
+for debugging in 0 1 ; do 
+    export SCALAR=real
+    export INT=32
+    export PRECISION=double
+    export SCALAR=${scalar}
+    export DEBUGGING=${debugging}
+    export CUDA=0
+    arch=$( make --no-print-directory petscshortarch )
+    ( echo && echo "Installing big for arch=${arch}" && echo ) | tee -a ${alllog}
+    echo ${arch} >> ${archs}
+    ./install_big.sh -j ${jcount} \
+		       $( if [ ! -z "${pversion}" ] ; then echo "-v ${pversion}" ; fi ) \
+		       $( if [ -z "${fortran}" ] ; then echo "-f" ; fi ) \
+    		       $( if [ ${p4p} -eq 1 ] ; then echo "-4" ; fi ) \
+		       -k \
+	| tee -a ${alllog}
+    if [ $? -gt 0 ] ; then exit 1 ; fi 
 done
 
 ##
