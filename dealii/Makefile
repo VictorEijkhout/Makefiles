@@ -2,13 +2,15 @@
 ####
 #### Makefile for Dealii installation
 ####
+#### Kokkos problem:
+#### https://github.com/dealii/dealii/issues/18928
+####
 ################################################################
 
 PACKAGE = DEALII
 ABOUT = Finite Element Library
 URL = https://github.com/dealii/dealii
-PACKAGEVERSION = 9.7.0
-# 9.7.1
+PACKAGEVERSION = 9.7.1
 MODE = mpi
 MODULES = p4est petsc sundials trilinos \
     mkl
@@ -23,6 +25,7 @@ include ${MAKEINCLUDES}/Make.info
 ##
 CMAKEFLAGS = \
     -D DEAL_II_WITH_MPI=ON \
+    -D CMAKE_CXX_FLAGS="-fopenmp" \
     -D DEAL_II_WITH_LAPACK=ON \
     -D DEAL_II_COMPONENT_EXAMPLES=OFF \
     -D DEAL_II_WITH_TBB=OFF \
@@ -60,16 +63,18 @@ info ::
 	@echo "make complex: configure build with complex. Make sure to load complex petsc!"
 real :
 	@make --no-print-directory configure build PACKAGEVERSION=${PACKAGEVERSION}
+# https://github.com/dealii/dealii/issues/18254
 complex :
 	@make --no-print-directory configure build PACKAGEVERSION=${PACKAGEVERSION} \
-	    INSTALLEXT="complex" CMAKEFLAGS="${CMAKEFLAGS} -DDEAL_II_WITH_PETSC_COMPLEX=ON"
+	    INSTALLEXT="complex" \
+	    CMAKEFLAGS="${CMAKEFLAGS} -DDEAL_II_WITH_PETSC_COMPLEX=ON -DDEAL_II_WITH_COMPLEX_VALUES=YES"
 
 .PHONY: default_install
 info ::
 	@echo "make default_install : real version, there is also complex"
 default_install : real
 # need to make sure we load real/complex petsc
-DEPENDSONCURRENT = petsc
+DEPENDSON = petsc
 
 GITREPO = https://github.com/dealii/dealii/archive/v${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.git

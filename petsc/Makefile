@@ -7,8 +7,8 @@
 PACKAGE = PETSC
 ABOUT = Portable, Extensible Toolkit for Scientific Computation
 URL = https://petsc.org/release/install/download/
-PACKAGEVERSION = 3.23.7
-LOADVERSION = 3.23
+PACKAGEVERSION = 3.24
+PACKAGEVERSION_DOWNLOAD = 3.24.0
 MODE = mpi
 
 include ${MAKEINCLUDES}/Make.info
@@ -29,7 +29,7 @@ info ::
 	@echo "make build "
 	@echo "     [CUSTOMEXT=customextension]"
 
-JCOUNT = 4
+JCOUNT = 6
 
 OPTFLAGS=-O2 -fPIC
 LOPTFLAGS=-O1 -fPIC
@@ -91,6 +91,8 @@ petscshortarch :
 	    export PETSC_EXT=$${PETSC_EXT}a${ALIGN} ; fi \
 	 && if [ "${CUDA}" = "1" ] ; then \
 	    export PETSC_EXT=$${PETSC_EXT}cuda ; fi \
+	 && if [ "${KOKKOS}" = "1" ] ; then \
+	    export PETSC_EXT=$${PETSC_EXT}kokkos ; fi \
 	 && if [ "${DEBUGGING}" = "1" ] ; then \
 	    export PETSC_EXT=$${PETSC_EXT}debug ; fi \
 	  \
@@ -278,7 +280,7 @@ makemodule :
 	    "${PREFIXOPTION}"  "${PREFIXEXTRA}" \
 	 && echo "makemodule: deduce install dir <<$$prefixdir>>" \
 	 \
-	 && shortversion=${PACKAGEVERSION} && shortversion=$${shortversion%.*} \
+	 && shortversion=${PACKAGEVERSION} \
 	 && petscshortarch=$$( make --no-print-directory petscshortarch ) \
 	 && echo "making module with version=$${shortversion} extra=<<$${petscshortarch}>>" \
 	 && ( make --no-print-directory varsmodule  \
@@ -335,7 +337,8 @@ biginstall :
 	   && case $${ext} in ( *complex* ) SCALAR=complex ;; ( * ) SCALAR=real ;; esac \
 	   \
 	   && echo "Selecting packages" \
-	   && AMGX=${AMGX} && CHACO=${CHACO} && CUDA=${CUDA} && EIGEN=${EIGEN} && FFTW=${FFTW} && HDF5=${HDF5} && HYPRE=${HYPRE} && METIS=${METIS} \
+	   && AMGX=${AMGX} && CHACO=${CHACO} && CUDA=${CUDA} && EIGEN=${EIGEN} && FFTW=${FFTW} && HDF5=${HDF5} && HYPRE=${HYPRE} \
+	   && KOKKOS=${KOKKOS} && METIS=${METIS} \
 	   && MUMPS=${MUMPS} && PARMETIS=${PARMETIS} && PTSCOTCH=${PTSCOTCH} \
 	   && STRUMPACK=${STRUMPACK} \
 	   && SUPERLU=${SUPERLU} && SUPERLUDIST=${SUPERLUDIST} \
@@ -392,7 +395,7 @@ biginstall :
 	      $$( if [ ! -z ${CUSTOMEXT} ] ; then echo CUSTOMEXT=${CUSTOMEXT} ; fi ) \
 	      \
 	      AMGX=$${AMGX} CHACO=$${CHACO} EIGEN=$${EIGEN} FFTW=$${FFTW} \
-	      HDF5=$${HDF5} HYPRE=$${HYPRE} METIS=$${METIS} \
+	      HDF5=$${HDF5} HYPRE=$${HYPRE} KOKKOS=$${KOKKOS} METIS=$${METIS} \
 	      MUMPS=$${MUMPS} PARMETIS=$${PARMETIS} PTSCOTCH=$${PTSCOTCH} \
 	      STRUMPACK=$${STRUMPACK} \
 	      SUPERLU=$${SUPERLU} SUPERLUDIST=$${SUPERLUDIST} \
@@ -435,7 +438,7 @@ GITREPO = https://gitlab.com/petsc/petsc.git
 BRANCH = main
 
 include ${MAKEINCLUDES}/Make.download
-TGZURL = https://web.cels.anl.gov/projects/petsc/download/release-snapshots/petsc-${PACKAGEVERSION}.tar.gz
+TGZURL = https://web.cels.anl.gov/projects/petsc/download/release-snapshots/petsc-${PACKAGEVERSION_DOWNLOAD}.tar.gz
 
 clean ::
 	@/bin/rm -f *job.o[0-9]* archs-* *setnames petscinstalljob* 

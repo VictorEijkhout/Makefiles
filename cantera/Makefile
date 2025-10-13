@@ -63,7 +63,8 @@ scons_config:
 	    cd $${srcdir} \
 	     && echo "Cons build" \
 	     && scons build env_vars=all \
-	          CC=icx CXX=icpx FORTRAN=ifx prefix=$${prefixdir} \
+	          CC=${TACC_CC} CXX=${TACC_CXX} FORTRAN=${TACC_FC} \
+	          prefix=$${prefixdir} \
 	          system_eigen='y' system_fmt='y' system_highfive='y' \
 	          system_sundials='y' system_yamlcpp='y' \
 	          extra_inc_dirs=${SCONS_EXTRA_INCS} \
