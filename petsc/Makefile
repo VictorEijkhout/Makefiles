@@ -38,10 +38,10 @@ ifeq "${TACC_FAMILY_COMPILER}" "gcc"
 endif
 
 ifeq "${TACC_SYSTEM}" "vista"
-  BLAS_FLAGS = "\
+  BLAS_FLAGS = \
     --with-lapack-lib=[${TACC_NVPL_LIB}/libnvpl_lapack_lp64_seq.so,libnvpl_lapack_core.so] \
-    --with-blas-lib=[${TACC_NVPL_LIB}/libnvpl_blas_lp64_seq.so,libnvpl_blas_core.so] \
-    "
+    --with-blas-lib=[${TACC_NVPL_LIB}/libnvpl_blas_lp64_seq.so,libnvpl_blas_core.so]
+
 # else ifeq "${TACC_FAMILY_COMPILER}" "nvidia"
 #   BLAS_FLAGS = "\
 #     --with-lapack-lib=[${TACC_NVPL_LIB}/libnvpl_lapack_lp64_seq.so,libnvpl_lapack_core.so] \
@@ -221,7 +221,7 @@ default_install :: modules
 	                  \" \
 	          ; else echo --with-kokkos=0 \
 	          ; fi` \
-	        --blas-flags '${BLAS_FLAGS}' \
+	        --blas-flags ${BLAS_FLAGS} \
 	        --package-flags $${package_options} $${param_settings} \
 	        " \
 	     && echo "Cmdline=$$cmdline" && retcode=0 && eval $$cmdline || retcode=$$? \
