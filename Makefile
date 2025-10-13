@@ -10,7 +10,7 @@ info ::
 
 .PHONY: clean localclean
 localclean : 
-	@rm -f *~ *.log
+	@rm -f *~ *.log install*.o* install.slurm
 clean :: localclean
 	@for d in * ; do \
 	  if [ -d "$${d}" ] ; then \

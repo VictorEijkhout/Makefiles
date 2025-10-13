@@ -51,7 +51,7 @@ endif
 
 ## was this always wrong or did it go away? PKGCONFIG = lib/pkgconfig
 CMAKEPREFIXPATHSET = 1
-CPTOINSTALLDIR = 1
+CPTOINSTALLDIR = examples
 # https://github.com/dealii/dealii/issues/18254
 CMAKEBUILDTYPE = DebugRelease
 include ${MAKEINCLUDES}/Make.cmake
