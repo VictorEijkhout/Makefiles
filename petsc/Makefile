@@ -359,15 +359,15 @@ biginstall :
 	      ; else \
 	        echo " .. disable AMGX because no cuda" && AMGX=0 \
 	      ; fi \
+	   && if [ "${TACC_FAMILY_COMPILER}" = "nvidia" ] ; then \
+	        echo " .. disable Fortran because nvidia not up to 2018" \
+	         && FORTRAN=0 ; fi \
 	   && if [ "$${FORTRAN}" = "0" ] ; then \
 	        echo " .. disable MUMPS, STrumpack, Scalapack because no Fortran" \
 	         && MUMPS=0 && SCALAPACK=0 && STRUMPACK=0 \
 	      ; elif [ "$${PARMETIS}" = "1" ] ; then \
 	          MUMPS=1 \
 	      ; fi \
-	   && if [ "${TACC_FAMILY_COMPILER}" = "nvidia" ] ; then \
-	        echo " .. disable STRUMPACK because nvidia fortran" \
-	         && STRUMPACK=0 ; fi \
 	   && AMGX=0 \
 	   && echo "Incompatibilities mode/package" \
 	   && case $${ext} in \
