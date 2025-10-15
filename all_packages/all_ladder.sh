@@ -15,7 +15,9 @@ ffmpeg
 fftw2
 fftw3
 fmtlib
+ginkgo
 gklib
+gmp
 gsl
 gsllite
 hypre
@@ -24,6 +26,7 @@ jsonc
 kokkos
 libcurl
 libisl
+libsc
 libtool
 libxc
 m4
@@ -34,6 +37,7 @@ mpfr
 mpl
 msgsl
 mutationpp
+nekrs
 ninja
 p4est
 parmetis
@@ -44,6 +48,7 @@ petsc
 pgplot
 rmt
 scalapack
+scons
 scotch
 sfml
 sonic
@@ -54,18 +59,20 @@ szip
 udunits
 wannier90
 warpx
+wfmash
+yamlcpp
 zlib
 ptscotch
 pnetcdf
 arpack
 parpack
 conquest
-octopus
 mpunits
 suitesparse
 p7zip
 swig
 precice
+octopus
 proj
 hdf5
 plumed
@@ -81,6 +88,7 @@ libmesh
 trilinos
 parallelnetcdf
 enzo
+cdo
 gdal
 ncview
 entity
@@ -90,6 +98,5 @@ peridigm
 siesta
 delft3d
 fillspillmerge
-cdo
 chyps
 aspect

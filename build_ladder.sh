@@ -25,7 +25,7 @@ ignored_packages = \
       "python", "pylauncher",
       "rangev3", "roms", "vtkhdf", "wannier",
       # stuff I should build
-      "alps", "athenapk",
+      "alps", "athenapk", "cantera",
       "blaspp", "lapackpp", "mfemcuda", # cuda stuff
       "corrfunc", # needs python
       "cesm", "claymore", "ecbuild", "fargparse", "geos",
@@ -128,44 +128,12 @@ print( "sorting" )
 sorted = topological_sort( all_packages,before )
 print(sorted)
 
-with open( "all_packages/all_ladder.sh","w" ) as ladderfile:
+ladder = "all_packages/all_ladder.sh"
+with open( ladder,"w" ) as ladderfile:
     for s in sorted:
         ladderfile.write( s+'\n' )
+print( f"Written ladder to: {ladder}" )
 
 import sys
 sys.exit(0)
 
-##
-## old code
-## broken
-##
-
-def list_packages_and_prereqs( package_list,writefun,indent="" ):
-    global done,before,after
-    for package in package_list:
-        if package in done: continue
-        print( f"{package} visiting" )
-        # first do all prereqs
-        if package in before.keys(): # and before[package] is not []:
-            # package has prerequisites
-            print( f"{package} before: {before[package]}" )
-            for prereq in before[package]:
-                list_packages_and_prereqs( before[package],writefun,indent=indent )
-            before.pop(package)
-        # then do package
-        if package in done: continue
-        print( f"{package} listed" )
-        writefun( f"{indent}{package}" )
-        done.append(package)
-        # then do dependents
-        if package in after.keys():
-            print( f"{package} after: {after[package]}" )
-            list_packages_and_prereqs( after[package],writefun,indent=indent+"  " )
-        print( f"{package} fully finished" )
-
-#done = []
-#list_packages_and_prereqs( top,lambda x:print(x) )
-
-done = []
-with open( "all_packages/all_ladder.sh","w" ) as ladderfile:
-    list_packages_and_prereqs( top,lambda x:ladderfile.write(x+'\n') )

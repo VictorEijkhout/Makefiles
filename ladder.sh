@@ -1,11 +1,7 @@
-## where do the spaces in this come from?
-numladder="\
-    $( i=1 && for l in ${ladder} ; do echo $i,$l && i=$(( i+1 )) ; done ) \
-    "
-export ladderlength=$( echo "${numladder}" | wc -w )
+#!/bin/bash
 
 function usage() {
-    echo "Usage: $0 [ -h ] [ -c compiler ] [ -x : setx ] [ -l : list ] [ -t : trace ]"
+    echo "Usage: $0 [ -h ] [ -c compiler ] [ -x : setx ] [ -l : list ] [ -t : trace ] ladderfile"
     echo "    [ -j nnn (default: ${jcount}) ] "
     echo "    nnn / all"
     echo "where nnn:"
@@ -115,6 +111,22 @@ while [ $# -gt 0 ] ; do
     fi
 done
 
+##
+## 1 argument left: name of ladder file
+## read that in and annotate with numbers
+##
+if [ $# -eq 0 ] ; then
+    usage && exit 1
+fi
+ladderfile=$1
+ladder="$( cat ${ladderfile} )"
+
+## where do the spaces in this come from?
+numladder="\
+    $( i=1 && for l in ${ladder} ; do echo $i,$l && i=$(( i+1 )) ; done ) \
+    "
+export ladderlength=$( echo "${numladder}" | wc -w )
+
 if [ $# -eq 0 ] ; then
     # this can only happen in list mode
     if [ -z "${list}" ] ; then
@@ -173,6 +185,8 @@ ladderlog=ladder_${TACC_FAMILY_COMPILER}${TACC_FAMILY_COMPILER_VERSION}.log
   echo 
 ) | tee ${ladderlog}
 
+exit 0
+
 ##
 ## Install loop:
 ## `m' runs over commandline arguments
@@ -183,7 +197,7 @@ for m in \
 	    # expand rangers
 	    echo $( seq $( echo $p | cut -d '-' -f 1 ) $( echo $p | cut -d '-' -f 2 ) )
 	elif [[ $p = [a-z][a-z0-9]* ]] ; then
-	    echo $( ./all_build.sh | grep $p | awk '{print $1}' )
+	    echo $( ./build_all.sh | grep $p | awk '{print $1}' )
 	else
 	    echo $p
 	fi
