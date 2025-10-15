@@ -17,6 +17,7 @@ include ${MAKEINCLUDES}/Make.info
 # hack'y solution for:
 # https://github.com/cburstedde/p4est/issues/351
 PKGCONFIG = lib/pkgconfig
+CMAKEPREFIXPATHSET = 1
 
 #ifeq "${TACC_FAMILY_COMPILER}" "gcc"
 ifeq "foo" "foo"

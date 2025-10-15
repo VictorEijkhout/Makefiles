@@ -1,11 +1,21 @@
 #!/bin/bash
 
-package=$1
-
-if [ $# -eq 2 ] ; then
-    queue=$2
+queue=normal
+while [ $# -gt 0 ] ; do
+    if [ "$1" = "-h" ] ; then
+	usage && exit 0
+    elif [ "$1" = "-q" ] ; then
+	shift && queue=$1 && shift
+    else
+	break
+    fi
+done
+if [ $# -eq 1 ] ; then
+    package=$1
+    cd ${package}
 else
-    queue=normal
+    package=$( pwd )
+    package=${package##*/}
 fi
 
 cat >install.slurm <<EOF
@@ -22,9 +32,6 @@ cat >install.slurm <<EOF
 ##SBATCH --mail-type=all    # Send email at begin and end of job
 #SBATCH -A A-ccsc       # Allocation name (req'd if you have more than 1)
 
-# Other commands must follow all #SBATCH directives...
-
-cd ${package}
 make default_install JCOUNT=20
 EOF
 
