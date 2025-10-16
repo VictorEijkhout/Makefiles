@@ -53,8 +53,7 @@ package_location :
 	     && export mumps_extra="--download-scalapack=yes --download-blacs=yes --download-parmetis=yes --download-metis=yes" \
 	     && export petsc4py_extra="--with-python=1 --with-python-exec=python3" \
 	     && export slepc_extra="\
-	        --download-slepc-commit=ed0d6013375c6ab8a2f79ff52b7796826dc00c68 \
-	        --download-sowing -download-arpack" \
+	        --download-arpack" \
 	     && /bin/true =https://slepc.upv.es/download/distrib/slepc-3.23.0.tar.gz \
 	     && export slepc4py_extra="--download-slepc-configure-arguments=--with-slepc4py" \
 	     && export superludist_extra="--with-superlu_dist=1 --download-superlu_dist=1 --with-openmp=1" \

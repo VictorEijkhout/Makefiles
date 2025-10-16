@@ -112,9 +112,12 @@ petscarch :
 	    else \
 	      echo ${PACKAGEVERSION}-$${petscext} ; \
 	    fi
-.PHONY: configurelog
+#
+# logs
+#
 info ::
-	@echo "make configurelog : display current configure.log"
+	@echo "make configurelog makelog : display current configure/make log"
+.PHONY: configurelog makelog
 configurelog :
 	@source ${MAKEINCLUDES}/names.sh \
 	 && systemnames && compilernames \
@@ -123,6 +126,14 @@ configurelog :
 	    "${PACKAGE}"  "${PACKAGEVERSION}"  "${PACKAGEBASENAME}" \
 	    "${DOWNLOADPATH}" "${SRCPATH}" \
 	 && echo "$${srcdir}/configure.log"
+makelog :
+	@source ${MAKEINCLUDES}/names.sh \
+	 && systemnames && compilernames \
+	 && notetoself "TODO dir names are no needed?" \
+	 && setnames \
+	    "${PACKAGE}"  "${PACKAGEVERSION}"  "${PACKAGEBASENAME}" \
+	    "${DOWNLOADPATH}" "${SRCPATH}" \
+	 && echo "$${srcdir}/make.log"
 oldloglog :
 	 && cd $${srcdir} \
 	 && ( ls -l $${srcdir}/configure.log && echo ">>>>>>>>>>>>>>>>" && cat ./configure.log )
