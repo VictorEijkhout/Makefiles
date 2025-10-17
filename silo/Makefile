@@ -10,12 +10,8 @@ BUILD = 4
 PACKAGE = SILO
 ABOUT = File-based, scientific data exchange and software interoperability
 URL = http://software.llnl.gov/Silo/
-ifeq "${BUILD}" "git"
-  PACKAGEVERSION = git
-else
-  PACKAGEVERSION = 4.11.1
-endif
-# 4.12 about to come out which is cmake based
+PACKAGEVERSION = 4.12.0
+PACKAGEVERSION_DOWNLOAD = 4.12.0-pre1
 
 ## WEIRD main branch has an error that is fixed in 4.11
 ## https://github.com/LLNL/Silo/issues/375
@@ -31,7 +27,8 @@ CMAKEPREFIXPATHSET = 1
 #DEPENDSON = hdf5
 ## silo executables need exact .so version
 DEPENDSONCURRENT = hdf5
-ifeq "${BUILD}" "git"
+
+## ifeq "${BUILD}" "git"
   CMAKEFLAGS = \
       -D SILO_ENABLE_HDF5=ON \
       -D SILO_ENABLE_FORTRAN=ON
@@ -40,16 +37,16 @@ ifeq "${BUILD}" "git"
   endif
   include ${MAKEINCLUDES}/Make.cmake
   include ${MAKEINCLUDES}/Make.cbuild
-else
-  CONFIGUREFLAGS = \
-      --enable-shared \
-      --with-hdf5=${TACC_HDF5_INC},${TACC_HDF5_LIB}
-  CONFIGUREENV="BUILD_SHARED_LIBS=1"
-  # DEFUNPROGFC = 1
-  # FORCERECONF = 1
-  include ${MAKEINCLUDES}/Make.configure
-  include ${MAKEINCLUDES}/Make.install
-endif
+# else
+#   CONFIGUREFLAGS = \
+#       --enable-shared \
+#       --with-hdf5=${TACC_HDF5_INC},${TACC_HDF5_LIB}
+#   CONFIGUREENV="BUILD_SHARED_LIBS=1"
+#   # DEFUNPROGFC = 1
+#   # FORCERECONF = 1
+#   include ${MAKEINCLUDES}/Make.configure
+#   include ${MAKEINCLUDES}/Make.install
+# endif
 
 info ::
 	@echo "make default_install : configure build"
@@ -58,7 +55,8 @@ default_install : configure build
 ##
 ## download
 ##
-TXZURL = https://github.com/LLNL/Silo/releases/download/${PACKAGEVERSION}/silo-${PACKAGEVERSION}.tar.xz
+TGZURL = https://github.com/LLNL/Silo/archive/refs/tags/${PACKAGEVERSION_DOWNLOAD}.tar.gz
+## TXZURL = https://github.com/LLNL/Silo/releases/download/${PACKAGEVERSION}/silo-${PACKAGEVERSION}.tar.xz
 include ${MAKEINCLUDES}/Make.download
 
 ##

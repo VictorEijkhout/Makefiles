@@ -3,7 +3,7 @@
 set -e
 
 cd ../petsc
-./install_big.sh
+./install_big.sh -f
 module load petsc/3.24
 
 cd ../trilinos
