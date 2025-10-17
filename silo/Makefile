@@ -15,6 +15,8 @@ ifeq "${BUILD}" "git"
 else
   PACKAGEVERSION = 4.11.1
 endif
+# 4.12 about to come out which is cmake based
+
 ## WEIRD main branch has an error that is fixed in 4.11
 ## https://github.com/LLNL/Silo/issues/375
 ## Intel 24 problem resolved?
