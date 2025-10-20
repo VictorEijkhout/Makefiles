@@ -156,7 +156,6 @@ if [ ! -z "${cuda}" ] ; then
 	export SCALAR=real
 	export INT=32
 	export PRECISION=double
-	export SCALAR=${scalar}
 	export DEBUGGING=${debugging}
 	export CUDA=1
 	arch=$( make --no-print-directory petscshortarch )
