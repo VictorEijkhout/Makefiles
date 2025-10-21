@@ -10,8 +10,7 @@ URL = https://computing.llnl.gov/projects/sundials \
     https://github.com/LLNL/sundials
 DOCURL = \
     https://sundials.readthedocs.io/en/latest/sundials/Install_link.html#installation-cmake
-PACKAGEVERSION = 7.4.0
-# 7.5.0
+PACKAGEVERSION = 7.5.0
 MODE = mpi
 
 include ${MAKEINCLUDES}/Make.info
