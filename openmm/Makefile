@@ -11,6 +11,7 @@ PACKAGE = openmmcuda
 ABOUT = toolkit for molecular simulation using high performance GPU code.
 URL = https://github.com/openmm/openmm
 PACKAGEVERSION = 8.3.1
+# 8.4.0
 
 MODE = seq
 BASICMODULES = python swig 

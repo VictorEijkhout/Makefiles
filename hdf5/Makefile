@@ -47,9 +47,10 @@ HDFFORTRAN = ON
 #### https://hdfgroup.atlassian.net/servicedesk/customer/portal/6/HELP-2539
 TESTING = ON
 
+THREADSAFE=ON
 CMAKEFLAGS = \
   -D HDF5_ENABLE_PLUGIN_SUPPORT=OFF \
-  -D HDF5_ENABLE_THREADSAFE=ON \
+  -D HDF5_ENABLE_THREADSAFE=${THREADSAFE} \
   -D BUILD_TESTING:BOOL=${TESTING} \
   \
   -D HDF5_ENABLE_Z_LIB_SUPPORT:BOOL=ON \
@@ -72,6 +73,7 @@ include ${MAKEINCLUDES}/Make.cmake
 HASBIN=1
 PKGCONFIGLIB = pkgconfig
 CMAKEPREFIXPATHSET = 1
+MODULENOTES = Thread-safe mode enabled
 FAMILY = hf5
 include ${MAKEINCLUDES}/Make.cbuild
 

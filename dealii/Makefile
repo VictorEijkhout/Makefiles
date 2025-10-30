@@ -12,7 +12,7 @@ ABOUT = Finite Element Library
 URL = https://github.com/dealii/dealii
 PACKAGEVERSION = 9.7.1
 MODE = mpi
-MODULES = p4est petsc sundials trilinos \
+MODULES = p4est petsc phdf5 sundials trilinos \
     mkl
 # intel 23 problem solved in 24
 # support ticket 05936427
@@ -29,6 +29,8 @@ CMAKEFLAGS = \
     -D DEAL_II_WITH_LAPACK=ON \
     -D DEAL_II_COMPONENT_EXAMPLES=OFF \
     -D DEAL_II_WITH_TBB=OFF \
+    -D DEAL_II_WITH_HDF5=ON \
+    -D HDF5_DIR=${TACC_PHDF5_DIR} \
     -D DEAL_II_WITH_P4EST=ON    -D P4EST_DIR=${TACC_P4EST_DIR} \
     -D DEAL_II_WITH_PETSC=ON    -D PETSC_DIR=${PETSC_DIR} -D PETSC_ARCH=${PETSC_ARCH} \
     -D DEAL_II_WITH_SUNDIALS=ON -D SUNDIALS_DIR=${TACC_SUNDIALS_DIR} \
@@ -56,13 +58,6 @@ CPTOINSTALLDIR = examples
 CMAKEBUILDTYPE = DebugRelease
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
-.PHONY: real complex
-info ::
-	@echo "================"
-	@echo "make real : default setup"
-	@echo "make complex: configure build with complex. Make sure to load complex petsc!"
-real :
-	@make --no-print-directory configure build PACKAGEVERSION=${PACKAGEVERSION}
 # https://github.com/dealii/dealii/issues/18254
 complex :
 	@make --no-print-directory configure build PACKAGEVERSION=${PACKAGEVERSION} \
@@ -72,7 +67,10 @@ complex :
 .PHONY: default_install
 info ::
 	@echo "make default_install : real version, there is also complex"
-default_install : real
+default_install :
+	@make --no-print-directory configure build PACKAGEVERSION=${PACKAGEVERSION} \
+	    CMAKEFLAGS="${CMAKEFLAGS} -DDEAL_II_WITH_PETSC_COMPLEX=ON -DDEAL_II_WITH_COMPLEX_VALUES=YES"
+
 # need to make sure we load real/complex petsc
 DEPENDSON = petsc
 
