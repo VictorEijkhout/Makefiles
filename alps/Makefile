@@ -8,22 +8,20 @@ PACKAGE = ALPS
 ABOUT = The Arbitrary Linear Plasma Solver
 URL = http://alps.space/ \
     https://github.com/danielver02/ALPS
-PACKAGEVERSION = 1.1.1
-# 1.1.0-fixes : https://github.com/VictorEijkhout/ALPS-1.1.0-fixes
-# 1.1.2
+PACKAGEVERSION = 1.1.2
 MODE = mpi
 MODULES = mkl
 
 include ${MAKEINCLUDES}/Make.info
 include ${MAKEINCLUDES}/Make.configure
-preconfigure ::
-	@echo " .. preconfigure copy"
-	@source ${MAKEINCLUDES}/names.sh \
-	 && systemnames && compilernames \
-	 && setnames \
-	    "${PACKAGE}"  "${PACKAGEVERSION}"  "${PACKAGEBASENAME}" \
-	    "${DOWNLOADPATH}" "${SRCPATH}" \
-	 && cp Makefile.in.src "$${srcdir}/src/Makefile.in"
+# preconfigure ::
+# 	@echo " .. preconfigure copy"
+# 	@source ${MAKEINCLUDES}/names.sh \
+# 	 && systemnames && compilernames \
+# 	 && setnames \
+# 	    "${PACKAGE}"  "${PACKAGEVERSION}"  "${PACKAGEBASENAME}" \
+# 	    "${DOWNLOADPATH}" "${SRCPATH}" \
+# 	 && cp Makefile.in.src "$${srcdir}/src/Makefile.in"
 CONFIGUREFLAGS = \
     --with-blas='-L${TACC_MKL_LIB} -lmkl_intel_lp64 -lmkl_core -lpthread' \
     --with-lapack='-L${TACC_MKL_LIB} -lmkl_intel_lp64 -lmkl_sequential -lmkl_core -lpthread'
