@@ -390,11 +390,11 @@ biginstall :
 	        ( *complexsingle* ) echo " .. disable superlu_dist because complex single" \
 	                && SUPERLUDIST=0 ;; esac \
 	   && case $${ext} in \
-	        ( *i64* ) CHACO=0 && PARMETIS=0 && SUPERLU=0 SUPERLUDIST=0 ;; esac \
-	   && case $${ext} in \
+	        ( *i64* ) CHACO=0 && PARMETIS=0 && SUPERLU=0 SUPERLUDIST=0 ;; \
 	        ( *complex* ) \
-	                echo " .. disable Hypre, Metis, Mumps because complex" \
-	      ;; esac \
+	                echo " .. disable Hypre ??Metis, Mumps?? because complex" \
+	                 && HYPRE=0 ;; \
+	      esac \
 	   \
 	   && if [ "$${METIS}" = "0" ] ; then PARMETIS=0 && PTSCOTCH=0 ; fi \
 	   && if [ "$${MUMPS}" = "0" ] ; then SCALAPACK=0 ; fi \

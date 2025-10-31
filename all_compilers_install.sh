@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [ $# -lt 1 -o "$1" = "-h" ] ; then 
-    echo "Usage: $0 [ -j 123 ] [ -m \"m1 m2 m3\" ] [ -t target ] [ -v version ] package"
+    echo "Usage: $0 [ -j 123 ] [ -t target ] [ -v version ] package"
     echo "    -m : modules to be loaded"
     echo "    -t : make target or default_install"
     echo "    -v : package version"
@@ -26,7 +26,7 @@ done
 package=$1
 
 cd ${HOME}/Software
-for compiler in intel19 intel23 intel24 gcc9 gcc13 ; do
+for compiler in $( cat ${HOME}/Testing/compilers_${TACC_SYSTEM}.sh ) ; do
     ( \
        settings=env_${TACC_SYSTEM}_${compiler}.sh \
 	&& if [ -f ${settings} ] ; then \
@@ -34,13 +34,14 @@ for compiler in intel19 intel23 intel24 gcc9 gcc13 ; do
 	    && echo "================ Compiler: ${compiler} ================" \
 	    && echo "================================================================" \
 	    && source ${settings}  \
-	    && for m in ${modules} ; do \
+	    && cd $package \
+	    && make clean \
+	    && for m in $( make list_modules ) ; do \
 		echo "loading prereq module <<$m>>" \
 		    && module load $m \
 		    && if [ $? -gt 0 ] ; then echo "ERROR could not load $m" && exit 1 ; fi \
 		; done \
 	    && module list \
-	    && cd $package \
 	    && make JCOUNT=${jcount} ${target} \
 	        $( if [ ! -z ${version} ] ; then echo PACKAGEVERSION=${version} ; fi ) \
 	  ; fi \
