@@ -23,6 +23,8 @@ include ${MAKEINCLUDES}/Make.info
 CMAKEFLAGS =
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
+PKGCONFIGLIB = 1
+CMAKEPREFIXPATHSET = 1
 
 info ::
 	@echo "make default_install : configure build"
