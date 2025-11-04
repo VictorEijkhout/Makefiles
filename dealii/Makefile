@@ -23,11 +23,14 @@ include ${MAKEINCLUDES}/Make.info
 ##
 ## https://dealii.org/developer/readme.html
 ##
+COMPLEX = OFF
 CMAKEFLAGS = \
     -D DEAL_II_WITH_MPI=ON \
     -D CMAKE_CXX_FLAGS="-fopenmp" \
     -D DEAL_II_WITH_LAPACK=ON \
     -D DEAL_II_COMPONENT_EXAMPLES=OFF \
+    -D DEAL_II_WITH_PETSC_COMPLEX=${COMPLEX} \
+    -D DEAL_II_WITH_COMPLEX_VALUES=${COMPLEX} \
     -D DEAL_II_WITH_TBB=OFF \
     -D DEAL_II_WITH_HDF5=ON \
     -D HDF5_DIR=${TACC_PHDF5_DIR} \
@@ -59,20 +62,29 @@ CMAKEBUILDTYPE = DebugRelease
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
 # https://github.com/dealii/dealii/issues/18254
-complex :
+real: 
+	@cd ${TACC_PETSC_DIR} \
+	 && has=$$( grep "define PETSC_USE_COMPLEX" include/petscconf.h | cut -d ' ' -f 3 ) \
+	 && if [ ! -z "$${has}" -a "$$has" -ne 0 ] ; then \
+	      echo "Real version needs real PETSC" && exit 1 ; fi
 	@make --no-print-directory configure build PACKAGEVERSION=${PACKAGEVERSION} \
-	    INSTALLEXT="complex" \
-	    CMAKEFLAGS="${CMAKEFLAGS} -DDEAL_II_WITH_PETSC_COMPLEX=ON -DDEAL_II_WITH_COMPLEX_VALUES=YES"
+	    INSTALLEXT="real" INSTALLVARIANT="real" COMPLEX=OFF
+complex :
+	@cd ${TACC_PETSC_DIR} \
+	 && has=$$( grep "define PETSC_USE_COMPLEX" include/petscconf.h | cut -d ' ' -f 3 ) \
+	 && if [ -z "$${has}" -o "$$has" = "0" ] ; then \
+	      echo "Complex version needs complex PETSC" && exit 1 ; fi
+	@make --no-print-directory configure build PACKAGEVERSION=${PACKAGEVERSION} \
+	    INSTALLEXT="complex" INSTALLVARIANT="complex" COMPLEX=ON
 
-.PHONY: default_install
+.PHONY: default_install real complex
 info ::
 	@echo "make default_install : real version, there is also complex"
-default_install :
-	@make --no-print-directory configure build PACKAGEVERSION=${PACKAGEVERSION} \
-	    CMAKEFLAGS="${CMAKEFLAGS} -DDEAL_II_WITH_PETSC_COMPLEX=ON -DDEAL_II_WITH_COMPLEX_VALUES=YES"
+# https://github.com/dealii/dealii/issues/18976
+default_install : real
 
-# need to make sure we load real/complex petsc
-DEPENDSON = petsc
+# petsc is linked in so no module dependency needed
+# DEPENDSON = petsc
 
 GITREPO = https://github.com/dealii/dealii/archive/v${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.git
