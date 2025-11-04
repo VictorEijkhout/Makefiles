@@ -23,7 +23,9 @@ while [ $# -gt 0 ] ; do
     fi
 done
 
+echo "Loading dependencies:"
 module load $( make listmodules | grep -v petsc | grep -v mkl )
+module -t list | sort | paste -s -d ' '
 
 if [ $real -gt 0 ] ; then
     module load petsc/3.24

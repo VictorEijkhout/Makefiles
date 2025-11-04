@@ -68,14 +68,14 @@ real:
 	 && if [ ! -z "$${has}" -a "$$has" -ne 0 ] ; then \
 	      echo "Real version needs real PETSC" && exit 1 ; fi
 	@make --no-print-directory configure build PACKAGEVERSION=${PACKAGEVERSION} \
-	    INSTALLEXT="real" COMPLEX=OFF
+	    INSTALLEXT="real" INSTALLVARIANT="real" COMPLEX=OFF
 complex :
 	@cd ${TACC_PETSC_DIR} \
 	 && has=$$( grep "define PETSC_USE_COMPLEX" include/petscconf.h | cut -d ' ' -f 3 ) \
 	 && if [ -z "$${has}" -o "$$has" = "0" ] ; then \
 	      echo "Complex version needs complex PETSC" && exit 1 ; fi
 	@make --no-print-directory configure build PACKAGEVERSION=${PACKAGEVERSION} \
-	    INSTALLEXT="complex" COMPLEX=ON
+	    INSTALLEXT="complex" INSTALLVARIANT="complex" COMPLEX=ON
 
 .PHONY: default_install real complex
 info ::
@@ -83,8 +83,8 @@ info ::
 # https://github.com/dealii/dealii/issues/18976
 default_install : real
 
-# need to make sure we load real/complex petsc
-DEPENDSON = petsc
+# petsc is linked in so no module dependency needed
+# DEPENDSON = petsc
 
 GITREPO = https://github.com/dealii/dealii/archive/v${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.git
