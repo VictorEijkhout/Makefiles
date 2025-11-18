@@ -10,6 +10,7 @@ URL = https://kdiff3.sourceforge.net/
 PACKAGEVERSION = 0.9.98
 MODE = core
 MODULES = 
+SKIPPACKAGE = 1
 
 include ${MAKEINCLUDES}/Make.info
 
