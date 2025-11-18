@@ -29,7 +29,7 @@ done
 ##
 package=$1
 cd ${HOME}/Software
-if [ ! d "$package" ] ; then
+if [ ! -d "$package" ] ; then
     echo "No such package: <<$package>>" && exit 1
 fi
 cd $package
@@ -91,6 +91,7 @@ for compiler in $compilers ; do
 	make JCOUNT=${jcount} ${target} PACKAGEVERSION=${version}
     fi
 done 2>&1 | tee all_${package}.log
+
 ##
 ## report available installation
 ## of this package, this version,
@@ -99,5 +100,3 @@ done 2>&1 | tee all_${package}.log
 echo "Available installations:"
 module -t spider ${package}/${version}
 echo && echo "See: all_${package}.log"  && echo
-
-
