@@ -52,11 +52,11 @@ echo "================================================================" \
 set -e
 archs=archs
 rm -f $archs && touch $archs
-for debugging in 0 1 ; do 
+for debug in 0 1 ; do 
     for int in 32 64 ; do 
 	for precision in double single ; do
 	    for scalar in real complex ; do 
-		export DEBUGGING=${debugging}
+		export DEBUG=${debug}
 		export INT=${int}
 		export PRECISION=${precision}
 		export SCALAR=${scalar} 
@@ -81,12 +81,12 @@ done
 ## Without HDF5
 ##
 export NOHDF5=1
-for debugging in 0 1 ; do 
+for debug in 0 1 ; do 
     for int in 32 64 ; do 
 	export INT=${int}
 	export PRECISION=double
 	export SCALAR=real 
-	export DEBUGGING=${debugging}
+	export DEBUG=${debug}
 	arch=$( make --no-print-directory petscshortarch )
 	( echo && echo "Installing big for arch=${arch}" && echo ) | tee -a ${alllog}
 	echo ${arch} >> ${archs}
@@ -106,12 +106,12 @@ export NOHDF5=0
 export FORTRAN=08
 # problem with hdf5, so skip
 # also skip p4p, even though only complexf08debug bombs
-for debugging in 0 1 ; do 
+for debug in 0 1 ; do 
     for scalar in real complex ; do 
 	export INT=32
 	export PRECISION=double
 	export SCALAR=${scalar}
-	export DEBUGGING=${debugging}
+	export DEBUG=${debug}
 	arch=$( make --no-print-directory petscshortarch )
 	( echo && echo "Installing big for arch=${arch}" && echo ) | tee -a ${alllog}
 	echo ${arch} >> ${archs}
@@ -129,12 +129,12 @@ done
 ## Kokkos
 ## just debug/non for now
 ##
-for debugging in 0 1 ; do 
+for debug in 0 1 ; do 
     export SCALAR=real
     export INT=32
     export PRECISION=double
     export SCALAR=${scalar}
-    export DEBUGGING=${debugging}
+    export DEBUG=${debug}
     export CUDA=0
     arch=$( make --no-print-directory petscshortarch )
     ( echo && echo "Installing big for arch=${arch}" && echo ) | tee -a ${alllog}
@@ -152,11 +152,11 @@ done
 ## CUDA
 ##
 if [ ! -z "${cuda}" ] ; then
-    for debugging in 0 1 ; do 
+    for debug in 0 1 ; do 
 	export SCALAR=real
 	export INT=32
 	export PRECISION=double
-	export DEBUGGING=${debugging}
+	export DEBUG=${debug}
 	export CUDA=1
 	arch=$( make --no-print-directory petscshortarch )
 	( echo && echo "Installing big for arch=${arch}" && echo ) | tee -a ${alllog}

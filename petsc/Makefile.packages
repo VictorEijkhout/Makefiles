@@ -99,11 +99,11 @@ WITH_X = "--with-x=1"
 info ::
 	@echo "parameter_settings"
 .PHONY: param_settings
-PARAMETERLIST = ALIGN DEBUGGING INT PRECISION SCALAR
-parameterlist = align debugging fortran int precision scalar
+PARAMETERLIST = ALIGN DEBUG INT PRECISION SCALAR
+parameterlist = align debug fortran int precision scalar
 param_settings :
 	@export align=${ALIGN} \
-	 && export debugging=${DEBUGGING} \
+	 && export debug=${DEBUG} \
 	 && export fortran=${FORTRAN} \
 	     && export fortran_option_90="--with-fortran-bindings=1" \
 	     && export fortran_option_08="--with-fortran-bindings=1 --with-mpi-f90module-visibility=0" \
@@ -127,6 +127,8 @@ param_settings :
 	                  eval optdef="\$${$${p}_default}" \
 	                   && if [ "$$p" = "scalar" ] ; then \
 	                        option="--with-scalar-type=$${optval}" \
+	                      ; elif [ "$$p" = "debug" ] ; then \
+	                        option="--with-debugging=$${optval}" \
 	                      ; else \
 	                        option="--with-$${p}=$${optval}" ; fi \
 	                ; fi \
