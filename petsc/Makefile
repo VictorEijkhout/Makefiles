@@ -93,7 +93,7 @@ petscshortarch :
 	    export PETSC_EXT=$${PETSC_EXT}cuda ; fi \
 	 && if [ "${KOKKOS}" = "1" ] ; then \
 	    export PETSC_EXT=$${PETSC_EXT}kokkos ; fi \
-	 && if [ "${DEBUGGING}" = "1" ] ; then \
+	 && if [ "${DEBUG}" = "1" ] ; then \
 	    export PETSC_EXT=$${PETSC_EXT}debug ; fi \
 	  \
 	 && if [ ! -z "${CUSTOMEXT}" ] ; then \
@@ -168,7 +168,7 @@ default_install :: modules
 	 && export petscarch=`make --no-print-directory \
 	                SCALAR=${SCALAR} PRECISION=${PRECISION} INT=${INT} \
 	                ALIGN=${ALIGN} \
-	                CUDA=${CUDA} DEBUGGING=${DEBUGGING} CUSTOMEXT=${CUSTOMEXT} \
+	                CUDA=${CUDA} DEBUG=${DEBUG} CUSTOMEXT=${CUSTOMEXT} \
 	                petscarch` \
 	 && echo " .. deduced petc arch: <<$$petscarch>>" && echo \
 	 && setnames \
@@ -191,7 +191,7 @@ default_install :: modules
 	      PETSC4PY=${PETSC4PY} SLEPC4PY=${SLEPC4PY} \
 	      )" \
 	 && export param_settings="$$( make --no-print-directory param_settings \
-	        DEBUGGING=${DEBUGGING} INT=${INT} PRECISION=${PRECISION} SCALAR=${SCALAR} \
+	        DEBUG=${DEBUG} INT=${INT} PRECISION=${PRECISION} SCALAR=${SCALAR} \
 		)" \
 	 && ( \
 	    if [ ! -d $$srcdir ] ; then \
@@ -263,7 +263,7 @@ installation_public :
 	@ export petscarch=`make --no-print-directory \
 	         SCALAR=${SCALAR} PRECISION=${PRECISION} INT=${INT} \
 	         ALIGN=${ALIGN} \
-	         CUDA=${CUDA} DEBUGGING=${DEBUGGING} CUSTOMEXT=${CUSTOMEXT} \
+	         CUDA=${CUDA} DEBUG=${DEBUG} CUSTOMEXT=${CUSTOMEXT} \
 	         petscarch` \
 	 && make public INSTALLEXT="" \
 	    $$( if [ ! -z ${CUSTOMEXT} ] ; then \
@@ -281,7 +281,7 @@ makemodule :
 	 && export petscarch=`make --no-print-directory \
 	                SCALAR=${SCALAR} PRECISION=${PRECISION} INT=${INT} \
 	                ALIGN=${ALIGN} \
-	                CUDA=${CUDA} DEBUGGING=${DEBUGGING} CUSTOMEXT=${CUSTOMEXT} \
+	                CUDA=${CUDA} DEBUG=${DEBUG} CUSTOMEXT=${CUSTOMEXT} \
 	                petscarch` \
 	 && setnames \
 	    "${PACKAGE}"  "${PACKAGEVERSION}"  "${PACKAGEBASENAME}" \
@@ -342,7 +342,7 @@ biginstall :
 	        ( "gcc" ) echo " .. no FORTRAN for gcc" && echo FORTRAN=0 ;; \
 	        esac \
 	   && echo "Selecting basic options for extension=$${ext}:" \
-	   && case $${ext} in ( *debug* ) DEBUGGING=1 ;; ( * ) DEBUGGING=0 ;; esac \
+	   && case $${ext} in ( *debug* ) DEBUG=1 ;; ( * ) DEBUG=0 ;; esac \
 	   && case $${ext} in ( *i64* ) INT=64 ;; ( * ) INT=32 ;; esac \
 	   && case $${ext} in ( *single* ) PRECISION=single ;; ( * ) PRECISION=double ;; esac \
 	   && case $${ext} in ( *complex* ) SCALAR=complex ;; ( * ) SCALAR=real ;; esac \
@@ -402,7 +402,7 @@ biginstall :
 	   && echo "Start configure/build at $$( date )" \
 	   && cmdline="make --no-print-directory default_install makemodule \
 	      PACKAGEVERSION=${PACKAGEVERSION} JCOUNT=${JCOUNT} \
-	      DEBUGGING=$${DEBUGGING} INT=$${INT} PRECISION=$${PRECISION} SCALAR=$${SCALAR} \
+	      DEBUG=$${DEBUG} INT=$${INT} PRECISION=$${PRECISION} SCALAR=$${SCALAR} \
 	      $$( if [ ! -z ${CUSTOMEXT} ] ; then echo CUSTOMEXT=${CUSTOMEXT} ; fi ) \
 	      \
 	      AMGX=$${AMGX} CHACO=$${CHACO} EIGEN=$${EIGEN} FFTW=$${FFTW} \
@@ -438,7 +438,7 @@ config-view :
 	 \
 	 && export petscarch=`make --no-print-directory \
 	                SCALAR=${SCALAR} INT=${INT} PRECISION=${PRECISION} ALIGN=${ALIGN} \
-	                CUDA=${CUDA} DEBUGGING=${DEBUGGING} CUSTOMEXT=${CUSTOMEXT} \
+	                CUDA=${CUDA} DEBUG=${DEBUG} CUSTOMEXT=${CUSTOMEXT} \
 	                petscarch` \
 	 && cat $$srcdir/configure.log
 log-view :
