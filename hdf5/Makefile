@@ -21,8 +21,10 @@ URL = https://github.com/HDFGroup/hdf5
 # https://support.hdfgroup.org/ftp/HDF5/releases/
 
 # there is a micro version but we ignore that for now.
-PACKAGESHORTVERSION = 1.14
-PACKAGEVERSION = 1.14.6
+PACKAGESHORTVERSION = 2.0
+# 1.14
+PACKAGEVERSION = 2.0.0
+# 1.14.6
 
 MODE = mpi
 MODULES = zlib
@@ -105,11 +107,14 @@ default_install ::
 ## download
 ##
 
+# version 2 semantic versioning at last. yay
+# TGZURL = https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-${PACKAGEVERSION}/src/hdf5-${PACKAGEVERSION}.tar.gz
+
 # my own attempt at predictable naming
-TGZURL = https://github.com/VictorEijkhout/hdf5-with-predictable-naming/archive/refs/tags/${PACKAGEVERSION}.tar.gz
+## TGZURL = https://github.com/VictorEijkhout/hdf5-with-predictable-naming/archive/refs/tags/${PACKAGEVERSION}.tar.gz
 
 # if hdf group ever gets semantic versioning straightened out
-## https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-${PACKAGESHORTVERSION}/hdf5-${PACKAGEVERSION}/src/hdf5-${PACKAGEVERSION}.tar.gz
+TGZURL = https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-${PACKAGESHORTVERSION}/hdf5-${PACKAGEVERSION}/src/hdf5-${PACKAGEVERSION}.tar.gz
 
 include ${MAKEINCLUDES}/Make.download
 

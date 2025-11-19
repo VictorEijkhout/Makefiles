@@ -28,25 +28,15 @@ CMAKEPREFIXPATHSET = 1
 ## silo executables need exact .so version
 DEPENDSONCURRENT = hdf5
 
-## ifeq "${BUILD}" "git"
-  CMAKEFLAGS = \
+## starting with 4.12 only cmake build
+CMAKEFLAGS = \
       -D SILO_ENABLE_HDF5=ON \
       -D SILO_ENABLE_FORTRAN=ON
-  ifeq "${TACC_FAMILY_COMPILER}" "intel"
+ifeq "${TACC_FAMILY_COMPILER}" "intel"
       CMAKEFLAGS += -D CMAKE_C_FLAGS=-Wno-int-conversion
-  endif
-  include ${MAKEINCLUDES}/Make.cmake
-  include ${MAKEINCLUDES}/Make.cbuild
-# else
-#   CONFIGUREFLAGS = \
-#       --enable-shared \
-#       --with-hdf5=${TACC_HDF5_INC},${TACC_HDF5_LIB}
-#   CONFIGUREENV="BUILD_SHARED_LIBS=1"
-#   # DEFUNPROGFC = 1
-#   # FORCERECONF = 1
-#   include ${MAKEINCLUDES}/Make.configure
-#   include ${MAKEINCLUDES}/Make.install
-# endif
+endif
+include ${MAKEINCLUDES}/Make.cmake
+include ${MAKEINCLUDES}/Make.cbuild
 
 info ::
 	@echo "make default_install : configure build"

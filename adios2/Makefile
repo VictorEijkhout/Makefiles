@@ -11,6 +11,7 @@ PACKAGE = adios2
 ABOUT = The Adaptable Input/Output System version 2
 URL = https://github.com/ornladios/ADIOS2
 PACKAGEVERSION = 2.10.2
+# 2.11.0
 
 MODE = mpi
 MODULES_BASIC = phdf5

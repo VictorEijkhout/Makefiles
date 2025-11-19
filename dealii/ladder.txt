@@ -1,0 +1,12 @@
+boost
+bison
+pcre2
+swig
+zlib
+phdf5
+pnetcdf
+trilinos
+petsc
+p4est
+sundials
+dealii

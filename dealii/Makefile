@@ -83,8 +83,8 @@ info ::
 # https://github.com/dealii/dealii/issues/18976
 default_install : real
 
-# petsc is linked in so no module dependency needed
-# DEPENDSON = petsc
+# needs to find the hdf5 libs
+DEPENDSONCURRENT = phdf5
 
 GITREPO = https://github.com/dealii/dealii/archive/v${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.git
