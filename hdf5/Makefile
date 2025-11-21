@@ -106,6 +106,8 @@ default_install ::
 ## download
 ##
 
+# https://support.hdfgroup.org/releases/hdf5/v2_0/v2_0_0/downloads/index.html
+
 # version 2 semantic versioning at last. and they still mess it up
 ## TGZURL = https://support.hdfgroup.org/releases/hdf5/v2_0/v2_0_0/downloads/hdf5-${PACKAGEVERSION}.tar.gz
 
