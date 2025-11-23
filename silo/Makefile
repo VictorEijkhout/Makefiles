@@ -15,7 +15,7 @@ PACKAGEVERSION = 4.12.0
 ## Intel 24 problem resolved?
 ## https://github.com/LLNL/Silo/issues/400
 MODE = seq
-MODULES = hdf5/1
+MODULES = hdf5
 
 include ${MAKEINCLUDES}/Make.info
 
