@@ -4,28 +4,23 @@
 ####
 ################################################################
 
-BUILD = 4
-# or BUILD=git
-
 PACKAGE = SILO
 ABOUT = File-based, scientific data exchange and software interoperability
 URL = http://software.llnl.gov/Silo/
 PACKAGEVERSION = 4.12.0
-PACKAGEVERSION_DOWNLOAD = 4.12.0-pre1
+## PACKAGEVERSION_DOWNLOAD = 4.12.0-pre1
 
 ## WEIRD main branch has an error that is fixed in 4.11
 ## https://github.com/LLNL/Silo/issues/375
 ## Intel 24 problem resolved?
 ## https://github.com/LLNL/Silo/issues/400
 MODE = seq
-MODULES = hdf5
+MODULES = hdf5/1
 
 include ${MAKEINCLUDES}/Make.info
 
 HASBIN=1
 CMAKEPREFIXPATHSET = 1
-#DEPENDSON = hdf5
-## silo executables need exact .so version
 DEPENDSONCURRENT = hdf5
 
 ## starting with 4.12 only cmake build
@@ -45,8 +40,7 @@ default_install : configure build
 ##
 ## download
 ##
-TGZURL = https://github.com/LLNL/Silo/archive/refs/tags/${PACKAGEVERSION_DOWNLOAD}.tar.gz
-## TXZURL = https://github.com/LLNL/Silo/releases/download/${PACKAGEVERSION}/silo-${PACKAGEVERSION}.tar.xz
+TGZURL = https://github.com/LLNL/Silo/archive/refs/tags/${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 
 ##
