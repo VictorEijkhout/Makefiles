@@ -29,6 +29,6 @@ info ::
 	@echo "make default_install : configure build"
 default_install : configure build
 
-TGZURL = https://sourceforge.net/projects/gnuplot/files/gnuplot/${PACKAGEVERSION}/gnuplot-${PACKAGEVERSION}.tar.gz/download
+DOWNLOADURL = https://sourceforge.net/projects/gnuplot/files/gnuplot/${PACKAGEVERSION}/gnuplot-${PACKAGEVERSION}.tar.gz/download
 include ${MAKEINCLUDES}/Make.download
 

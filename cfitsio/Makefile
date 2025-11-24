@@ -25,5 +25,5 @@ info ::
 .PHONY: default_install
 default_install : configure build public
 
-TGZURL = https://heasarc.gsfc.nasa.gov/FTP/software/fitsio/c/cfitsio-${PACKAGEVERSION}.tar.gz
+DOWNLOADURL = https://heasarc.gsfc.nasa.gov/FTP/software/fitsio/c/cfitsio-${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download

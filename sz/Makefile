@@ -25,7 +25,7 @@ default_install : configure build
 ##
 ## Download and clone
 ##
-TGZURL = https://github.com/szcompressor/SZ/archive/refs/tags/v${PACKAGEVERSIONDOWNLOAD}.tar.gz
+DOWNLOADURL = https://github.com/szcompressor/SZ/archive/refs/tags/v${PACKAGEVERSIONDOWNLOAD}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 GITREPO = https://github.com/szcompressor/SZ.git
 include ${MAKEINCLUDES}/Make.git

@@ -49,6 +49,6 @@ info ::
 	@echo "make default_install : build only"
 default_install : build varsmodule public
 
-TGZURL = https://github.com/manodeep/Corrfunc/archive/refs/tags/${PACKAGEVERSION}.tar.gz
+DOWNLOADURL = https://github.com/manodeep/Corrfunc/archive/refs/tags/${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 

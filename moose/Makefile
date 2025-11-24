@@ -46,7 +46,7 @@ notconfigure : modules
 	@echo && echo "CMake configuration ended: $$( date )" && echo 
 
 # tagged versions fail, seem to think they are in a repository?
-# TGZURL = https://github.com/idaholab/moose/archive/refs/tags/${PACKAGEVERSION}.tar.gz
+# DOWNLOADURL = https://github.com/idaholab/moose/archive/refs/tags/${PACKAGEVERSION}.tar.gz
 # include ${MAKEINCLUDES}/Make.download
 GITREPO = https://github.com/idaholab/moose.git
 SUBMODULE = 1

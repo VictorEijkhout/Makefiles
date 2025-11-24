@@ -141,18 +141,18 @@ default_install : configure build
 
 ##
 ## Download of versioned releases
-## Specify a TGZURL path
+## Specify a DOWNLOADURL path
 ## - this can end in tgz or tar.gz; it gets renamed to a standard name anyway
 ## - use PACKAGEVERSION here as much as possible
 ## - for zip files use ZIPURL
 ##
-TGZURL = https://gitlab.com/pkg-project/pkg/-/archive/${PACKAGEVERSION}/pkg-${PACKAGEVERSION}.tar.gz
+DOWNLOADURL = https://gitlab.com/pkg-project/pkg/-/archive/${PACKAGEVERSION}/pkg-${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 
 ##
 ## Clone of git repo
 ## Specify a GITREPO path
-## This rule can coexist with the TGZURL download above,
+## This rule can coexist with the DOWNLOADURL download above,
 ## however, you then need to set the package version explicitly:
 ##   make clone PACKAGEVERSION=git
 ## - SUBMODULE : set to nonzero to have submodules loaded

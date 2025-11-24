@@ -34,5 +34,5 @@ default_install : configure build
 ##
 ## download
 ##
-TGZURL = https://github.com/cburstedde/libsc/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
+DOWNLOADURL = https://github.com/cburstedde/libsc/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download

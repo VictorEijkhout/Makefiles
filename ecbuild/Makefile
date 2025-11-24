@@ -41,7 +41,7 @@ include ${MAKEINCLUDES}/Make.vars
 .PHONY: default_install
 default_install : build module
 
-TGZURL = https://github.com/ecmwf/ecbuild/archive/refs/tags/${PACKAGEVERSION}.tar.gz
+DOWNLOADURL = https://github.com/ecmwf/ecbuild/archive/refs/tags/${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 
 include ${MAKEINCLUDES}/Make.clean

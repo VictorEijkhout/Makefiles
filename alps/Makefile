@@ -51,7 +51,7 @@ info ::
 	@echo "make default_install : configure build"
 default_install : configure build
 
-TGZURL = https://github.com/danielver02/ALPS/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
+DOWNLOADURL = https://github.com/danielver02/ALPS/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 GITREPO = https://github.com/danielver02/ALPS.git
 include ${MAKEINCLUDES}/Make.git

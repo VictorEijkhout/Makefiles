@@ -24,6 +24,6 @@ include ${MAKEINCLUDES}/Make.cbuild
 .PHONY: default_install
 default_install : configure build
 
-TGZURL = https://github.com/madler/zlib/releases/download/v${PACKAGEVERSION}/zlib-${PACKAGEVERSION}.tar.gz
+DOWNLOADURL = https://github.com/madler/zlib/releases/download/v${PACKAGEVERSION}/zlib-${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 include ${MAKEINCLUDES}/Make.clean

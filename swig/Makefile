@@ -34,5 +34,5 @@ default_install : configure build
 HASBIN = 1
 NOLIB = 1
 
-TGZURL = http://prdownloads.sourceforge.net/swig/swig-${PACKAGEVERSION}.tar.gz
+DOWNLOADURL = http://prdownloads.sourceforge.net/swig/swig-${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download

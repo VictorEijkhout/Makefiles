@@ -47,7 +47,7 @@ LIBS = \
 include ${MAKEINCLUDES}/Make.install
 HASBIN = 1
 
-TGZURL = https://github.com/plumed/plumed2/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
+DOWNLOADURL = https://github.com/plumed/plumed2/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 
 include ${MAKEINCLUDES}/Make.clean

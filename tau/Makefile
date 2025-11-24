@@ -53,7 +53,7 @@ info ::
 .PHONY: default_install
 default_install : configure build public
 
-TGZURL = http://tau.uoregon.edu/tau.tgz
+DOWNLOADURL = http://tau.uoregon.edu/tau.tgz
 include ${MAKEINCLUDES}/Make.download
 untar ::
 	@source ${MAKEINCLUDES}/names.sh \

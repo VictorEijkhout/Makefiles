@@ -102,7 +102,7 @@ gpu :
 ##
 DEPENDSONCURRENT = hypre
 
-TGZURL = https://github.com/mfem/mfem/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
+DOWNLOADURL = https://github.com/mfem/mfem/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 GITREPO = git@github.com:mfem/mfem.git
 include ${MAKEINCLUDES}/Make.git

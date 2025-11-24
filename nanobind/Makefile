@@ -34,5 +34,5 @@ GITREPO = https://github.com/wjakob/nanobind.git
 SUBMODULE = 1
 include ${MAKEINCLUDES}/Make.git
 
-TGZURL = https://github.com/wjakob/nanobind/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
+DOWNLOADURL = https://github.com/wjakob/nanobind/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download

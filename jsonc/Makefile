@@ -24,7 +24,7 @@ include ${MAKEINCLUDES}/Make.cbuild
 .PHONY: default_install
 default_install : configure build public
 
-TGZURL = https://github.com/json-c/json-c/archive/refs/tags/json-c-${PACKAGEVERSION_DOWNLOAD}.tar.gz
+DOWNLOADURL = https://github.com/json-c/json-c/archive/refs/tags/json-c-${PACKAGEVERSION_DOWNLOAD}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 
 GITREPO = https://github.com/json-c/json-c.git

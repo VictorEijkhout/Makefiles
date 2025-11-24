@@ -35,5 +35,5 @@ default_install :
 	 && make --no-print-directory configure build public \
 	      PACKAGEVERSION=$(PACKAGEVERSION) JCOUNT=${JCOUNT}
 
-TGZURL = https://cirrus.ucsd.edu/~pierce/ncview/ncview-${PACKAGEVERSION}.tar.gz
+DOWNLOADURL = https://cirrus.ucsd.edu/~pierce/ncview/ncview-${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download

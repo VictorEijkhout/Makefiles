@@ -56,7 +56,7 @@ config-help :
 	 && cd $$srcdir \
 	 && ./build --help
 
-TGZURL = https://github.com/charmplusplus/charm/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
+DOWNLOADURL = https://github.com/charmplusplus/charm/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 
 ################################################################

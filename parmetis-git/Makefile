@@ -39,6 +39,6 @@ build ::
 	    && make BUILDDIR=$${builddir} install \
 	    ) 2>&1 | tee $${installlog}
 
-TGZURL = http://glaros.dtc.umn.edu/gkhome/fetch/sw/parmetis/parmetis-${PACKAGEVERSION}.tar.gz
+DOWNLOADURL = http://glaros.dtc.umn.edu/gkhome/fetch/sw/parmetis/parmetis-${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 

@@ -21,5 +21,5 @@ info ::
 .PHONY: default_install
 default_install : configure build
 
-TGZURL = http://mvapich.cse.ohio-state.edu/download/mvapich/osu-micro-benchmarks-${PACKAGEVERSION}.tar.gz
+DOWNLOADURL = http://mvapich.cse.ohio-state.edu/download/mvapich/osu-micro-benchmarks-${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download

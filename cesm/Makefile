@@ -30,7 +30,7 @@ configure :
 HASBIN = 1
 include ${MAKEINCLUDES}/Make.vars
 
-TGZURL = https://github.com/ESCOMP/CESM/archive/refs/tags/release-cesm${PACKAGEVERSION}.tar.gz
+DOWNLOADURL = https://github.com/ESCOMP/CESM/archive/refs/tags/release-cesm${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 
 GITREPO = https://github.com/escomp/cesm.git

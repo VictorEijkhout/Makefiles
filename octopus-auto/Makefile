@@ -37,6 +37,6 @@ GITREPO = https://gitlab.com/octopus-code/octopus.git
 SUBMODULE = 1
 include ${MAKEINCLUDES}/Make.git
 
-TGZURL = https://gitlab.com/octopus-code/octopus/-/archive/${PACKAGEVERSION}/octopus-${PACKAGEVERSION}.tar.gz
+DOWNLOADURL = https://gitlab.com/octopus-code/octopus/-/archive/${PACKAGEVERSION}/octopus-${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 

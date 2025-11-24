@@ -24,5 +24,5 @@ info ::
 	@echo "make default_install : configure build"
 default_install : configure build public
 
-TGZURL = https://github.com/ninja-build/ninja/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
+DOWNLOADURL = https://github.com/ninja-build/ninja/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download

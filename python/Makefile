@@ -56,7 +56,7 @@ HASBIN = 1
 include ${MAKEINCLUDES}/Make.vars
 include ${MAKEINCLUDES}/Make.public
 
-TGZURL = https://www.python.org/ftp/python/${PACKAGEVERSION}/Python-${PACKAGEVERSION}.tgz
+DOWNLOADURL = https://www.python.org/ftp/python/${PACKAGEVERSION}/Python-${PACKAGEVERSION}.tgz
 include ${MAKEINCLUDES}/Make.download
 
 include ${MAKEINCLUDES}/Make.clean

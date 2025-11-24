@@ -45,7 +45,7 @@ info ::
 .PHONY: default_install
 default_install : configure build
 
-# TGZURL = 
+# DOWNLOADURL = 
 # include ${MAKEINCLUDES}/Make.download
 
 GITREPO = https://github.com/jobordner/enzo-e.git

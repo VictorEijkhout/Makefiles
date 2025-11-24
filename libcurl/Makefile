@@ -27,7 +27,7 @@ CONFIGUREFLAGS = --with-openssl --without-libpsl
 include ${MAKEINCLUDES}/Make.configure
 include ${MAKEINCLUDES}/Make.install
 
-TGZURL = https://github.com/curl/curl/releases/download/curl-${PACKAGEVERSIONDOWNLOAD}/curl-${PACKAGEVERSION}.tar.gz
+DOWNLOADURL = https://github.com/curl/curl/releases/download/curl-${PACKAGEVERSIONDOWNLOAD}/curl-${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 GITREPO = https://github.com/libcurlbuild/libcurl.git
 

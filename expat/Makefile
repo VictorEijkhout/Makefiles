@@ -30,7 +30,7 @@ default_install : configure build public
 ##
 ## Download
 ##
-TGZURL = https://github.com/libexpat/libexpat/releases/download/R_${PACKAGEVERSIONDOWNLOAD}/expat-${PACKAGEVERSION}.tar.gz
+DOWNLOADURL = https://github.com/libexpat/libexpat/releases/download/R_${PACKAGEVERSIONDOWNLOAD}/expat-${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 
 ##

@@ -20,7 +20,7 @@ include ${MAKEINCLUDES}/Make.install
 .PHONY: default_install
 default_install : configure build 
 
-TGZURL = https://ftp.gnu.org/gnu/m4/m4-${PACKAGEVERSION}.tar.gz
+DOWNLOADURL = https://ftp.gnu.org/gnu/m4/m4-${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 
 include ${MAKEINCLUDES}/Make.clean

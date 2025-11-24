@@ -21,7 +21,7 @@ include ${MAKEINCLUDES}/Make.install
 .PHONY: default_install
 default_install : configure build 
 
-TGZURL = https://github.com/tmux/tmux/archive/refs/tags/${PACKAGEVERSION}.tar.gz
+DOWNLOADURL = https://github.com/tmux/tmux/archive/refs/tags/${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 
 include ${MAKEINCLUDES}/Make.clean

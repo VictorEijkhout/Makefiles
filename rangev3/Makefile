@@ -37,7 +37,7 @@ include ${MAKEINCLUDES}/Make.cbuild
 .PHONY: default_install
 default_install : configure build
 
-TGZURL = https://github.com/ericniebler/range-v3/archive/refs/tags/${PACKAGEVERSION}.tar.gz
+DOWNLOADURL = https://github.com/ericniebler/range-v3/archive/refs/tags/${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 
 GITREPO = https://github.com/ericniebler/range-v3.git

@@ -158,7 +158,7 @@ info ::
 	@echo "make default_install : configure build"
 default_install : configure build
 
-TGZURL = https://github.com/trilinos/Trilinos/archive/refs/tags/trilinos-release-${PACKAGEVERSION_DOWNLOAD}.tar.gz
+DOWNLOADURL = https://github.com/trilinos/Trilinos/archive/refs/tags/trilinos-release-${PACKAGEVERSION_DOWNLOAD}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 
 GITREPO = git@github.com:trilinos/Trilinos.git

@@ -117,7 +117,7 @@ configlog :
 ####
 #### Download
 ####
-TGZURL = https://github.com/Cantera/cantera/releases/download/v${PACKAGEVERSION}/cantera-${PACKAGEVERSION}.tar.gz
+DOWNLOADURL = https://github.com/Cantera/cantera/releases/download/v${PACKAGEVERSION}/cantera-${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 GITREPO = https://github.com/Cantera/cantera.git
 include ${MAKEINCLUDES}/Make.git

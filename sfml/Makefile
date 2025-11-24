@@ -28,7 +28,7 @@ default_install : configure build
 ## download or clone
 ##
 # https://github.com/SFML/SFML/archive/refs/tags/3.0.1.tar.gz
-TGZURL = https://github.com/SFML/SFML/archive/refs/tags/${PACKAGEVERSION}.tar.gz
+DOWNLOADURL = https://github.com/SFML/SFML/archive/refs/tags/${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 GITREPO = https://github.com/SFML/SFML.git
 include ${MAKEINCLUDES}/Make.git

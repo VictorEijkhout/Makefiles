@@ -31,5 +31,5 @@ info ::
 .PHONY: default_install
 default_install : configure build 
 
-TGZURL = https://github.com/Kitware/CMake/releases/download/v${PACKAGEVERSION}/cmake-${PACKAGEVERSION}.tar.gz
+DOWNLOADURL = https://github.com/Kitware/CMake/releases/download/v${PACKAGEVERSION}/cmake-${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download

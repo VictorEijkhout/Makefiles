@@ -20,5 +20,5 @@ info ::
 	@echo "make default_install : configure build"
 default_install : configure build public
 
-TGZURL = https://downloads.unidata.ucar.edu/udunits/${PACKAGEVERSION}/udunits-${PACKAGEVERSION}.tar.gz
+DOWNLOADURL = https://downloads.unidata.ucar.edu/udunits/${PACKAGEVERSION}/udunits-${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download

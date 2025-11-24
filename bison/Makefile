@@ -22,7 +22,7 @@ include ${MAKEINCLUDES}/Make.install
 .PHONY: default_install
 default_install : configure build 
 
-TXZURL = https://ftp.gnu.org/gnu/bison/bison-${PACKAGEVERSION}.tar.xz
+DOWNLOADURL = https://ftp.gnu.org/gnu/bison/bison-${PACKAGEVERSION}.tar.xz
 include ${MAKEINCLUDES}/Make.download
 
 include ${MAKEINCLUDES}/Make.clean

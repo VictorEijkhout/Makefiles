@@ -58,6 +58,6 @@ double :
 	    MODE=mpi
 ## INSTALLVARIANT=double 
 
-TGZURL = http://fftw.org/fftw-${PACKAGEVERSION}.tar.gz
+DOWNLOADURL = http://fftw.org/fftw-${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 

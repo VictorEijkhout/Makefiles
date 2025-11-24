@@ -25,6 +25,6 @@ default_install : configure build
 GITREPO = https://github.com/grackle-project/grackle.git
 include ${MAKEINCLUDES}/Make.git
 
-TGZURL = https://github.com/grackle-project/grackle/archive/refs/tags/grackle-${PACKAGEVERSION}.tar.gz
+DOWNLOADURL = https://github.com/grackle-project/grackle/archive/refs/tags/grackle-${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 

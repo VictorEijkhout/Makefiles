@@ -55,7 +55,7 @@ DEPENDSONCURRENTMINOR = phdf5 petsc
 
 include ${MAKEINCLUDES}/Make.install
 
-TGZURL = https://github.com/libMesh/libmesh/releases/download/v${PACKAGEVERSIONDOWNLOAD}/libmesh-${PACKAGEVERSIONDOWNLOAD}.tar.gz
+DOWNLOADURL = https://github.com/libMesh/libmesh/releases/download/v${PACKAGEVERSIONDOWNLOAD}/libmesh-${PACKAGEVERSIONDOWNLOAD}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 
 GITREPO = https://github.com/libMesh/libmesh.git

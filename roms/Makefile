@@ -25,7 +25,7 @@ include ${MAKEINCLUDES}/Make.cbuild
 .PHONY: default_install
 default_install : configure build public
 
-TGZURL = https://github.com/myroms/roms/archive/refs/tags/roms-${PACKAGEVERSION}.tar.gz
+DOWNLOADURL = https://github.com/myroms/roms/archive/refs/tags/roms-${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 
 GITREPO = https://github.com/myroms/roms.git

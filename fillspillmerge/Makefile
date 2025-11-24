@@ -25,7 +25,7 @@ NOLIB = 1
 .PHONY: default_install
 default_install : configure build public
 
-TGZURL = https://github.com/r-barnes/Barnes2020-FillSpillMerge/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
+DOWNLOADURL = https://github.com/r-barnes/Barnes2020-FillSpillMerge/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 
 GITREPO = git@github.com:r-barnes/Barnes2020-FillSpillMerge.git

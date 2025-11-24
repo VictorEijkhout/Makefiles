@@ -22,5 +22,5 @@ info ::
 .PHONY: default_install
 default_install : configure build
 
-TGZURL = https://www.mpfr.org/mpfr-current/mpfr-${PACKAGEVERSION}.tar.gz
+DOWNLOADURL = https://www.mpfr.org/mpfr-current/mpfr-${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download

@@ -23,6 +23,6 @@ info ::
 	@echo "make default_install : configure build"
 default_install : configure build public
 
-TGZURL = https://github.com/NixOS/patchelf/archive/refs/tags/${PACKAGEVERSION}.tar.gz
+DOWNLOADURL = https://github.com/NixOS/patchelf/archive/refs/tags/${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 GITREPO = https://github.com/jarro2783/patchelf.git

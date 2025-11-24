@@ -81,7 +81,7 @@ default_install seq : seq32
 ##
 ## download
 ##
-TGZURL = https://gitlab.inria.fr/scotch/scotch/-/archive/v${PACKAGEVERSION}/scotch-v${PACKAGEVERSION}.tar.gz
+DOWNLOADURL = https://gitlab.inria.fr/scotch/scotch/-/archive/v${PACKAGEVERSION}/scotch-v${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 
 ##

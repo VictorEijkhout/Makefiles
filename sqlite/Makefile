@@ -32,7 +32,7 @@ info ::
 	@echo "make default_install"
 default_install : configure build public 
 
-TGZURL = https://github.com/sqlite/sqlite/archive/refs/tags/version-${PACKAGEVERSION}.tar.gz
+DOWNLOADURL = https://github.com/sqlite/sqlite/archive/refs/tags/version-${PACKAGEVERSION}.tar.gz
 # https://www.sqlite.org/src/tarball/sqlite.tar.gz
 ## ?r=release
 include ${MAKEINCLUDES}/Make.download

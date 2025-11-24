@@ -70,7 +70,7 @@ default_install :
 	 && make --no-print-directory varsmodule \
 	      CMAKEPREFIXPATHSET=1
 
-TGZURL = https://github.com/p7zip-project/p7zip/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
+DOWNLOADURL = https://github.com/p7zip-project/p7zip/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 GITREPO = https://github.com/p7zip-project/p7zip.git
 include ${MAKEINCLUDES}/Make.git

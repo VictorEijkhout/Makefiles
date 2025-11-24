@@ -109,10 +109,10 @@ default_install ::
 # https://support.hdfgroup.org/releases/hdf5/v2_0/v2_0_0/downloads/index.html
 
 # version 2 semantic versioning at last. and they still mess it up
-## TGZURL = https://support.hdfgroup.org/releases/hdf5/v2_0/v2_0_0/downloads/hdf5-${PACKAGEVERSION}.tar.gz
+## DOWNLOADURL = https://support.hdfgroup.org/releases/hdf5/v2_0/v2_0_0/downloads/hdf5-${PACKAGEVERSION}.tar.gz
 
 # my own attempt at predictable naming
-TGZURL = https://github.com/VictorEijkhout/hdf5-with-predictable-naming/archive/refs/tags/${PACKAGEVERSION}.tar.gz
+DOWNLOADURL = https://github.com/VictorEijkhout/hdf5-with-predictable-naming/archive/refs/tags/${PACKAGEVERSION}.tar.gz
 
 include ${MAKEINCLUDES}/Make.download
 

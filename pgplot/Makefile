@@ -76,7 +76,7 @@ build ::
 .PHONY: default_install
 default_install : configure build 
 
-TGZURL = ftp://ftp.astro.caltech.edu/pub/pgplot/pgplot${PACKAGEVERSION}.tar.gz
+DOWNLOADURL = ftp://ftp.astro.caltech.edu/pub/pgplot/pgplot${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 
 include ${MAKEINCLUDES}/Make.clean

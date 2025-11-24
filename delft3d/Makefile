@@ -23,5 +23,5 @@ include ${MAKEINCLUDES}/Make.cbuild
 .PHONY: default_install
 default_install : configure build public
 
-# TGZURL = 
+# DOWNLOADURL = 
 # include ${MAKEINCLUDES}/Make.download

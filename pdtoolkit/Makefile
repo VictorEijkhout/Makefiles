@@ -23,5 +23,5 @@ info ::
 .PHONY: default_install
 default_install : configure build public
 
-TGZURL = http://tau.uoregon.edu/pdt.tgz
+DOWNLOADURL = http://tau.uoregon.edu/pdt.tgz
 include ${MAKEINCLUDES}/Make.download

@@ -56,7 +56,7 @@ gpu :
 ##
 ## Download
 ##
-TGZURL = https://github.com/Nek5000/nekRS/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
+DOWNLOADURL = https://github.com/Nek5000/nekRS/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
 BRANCH = next
 # BOOTSTRAP = find . -name polyfill.hpp -exec sed -i -e 's/ uint/ std::uint/g' {} \;
 include ${MAKEINCLUDES}/Make.download

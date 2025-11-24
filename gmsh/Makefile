@@ -22,7 +22,7 @@ info ::
 .PHONY: default_install
 default_install : configure build public
 
-TGZURL = https://gmsh.info/src/gmsh-${PACKAGEVERSION}-source.tgz
+DOWNLOADURL = https://gmsh.info/src/gmsh-${PACKAGEVERSION}-source.tgz
 include ${MAKEINCLUDES}/Make.download
 
 include ${MAKEINCLUDES}/Make.clean

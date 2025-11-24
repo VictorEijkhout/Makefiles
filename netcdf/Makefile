@@ -59,7 +59,7 @@ info ::
 	@echo "make default_install: sequential version, also available: par"
 default_install : seq
 
-TGZURL = https://downloads.unidata.ucar.edu/netcdf-c/${PACKAGEVERSION}/netcdf-c-${PACKAGEVERSION}.tar.gz
+DOWNLOADURL = https://downloads.unidata.ucar.edu/netcdf-c/${PACKAGEVERSION}/netcdf-c-${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 GITREPO = http://github.com/Unidata/netcdf-c
 include ${MAKEINCLUDES}/Make.git

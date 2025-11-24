@@ -22,7 +22,7 @@ include ${MAKEINCLUDES}/Make.cbuild
 .PHONY: default_install
 default_install : configure build
 
-TGZURL = https://github.com/PCRE2Project/pcre2/archive/refs/tags/pcre2-${PACKAGEVERSION}.tar.gz
+DOWNLOADURL = https://github.com/PCRE2Project/pcre2/archive/refs/tags/pcre2-${PACKAGEVERSION}.tar.gz
 ## https://github.com/PCRE2Project/pcre2/releases/download/pcre2-10.42/pcre2-${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 

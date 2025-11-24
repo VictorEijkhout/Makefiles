@@ -37,7 +37,7 @@ default_install : configure build
 
 HASBIN = 1
 
-TGZURL = https://github.com/geodynamics/aspect/releases/download/v${PACKAGEVERSION}/aspect-${PACKAGEVERSION}.tar.gz
+DOWNLOADURL = https://github.com/geodynamics/aspect/releases/download/v${PACKAGEVERSION}/aspect-${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 include ${MAKEINCLUDES}/Make.clean
 

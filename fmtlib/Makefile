@@ -37,5 +37,5 @@ docview :
 	 && setnames "${PACKAGEROOT}" "${PACKAGE}" "${PACKAGEVERSION}" "${INSTALLEXT}" \
 	 && cd $${installdir}/doc/html && open index.html
 
-TGZURL = https://github.com/fmtlib/fmt/archive/${PACKAGEVERSION}.tar.gz
+DOWNLOADURL = https://github.com/fmtlib/fmt/archive/${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download

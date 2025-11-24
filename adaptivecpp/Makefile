@@ -51,7 +51,7 @@ info ::
 default_install : cpu
 	@echo && echo "==== cpu install done, not gpu ====" && echo
 
-TGZURL = https://github.com/AdaptiveCpp/AdaptiveCpp/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
+DOWNLOADURL = https://github.com/AdaptiveCpp/AdaptiveCpp/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 GITREPO = https://github.com/Adaptivecpp/Adaptivecpp.git
 include ${MAKEINCLUDES}/Make.git

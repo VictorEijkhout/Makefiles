@@ -34,7 +34,7 @@ info ::
 .PHONY: default_install
 default_install : configure build
 
-TGZURL = https://github.com/precice/precice/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
+DOWNLOADURL = https://github.com/precice/precice/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 GITREPO = git@github.com:precice/precice.git
 include ${MAKEINCLUDES}/Make.git

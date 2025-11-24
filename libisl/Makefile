@@ -23,6 +23,6 @@ info ::
 	echo "make default_install : configure build public"
 default_install : configure build public
 
-TGZURL = https://libisl.sourceforge.io/isl-${PACKAGEVERSION}.tar.gz
+DOWNLOADURL = https://libisl.sourceforge.io/isl-${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 

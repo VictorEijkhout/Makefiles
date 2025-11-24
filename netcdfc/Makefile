@@ -21,7 +21,7 @@ include ${MAKEINCLUDES}/Make.cbuild
 default_install :
 	@make configure build JCOUNT=${JCOUNT}
 
-TGZURL = https://github.com/Unidata/netcdf-c/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
+DOWNLOADURL = https://github.com/Unidata/netcdf-c/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
 # https://downloads.unidata.ucar.edu/netcdf-c/${PACKAGEVERSION}/netcdf-c-${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 include ${MAKEINCLUDES}/Make.clean

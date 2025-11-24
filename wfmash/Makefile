@@ -27,7 +27,7 @@ info ::
 .PHONY: default_install
 default_install : configure build
 
-TGZURL = https://github.com/waveygang/wfmash/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
+DOWNLOADURL = https://github.com/waveygang/wfmash/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 GITREPO = https://github.com/waveygang/wfmash.git
 SUBMODULE = 1

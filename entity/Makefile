@@ -46,7 +46,7 @@ gpu :
 	  CMAKEFLAGS="${CMAKEFLAGS_BASIC} -D Kokkos_ENABLE_CUDA=ON "
 ## -D Kokkos_ARCH_HOPPER90=ON"
 
-TGZURL = https://github.com/entity-toolkit/entity/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
+DOWNLOADURL = https://github.com/entity-toolkit/entity/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 
 GITREPO = https://github.com/entity-toolkit/entity.git

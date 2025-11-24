@@ -35,6 +35,6 @@ default_install :
 
 include ${MAKEINCLUDES}/Make.vars
 
-TGZURL = https://github.com/TACC/pylauncher/archive/refs/tags/${PACKAGEVERSION}.tar.gz
+DOWNLOADURL = https://github.com/TACC/pylauncher/archive/refs/tags/${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 GITREPO = https://github.com/TACC/pylauncher.git

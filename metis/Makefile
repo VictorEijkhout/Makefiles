@@ -77,7 +77,7 @@ i64-fix :
 	 && sed -i $${builddir}/src/include/metis.h \
 	    -e '/define/s/WIDTH 32/WIDTH 64/'
 
-TGZURL = https://github.com/scivision/METIS/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
+DOWNLOADURL = https://github.com/scivision/METIS/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
 # BOOTSTRAP = sed -i \
 #     -e '/GIT_TAG/s/6897bfe/078042614ff5192ab4c9bde0575bfef0d4572687/' \
 #     -e '/GIT_TAG/s/44630ca/078042614ff5192ab4c9bde0575bfef0d4572687/' \

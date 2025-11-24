@@ -449,7 +449,7 @@ GITREPO = https://gitlab.com/petsc/petsc.git
 BRANCH = main
 
 include ${MAKEINCLUDES}/Make.download
-TGZURL = https://web.cels.anl.gov/projects/petsc/download/release-snapshots/petsc-${PACKAGEVERSION_DOWNLOAD}.tar.gz
+DOWNLOADURL = https://web.cels.anl.gov/projects/petsc/download/release-snapshots/petsc-${PACKAGEVERSION_DOWNLOAD}.tar.gz
 
 clean ::
 	@/bin/rm -f *job.o[0-9]* archs-* *setnames petscinstalljob* 

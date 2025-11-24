@@ -112,7 +112,7 @@ info ::
 .PHONY: default_install
 default_install : system_test makefile everything varsmodule public
 
-TGZURL = https://github.com/NCAR/ncl/archive/refs/tags/${PACKAGEVERSION}.tar.gz
+DOWNLOADURL = https://github.com/NCAR/ncl/archive/refs/tags/${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 
 GITREPO = https://github.com/NCAR/ncl.git

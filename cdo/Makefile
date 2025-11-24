@@ -25,6 +25,6 @@ info ::
 	@echo "make default_install: configure build"
 default_install : configure build public
 
-TGZURL = https://code.mpimet.mpg.de/attachments/download/29786/cdo-${PACKAGEVERSION}.tar.gz
-## 2.3.0: TGZURL = https://code.mpimet.mpg.de/attachments/download/29019/cdo-${PACKAGEVERSION}.tar.gz
+DOWNLOADURL = https://code.mpimet.mpg.de/attachments/download/29786/cdo-${PACKAGEVERSION}.tar.gz
+## 2.3.0: DOWNLOADURL = https://code.mpimet.mpg.de/attachments/download/29019/cdo-${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download

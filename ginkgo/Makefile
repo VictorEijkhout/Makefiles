@@ -107,7 +107,7 @@ configure_sycl :
 	      " \
 	    INSTALLVARIANT=sycl INSTALLEXT=sycl
 
-TGZURL = https://github.com/ginkgo-project/ginkgo/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
+DOWNLOADURL = https://github.com/ginkgo-project/ginkgo/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 
 clean ::

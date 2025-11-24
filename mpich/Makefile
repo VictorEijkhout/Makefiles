@@ -31,7 +31,7 @@ info ::
 	@echo "    (note: module needs to be made explicitly)"
 default_install : configure build 
 
-TGZURL = http://www.mpich.org/static/downloads/${PACKAGEVERSION_DOWNLOAD}/mpich-${PACKAGEVERSION_DOWNLOAD}.tar.gz
+DOWNLOADURL = http://www.mpich.org/static/downloads/${PACKAGEVERSION_DOWNLOAD}/mpich-${PACKAGEVERSION_DOWNLOAD}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 
 SUBMODULE = submodule

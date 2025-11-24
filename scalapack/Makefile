@@ -30,5 +30,5 @@ default_install : configure build
 
 GITREPO = https://github.com/Reference-ScaLAPACK/scalapack.git
 include ${MAKEINCLUDES}/Make.git
-TGZURL = https://github.com/Reference-ScaLAPACK/scalapack/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
+DOWNLOADURL = https://github.com/Reference-ScaLAPACK/scalapack/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download

@@ -54,6 +54,6 @@ par :
 	    " \
 	  INSTALLPATH=${TACC_PARALLELNETCDF_DIR}
 
-TGZURL = https://github.com/Unidata/netcdf-cxx4/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
+DOWNLOADURL = https://github.com/Unidata/netcdf-cxx4/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 include ${MAKEINCLUDES}/Make.clean

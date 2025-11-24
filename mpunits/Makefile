@@ -32,7 +32,7 @@ info ::
 	@echo "make default_install : configure build"
 default_install : configure build public
 
-TGZURL = https://github.com/mpusz/mp-units/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
+DOWNLOADURL = https://github.com/mpusz/mp-units/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 GITREPO = https://github.com/mpusz/mp-units.git
 include ${MAKEINCLUDES}/Make.git

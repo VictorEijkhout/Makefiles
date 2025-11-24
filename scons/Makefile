@@ -45,5 +45,5 @@ build ::
 PYTHONPATHADDREL = 1
 include ${MAKEINCLUDES}/Make.vars
 
-TGZURL = https://github.com/SCons/scons/archive/refs/tags/${PACKAGEVERSION}.tar.gz
+DOWNLOADURL = https://github.com/SCons/scons/archive/refs/tags/${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download

@@ -51,7 +51,7 @@ default_install : configure build
 ##
 ## download
 ##
-TGZURL = https://github.com/cburstedde/p4est/releases/download/v${PACKAGEVERSION}/p4est-${PACKAGEVERSION}.tar.gz
+DOWNLOADURL = https://github.com/cburstedde/p4est/releases/download/v${PACKAGEVERSION}/p4est-${PACKAGEVERSION}.tar.gz
 ## https://p4est.github.io/release/p4est-${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 

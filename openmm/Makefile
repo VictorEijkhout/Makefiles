@@ -46,7 +46,7 @@ default_install gpu :
 	 && export NVCC_APPEND_FLAGS="${CUDAFLAGS}" \
 	 && make --no-print-directory configure build JCOUNT=${JCOUNT}
 
-TGZURL = https://github.com/openmm/openmm/archive/refs/tags/${PACKAGEVERSION}.tar.gz
+DOWNLOADURL = https://github.com/openmm/openmm/archive/refs/tags/${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 
 GITREPO = git@github.com:openmm/openmm.git

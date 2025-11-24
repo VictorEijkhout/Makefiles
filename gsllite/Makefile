@@ -24,5 +24,5 @@ info ::
 .PHONY: default_install
 default_install : configure build public
 
-TGZURL = https://github.com/gsl-lite/gsl-lite/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
+DOWNLOADURL = https://github.com/gsl-lite/gsl-lite/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download

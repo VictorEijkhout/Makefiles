@@ -27,6 +27,6 @@ info ::
 	@echo "make default_install : configure build"
 default_install : configure build
 
-TGZURL = https://ftp.gnu.org/gnu/gsl/gsl-${PACKAGEVERSION}.tar.gz
+DOWNLOADURL = https://ftp.gnu.org/gnu/gsl/gsl-${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 

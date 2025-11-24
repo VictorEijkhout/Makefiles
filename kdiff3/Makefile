@@ -41,7 +41,7 @@ NOLIB = 1
 HASBIN = 1
 include ${MAKEINCLUDES}/Make.vars
 
-TGZURL = https://sourceforge.net/projects/kdiff3/files/kdiff3/${PACKAGEVERSION}/kdiff3-${PACKAGEVERSION}.tar.gz
+DOWNLOADURL = https://sourceforge.net/projects/kdiff3/files/kdiff3/${PACKAGEVERSION}/kdiff3-${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 
 include ${MAKEINCLUDES}/Make.clean

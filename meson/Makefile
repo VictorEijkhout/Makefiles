@@ -36,7 +36,7 @@ default_install :
 	 && make --no-print-directory varsmodule \
 	        EXTRAINSTALLPATHS=PYTHONPATH=
 
-TGZURL = https://github.com/mesonbuild/meson/archive/refs/tags/${PACKAGEVERSION}.tar.gz
+DOWNLOADURL = https://github.com/mesonbuild/meson/archive/refs/tags/${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 GITREPO = https://github.com/mesonbuild/meson.git
 

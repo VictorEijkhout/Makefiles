@@ -33,6 +33,6 @@ info ::
 seq : configure build
 default_install : seq
 
-TGZURL = https://github.com/modern-fortran/neural-fortran/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
+DOWNLOADURL = https://github.com/modern-fortran/neural-fortran/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 

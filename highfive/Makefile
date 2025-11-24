@@ -62,7 +62,7 @@ DEPENDSON = boost eigen
 #
 # Download
 #
-TGZURL = https://github.com/BlueBrain/HighFive/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
+DOWNLOADURL = https://github.com/BlueBrain/HighFive/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 
 GITREPO = git@github.com:BlueBrain/HighFive.git

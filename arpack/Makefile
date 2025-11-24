@@ -47,7 +47,7 @@ default_install :: seq
 ##
 ## download
 ##
-TGZURL = https://github.com/opencollab/arpack-ng/archive/refs/tags/${PACKAGEVERSION}.tar.gz
+DOWNLOADURL = https://github.com/opencollab/arpack-ng/archive/refs/tags/${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 
 ##

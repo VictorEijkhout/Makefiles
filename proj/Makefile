@@ -31,7 +31,7 @@ include ${MAKEINCLUDES}/Make.cbuild
 .PHONY: default_install
 default_install : configure build public
 
-TGZURL = https://github.com/OSGeo/PROJ/archive/refs/tags/${PACKAGEVERSION}.tar.gz
+DOWNLOADURL = https://github.com/OSGeo/PROJ/archive/refs/tags/${PACKAGEVERSION}.tar.gz
 ### https://download.osgeo.org/proj/proj-${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 

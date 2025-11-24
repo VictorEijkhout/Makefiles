@@ -23,5 +23,5 @@ include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
 default_install : configure build 
 
-TGZURL = https://github.com/doxygen/doxygen/archive/refs/tags/Release_${PACKAGEVERSIONDOWNLOAD}.tar.gz
+DOWNLOADURL = https://github.com/doxygen/doxygen/archive/refs/tags/Release_${PACKAGEVERSIONDOWNLOAD}.tar.gz
 include ${MAKEINCLUDES}/Make.download

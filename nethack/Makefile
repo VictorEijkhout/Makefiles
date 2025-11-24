@@ -37,5 +37,5 @@ make_module :
 	    "${PACKAGEBASENAME}" "${VARIANT}" "${MODULENAME}" "${MODE}" \
 	 && make --no-print-directory varsmodule 
 
-TGZURL = https://github.com/NetHack/NetHack/archive/refs/tags/NetHack-${PACKAGEVERSION}_Released.tar.gz
+DOWNLOADURL = https://github.com/NetHack/NetHack/archive/refs/tags/NetHack-${PACKAGEVERSION}_Released.tar.gz
 include ${MAKEINCLUDES}/Make.download

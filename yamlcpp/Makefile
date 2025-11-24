@@ -25,7 +25,7 @@ default_install : configure build public
 ####
 #### Download
 ####
-TGZURL = https://github.com/jbeder/yaml-cpp/archive/refs/tags/${PACKAGEVERSION}.tar.gz
+DOWNLOADURL = https://github.com/jbeder/yaml-cpp/archive/refs/tags/${PACKAGEVERSION}.tar.gz
 # https://github.com/jbeder/yaml-cpp/issues/1359
 BOOTSTRAP = sed -i -e 3i\"\#include <cstdint>\"  src/*.cpp
 include ${MAKEINCLUDES}/Make.download

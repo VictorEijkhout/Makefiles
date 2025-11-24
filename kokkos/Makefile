@@ -126,7 +126,7 @@ kokkoscore :
 	 && echo $${builddir} && ls $${builddir} \
 	 && cat $${builddir}/KokkosCore_config.h
 
-TGZURL = https://github.com/kokkos/kokkos/archive/refs/tags/${PACKAGEVERSION}.tar.gz
+DOWNLOADURL = https://github.com/kokkos/kokkos/archive/refs/tags/${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 
 GITREPO = https://github.com/kokkos/kokkos.git

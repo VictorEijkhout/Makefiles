@@ -47,5 +47,5 @@ DEPENDSONCURRENT = netcdf
 .PHONY: default_install
 default_install : configure build public
 
-TGZURL = https://github.com/OSGeo/gdal/releases/download/v${PACKAGEVERSION}/gdal-${PACKAGEVERSION}.tar.gz
+DOWNLOADURL = https://github.com/OSGeo/gdal/releases/download/v${PACKAGEVERSION}/gdal-${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download

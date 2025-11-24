@@ -67,8 +67,8 @@ SUBMODULE = 1
 # GITTAG with version number listed up top
 include ${MAKEINCLUDES}/Make.git
 
-#TGZURL = https://octopus-code.org/download/${PACKAGEVERSION}/octopus-${PACKAGEVERSION}.tgz
-TGZURL = https://gitlab.com/octopus-code/octopus/-/archive/${PACKAGEVERSION}/octopus-${PACKAGEVERSION}.tar.gz
+#DOWNLOADURL = https://octopus-code.org/download/${PACKAGEVERSION}/octopus-${PACKAGEVERSION}.tgz
+DOWNLOADURL = https://gitlab.com/octopus-code/octopus/-/archive/${PACKAGEVERSION}/octopus-${PACKAGEVERSION}.tar.gz
 #        https://gitlab.com/octopus-code/octopus/-/archive/16.0/octopus-16.0.tar.gz
 # this is the downloaded tar ball, which can not be used 
 # TXZURL = https://octopus-code.org/download/${PACKAGEVERSION}/octopus-${PACKAGEVERSION}.tar.xz

@@ -49,7 +49,7 @@ include ${MAKEINCLUDES}/Make.vars
 include ${MAKEINCLUDES}/Make.public
 
 
-TGZURL = https://github.com/wannier-developers/wannier90/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
+DOWNLOADURL = https://github.com/wannier-developers/wannier90/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 
 GITREPO = https://gitlab.com/wannier90-project/wannier90.git

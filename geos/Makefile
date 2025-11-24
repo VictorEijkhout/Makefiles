@@ -25,7 +25,7 @@ info ::
 	@echo "make default_install : configure build"
 default_install : configure build
 
-TGZURL = https://github.com/GEOS-DEV/GEOS/archive/refs/tags/${PACKAGEVERSION}.tar.gz
+DOWNLOADURL = https://github.com/GEOS-DEV/GEOS/archive/refs/tags/${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 
 GITREPO = https://github.com/GEOS-DEV/GEOS.git

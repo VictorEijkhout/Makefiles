@@ -19,7 +19,7 @@ CMAKEPREFIXPATHSET = 1
 CMAKEMODULEPATHSET = share/cmake
 default_install : configure build
 
-TGZURL = https://docs.hdfgroup.org/archive/support/ftp/lib-external/szip/${PACKAGEVERSION}/src/szip-${PACKAGEVERSION}.tar.gz
+DOWNLOADURL = https://docs.hdfgroup.org/archive/support/ftp/lib-external/szip/${PACKAGEVERSION}/src/szip-${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 include ${MAKEINCLUDES}/Make.clean
 

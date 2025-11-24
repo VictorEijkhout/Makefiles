@@ -69,5 +69,5 @@ include ${MAKEINCLUDES}/Make.public
 ##
 ## download
 ##
-TGZURL = https://mumps-solver.org/MUMPS_${PACKAGEVERSION}.tar.gz
+DOWNLOADURL = https://mumps-solver.org/MUMPS_${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
