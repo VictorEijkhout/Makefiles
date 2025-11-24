@@ -27,9 +27,20 @@ DEPENDSONCURRENT = hdf5
 CMAKEFLAGS = \
       -D SILO_ENABLE_HDF5=ON \
       -D SILO_ENABLE_FORTRAN=ON
+
 ifeq "${TACC_FAMILY_COMPILER}" "intel"
       CMAKEFLAGS += -D CMAKE_C_FLAGS=-Wno-int-conversion
 endif
+
+##
+## This is needed on Frontera, not elsewhere
+##
+ifeq "${TACC_FAMILY_COMPILER}" "gcc"
+  CMAKEFLAGS += -DCMAKE_EXE_LINKER_FLAGS='-lpthread -lgfortran'
+else
+  CMAKEFLAGS += -DCMAKE_EXE_LINKER_FLAGS='-lpthread'
+endif
+
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
 
