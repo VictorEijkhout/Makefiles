@@ -8,7 +8,7 @@ PACKAGE = PETSC
 ABOUT = Portable, Extensible Toolkit for Scientific Computation
 URL = https://petsc.org/release/install/download/
 PACKAGEVERSION = 3.24
-PACKAGEVERSION_DOWNLOAD = 3.24.0
+PACKAGEVERSION_DOWNLOAD = 3.24.1
 MODE = mpi
 
 include ${MAKEINCLUDES}/Make.info
