@@ -17,7 +17,14 @@ URL = https://github.com/trilinos/Trilinos \
     https://www.docs.trilinos.org/files/TrilinosBuildReference.html
 PACKAGEVERSION = 16.1.0
 PACKAGEVERSION_DOWNLOAD = 16-1-0
-#15-1-0
+#
+# 16.2.0 will be the last of the 16 line
+# it will have some deprecated packages which I think aspect relies on
+#
+# 17.0.0 is at the rc stage
+# it has the deprecated packages removed!
+#
+
 MODE = hybrid
 MODULES = boost swig phdf5 pnetcdf mkl
 MODULE_MINIMUM_VERSION_intel = 20
