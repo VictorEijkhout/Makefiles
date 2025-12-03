@@ -5,8 +5,8 @@
 ################################################################
 
 PACKAGE = HMMER
-ABOUT = 
-URL = 
+ABOUT = Biosequence Analysis using Profile Hidden Markov Models
+URL = http://hmmer.org/
 PACKAGEVERSION = 3.4
 MODE = core
 MODULES = 
