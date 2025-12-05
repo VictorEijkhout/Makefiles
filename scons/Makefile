@@ -42,7 +42,7 @@ build ::
 	 && echo "using python3=$$( which python3 )" \
 	 && python3 -m pip install --target "$${prefixdir}" \
 	      scons
-PYTHONPATHADDREL = 1
+PYTHONPATHADDREL = SCons
 include ${MAKEINCLUDES}/Make.vars
 
 DOWNLOADURL = https://github.com/SCons/scons/archive/refs/tags/${PACKAGEVERSION}.tar.gz

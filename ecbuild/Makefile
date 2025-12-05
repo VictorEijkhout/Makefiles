@@ -10,6 +10,7 @@ PACKAGE = ecbuild
 ABOUT = A CMake-based build system, consisting of a collection of CMake macros and functions that ease the managing of software build systems
 URL = https://github.com/ecmwf/ecbuild/tree/develop
 PACKAGEVERSION = 3.8.2
+# 3.13 is out
 
 MODE = seq
 MODULES = 
