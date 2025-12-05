@@ -14,8 +14,8 @@ URL = https://github.com/BlueBrain/HighFive
 DOCURL = https://bluebrain.github.io/HighFive/
 MODE = mpi
 ## note: modules needs hdf5 or phdf5 depending
-MODULES_seq = boost eigen hdf5
-MODULES_par = boost eigen phdf5
+MODULES_seq = boost eigen/3 hdf5
+MODULES_par = boost eigen/3 phdf5
 MODULES = ${MODULES_seq}
 
 include ${MAKEINCLUDES}/Make.info
