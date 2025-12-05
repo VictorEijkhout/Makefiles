@@ -31,7 +31,7 @@ default_install :
 	 && make --no-print-directory varsmodule \
 	      NOLIB=1 NOINC=1 \
 	      DOCURL=https://docs.tacc.utexas.edu/software/pylauncher/ \
-	      PYTHONPATHADD=src
+	      PYTHONPATHADDREL=src
 
 include ${MAKEINCLUDES}/Make.vars
 
