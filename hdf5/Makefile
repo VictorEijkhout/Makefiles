@@ -20,7 +20,7 @@ URL = https://github.com/HDFGroup/hdf5
 
 # there is a micro version but we ignore that for now.
 PACKAGEVERSION = 2.0.0
-PACKAGESHORTVERSION = 2.0
+# PACKAGESHORTVERSION = 2.0
 # 1.14.6
 # 1.14
 ## ? PACKAGEVERSIONDIR = 2_0_0
@@ -106,13 +106,9 @@ default_install ::
 ## download
 ##
 
-# https://support.hdfgroup.org/releases/hdf5/v2_0/v2_0_0/downloads/index.html
-
-# version 2 semantic versioning at last. and they still mess it up
-## DOWNLOADURL = https://support.hdfgroup.org/releases/hdf5/v2_0/v2_0_0/downloads/hdf5-${PACKAGEVERSION}.tar.gz
-
 # my own attempt at predictable naming
-DOWNLOADURL = https://github.com/VictorEijkhout/hdf5-with-predictable-naming/archive/refs/tags/${PACKAGEVERSION}.tar.gz
+DOWNLOADURL = https://github.com/HDFGroup/hdf5/releases/download/${PACKAGEVERSION}/hdf5-${PACKAGEVERSION}.tar.gz
+# https://github.com/VictorEijkhout/hdf5-with-predictable-naming/archive/refs/tags/${PACKAGEVERSION}.tar.gz
 
 include ${MAKEINCLUDES}/Make.download
 

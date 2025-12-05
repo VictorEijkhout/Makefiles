@@ -2,16 +2,15 @@
 ####
 #### Makefile for Highfive installation
 ####
-#### This package is discontinued, 
-#### see: highfivenew directory for continued development
-####
 ################################################################
 
 PACKAGE = highfive
 ABOUT = Header-only C++ HDF5 interface
-PACKAGEVERSION = 2.10.1
-URL = https://github.com/BlueBrain/HighFive
-DOCURL = https://bluebrain.github.io/HighFive/
+PACKAGEVERSION = 3.2.0
+# DISCONTINUED 2.10.1
+URL = https://github.com/highfive-devs/highfive
+# DISCONTINUED https://github.com/BlueBrain/HighFive
+DOCURL = https://highfive-devs.github.io/highfive/
 MODE = mpi
 ## note: modules needs hdf5 or phdf5 depending
 MODULES_seq = boost eigen hdf5
@@ -52,7 +51,8 @@ seq :
 par :
 	make configure build JCOUNT=${JCOUNT} \
 	    PACKAGEVERSION=${PACKAGEVERSION} \
-	    HDF5PARALLEL=ON  MODE=mpi MODULES="${MODULES_par}" MODULENAME=phighfive
+	    HDF5PARALLEL=ON  MODE=mpi MODULES="${MODULES_par}" \
+	    MODULENAME=phighfive MODULENAMEALT=highfive
 info ::
 	@echo "make default_install : sequential version"
 default_install :: seq
@@ -65,8 +65,10 @@ DEPENDSON = boost eigen
 #
 # Download
 #
-DOWNLOADURL = https://github.com/BlueBrain/HighFive/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
+DOWNLOADURL = https://github.com/highfive-devs/highfive/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
+# DISCONTINUED https://github.com/BlueBrain/HighFive/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 
-GITREPO = git@github.com:BlueBrain/HighFive.git
+GITREPO = https://github.com/highfive-devs/highfive.git
+SUBMODULE = 1
 include ${MAKEINCLUDES}/Make.git
