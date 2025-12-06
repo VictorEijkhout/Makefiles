@@ -1,0 +1,22 @@
+################################################################
+####
+#### Configuration for PNetcdf installation
+####
+################################################################
+
+PACKAGE = pnetcdf
+ABOUT = coupling library for partitioned multi-physics simulations
+URL = https://parallel-netcdf.github.io/
+SOFTWAREURL = https://github.com/Parallel-NetCDF/PnetCDF
+let PACKAGEVERSION = 1.14.0
+MODE = mpi
+MODULES = automake
+
+BUILDSYSTEM = autotools
+CONFIGUREFLAGS = --enable-fortran --enable-shared
+FORCERECONF = 1
+HASBIN=1
+PKGCONFIGLIB = pkgconfig
+
+DOWNLOADURL = https://parallel-netcdf.github.io/Release/pnetcdf-${PACKAGEVERSION}.tar.gz
+GITREPO = https://github.com/Parallel-NetCDF/PnetCDF.git
