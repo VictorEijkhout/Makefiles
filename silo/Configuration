@@ -1,0 +1,24 @@
+################################################################
+####
+#### MPM configuration for Silo
+####
+################################################################
+
+PACKAGE = SILO
+ABOUT = File-based, scientific data exchange and software interoperability
+URL = http://software.llnl.gov/Silo/
+let PACKAGEVERSION = 4.12.0
+
+MODE = seq
+MODULES = hdf5
+
+HASBIN=1
+CMAKEPREFIXPATHSET = 1
+DEPENDSONCURRENT = hdf5
+
+CMAKEFLAGS = \
+      -D SILO_ENABLE_HDF5=ON \
+      -D SILO_ENABLE_FORTRAN=ON
+
+DOWNLOADURL = https://github.com/LLNL/Silo/archive/refs/tags/${PACKAGEVERSION}.tar.gz
+GITREPO = https://github.com/LLNL/Silo.git
