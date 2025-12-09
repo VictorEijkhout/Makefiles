@@ -1,0 +1,28 @@
+################################################################
+####
+#### Makefile for PROJ installation
+#### https://proj.org/index.html
+####
+################################################################
+
+PACKAGE = PROJ
+ABOUT = Cartographic Projections and Coordinate Transformations Library
+URL = https://github.com/OSGeo/PROJ
+let PACKAGEVERSION = 9.6.0
+MODE = seq
+MODULES = sqlite
+
+CMAKEFLAGS = --trace \
+    -D BUILD_TESTING=OFF \
+    -D EXE_SQLITE3=${TACC_SQLITE_BIN}/sqlite3 \
+    -D SQLITE3_INCLUDE_DIR=${TACC_SQLITE_INC} \
+    -D SQLITE3_LIBRARY=${TACC_SQLITE_LIB}/libsqlite3.so
+
+BUILDSYSTEM = cmake
+HASBIN = 1
+DEPENDSON = sqlite
+CMAKEPREFIXPATHSET = 1
+PKGCONFIGLIB = pkgconfig
+
+DOWNLOADURL = https://github.com/OSGeo/PROJ/archive/refs/tags/${PACKAGEVERSION}.tar.gz
+GITREPO = https://github.com/OSGeo/PROJ.git
