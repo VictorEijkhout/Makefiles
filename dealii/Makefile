@@ -83,6 +83,8 @@ info ::
 # https://github.com/dealii/dealii/issues/18976
 default_install : real
 
+# need modules loaded for shared libs
+DEPENDSON = p4est trilinos
 # needs to find the hdf5 libs
 DEPENDSONCURRENT = phdf5
 

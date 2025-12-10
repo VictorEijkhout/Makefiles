@@ -20,7 +20,6 @@ CMAKEBUILDTYPE = DebugRelease
 CMAKEPREFIXPATHSET = 1
 CPTOINSTALLDIR = cookbooks
 DEPENDSONCURRENT = boost
-
 HASBIN = 1
 
 DOWNLOADURL = https://github.com/geodynamics/aspect/releases/download/v${PACKAGEVERSION}/aspect-${PACKAGEVERSION}.tar.gz
