@@ -1,0 +1,27 @@
+################################################################
+####
+#### Makefile for Sundials installation
+####
+################################################################
+
+PACKAGE = SUNDIALS
+ABOUT = SUite of Nonlinear and DIfferential/ALgebraic equation Solvers
+MODULENOTES = Sequential version
+URL = https://computing.llnl.gov/projects/sundials
+SOFTWAREURL = https://github.com/LLNL/sundials
+DOCURL = \
+    https://sundials.readthedocs.io/en/latest/sundials/Install_link.html#installation-cmake
+let PACKAGEVERSION = 7.5.0
+MODE = seq
+
+BUILDSYSTEM = cmake
+let PARALLEL = OFF
+CMAKEFLAGS = \
+    -D ENABLE_MPI=${PARALLEL} \
+    -D BUILD_FORTRAN_MODULE_INTERFACE=ON
+CMAKEPREFIXPATHSET = 1
+
+MODULENAME=ssundials
+MODULENAMEALT=sundials
+
+DOWNLOADURL = https://github.com/LLNL/sundials/releases/download/v${PACKAGEVERSION}/sundials-${PACKAGEVERSION}.tar.gz
