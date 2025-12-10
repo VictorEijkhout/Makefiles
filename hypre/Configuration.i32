@@ -1,0 +1,24 @@
+################################################################
+####
+#### Makefile for Hypre installation, 32 bit int
+####
+################################################################
+
+PACKAGE = hypre
+ABOUT = Parallel solvers for sparse linear systems featuring multigrid methods.
+URL = https://github.com/hypre-space/hypre
+DOCURL = https://hypre.readthedocs.io/en/latest/ch-misc.html#cmake-instructions
+let PACKAGEVERSION = 3.0.0
+
+MODE = mpi
+MODULES = 
+
+BUILDSYSTEM = cmake
+CMAKEFLAGS = -D HYPRE_ENABLE_SHARED=ON
+INSTALLVARIANT = i32 
+
+CMAKESUBDIR = src
+CMAKEPREFIXPATHSET = 1
+CPTOINSTALLDIR = src/examples
+
+DOWNLOADURL = https://github.com/hypre-space/hypre/archive/refs/tags/v${PACKAGEVERSION}.tar.gz

@@ -13,7 +13,7 @@ include ${MAKEINCLUDES}/Make.info
 
 NOLIB = 1
 HASBIN = 1
-CMAKESOURCE = llvm
+CMAKESUBDIR = llvm
 CMAKEFLAGS = \
     -D LLVM_ENABLE_PROJECTS=clang \
     -D CMAKE_BUILD_TYPE=Release

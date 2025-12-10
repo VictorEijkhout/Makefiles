@@ -16,7 +16,7 @@ MODULES =
 include ${MAKEINCLUDES}/Make.info
 
 CMAKEFLAGS = 
-CMAKESOURCE = src/main
+CMAKESUBDIR = src/main
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
 

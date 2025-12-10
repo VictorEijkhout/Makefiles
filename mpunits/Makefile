@@ -18,7 +18,7 @@ CMAKEPREFIXPATHSET = 1
 NOLIB = 1
 
 # there is a top level cmake setup but that bombs in all sorts of ways.
-CMAKESOURCE = src
+CMAKESUBDIR = src
 
 CMAKEFLAGS = \
     -D MP_UNITS_API_STD_FORMAT=OFF \
