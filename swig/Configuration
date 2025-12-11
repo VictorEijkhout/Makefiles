@@ -1,0 +1,22 @@
+################################################################
+####
+#### Makefile for swig
+####
+################################################################
+
+PACKAGE = swig
+ABOUT = software development tool that connects programs written in C and C++ with a variety of high-level programming languages
+URL = https://www.swig.org/ https://github.com/swig/swig
+let PACKAGEVERSION = 4.4.1
+MODE = seq
+MODULES = pcre2 bison
+
+BUILDSYSTEM = autotools
+CONFIGUREFLAGS = \
+    --with-pcre2-prefix=${TACC_PCRE2_DIR}
+HASBIN = 1
+NOLIB = 1
+NOINC = 1
+
+DOWNLOADURL = http://prdownloads.sourceforge.net/swig/swig-${PACKAGEVERSION}.tar.gz
+

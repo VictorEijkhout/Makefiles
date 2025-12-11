@@ -1,0 +1,29 @@
+################################################################
+####
+#### Makefile for P4est installation
+####
+################################################################
+
+PACKAGE = p4est
+ABOUT = Parallel AMR on Forests of Octrees
+URL = http://p4est.org/ https://github.com/cburstedde/p4est
+let PACKAGEVERSION = 2.8.7
+
+MODE = mpi
+MODULES = 
+
+BUILDSYSTEM = cmake
+CMAKEFLAGS = \
+    -D SC_ENABLE_MPI=ON \
+    -D P4EST_ENABLE_MPI=ON \
+    -D P4EST_BUILD_EXAMPLES=OFF
+
+PKGCONFIG = lib/pkgconfig
+CMAKEPREFIXPATHSET = 1
+
+DOWNLOADURL = https://github.com/cburstedde/p4est/releases/download/v${PACKAGEVERSION}/p4est-${PACKAGEVERSION}.tar.gz
+GITREPO = https://github.com/cburstedde/p4est.git
+BRANCH = master
+SUBMODULE = yes
+PULLAFTERACTIONS = ./bootstrap
+

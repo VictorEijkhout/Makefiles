@@ -7,7 +7,7 @@
 PACKAGE = swig
 ABOUT = software development tool that connects programs written in C and C++ with a variety of high-level programming languages
 URL = https://www.swig.org/ https://github.com/swig/swig
-PACKAGEVERSION = 4.3.1
+PACKAGEVERSION = 4.4.1
 MODE = seq
 MODULES = pcre2 bison
 
@@ -18,16 +18,16 @@ include ${MAKEINCLUDES}/Make.info
 
 # # Stupid: Swig has its own FindPCRE2 rather than relying on cmake:
 # # swig-4.1.1/Tools/cmake/FindPCRE2.cmake
-# CMAKEFLAGS = \
+CMAKEFLAGS = \
 #     -D PCRE2_INCLUDE_DIR:PATH=${TACC_PCRE2_INC} \
 #     -D PCRE2_LIBRARY:PATH=${TACC_PCRE2_LIB}/libpcre2-8.so
-# include ${MAKEINCLUDES}/Make.cmake
-# include ${MAKEINCLUDES}/Make.cbuild
+include ${MAKEINCLUDES}/Make.cmake
+include ${MAKEINCLUDES}/Make.cbuild
 
-include ${MAKEINCLUDES}/Make.configure
-CONFIGUREFLAGS = \
-    --with-pcre2-prefix=${TACC_PCRE2_DIR}
-include ${MAKEINCLUDES}/Make.install
+# include ${MAKEINCLUDES}/Make.configure
+# CONFIGUREFLAGS = \
+#     --with-pcre2-prefix=${TACC_PCRE2_DIR}
+# include ${MAKEINCLUDES}/Make.install
 
 .PHONY: default_install
 default_install : configure build

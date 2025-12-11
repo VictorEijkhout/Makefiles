@@ -37,7 +37,7 @@ CPTOINSTALLDIR = examples
 CMAKEBUILDTYPE = DebugRelease
 INSTALLEXT = real
 INSTALLVARIANT = real
-DEPENDSON = p4est,trilinos
+DEPENDSON = p4est sundials trilinos
 DEPENDSONCURRENT = phdf5
 
 GITREPO = https://github.com/dealii/dealii/archive/v${PACKAGEVERSION}.tar.gz
