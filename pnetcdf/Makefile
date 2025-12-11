@@ -8,7 +8,7 @@ PACKAGE = pnetcdf
 ABOUT = coupling library for partitioned multi-physics simulations
 URL = https://parallel-netcdf.github.io/ \
     https://github.com/Parallel-NetCDF/PnetCDF
-PACKAGEVERSION = 1.14.0
+PACKAGEVERSION = 1.14.1
 MODE = mpi
 MODULES = automake
 
