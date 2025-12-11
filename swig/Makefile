@@ -19,8 +19,8 @@ include ${MAKEINCLUDES}/Make.info
 # # Stupid: Swig has its own FindPCRE2 rather than relying on cmake:
 # # swig-4.1.1/Tools/cmake/FindPCRE2.cmake
 CMAKEFLAGS = \
-#     -D PCRE2_INCLUDE_DIR:PATH=${TACC_PCRE2_INC} \
-#     -D PCRE2_LIBRARY:PATH=${TACC_PCRE2_LIB}/libpcre2-8.so
+     -D PCRE2_INCLUDE_DIR:PATH=${TACC_PCRE2_INC} \
+     -D PCRE2_LIBRARY:PATH=${TACC_PCRE2_LIB}/libpcre2-8.so
 include ${MAKEINCLUDES}/Make.cmake
 include ${MAKEINCLUDES}/Make.cbuild
 

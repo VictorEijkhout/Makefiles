@@ -11,9 +11,10 @@ let PACKAGEVERSION = 4.4.1
 MODE = seq
 MODULES = pcre2 bison
 
-BUILDSYSTEM = autotools
-CONFIGUREFLAGS = \
-    --with-pcre2-prefix=${TACC_PCRE2_DIR}
+BUILDSYSTEM = cmake
+CMAKEFLAGS = \
+     -D PCRE2_INCLUDE_DIR:PATH=${TACC_PCRE2_INC} \
+     -D PCRE2_LIBRARY:PATH=${TACC_PCRE2_LIB}/libpcre2-8.so
 HASBIN = 1
 NOLIB = 1
 NOINC = 1
