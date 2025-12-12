@@ -1,0 +1,36 @@
+################################################################
+####
+#### Makefile for Netcdf installation
+####
+#### this is the C version
+####
+################################################################
+
+PACKAGE = NETCDF
+ABOUT = Network Common Data Format
+URL = https://netcdf.geodynamics.org/ 
+CODEURL = https://github.com/Unidata/netcdf-c 
+DOCURL = https://docs.unidata.ucar.edu/nug/current/getting_and_building_netcdf.html#configure_options
+let PACKAGEVERSION = 4.9.2
+
+MODE = seq
+MODULES = hdf5
+let NETCDF_PARALLEL = OFF
+
+BUILDSYSTEM = cmake
+HASBIN=1
+PREFIXPATHSET = 1
+PKGCONFIGLIB = pkgconfig
+DEPENDSONCURRENT = hdf5
+LINKLIB64toLIB = 1
+CPTOINSTALLDIR = examples
+MODULENAME = netcdf
+
+CMAKEFLAGS = \
+    -D NETCDF_ENABLE_PARALLEL4=${NETCDF_PARALLEL} \
+    -D ENABLE_PARALLEL_TESTS=OFF \
+    -D NETCDF_ENABLE_HDF5=ON \
+    -D ENABLE_DAP=ON
+
+DOWNLOADURL = https://downloads.unidata.ucar.edu/netcdf-c/${PACKAGEVERSION}/netcdf-c-${PACKAGEVERSION}.tar.gz
+GITREPO = http://github.com/Unidata/netcdf-c

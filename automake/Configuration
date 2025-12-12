@@ -1,0 +1,20 @@
+################################################################
+####
+#### Makefile for AUTOMAKE installation
+####
+################################################################
+
+PACKAGE = AUTOMAKE
+ABOUT = GNU automake
+URL = https://ftp.gnu.org/gnu/automake/
+let PACKAGEVERSION = 1.18.1
+MODE = core
+MODULES = 
+
+BUILDSYSTEM = autotools
+NOINC = 1
+NOLIB = 1
+HASBIN = 1
+
+DOWNLOADURL = https://ftp.gnu.org/gnu/automake/automake-${PACKAGEVERSION}.tar.gz
+
