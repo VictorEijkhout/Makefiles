@@ -9,6 +9,7 @@ ABOUT = High-Performance Linear Algebra Library for Manycore Systems
 URL = https://github.com/ginkgo-project/ginkgo
 DOCURL = https://github.com/ginkgo-project/ginkgo/blob/develop/INSTALL.md
 PACKAGEVERSION = 1.10.0
+# 1.11.0
 MODE = mpi
 MODULES = 
 MODULE_MINIMUM_VERSION_cuda = 12
