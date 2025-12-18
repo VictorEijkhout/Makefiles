@@ -6,7 +6,8 @@
 
 PACKAGE = p4est
 ABOUT = Parallel AMR on Forests of Octrees
-URL = http://p4est.org/ https://github.com/cburstedde/p4est
+URL = http://p4est.org/
+CODEURL = https://github.com/cburstedde/p4est
 let PACKAGEVERSION = 2.8.7
 
 MODE = mpi
@@ -18,6 +19,7 @@ CMAKEFLAGS = \
     -D P4EST_ENABLE_MPI=ON \
     -D P4EST_BUILD_EXAMPLES=OFF
 
+# https://github.com/cburstedde/p4est/issues/351
 PKGCONFIG = lib/pkgconfig
 CMAKEPREFIXPATHSET = 1
 
