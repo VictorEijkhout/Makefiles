@@ -8,8 +8,8 @@ PACKAGE = Octopus
 ABOUT = Real-space Time-Dependent Density Functional Theory code
 URL = https://gitlab.com/octopus-code/octopus
 DOCURL = https://www.octopus-code.org/documentation/15/manual/installation/cmake/
-PACKAGEVERSION = 16.0
-GITTAG = 16.0
+PACKAGEVERSION = 16.3
+GITTAG = 16.3
 
 MODE = mpi
 MODULES = gsl scalapack \
