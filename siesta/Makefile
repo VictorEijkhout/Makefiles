@@ -17,6 +17,7 @@ URL = https://siesta-project.org/siesta/index.html \
     https://gitlab.com/siesta-project/siesta
 ## see below if this ever reaches 5.4
 PACKAGEVERSION = 5.4.1
+# 5.4.2
 
 MODE = mpi
 MODULES = fftw3 parallelnetcdf \

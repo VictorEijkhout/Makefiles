@@ -15,8 +15,8 @@ PACKAGE = trilinos
 ABOUT = Collection of reusable scientific software libraries
 URL = https://github.com/trilinos/Trilinos \
     https://www.docs.trilinos.org/files/TrilinosBuildReference.html
-PACKAGEVERSION = 16.1.0
-PACKAGEVERSION_DOWNLOAD = 16-1-0
+PACKAGEVERSION = 16.2.0
+PACKAGEVERSION_DOWNLOAD = 16-2-0
 #
 # 16.2.0 will be the last of the 16 line
 # it will have some deprecated packages which I think aspect relies on

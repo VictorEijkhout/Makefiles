@@ -78,6 +78,7 @@ cmdline="cmake \
   -D Trilinos_ENABLE_EpetraExt:Bool=${HAS_EPETRA} \
   -D                 Epetra_ENABLE_TESTS:BOOL=ON \
   -D Trilinos_ENABLE_ThyraEpetraAdapters=${HAS_ADAPTERS} \
+  -D Trilinos_ENABLE_ThyraEpetraExtAdapters=${HAS_ADAPTERS} \
   -D Trilinos_ENABLE_ExodusII:Bool=${HAS_EXODUS} \
   -D Trilinos_ENABLE_FEI:Bool=${HAS_FEI} \
   -D Trilinos_ENABLE_Ifpack:Bool=${HAS_EPETRA} \

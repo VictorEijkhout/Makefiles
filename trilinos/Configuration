@@ -8,11 +8,16 @@ PACKAGE = trilinos
 ABOUT = Collection of reusable scientific software libraries
 URL = https://github.com/trilinos/Trilinos
 DOCURL = https://www.docs.trilinos.org/files/TrilinosBuildReference.html
-let PACKAGEVERSION = 16.1.0
-let PACKAGEVERSION_DOWNLOAD = 16-1-0
+let PACKAGEVERSION = 16.2.0
+let PACKAGEVERSION_DOWNLOAD = 16-2-0
 
+DOWNLOADURL = https://github.com/trilinos/Trilinos/archive/refs/tags/${PACKAGEVERSION}.tar.gz
+# https://github.com/trilinos/Trilinos/archive/refs/tags/trilinos-release-${PACKAGEVERSION_DOWNLOAD}.tar.gz
+GITREPO = git@github.com:trilinos/Trilinos.git
+
+##
 MODE = hybrid
-MODULES = boost swig phdf5 parallenetcdf pnetcdf mkl
+MODULES = boost swig phdf5 parallelnetcdf pnetcdf parmetis mkl
 MODULE_MINIMUM_VERSION_intel = 20
 
 BUILDSYSTEM = cmake
@@ -33,11 +38,11 @@ let HAS_KOKKOS = ON
 let HAS_NETCDF = ON
 let HAS_PNETCDF = ON
 let HAS_SEACASEXODUS = ON
-#${HAS_NETCDF}
 let HAS_HDF5 = ON
 let HAS_OPENMP = ON
 let HAS_Teko = ${HAS_ADAPTERS}
 
+let HAS_MUELU = OFF
 let HAS_MUMPS = OFF 
 let HAS_STK = OFF
 let HAS_YAMLCPP = OFF 
@@ -55,10 +60,6 @@ let TRILINOS_LAPACK_LIBS = mkl_intel_lp64;mkl_sequential;mkl_core;pthread
 let DEPRECATED=OFF 
 let HAS_TEUCHOS=ON 
 
-DOWNLOADURL = https://github.com/trilinos/Trilinos/archive/refs/tags/trilinos-release-${PACKAGEVERSION_DOWNLOAD}.tar.gz
-GITREPO = git@github.com:trilinos/Trilinos.git
-
-##
 ## source $${scriptdir}/trilinos_cmake.sh 
 ##
 
@@ -104,9 +105,9 @@ CMAKEFLAGS = \
   -D HDF5_LIBRARY_DIRS:PATH=${TACC_HDF5_LIB}    \
   \
   -D TPL_ENABLE_Netcdf:BOOL=${HAS_NETCDF} \
-  -D TPL_Netcdf_INCLUDE_DIRS:PATH=${TACC_NETCDF_INC} \
-  -D TPL_Netcdf_LIBRARY_DIRS:PATH=${TACC_NETCDF_LIB} \
-  -D TPL_Netcdf_LIBRARIES=${TACC_NETCDF_LIB}/libnetcdf.so \
+  -D TPL_Netcdf_INCLUDE_DIRS:PATH=${TACC_PARALLELNETCDF_INC} \
+  -D TPL_Netcdf_LIBRARY_DIRS:PATH=${TACC_PARALLELNETCDF_LIB} \
+  -D TPL_Netcdf_LIBRARIES=${TACC_PARALLELNETCDF_LIB}/libnetcdf.so \
   \
   -D TPL_ENABLE_Pnetcdf:BOOL=${HAS_PNETCDF} \
   -D TPL_Pnetcdf_INCLUDE_DIRS:PATH=${TACC_PNETCDF_INC} \
@@ -138,6 +139,7 @@ CMAKEFLAGS = \
   -D Trilinos_ENABLE_EpetraExt:Bool=${HAS_EPETRA} \
   -D                 Epetra_ENABLE_TESTS:BOOL=ON \
   -D Trilinos_ENABLE_ThyraEpetraAdapters=${HAS_ADAPTERS} \
+  -D Trilinos_ENABLE_ThyraEpetraExtAdapters=${HAS_ADAPTERS} \
   -D Trilinos_ENABLE_ExodusII:Bool=${HAS_EXODUS} \
   -D Trilinos_ENABLE_FEI:Bool=${HAS_FEI} \
   -D Trilinos_ENABLE_Ifpack:Bool=${HAS_EPETRA} \
