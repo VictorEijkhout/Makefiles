@@ -1,0 +1,37 @@
+################################################################
+####
+#### Makefile for Octopus installation
+####
+################################################################
+
+PACKAGE = Octopus
+ABOUT = Real-space Time-Dependent Density Functional Theory code
+URL = https://gitlab.com/octopus-code/octopus
+DOCURL = https://www.octopus-code.org/documentation/15/manual/installation/cmake/
+let PACKAGEVERSION = 16.3
+GITTAG = 16.3
+
+MODE = mpi
+MODULES = gsl scalapack \
+    mkl 
+let OCTOPUS_MPI = ON
+USEMKL=ON
+let DEFINE_LAPACK='-D OCTOPUS_MKL=ON'
+
+CMAKEUSENINJA = 1
+CMAKEFLAGS = \
+    -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
+    -D CMAKE_DISABLE_FIND_PACKAGE_Libxc=On \
+    -D CMAKE_DISABLE_FIND_PACKAGE_METIS=On \
+    -D OCTOPUS_OpenMP=ON \
+    -D OCTOPUS_MPI=${OCTOPUS_MPI} \
+    ${DEFINE_LAPACK} \
+    -D OCTOPUS_ScaLAPACK=ON \
+    -D BUFFER=ON
+
+HASBIN = 1
+DEPENDSON = gsl
+
+GITREPO = https://gitlab.com/octopus-code/octopus.git
+SUBMODULE = 1
+DOWNLOADURL = https://gitlab.com/octopus-code/octopus/-/archive/${PACKAGEVERSION}/octopus-${PACKAGEVERSION}.tar.gz
