@@ -5,11 +5,14 @@
 ################################################################
 
 PACKAGE = AUTOCONF
+ABOUT = autotools configuration utility
 URL = https://ftp.gnu.org/gnu/autoconf/
 let PACKAGEVERSION = 2.72
 DOWNLOADURL = https://ftp.gnu.org/gnu/autoconf/autoconf-${PACKAGEVERSION}.tar.gz
 
+BUILDSYSTEM = autotools
 MODE = core
 MODULES = 
+NOINC = 1
 NOLIB = 1
 HASBIN = 1

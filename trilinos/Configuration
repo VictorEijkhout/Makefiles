@@ -32,6 +32,7 @@ let PYTHON = OFF
 let HAS_ADAPTERS = ON
 let HAS_EPETRA = ON
 let HAS_BOOST = ON
+# exodus seems external to trilinos, so let's turn it off
 let HAS_EXODUS = OFF
 let HAS_FEI = ${HAS_ADAPTERS}
 let HAS_KOKKOS = ON
@@ -42,9 +43,9 @@ let HAS_HDF5 = ON
 let HAS_OPENMP = ON
 let HAS_Teko = ${HAS_ADAPTERS}
 
-let HAS_MUELU = OFF
-let HAS_MUMPS = OFF 
-let HAS_STK = OFF
+let HAS_MUELU = ON
+let HAS_MUMPS = OFF
+let HAS_STK = ON
 let HAS_YAMLCPP = OFF 
 # if [ "$${HAS_YAMLCPP}" = "1" ] ; then 
 # source $${scriptdir}/../yaml-cpp/yamlcpp_vars.sh
