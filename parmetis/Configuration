@@ -1,0 +1,30 @@
+################################################################
+####
+#### Makefile for Parmetis installation
+####
+#### this is the 4.0.3 version from
+#### https://github.com/scibuilder/parmetis
+#### this builds gklib & metis too 
+####
+################################################################
+
+PACKAGE = parmetis
+URL = https://github.com/scibuilder/parmetis
+ABOUT = parallel graph partitioner
+let PACKAGEVERSION = 4.0.3
+GITREPO = https://github.com/scibuilder/parmetis.git
+ZIPURL = https://github.com/scibuilder/parmetis/archive/refs/heads/master.zip
+
+MODE = hybrid
+MODULES = 
+
+# ifeq "${TACC_FAMILY_COMPILER}" "intel"
+#   CMAKEFLAGS=\
+#     -DCMAKE_C_FLAGS=\"-O2 -qopenmp\" 
+# else
+#   CMAKEFLAGS=\
+#     -DCMAKE_C_FLAGS=\"-O2 -fopenmp\" 
+# endif
+
+BUILDSYSTEM = cmake
+
