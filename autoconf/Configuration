@@ -1,0 +1,15 @@
+################################################################
+####
+#### Makefile for AUTOCONF installation
+####
+################################################################
+
+PACKAGE = AUTOCONF
+URL = https://ftp.gnu.org/gnu/autoconf/
+let PACKAGEVERSION = 2.72
+DOWNLOADURL = https://ftp.gnu.org/gnu/autoconf/autoconf-${PACKAGEVERSION}.tar.gz
+
+MODE = core
+MODULES = 
+NOLIB = 1
+HASBIN = 1
