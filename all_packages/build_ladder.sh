@@ -4,9 +4,22 @@
 import re
 import os
 import subprocess
+import sys
 
-print( "inventory" )
+##
+## Argument handling
+##
+args = sys.argv
+import argparse
+parser = argparse.ArgumentParser\
+    ( prog="build_ladder",
+      description="Build ladder file",
+      add_help=True )
+
+os.chdir( f"{os.getenv('HOME')}/Software" )
+
 packages = [ d for d in os.listdir(".") if os.path.isdir(d) ]
+print( f"Packages from directory listing: {packages}" )
 all_packages = []
 after = {}
 before = {}
@@ -16,7 +29,7 @@ ignored_packages = \
       "benchpro", "demangle", "demangler", "testing",
       # system stuff:
       "clang", "gcc", "intel", "intel-mpi-binding-kit", "cuda", "mkl", "mpich",
-      "gtest", "julia", "tau",
+      "gtest", "julia", "tau", "utils",
       # stuff I'm not building:
       "adaptivecpp", "foam", "mapl", "facebook_nle",
       "nethack", "netcdfc", "netcdfx", "netcdff",
