@@ -1,0 +1,25 @@
+################################################################
+####
+#### Makefile for MPUNITS installation
+####
+################################################################
+
+PACKAGE = MPUNITS
+ABOUT = The quantities and units library for C++
+let PACKAGEVERSION = 2.5.0
+URL = https://github.com/mpusz/mp-units
+DOWNLOADURL = https://github.com/mpusz/mp-units/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
+GITREPO = https://github.com/mpusz/mp-units.git
+
+MODE = seq
+MODULES = fmtlib gsllite
+# only needed for the full library install: catch2
+
+BUILDSYSTEM = cmake
+PREFIXPATHSET = 1
+NOLIB = 1
+# there is a top level cmake setup but that bombs in all sorts of ways.
+CMAKESUBDIR = src
+CMAKEFLAGS = \
+    -D MP_UNITS_API_STD_FORMAT=OFF \
+    -D MP_UNITS_LIBCXX=ON

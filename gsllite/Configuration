@@ -1,0 +1,18 @@
+################################################################
+####
+#### Makefile for GSLLITE installation
+####
+################################################################
+
+PACKAGE = GSLLITE
+ABOUT = ISO C++ Core Guidelines Library
+let PACKAGEVERSION = 1.0.1
+# 0.43.0
+URL = https://github.com/gsl-lite/gsl-lite
+DOWNLOADURL = https://github.com/gsl-lite/gsl-lite/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
+
+BUILDSYSTEM = cmake
+MODE = seq
+PKGCONFIGLIB = pkgconfig
+PREFIXPATHSET = 1
+NOLIB = 1

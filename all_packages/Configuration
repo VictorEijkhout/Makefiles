@@ -1,0 +1,8 @@
+################################################################
+####
+#### Dummy configuration file because otherwise we can not run MrPackMod
+####
+################################################################
+
+PACKAGES = all_packages
+ABOUT = dummy package for tree building
