@@ -1,0 +1,27 @@
+################################################################
+####
+#### Makefile for SQLITE installation
+####
+################################################################
+
+PACKAGE = SQLITE
+ABOUT = SQL database engine
+let PACKAGEVERSION = 3.51.1
+URL = https://www.sqlite.org
+CODEURL = https://github.com/sqlite/sqlite
+DOCURL = https://www.sqlite.org/howtocompile.html
+DOWNLOADURL = https://github.com/sqlite/sqlite/archive/refs/tags/version-${PACKAGEVERSION}.tar.gz
+# https://www.sqlite.org/src/tarball/sqlite.tar.gz
+## ?r=release
+# REQUIRES nvidia > 24.
+MODE = seq
+MODULES = 
+
+BUILDSYSTEM = autotools
+CONFIGUREFLAGS = \
+    --all \
+    --disable-tcl
+HASBIN = 1
+EXTRABUILDTARGETS = all sqlite3.pc
+PKGCONFIGLIB = pkgconfig
+

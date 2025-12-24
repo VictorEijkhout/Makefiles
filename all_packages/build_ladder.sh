@@ -15,11 +15,10 @@ parser = argparse.ArgumentParser\
     ( prog="build_ladder",
       description="Build ladder file",
       add_help=True )
+parser.add_argument( '-a','--all',action='store_true',default=False )
+parser.add_argument( 'packages', nargs='*', help="root level packages" )
+arguments = parser.parse_args()
 
-os.chdir( f"{os.getenv('HOME')}/Software" )
-
-packages = [ d for d in os.listdir(".") if os.path.isdir(d) ]
-print( f"Packages from directory listing: {packages}" )
 all_packages = []
 after = {}
 before = {}
@@ -36,7 +35,7 @@ ignored_packages = \
       "gklib-karypis", "metis-karypis", # karypis stuff is abandonware
       "neuralfortran", "octopus-auto", "opensycl", "parmetis-git", "plascom",
       "python", "pylauncher",
-      "rangev3", "roms", "vtkhdf", "wannier",
+      "rangev3", "roms", "vtkhdf", "wannier", "wannier90",
       # stuff I should build
       "alps", "athenapk", "cantera",
       "blaspp", "lapackpp", "mfemcuda", # cuda stuff
@@ -52,6 +51,21 @@ ignored_packages = \
     ]
 
 ##
+## Determine packages to build
+##
+os.chdir( f"{os.getenv('HOME')}/Software" )
+
+build_all = arguments.all
+packages  = arguments.packages
+if build_all:
+    if len(package)>0:
+        print( f"Warning: flagg -a/--all override explicit package specification." )
+    packages = [ d for d in os.listdir(".") if os.path.isdir(d) and d not in ignored_packages ]
+    print( f"Packages from directory listing: {packages}" )
+else:
+    print( f"Packages from args: {packages}" )
+
+##
 ## modules that are built from a different directory
 ##
 variants = ["parallelnetcdf", "parpack", "phdf5",
@@ -60,41 +74,31 @@ packagedirs = { "parallelnetcdf":"netcdf", "parpack":"arpack", "phdf5":"hdf5",
                 "ptscotch":"scotch", }
 packagetgts = { "parallelnetcdf":"par", "parpack":"par", "phdf5":"par",
                 "ptscotch":"par32", }
-packages = packages+variants
+def configuration_file( package ):
+    config_files = { 'hdf5':'Configuration.seq', 'phdf5':'Configuration.par',
+                     'dealii':'Configuration.real',
+                     }
+    if package in config_files.keys():
+        return config_files[package]
+    else: return "Configuration"
 
 ##
-## Loop over package directorie and variants
+## Loop over package directories and variants
 ##
-for package in packages :
-    if package in ignored_packages : continue
-    all_packages.append(package)
-    if os.path.isdir(package):
-        # there is a directory for this package
-        packagedir = package
-        packagetgt = ""
-    else:
-        # this package is built from a different directory
-        packagedir = packagedirs[package]
-        packagetgt = f"TARGET={packagetgts[package]}"
-    # find prerequisites by running "make listmodules"
-    list_prereqs = subprocess.Popen\
-        ( f"cd {packagedir}/ && make listmodules {packagetgt}",
-          shell=True,env=os.environ,
-          stdout=subprocess.PIPE, stderr=subprocess.STDOUT )
-    prereqs = list_prereqs.communicate()[0].strip().decode("utf-8").split()
-    # filter ignored packages
-    prereqs = set(prereqs) - set(ignored_packages)
-    # remove explicit version numbers
-    prereqs = [ p.split("/")[0] for p in prereqs ]
-    print( f"Package: {package}, prereqs: {prereqs}" )
-    before[package] = prereqs
-    if len(prereqs)==0:
-        top.append(package)
-    else:
-        for p in prereqs:
-            if p not in after:
-                after[p] = []
-            after[p].append(package)
+def closure( packages,before ):
+    cwd = os.getcwd()
+    for p in packages:
+        config = configuration_file(p)
+        list_reqs = subprocess.Popen\
+            ( f"cd {cwd}/{p}/ && mpm.py -c {config} dependencies",
+              shell=True,env=os.environ,
+              stdout=subprocess.PIPE, stderr=subprocess.STDOUT )
+        reqs = list_reqs.communicate()[0].strip().decode("utf-8").split()
+        for q in reqs:
+            print( f"{p} <- {q}" )
+    return packages,before
+packages,before = closure( packages,{} )
+sys.exit(0)
 
 print( f"Before: {before}" )
 #print( f"Top: {top}" )
@@ -150,3 +154,33 @@ print( f"Written ladder to: {ladder}" )
 import sys
 sys.exit(0)
 
+for package in packages :
+    if package in ignored_packages : continue
+    all_packages.append(package)
+    if os.path.isdir(package):
+        # there is a directory for this package
+        packagedir = package
+        packagetgt = ""
+    else:
+        # this package is built from a different directory
+        packagedir = packagedirs[package]
+        packagetgt = f"TARGET={packagetgts[package]}"
+    # find prerequisites by running "make listmodules"
+    list_prereqs = subprocess.Popen\
+        ( f"cd {packagedir}/ && make listmodules {packagetgt}",
+          shell=True,env=os.environ,
+          stdout=subprocess.PIPE, stderr=subprocess.STDOUT )
+    prereqs = list_prereqs.communicate()[0].strip().decode("utf-8").split()
+    # filter ignored packages
+    prereqs = set(prereqs) - set(ignored_packages)
+    # remove explicit version numbers
+    prereqs = [ p.split("/")[0] for p in prereqs ]
+    print( f"Package: {package}, prereqs: {prereqs}" )
+    before[package] = prereqs
+    if len(prereqs)==0:
+        top.append(package)
+    else:
+        for p in prereqs:
+            if p not in after:
+                after[p] = []
+            after[p].append(package)

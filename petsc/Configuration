@@ -1,0 +1,21 @@
+################################################################
+####
+#### Makefile for PETSc local installation
+####
+################################################################
+
+PACKAGE = PETSC
+ABOUT = Portable, Extensible Toolkit for Scientific Computation
+DOWNLOADURL = https://petsc.org/release/install/download/
+let PACKAGEVERSION = 3.24
+let PACKAGEVERSION_DOWNLOAD = 3.24.2
+DOWNLOADURL = https://web.cels.anl.gov/projects/petsc/download/release-snapshots/petsc-${PACKAGEVERSION_DOWNLOAD}.tar.gz
+GITREPO = https://gitlab.com/petsc/petsc.git
+BRANCH = main
+
+MODE = mpi
+OPTFLAGS=-O2 -fPIC
+LOPTFLAGS=-O1 -fPIC
+
+CUDA = 0
+# include Makefile.packages

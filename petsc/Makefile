@@ -8,7 +8,11 @@ PACKAGE = PETSC
 ABOUT = Portable, Extensible Toolkit for Scientific Computation
 URL = https://petsc.org/release/install/download/
 PACKAGEVERSION = 3.24
-PACKAGEVERSION_DOWNLOAD = 3.24.1
+PACKAGEVERSION_DOWNLOAD = 3.24.2
+DOWNLOADURL = https://web.cels.anl.gov/projects/petsc/download/release-snapshots/petsc-${PACKAGEVERSION_DOWNLOAD}.tar.gz
+GITREPO = https://gitlab.com/petsc/petsc.git
+BRANCH = main
+
 MODE = mpi
 
 include ${MAKEINCLUDES}/Make.info
@@ -223,7 +227,6 @@ default_install :: modules
 	                echo \"--with-cuda=1 --with-cuda-dir=${TACC_CUDA_DIR} \
 	                  --with-cudac=nvcc \
 	                  --with-cuda-gencodearch=70 \
-	                  --with-kokkos=1 --download-kokkos=1 --with-kokkos-kernels=1 --download-kokkos-kernels=1 \
 	                  \" \
 	          ; else echo --with-cudac=0 ; fi ` \
 	        `if [ ${KOKKOS} -eq 1 ] ; then \
@@ -445,11 +448,7 @@ log-view :
 	@cat ${PACKAGEROOT}/petsc/petsc-${PACKAGEVERSION}/configure.log
 
 include ${MAKEINCLUDES}/Make.git
-GITREPO = https://gitlab.com/petsc/petsc.git
-BRANCH = main
-
 include ${MAKEINCLUDES}/Make.download
-DOWNLOADURL = https://web.cels.anl.gov/projects/petsc/download/release-snapshots/petsc-${PACKAGEVERSION_DOWNLOAD}.tar.gz
 
 clean ::
 	@/bin/rm -f *job.o[0-9]* archs-* *setnames petscinstalljob* 
