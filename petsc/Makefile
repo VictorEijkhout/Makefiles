@@ -25,7 +25,7 @@ modules ::
 	    ( "vista" )      make --no-print-directory moduletest MODULE=nvpl ;; \
 	    ( * ) \
 	      if [ "${TACC_FAMILY_COMPILER}" = "gcc" ] ; then \
-	        make --no-print-directory moduletest MODULE=mkl \
+	        make --no-print-directory moduletest MODULE=blaslapack \
 	      ; fi ;; \
 	  esac
 

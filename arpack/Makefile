@@ -9,7 +9,7 @@ ABOUT = Collection of Fortran77 subroutines designed to solve large scale eigenv
 URL = https://github.com/opencollab/arpack-ng
 PACKAGEVERSION = 3.9.1
 MODE = seq
-MODULES = eigen mkl
+MODULES = eigen blaslapack
 
 include ${MAKEINCLUDES}/Make.info
 

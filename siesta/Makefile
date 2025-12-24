@@ -21,7 +21,7 @@ PACKAGEVERSION = 5.4.1
 
 MODE = mpi
 MODULES = fftw3 parallelnetcdf \
-    mkl 
+    blaslapack 
 
 include ${MAKEINCLUDES}/Make.info
 

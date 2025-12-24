@@ -13,7 +13,7 @@ GITTAG = 16.3
 
 MODE = mpi
 MODULES = gsl scalapack \
-    mkl 
+    blaslapack 
 ifeq "${TACC_FAMILY_COMPILER}" "gcc"
   MODULES += ninja
 endif

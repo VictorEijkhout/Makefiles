@@ -18,7 +18,7 @@ PETSCVERSION = 3.23
 PETSCLOAD = ${PETSCVERSION}
 
 MODE = mpi
-BASICMODULES = mkl adios2 hypre/${HYPRELOAD} metis petsc/${PETSCLOAD}
+BASICMODULES = blaslapack adios2 hypre/${HYPRELOAD} metis petsc/${PETSCLOAD}
 MODULES = ${BASICMODULES}
 
 include ${MAKEINCLUDES}/Make.info

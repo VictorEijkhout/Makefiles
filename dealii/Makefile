@@ -13,7 +13,7 @@ URL = https://github.com/dealii/dealii
 PACKAGEVERSION = 9.7.1
 MODE = mpi
 MODULES = p4est petsc phdf5 sundials trilinos \
-    mkl
+    blaslapack
 # intel 23 problem solved in 24
 # support ticket 05936427
 

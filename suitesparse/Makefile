@@ -10,7 +10,7 @@ PACKAGEVERSION = 7.11.0
 # 7.12.1
 URL = https://github.com/DrTimothyAldenDavis/SuiteSparse
 MODE = seq
-MODULES = gmp mpfr mkl
+MODULES = gmp mpfr blaslapack
 
 include ${MAKEINCLUDES}/Make.info
 

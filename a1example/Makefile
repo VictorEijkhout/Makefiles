@@ -36,7 +36,7 @@ MODE = mpi
 ## - mkl : only loaded for gcc; for nvidia this loads nvpl, for intel it's a no-op
 ## - these modules do not go into the "depends_on" clause of the module file
 ##
-MODULES = fftw3 mkl 
+MODULES = fftw3 blaslapack 
 ##
 
 ##

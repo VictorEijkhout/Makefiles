@@ -74,30 +74,60 @@ packagedirs = { "parallelnetcdf":"netcdf", "parpack":"arpack", "phdf5":"hdf5",
                 "ptscotch":"scotch", }
 packagetgts = { "parallelnetcdf":"par", "parpack":"par", "phdf5":"par",
                 "ptscotch":"par32", }
+def package_dir( package ):
+    directories = { 'parallelnetcdf':'netcdf', 'phdf5':'hdf5',
+                   }
+    if package in directories.keys():
+        return directories[package]
+    else: return package
+
 def configuration_file( package ):
-    config_files = { 'hdf5':'Configuration.seq', 'phdf5':'Configuration.par',
+    config_files = { 'boost':'Configuration.seq',
                      'dealii':'Configuration.real',
+                     'hdf5':'Configuration.seq', 'phdf5':'Configuration.par',
+                     'netcdf':'Configuration.seq', 'parallenetcdf':'Configuration.par',
+                     'sundials':'Configuration.par',
                      }
     if package in config_files.keys():
-        return config_files[package]
-    else: return "Configuration"
+        config_file = config_files[package]
+    else: config_file = "Configuration"
+    # test on existence is done in the calling environment
+    return config_file
 
 ##
 ## Loop over package directories and variants
 ##
 def closure( packages,before ):
+    # assume we are home/Software
     cwd = os.getcwd()
+    changes = False
     for p in packages:
-        config = configuration_file(p)
+        if p in before.keys(): continue
+        # only look at uninvestigated packages
+        changes = True
+        before[p] = []
+        packageloc    = package_dir(p)
+        package_config = configuration_file( packageloc )
+        config_full_path = f"{cwd}/{packageloc}/{package_config}"
+        if not os.path.exists( config_full_path ):
+            raise Exception( f"No such config file: {config_full_path}" )
         list_reqs = subprocess.Popen\
-            ( f"cd {cwd}/{p}/ && mpm.py -c {config} dependencies",
+            ( f"cd {cwd}/{packageloc}/ && mpm.py -c {package_config} dependencies",
               shell=True,env=os.environ,
               stdout=subprocess.PIPE, stderr=subprocess.STDOUT )
         reqs = list_reqs.communicate()[0].strip().decode("utf-8").split()
+        print( f"{p} <- {reqs}" )
         for q in reqs:
-            print( f"{p} <- {q}" )
-    return packages,before
+            if q not in packages:
+                packages.append(q)
+            before[p].append(q)
+    if changes:
+        return closure(packages,before)
+    else:
+        return packages,before
+
 packages,before = closure( packages,{} )
+print( f"{packages} with relations: {before}" )
 sys.exit(0)
 
 print( f"Before: {before}" )

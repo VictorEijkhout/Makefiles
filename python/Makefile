@@ -10,7 +10,7 @@ PACKAGEVERSION = 3.12.5
 ## problems: 13.0
 URL = https://www.python.org/
 MODE = mpi
-MODULES = hdf5 mkl sqlite
+MODULES = hdf5 blaslapack sqlite
 
 include ${MAKEINCLUDES}/Make.info
 

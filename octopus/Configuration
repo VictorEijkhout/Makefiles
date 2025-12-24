@@ -13,7 +13,7 @@ GITTAG = 16.3
 
 MODE = mpi
 MODULES = gsl scalapack \
-    mkl 
+    blaslapack 
 let OCTOPUS_MPI = ON
 USEMKL=ON
 let DEFINE_LAPACK='-D OCTOPUS_MKL=ON'

@@ -17,7 +17,7 @@ GITREPO = git@github.com:trilinos/Trilinos.git
 
 ##
 MODE = hybrid
-MODULES = boost swig phdf5 parallelnetcdf pnetcdf parmetis mkl
+MODULES = boost swig phdf5 parallelnetcdf pnetcdf parmetis blaslapack
 MODULE_MINIMUM_VERSION_intel = 20
 
 BUILDSYSTEM = cmake

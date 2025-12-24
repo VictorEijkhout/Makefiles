@@ -14,7 +14,7 @@ URL = https://github.com/wannier-developers/wannier90
 PACKAGEVERSION = 3.1.0
 
 MODE = mpi
-MODULES = mkl
+MODULES = blaslapack
 
 include ${MAKEINCLUDES}/Make.info
 

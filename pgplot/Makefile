@@ -11,7 +11,7 @@ ABOUT = Graphics Subroutine Library
 URL = https://sites.astro.caltech.edu/~tjp/pgplot/
 PACKAGEVERSION = 5.2
 MODE = seq
-MODULES = mkl
+MODULES = blaslapack
 include ${MAKEINCLUDES}/Make.info
 
 include ${MAKEINCLUDES}/Make.vars

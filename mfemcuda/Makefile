@@ -13,7 +13,7 @@ PACKAGEVERSION = 4.7
 HYPREVERSION = 2.31.0
 
 MODE = mpi
-BASICMODULES = mkl adios2 hypre/${HYPREVERSION}-i64 metis 
+BASICMODULES = blaslapack adios2 hypre/${HYPREVERSION}-i64 metis 
 MODULES = ${BASIC_MODULES} cuda
 
 include ${MAKEINCLUDES}/Make.info

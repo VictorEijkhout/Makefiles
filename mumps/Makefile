@@ -8,8 +8,8 @@ PACKAGE = MUMPS
 PACKAGEVERSION = 5.8.1
 URL = https://www.mumps-solver.org/
 MODE = mpi
-MODULES_seq = metis scotch mkl
-MODULES_par = parmetis ptscotch mkl
+MODULES_seq = metis scotch blaslapack
+MODULES_par = parmetis ptscotch blaslapack
 MODULES = ${MODULES_par}
 
 include ${MAKEINCLUDES}/Make.info

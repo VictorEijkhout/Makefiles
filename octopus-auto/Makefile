@@ -11,7 +11,7 @@ URL = https://gitlab.com/octopus-code/octopus \
 PACKAGEVERSION = 15.1
 
 MODE = mpi
-MODULES = gsl fftw3 libxc mkl
+MODULES = gsl fftw3 libxc blaslapack
 
 include ${MAKEINCLUDES}/Make.info
 

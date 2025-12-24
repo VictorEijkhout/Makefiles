@@ -26,7 +26,7 @@ PACKAGEVERSION_DOWNLOAD = 16-2-0
 #
 
 MODE = hybrid
-MODULES = boost swig phdf5 pnetcdf mkl
+MODULES = boost swig phdf5 pnetcdf blaslapack
 MODULE_MINIMUM_VERSION_intel = 20
 
 include ${MAKEINCLUDES}/Make.info

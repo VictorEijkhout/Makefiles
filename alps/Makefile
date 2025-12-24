@@ -10,7 +10,7 @@ URL = http://alps.space/ \
     https://github.com/danielver02/ALPS
 PACKAGEVERSION = 1.1.2
 MODE = mpi
-MODULES = mkl
+MODULES = blaslapack
 
 include ${MAKEINCLUDES}/Make.info
 include ${MAKEINCLUDES}/Make.configure

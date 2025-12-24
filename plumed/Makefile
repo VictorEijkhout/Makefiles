@@ -14,7 +14,7 @@ PACKAGEVERSION = 2.9.3
 
 MODE = hybrid
 MODULES = fftw3 gsl zlib \
-    mkl
+    blaslapack
 
 include ${MAKEINCLUDES}/Make.info
 

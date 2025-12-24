@@ -14,7 +14,7 @@ URL = https://github.com/Cantera/cantera
 DOCURL = https://cantera.org/stable/develop/index.html#sec-compiling
 MODE = seq
 MODULES = boost eigen fmtlib hdf5 highfive ssundials yamlcpp \
-    scons mkl
+    scons blaslapack
 
 include ${MAKEINCLUDES}/Make.info
 
