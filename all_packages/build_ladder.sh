@@ -62,8 +62,10 @@ if build_all:
         print( f"Warning: flagg -a/--all override explicit package specification." )
     packages = [ d for d in os.listdir(".") if os.path.isdir(d) and d not in ignored_packages ]
     print( f"Packages from directory listing: {packages}" )
+    id_string = "all"
 else:
     print( f"Packages from args: {packages}" )
+    id_string = '_'.join(packages)
 
 ##
 ## modules that are built from a different directory
@@ -102,7 +104,8 @@ def closure( packages,before ):
     cwd = os.getcwd()
     changes = False
     for p in packages:
-        if p in before.keys(): continue
+        if p in before.keys() or p in [ "blaslapack", "mkl", "nvpl" ]:
+            continue
         # only look at uninvestigated packages
         changes = True
         before[p] = []
@@ -116,7 +119,7 @@ def closure( packages,before ):
               shell=True,env=os.environ,
               stdout=subprocess.PIPE, stderr=subprocess.STDOUT )
         reqs = list_reqs.communicate()[0].strip().decode("utf-8").split()
-        print( f"{p} <- {reqs}" )
+        # print( f"{p} <- {reqs}" )
         for q in reqs:
             if q not in packages:
                 packages.append(q)
@@ -127,55 +130,54 @@ def closure( packages,before ):
         return packages,before
 
 packages,before = closure( packages,{} )
-print( f"{packages} with relations: {before}" )
-sys.exit(0)
+print( f"packages: {packages}\nwith relations:\n{before}" )
 
-print( f"Before: {before}" )
-#print( f"Top: {top}" )
-#print( f"After: {after}" )
 
 from collections import defaultdict, deque
 
-def topological_sort(strings, before):
+def topological_sort(names, before):
     # Build graph and in-degree count
     graph = defaultdict(list)
-    in_degree = defaultdict(int)
+    in_degree = {}
 
     # Initialize in-degree for all nodes
-    for s in strings:
+    #print( f"names: {names}" )
+    for s in names:
         in_degree[s] = 0
+    #print( f"zero: {in_degree}" )
 
     # Add edges based on the 'before' relationships
     for s1, predecessors in before.items():
-        #print( f"{s1} <= {predecessors}" )
+        #print( f"Precedence: {s1} <= {predecessors}" )
         for s2 in predecessors:
             graph[s2].append(s1)   # s2 -> s1 (s2 must come before s1)
             in_degree[s1] += 1     # s1 has one more dependency
-
+        #print( f"Degree {s1} = {in_degree[s1]}" )
     # Start with all nodes that have no incoming edges
-    queue = deque([s for s in strings if in_degree[s] == 0])
+    #print( "Degrees:\n"+str(in_degree) )
+    queue = deque( [s for s in names if in_degree[s] == 0] )
     #print( f"start queue: {queue}" )
-    sorted_strings = []
+    sorted_names = []
 
     while queue:
         current = queue.popleft()
-        sorted_strings.append(current)
+        sorted_names.append(current)
         for neighbor in graph[current]:
             in_degree[neighbor] -= 1
             if in_degree[neighbor] == 0:
                 queue.append(neighbor)
 
-    if len(sorted_strings) != len(strings):
-        print( f"Missing: { set(strings)-set(sorted_strings) }" )
+    if len(sorted_names) != len(names):
+        print( f"Missing: { set(names)-set(sorted_names) }" )
         raise ValueError("Cycle detected or incomplete input: cannot topologically sort.")
 
-    return sorted_strings
+    return sorted_names
 
 print( "sorting" )
-sorted = topological_sort( all_packages,before )
-print(sorted)
+sorted = topological_sort( packages,before )
+#print(sorted)
 
-ladder = "all_packages/all_ladder.sh"
+ladder = f"all_packages/{id_string}_ladder.txt"
 with open( ladder,"w" ) as ladderfile:
     for s in sorted:
         ladderfile.write( s+'\n' )
