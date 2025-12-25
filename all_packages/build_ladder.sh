@@ -70,31 +70,15 @@ else:
 ##
 ## modules that are built from a different directory
 ##
-variants = ["parallelnetcdf", "parpack", "phdf5",
-            "ptscotch", ]
-packagedirs = { "parallelnetcdf":"netcdf", "parpack":"arpack", "phdf5":"hdf5",
-                "ptscotch":"scotch", }
-packagetgts = { "parallelnetcdf":"par", "parpack":"par", "phdf5":"par",
-                "ptscotch":"par32", }
-def package_dir( package ):
-    directories = { 'parallelnetcdf':'netcdf', 'phdf5':'hdf5',
-                   }
-    if package in directories.keys():
-        return directories[package]
-    else: return package
 
-def configuration_file( package ):
-    config_files = { 'boost':'Configuration.seq',
-                     'dealii':'Configuration.real',
-                     'hdf5':'Configuration.seq', 'phdf5':'Configuration.par',
-                     'netcdf':'Configuration.seq', 'parallenetcdf':'Configuration.par',
-                     'sundials':'Configuration.par',
-                     }
-    if package in config_files.keys():
-        config_file = config_files[package]
-    else: config_file = "Configuration"
-    # test on existence is done in the calling environment
-    return config_file
+# variants = ["parallelnetcdf", "parpack", "phdf5",
+#             "ptscotch", ]
+# packagedirs = { "parallelnetcdf":"netcdf", "parpack":"arpack", "phdf5":"hdf5",
+#                 "ptscotch":"scotch", }
+# packagetgts = { "parallelnetcdf":"par", "parpack":"par", "phdf5":"par",
+#                 "ptscotch":"par32", }
+
+from utils import *
 
 ##
 ## Loop over package directories and variants
