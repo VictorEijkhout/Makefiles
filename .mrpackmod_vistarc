@@ -1,0 +1,2 @@
+let BLASLAPACK_LIBS = nvpl_lapack_lp64_seq;nvpl_lapack_core;nvpl_blas_core
+

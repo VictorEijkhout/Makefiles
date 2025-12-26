@@ -51,20 +51,24 @@ let HAS_YAMLCPP = OFF
 # source $${scriptdir}/../yaml-cpp/yamlcpp_vars.sh
 # fi
 
-# blas/lapack for Intel:
-let MKLFLAG='-mkl' 
-let TACC_MKL_INC=${MKLROOT}/include
-let TACC_MKL_LIB=${MKLROOT}/lib/intel64 
-let TRILINOS_BLAS_LIBS = mkl_intel_lp64;mkl_core;pthread
-let TRILINOS_LAPACK_LIBS = mkl_intel_lp64;mkl_sequential;mkl_core;pthread
+ifeqmacro TACC_SYSTEM vista
+  # blas/lapack for NVidia:
+  let MKLFLAG="-Mnvpl -Mscalapack"
+  let TACC_MKL_INC=${TACC_NVPL_INC}
+  let TACC_MKL_LIB=${TACC_NVPL_LIB}
+  let TRILINOS_BLAS_LIBS='nvpl_blas_lp64_seq;nvpl_blas_core'
+  let TRILINOS_LAPACK_LIBS='nvpl_lapack_lp64_seq;nvpl_lapack_core'
+else
+  # blas/lapack for Intel:
+  let MKLFLAG='-mkl' 
+  let TACC_MKL_INC=${MKLROOT}/include
+  let TACC_MKL_LIB=${MKLROOT}/lib/intel64 
+  let TRILINOS_BLAS_LIBS = mkl_intel_lp64;mkl_core;pthread
+  let TRILINOS_LAPACK_LIBS = mkl_intel_lp64;mkl_sequential;mkl_core;pthread
+endif
 
 let DEPRECATED=OFF 
 let HAS_TEUCHOS=ON 
-
-## source $${scriptdir}/trilinos_cmake.sh 
-##
-
-# ?  -B ${BUILDDIR} -S ${SRCDIR} 
 
 CMAKEFLAGS = \
   -D Trilinos_VERBOSE_CONFIGURE=ON \
@@ -94,6 +98,9 @@ CMAKEFLAGS = \
   -D TPL_ENABLE_Matio=OFF \
   \
   -D TPL_ENABLE_BLAS=ON \
+  -D TPL_BLAS_INCLUDE_DIRS:PATH='${TACC_MKL_INC}' \
+  -D TPL_BLAS_LIBRARIES:STRING='${TRILINOS_BLAS_LIBS}' \
+  \
   -D BLAS_LIBRARY_DIRS:PATH='${TACC_MKL_LIB}' \
   -D BLAS_LIBRARY_NAMES:STRING='${TRILINOS_BLAS_LIBS}' \
   -D BLAS_INCLUDE_DIRS:PATH='${TACC_MKL_INC}' \
