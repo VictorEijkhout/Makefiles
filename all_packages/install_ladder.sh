@@ -20,24 +20,43 @@ parser.add_argument( 'ladder_file', nargs='*', help="ladder file" )
 arguments = parser.parse_args()
 
 force_install = arguments.force 
+if force_install:
+    print( "Forcing all install" )
 ladder_file   = arguments.ladder_file[0]
 #ladder_file   = ladder_file.decode("utf-8")
-print(ladder_file)
+print( f"Using ladder file: {ladder_file}" )
 
+from utils import *
+from MrPackMod.process import process_initiate,process_terminate, process_execute, nonnull
+
+non_packages = [ "mkl","nvpl","blaslapack", "mpi", ]
+install_process = process_initiate()
 with open(ladder_file,"r") as ladder:
     os.chdir( ".." )
     cwd = os.getcwd()
     for package in ladder.readlines():
         package = package.strip()
-        package_var = f"TACC_{package.upper()}_DIR"
-        package_dir = os.getenv( package_var,"" )
-        do_install  = force_install \
-            or package_dir == "" \
-            or not os.path.isdir( package_dir )
-        if do_install:
-            print( f"Installing package: {package}" )
-            list_reqs = subprocess.Popen\
-                ( f"cd {cwd}/{packageloc}/ && mpm.py -c {package_config} dependencies",
-                  shell=True,env=os.environ,
-                  stdout=subprocess.PIPE, stderr=subprocess.STDOUT )
-            reqs = list_reqs.communicate()[0].strip().decode("utf-8").split()
+        if package in non_packages: continue
+        print( f"Package: {package}" )
+        if force_install:
+            do_install = True
+        else:
+            package_var = f"TACC_{package.upper()}_DIR"
+            installation_dir = os.getenv( package_var,"" )
+            if installation_dir != "":
+                print( f" .. loaded at {installation_dir}: {os.path.isdir( installation_dir )}" )
+            else:
+                avails = process_execute( f"module -t avail {package}",terminal=None )
+                if nonnull( avails):
+                    print( f" .. availability: {avails}; loading" )
+                    process_execute( f"module -t load {package}",process=install_process )
+                else:
+                    print( " .. proceeding with installation" )
+                    packageloc     = package_dir(package)
+                    package_config = configuration_file( packageloc )
+                    process_execute\
+                        ( f"cd {cwd}/{packageloc}/ && mpm.py -c {package_config} install",
+                          process=install_process )
+                    process_execute( f"module -t load {package}",process=install_process )
+
+process_terminate(install_process)
