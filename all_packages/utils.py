@@ -9,7 +9,7 @@ def configuration_file( package ):
     config_files = { 'boost':'Configuration.seq',
                      'dealii':'Configuration.real',
                      'hdf5':'Configuration.seq', 'phdf5':'Configuration.par',
-                     'netcdf':'Configuration.seq', 'parallenetcdf':'Configuration.par',
+                     'netcdf':'Configuration.seq', 'parallelnetcdf':'Configuration.par',
                      'sundials':'Configuration.par',
                      }
     if package in config_files.keys():

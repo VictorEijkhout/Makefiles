@@ -36,7 +36,9 @@ with open(ladder_file,"r") as ladder:
     cwd = os.getcwd()
     for package in ladder.readlines():
         package = package.strip()
-        if package in non_packages: continue
+        if package in non_packages:
+            print( f" .. skip install of non-package: {package}" )
+            continue
         print( f"Package: {package}" )
         if force_install:
             do_install = True
@@ -49,14 +51,15 @@ with open(ladder_file,"r") as ladder:
                 avails = process_execute( f"module -t avail {package}",terminal=None )
                 if nonnull( avails):
                     print( f" .. availability: {avails}; loading" )
-                    process_execute( f"module -t load {package}",process=install_process )
+                    process_execute( f"module -t load {package}",
+                                     process=install_process )
                 else:
                     print( " .. proceeding with installation" )
                     packageloc     = package_dir(package)
-                    package_config = configuration_file( packageloc )
+                    package_config = configuration_file( package )
                     process_execute\
                         ( f"cd {cwd}/{packageloc}/ && mpm.py -c {package_config} install",
-                          process=install_process )
+                          process=install_process,immediate=True )
                     process_execute( f"module -t load {package}",process=install_process )
 
 process_terminate(install_process)
