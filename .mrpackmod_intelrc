@@ -1,1 +1,3 @@
+let BLASLAPACK_INC = ${TACC_MKL_INC}
+let BLASLAPACK_LIB = ${TACC_MKL_LIB}
 let BLASLAPACK_LIBS = mkl_intel_lp64;mkl_sequential;mkl_core;pthread
