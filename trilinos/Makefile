@@ -16,6 +16,7 @@ ABOUT = Collection of reusable scientific software libraries
 URL = https://github.com/trilinos/Trilinos \
     https://www.docs.trilinos.org/files/TrilinosBuildReference.html
 PACKAGEVERSION = 16.2.0
+DOWNLOADURL = https://github.com/trilinos/Trilinos/archive/refs/tags/${PACKAGEVERSION}.tar.gz
 PACKAGEVERSION_DOWNLOAD = 16-2-0
 #
 # 16.2.0 will be the last of the 16 line
@@ -166,7 +167,7 @@ info ::
 	@echo "make default_install : configure build"
 default_install : configure build
 
-DOWNLOADURL = https://github.com/trilinos/Trilinos/archive/refs/tags/trilinos-release-${PACKAGEVERSION_DOWNLOAD}.tar.gz
+# DOWNLOADURL = https://github.com/trilinos/Trilinos/archive/refs/tags/trilinos-release-${PACKAGEVERSION_DOWNLOAD}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 
 GITREPO = git@github.com:trilinos/Trilinos.git
