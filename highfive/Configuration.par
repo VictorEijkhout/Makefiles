@@ -11,26 +11,22 @@ URL = https://github.com/highfive-devs/highfive
 DOCURL = https://highfive-devs.github.io/highfive/
 
 #
-# seq configuration
+# par configuration
 #
-MODE = seq
-MODULES = boost eigen hdf5
-let HDF5PARALLEL = OFF
+MODE = mpi
+MODULES = 
+HDF5PARALLEL = ON
+MODULENAME = phighfive
+MODULENAMEALT = highfive
 
 CMAKEFLAGS = \
-    -D HIGHFIVE_UNIT_TESTS=OFF \
-    -D HIGHFIVE_PARALLEL_HDF5=${HDF5PARALLEL} \
-    -D HIGHFIVE_USE_BOOST=ON \
-    -D HIGHFIVE_USE_EIGEN=ON \
-    -D HIGHFIVE_USE_XTENSOR=OFF \
-    -D HIGHFIVE_USE_HALF_FLOAT=OFF
-CMAKEPREFIXPATHSET = 1
+    -D HIGHFIVE_UNIT_TESTS=OFF 
+PREFIXPATHSET = 1
 NOLIB = 1
 
-DEPENDSONCURRENT = hdf5
-DEPENDSON = boost,eigen
+## DEPENDSONCURRENT = phdf5
+## DEPENDSON = boost eigen
 
 DOWNLOADURL = https://github.com/highfive-devs/highfive/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
 GITREPO = https://github.com/highfive-devs/highfive.git
 SUBMODULE = 1
-

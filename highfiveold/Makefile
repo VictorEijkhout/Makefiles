@@ -2,19 +2,20 @@
 ####
 #### Makefile for Highfive installation
 ####
+#### This package is discontinued, 
+#### see: highfivenew directory for continued development
+####
 ################################################################
 
 PACKAGE = highfive
 ABOUT = Header-only C++ HDF5 interface
-PACKAGEVERSION = 3.2.0
-# DISCONTINUED 2.10.1
-URL = https://github.com/highfive-devs/highfive
-# DISCONTINUED https://github.com/BlueBrain/HighFive
-DOCURL = https://highfive-devs.github.io/highfive/
+PACKAGEVERSION = 2.10.1
+URL = https://github.com/BlueBrain/HighFive
+DOCURL = https://bluebrain.github.io/HighFive/
 MODE = mpi
 ## note: modules needs hdf5 or phdf5 depending
-MODULES_seq = boost eigen hdf5
-MODULES_par = boost eigen phdf5
+MODULES_seq = boost eigen/3 hdf5
+MODULES_par = boost eigen/3 phdf5
 MODULES = ${MODULES_seq}
 
 include ${MAKEINCLUDES}/Make.info
@@ -23,8 +24,7 @@ include ${MAKEINCLUDES}/Make.info
 ## cmake version
 ##
 HDF5PARALLEL = ON
-CMAKEFLAGS = \
-    -D HIGHFIVE_UNIT_TESTS=OFF \
+CMAKEFLAGS_old = \
     -D HIGHFIVE_PARALLEL_HDF5=${HDF5PARALLEL} \
     -D HIGHFIVE_USE_BOOST=ON \
     -D HIGHFIVE_USE_EIGEN=ON \
@@ -52,8 +52,7 @@ seq :
 par :
 	make configure build JCOUNT=${JCOUNT} \
 	    PACKAGEVERSION=${PACKAGEVERSION} \
-	    HDF5PARALLEL=ON  MODE=mpi MODULES="${MODULES_par}" \
-	    MODULENAME=phighfive MODULENAMEALT=highfive
+	    HDF5PARALLEL=ON  MODE=mpi MODULES="${MODULES_par}" MODULENAME=phighfive
 info ::
 	@echo "make default_install : sequential version"
 default_install :: seq
@@ -66,10 +65,8 @@ DEPENDSON = boost eigen
 #
 # Download
 #
-DOWNLOADURL = https://github.com/highfive-devs/highfive/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
-# DISCONTINUED https://github.com/BlueBrain/HighFive/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
+DOWNLOADURL = https://github.com/BlueBrain/HighFive/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
 include ${MAKEINCLUDES}/Make.download
 
-GITREPO = https://github.com/highfive-devs/highfive.git
-SUBMODULE = 1
+GITREPO = git@github.com:BlueBrain/HighFive.git
 include ${MAKEINCLUDES}/Make.git

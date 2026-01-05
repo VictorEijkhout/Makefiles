@@ -19,9 +19,13 @@ CMAKEFLAGS = \
     -D P4EST_ENABLE_MPI=ON \
     -D P4EST_BUILD_EXAMPLES=OFF
 
+##
+## there is boht a lib & lib64 dir
+##
 # https://github.com/cburstedde/p4est/issues/351
+# https://github.com/cburstedde/p4est/issues/359
 PKGCONFIG = lib/pkgconfig
-CMAKEPREFIXPATHSET = 1
+PREFIXPATHSET = 1
 
 DOWNLOADURL = https://github.com/cburstedde/p4est/releases/download/v${PACKAGEVERSION}/p4est-${PACKAGEVERSION}.tar.gz
 GITREPO = https://github.com/cburstedde/p4est.git

@@ -36,3 +36,5 @@ echo && echo "Loaded:"
 module -t list 2>&1 | sort | tr '\n' ' ' 
 echo
 
+export PATH=${STOCKYARD}/MrPackMod:${PATH}
+export PYTHONPATH=${STOCKYARD}:${PYTHONPATH}
