@@ -1,0 +1,20 @@
+################################################################
+####
+#### Makefile for Libsc installation
+####
+#### This is needed for p4est, but should be included
+####
+################################################################
+
+PACKAGE = libsc
+ABOUT = The "sc" auxiliary library
+URL = https://github.com/cburstedde/libsc
+let PACKAGEVERSION = 2.8.7
+DOWNLOADURL = https://github.com/cburstedde/libsc/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
+
+SKIPPACKAGE = 1
+MODE = seq
+MODULES = 
+
+PKGCONFIGLIB = 1
+PREFIXPATHSET = 1
