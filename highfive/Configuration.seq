@@ -9,6 +9,8 @@ ABOUT = Header-only C++ HDF5 interface
 let PACKAGEVERSION = 3.2.0
 URL = https://github.com/highfive-devs/highfive
 DOCURL = https://highfive-devs.github.io/highfive/
+## migration:
+## https://highfive-devs.github.io/highfive/md__2home_2runner_2work_2highfive_2highfive_2doc_2migration__guide.html
 
 #
 # seq configuration
