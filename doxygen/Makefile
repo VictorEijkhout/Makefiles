@@ -7,7 +7,7 @@
 PACKAGE = doxygen
 ABOUT = Widely-used documentation generator tool in software development.
 PACKAGEVERSION = 1.12.0
-# 1.14.0 is out
+# 1.16.0 is out
 PACKAGEVERSIONDOWNLOAD = 1_12_0
 URL = https://github.com/doxygen/doxygen
 MODE = core
