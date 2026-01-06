@@ -9,8 +9,8 @@ ABOUT = Collection of reusable scientific software libraries
 URL = https://github.com/trilinos/Trilinos
 # https://github.com/trilinos/Trilinos/issues/14831
 DOCURL = https://www.docs.trilinos.org/files/TrilinosBuildReference.html
-let PACKAGEVERSION = 16.2.0
-let PACKAGEVERSION_DOWNLOAD = 16-2-0
+PACKAGEVERSION = 16.2.0
+PACKAGEVERSION_DOWNLOAD = 16-2-0
 
 #DOWNLOADURL = https://github.com/trilinos/Trilinos/archive/refs/tags/${PACKAGEVERSION}.tar.gz
 DOWNLOADURL = https://github.com/trilinos/Trilinos/archive/refs/tags/${PACKAGEVERSION}.tar.gz
@@ -29,38 +29,38 @@ CPPSTANDARD = 20
 #
 # lots of package settings
 #
-let PYTHON = OFF
-let HAS_ADAPTERS = ON
-let HAS_EPETRA = ON
-let HAS_BOOST = ON
+PYTHON = OFF
+HAS_ADAPTERS = ON
+HAS_EPETRA = ON
+HAS_BOOST = ON
 # exodus seems external to trilinos, so let's turn it off
-let HAS_EXODUS = OFF
-let HAS_FEI = ${HAS_ADAPTERS}
-let HAS_KOKKOS = ON
-let HAS_NETCDF = ON
-let HAS_PNETCDF = ON
-let HAS_SEACASEXODUS = ON
-let HAS_HDF5 = ON
-let HAS_OPENMP = ON
-let HAS_Teko = ${HAS_ADAPTERS}
+HAS_EXODUS = OFF
+HAS_FEI = ${HAS_ADAPTERS}
+HAS_KOKKOS = ON
+HAS_NETCDF = ON
+HAS_PNETCDF = ON
+HAS_SEACASEXODUS = ON
+HAS_HDF5 = ON
+HAS_OPENMP = ON
+HAS_Teko = ${HAS_ADAPTERS}
 
-let HAS_MUELU = ON
-let HAS_MUMPS = OFF
-let HAS_STK = ON
-let HAS_YAMLCPP = OFF 
+HAS_MUELU = ON
+HAS_MUMPS = OFF
+HAS_STK = ON
+HAS_YAMLCPP = OFF 
 # if [ "$${HAS_YAMLCPP}" = "1" ] ; then 
 # source $${scriptdir}/../yaml-cpp/yamlcpp_vars.sh
 # fi
 
-let TRILINOS_BLAS_INC    = ${BLASLAPACK_INC}
-let TRILINOS_LAPACK_INC  = ${BLASLAPACK_INC}
-let TRILINOS_BLAS_LIB    = ${BLASLAPACK_LIB}
-let TRILINOS_LAPACK_LIB  = ${BLASLAPACK_LIB}
-let TRILINOS_BLAS_LIBS   = ${BLASLAPACK_LIBS}
-let TRILINOS_LAPACK_LIBS = ${BLASLAPACK_LIBS}
+TRILINOS_BLAS_INC    = ${BLASLAPACK_INC}
+TRILINOS_LAPACK_INC  = ${BLASLAPACK_INC}
+TRILINOS_BLAS_LIB    = ${BLASLAPACK_LIB}
+TRILINOS_LAPACK_LIB  = ${BLASLAPACK_LIB}
+TRILINOS_BLAS_LIBS   = ${BLASLAPACK_LIBS}
+TRILINOS_LAPACK_LIBS = ${BLASLAPACK_LIBS}
 
-let DEPRECATED=OFF 
-let HAS_TEUCHOS=ON 
+DEPRECATED=OFF 
+HAS_TEUCHOS=ON 
 
 CMAKEFLAGS = \
   -D Trilinos_VERBOSE_CONFIGURE=ON \
@@ -176,7 +176,7 @@ CMAKEFLAGS = \
   -D Trilinos_ENABLE_ShyLU:BOOL=OFF \
   -D Trilinos_ENABLE_Stokhos:BOOL=${HAS_KOKKOS} \
   -D Trilinos_ENABLE_Stratimikos:BOOL=ON \
-  -D Trilinos_ENABLE_Teko:BOOL=${HAS_Teko} \
+  -D Trilinos_ENABLE_Teko:BOOL=${HAS_TEKO} \
   -D Trilinos_ENABLE_Teuchos:BOOL=${HAS_TEUCHOS} \
       -D Teuchos_ENABLE_LONG_LONG_INT:BOOL=ON \
   -D Trilinos_ENABLE_Thyra:BOOL=ON \
