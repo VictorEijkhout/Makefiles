@@ -1,0 +1,28 @@
+################################################################
+####
+#### Makefile for Ginkgo installation
+####
+################################################################
+
+PACKAGE = ginkgo
+ABOUT = High-Performance Linear Algebra Library for Manycore Systems
+URL = https://github.com/ginkgo-project/ginkgo
+DOCURL = https://github.com/ginkgo-project/ginkgo/blob/develop/INSTALL.md
+PACKAGEVERSION = 1.11.0
+DOWNLOADURL = https://github.com/ginkgo-project/ginkgo/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
+
+MODE = mpi
+MODULES = 
+
+LINKEDSTUFF = ON
+CMAKEFLAGS = \
+    -D GINKGO_BUILD_BENCHMARKS=${LINKEDSTUFF} \
+    -D GINKGO_BUILD_EXAMPLES=${LINKEDSTUFF} \
+    -D GINKGO_BUILD_TESTS=${LINKEDSTUFF} \
+    -D GINKGO_BUILD_OMP=ON
+HASBIN = 1
+PREFIXPATHSET = 1
+SRCPATH = ${PACKAGEROOT}/ginkgo/ginkgo-${PACKAGEVERSION}
+# cpu settings
+INSTALLVARIANT = omp
+INSTALLEXT = omp
