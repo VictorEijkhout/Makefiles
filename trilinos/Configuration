@@ -7,10 +7,14 @@
 PACKAGE = trilinos
 ABOUT = Collection of reusable scientific software libraries
 URL = https://github.com/trilinos/Trilinos
+
 # https://github.com/trilinos/Trilinos/issues/14831
+# until move is complete:
+# https://trilinos.github.io/pdfs/TrilinosBuildReference.pdf
 DOCURL = https://www.docs.trilinos.org/files/TrilinosBuildReference.html
-let PACKAGEVERSION = 16.2.0
-let PACKAGEVERSION_DOWNLOAD = 16-2-0
+
+PACKAGEVERSION = 16.2.0
+PACKAGEVERSION_DOWNLOAD = 16-2-0
 
 #DOWNLOADURL = https://github.com/trilinos/Trilinos/archive/refs/tags/${PACKAGEVERSION}.tar.gz
 DOWNLOADURL = https://github.com/trilinos/Trilinos/archive/refs/tags/${PACKAGEVERSION}.tar.gz
@@ -29,38 +33,38 @@ CPPSTANDARD = 20
 #
 # lots of package settings
 #
-let PYTHON = OFF
-let HAS_ADAPTERS = ON
-let HAS_EPETRA = ON
-let HAS_BOOST = ON
+PYTHON = OFF
+HAS_ADAPTERS = ON
+HAS_EPETRA = ON
+HAS_BOOST = ON
 # exodus seems external to trilinos, so let's turn it off
-let HAS_EXODUS = OFF
-let HAS_FEI = ${HAS_ADAPTERS}
-let HAS_KOKKOS = ON
-let HAS_NETCDF = ON
-let HAS_PNETCDF = ON
-let HAS_SEACASEXODUS = ON
-let HAS_HDF5 = ON
-let HAS_OPENMP = ON
-let HAS_Teko = ${HAS_ADAPTERS}
+HAS_EXODUS = OFF
+HAS_FEI = ${HAS_ADAPTERS}
+HAS_KOKKOS = ON
+HAS_NETCDF = ON
+HAS_PNETCDF = ON
+HAS_SEACASEXODUS = ON
+HAS_HDF5 = ON
+HAS_OPENMP = ON
+HAS_TEKO = ${HAS_ADAPTERS}
 
-let HAS_MUELU = ON
-let HAS_MUMPS = OFF
-let HAS_STK = ON
-let HAS_YAMLCPP = OFF 
+HAS_MUELU = ON
+HAS_MUMPS = OFF
+HAS_STK = ON
+HAS_YAMLCPP = OFF 
 # if [ "$${HAS_YAMLCPP}" = "1" ] ; then 
 # source $${scriptdir}/../yaml-cpp/yamlcpp_vars.sh
 # fi
 
-let TRILINOS_BLAS_INC    = ${BLASLAPACK_INC}
-let TRILINOS_LAPACK_INC  = ${BLASLAPACK_INC}
-let TRILINOS_BLAS_LIB    = ${BLASLAPACK_LIB}
-let TRILINOS_LAPACK_LIB  = ${BLASLAPACK_LIB}
-let TRILINOS_BLAS_LIBS   = ${BLASLAPACK_LIBS}
-let TRILINOS_LAPACK_LIBS = ${BLASLAPACK_LIBS}
+TRILINOS_BLAS_INC    = ${BLASLAPACK_INC}
+TRILINOS_LAPACK_INC  = ${BLASLAPACK_INC}
+TRILINOS_BLAS_LIB    = ${BLASLAPACK_LIB}
+TRILINOS_LAPACK_LIB  = ${BLASLAPACK_LIB}
+TRILINOS_BLAS_LIBS   = ${BLASLAPACK_LIBS}
+TRILINOS_LAPACK_LIBS = ${BLASLAPACK_LIBS}
 
-let DEPRECATED=OFF 
-let HAS_TEUCHOS=ON 
+DEPRECATED=OFF 
+HAS_TEUCHOS=ON 
 
 CMAKEFLAGS = \
   -D Trilinos_VERBOSE_CONFIGURE=ON \
@@ -73,11 +77,12 @@ CMAKEFLAGS = \
   -D Trilinos_ENABLE_TESTS:BOOL=OFF \
   -D Trilinos_ENABLE_EXAMPLES:BOOL=ON \
   -D Trilinos_ENABLE_Export_Makefiles:BOOL=ON \
+  -D Trilinos_ENABLE_Gtest=OFF \
   -D Trilinos_ENABLE_Fortran:BOOL=ON \
   \
-  -D CMAKE_C_COMPILER=${CC} \
-  -D CMAKE_CXX_COMPILER=${CXX} \
-  -D CMAKE_Fortran_COMPILER=${FC} \
+  -D CMAKE_C_COMPILER=mpicc \
+  -D CMAKE_CXX_COMPILER=mpicxx \
+  -D CMAKE_Fortran_COMPILER=mpif90 \
   -D CMAKE_CXX_STANDARD:STRING=17 \
   \
   -D Trilinos_ENABLE_OpenMP:BOOL=${HAS_OPENMP} \
@@ -103,8 +108,8 @@ CMAKEFLAGS = \
   -D LAPACK_LIBRARY_NAMES:STRING='${BLASLAPACK_LIBS}' \
   \
   -D TPL_ENABLE_HDF5:BOOL=${HAS_HDF5} \
-  -D HDF5_INCLUDE_DIRS:PATH=${TACC_HDF5_INC}    \
-  -D HDF5_LIBRARY_DIRS:PATH=${TACC_HDF5_LIB}    \
+  -D HDF5_INCLUDE_DIRS:PATH=${TACC_PHDF5_INC}    \
+  -D HDF5_LIBRARY_DIRS:PATH=${TACC_PHDF5_LIB}    \
   \
   -D TPL_ENABLE_Netcdf:BOOL=${HAS_NETCDF} \
   -D TPL_Netcdf_INCLUDE_DIRS:PATH=${TACC_PARALLELNETCDF_INC} \
@@ -176,7 +181,7 @@ CMAKEFLAGS = \
   -D Trilinos_ENABLE_ShyLU:BOOL=OFF \
   -D Trilinos_ENABLE_Stokhos:BOOL=${HAS_KOKKOS} \
   -D Trilinos_ENABLE_Stratimikos:BOOL=ON \
-  -D Trilinos_ENABLE_Teko:BOOL=${HAS_Teko} \
+  -D Trilinos_ENABLE_Teko:BOOL=${HAS_TEKO} \
   -D Trilinos_ENABLE_Teuchos:BOOL=${HAS_TEUCHOS} \
       -D Teuchos_ENABLE_LONG_LONG_INT:BOOL=ON \
   -D Trilinos_ENABLE_Thyra:BOOL=ON \
