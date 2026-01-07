@@ -80,9 +80,9 @@ CMAKEFLAGS = \
   -D Trilinos_ENABLE_Gtest=OFF \
   -D Trilinos_ENABLE_Fortran:BOOL=ON \
   \
-  -D CMAKE_C_COMPILER=${CC} \
-  -D CMAKE_CXX_COMPILER=${CXX} \
-  -D CMAKE_Fortran_COMPILER=${FC} \
+  -D CMAKE_C_COMPILER=mpicc \
+  -D CMAKE_CXX_COMPILER=mpicxx \
+  -D CMAKE_Fortran_COMPILER=mpif90 \
   -D CMAKE_CXX_STANDARD:STRING=17 \
   \
   -D Trilinos_ENABLE_OpenMP:BOOL=${HAS_OPENMP} \
