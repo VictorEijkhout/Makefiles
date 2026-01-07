@@ -1,3 +1,0 @@
-CC  = ${TACC_CC}
-CXX = ${TACC_CXX}
-FC  = ${TACC_FC}
