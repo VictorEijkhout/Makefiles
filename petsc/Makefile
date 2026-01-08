@@ -6,7 +6,8 @@
 
 PACKAGE = PETSC
 ABOUT = Portable, Extensible Toolkit for Scientific Computation
-URL = https://petsc.org/release/install/download/
+URL = https://petsc.org/
+CODEURL = https://petsc.org/release/install/download/
 PACKAGEVERSION = 3.24
 PACKAGEVERSION_DOWNLOAD = 3.24.3
 DOWNLOADURL = https://web.cels.anl.gov/projects/petsc/download/release-snapshots/petsc-${PACKAGEVERSION_DOWNLOAD}.tar.gz
@@ -359,6 +360,8 @@ biginstall :
 	   && SCALAPACK=${SCALAPACK} && ZOLTAN=${ZOLTAN} \
 	   && compiler_major_version=${TACC_FAMILY_COMPILER_VERSION} \
 	       && compiler_major_version=$${compiler_major_version%%.*} \
+	   && petsc_version=${PACKAGE_VERSION} \
+	       && petsc_version_minor=$${petsc_version##*.} \
 	   && echo "Incompatibilities mode/package:" \
 	   && if [ "$${CUDA}" = "1" ] ; then \
 	        echo " .. disable STRUMPACK: don't work with cuda" && STRUMPACK=0 \
