@@ -14,7 +14,7 @@ module -t unload intel oneapi gcc impi mvapich2 python3 python2 2>/dev/null 2>/d
 
 echo "adding experimental and my own module paths"
 ## module use /scratch/projects/compilers/modulefiles
-export VICTOR_WORK=/work2/00434/eijkhout/ls6
+export VICTOR_WORK=/work/00434/eijkhout/ls6
 export MODULEROOT=${VICTOR_WORK}/modulefiles
 export VICTOR_MODULEPATH_ROOT=${MODULEROOT}
 module use ${VICTOR_MODULEPATH_ROOT}/Core
