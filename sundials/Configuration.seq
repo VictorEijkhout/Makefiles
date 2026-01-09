@@ -4,7 +4,7 @@
 ####
 ################################################################
 
-PACKAGE = SUNDIALS
+PACKAGE = sundials
 ABOUT = SUite of Nonlinear and DIfferential/ALgebraic equation Solvers
 MODULENOTES = Sequential version
 URL = https://computing.llnl.gov/projects/sundials

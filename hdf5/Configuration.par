@@ -4,7 +4,7 @@
 ####
 ################################################################
 
-PACKAGE = HDF5
+PACKAGE = hdf5
 ABOUT =  Hierarchical Data Format, version 5
 URL = https://www.hdfgroup.org/
 SOFTWAREURL = https://github.com/HDFGroup/hdf5

@@ -4,7 +4,7 @@
 ####
 ################################################################
 
-PACKAGE = MPUNITS
+PACKAGE = mpunits
 ABOUT = The quantities and units library for C++
 let PACKAGEVERSION = 2.5.0
 URL = https://github.com/mpusz/mp-units

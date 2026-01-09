@@ -4,7 +4,7 @@
 ####
 ################################################################
 
-PACKAGE = AUTOCONF
+PACKAGE = autoconf
 ABOUT = autotools configuration utility
 URL = https://ftp.gnu.org/gnu/autoconf/
 let PACKAGEVERSION = 2.72

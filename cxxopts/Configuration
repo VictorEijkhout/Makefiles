@@ -4,7 +4,7 @@
 ####
 ################################################################
 
-PACKAGE = CXXOPTS
+PACKAGE = cxxopts
 ABOUT = Lightweight C++ command line option parser
 let PACKAGEVERSION = 3.3.1
 URL = https://github.com/jarro2783/cxxopts

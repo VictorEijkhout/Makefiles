@@ -5,7 +5,7 @@
 ####
 ################################################################
 
-PACKAGE = PROJ
+PACKAGE = proj
 ABOUT = Cartographic Projections and Coordinate Transformations Library
 URL = https://github.com/OSGeo/PROJ
 let PACKAGEVERSION = 9.6.0

@@ -4,7 +4,7 @@
 ####
 ################################################################
 
-PACKAGE = SILO
+PACKAGE = silo
 ABOUT = File-based, scientific data exchange and software interoperability
 URL = https://silo.llnl.gov/
 CODEURL = https://github.com/llnl/Silo

@@ -4,7 +4,7 @@
 ####
 ################################################################
 
-PACKAGE = SQLITE
+PACKAGE = sqlite
 ABOUT = SQL database engine
 let PACKAGEVERSION = 3.51.1
 URL = https://www.sqlite.org

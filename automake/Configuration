@@ -4,7 +4,7 @@
 ####
 ################################################################
 
-PACKAGE = AUTOMAKE
+PACKAGE = automake
 ABOUT = GNU automake
 URL = https://ftp.gnu.org/gnu/automake/
 let PACKAGEVERSION = 1.18.1

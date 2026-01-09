@@ -4,7 +4,7 @@
 ####
 ################################################################
 
-PACKAGE = CATCH2
+PACKAGE = catch2
 ABOUT = A modern, C++-native, test framework for unit-tests, TDD and BDD
 URL = https://github.com/catchorg/Catch2
 let PACKAGEVERSION = 3.8.1

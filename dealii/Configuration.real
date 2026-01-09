@@ -7,7 +7,7 @@
 ####
 ################################################################
 
-PACKAGE = DEALII
+PACKAGE = dealii
 ABOUT = Finite Element Library
 URL = https://github.com/dealii/dealii
 let PACKAGEVERSION = 9.7.1
