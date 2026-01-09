@@ -14,11 +14,11 @@ echo "==== adding experimental and my own module paths"
 
 export VICTOR_WORK=/work/00434/eijkhout/ls6
 export VICTOR_MODULEPATH_ROOT=${VICTOR_WORK}/modulefiles
+module use /scratch/projects/compilers/modulefiles
 module use ${VICTOR_MODULEPATH_ROOT}/Core
 
 intelversion=25.3
 echo "==== loading intel ${intelversion}"
-module use /scratch/projects/compilers/modulefiles
 module load intel/${intelversion}
 module load impi/21.17
 
