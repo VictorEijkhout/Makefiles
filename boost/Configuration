@@ -62,7 +62,7 @@ build ::
 	 && requirenonzero logfilesdir \
 	 && cp $${installlog} $${logfilesdir}/ \
 	 && make --no-print-directory varsmodule \
-	      CMAKEPREFIXPATHSET=1
+	      PREFIXPATHSET=1
 
 .PHONY: seq par default_install
 default_install : seq

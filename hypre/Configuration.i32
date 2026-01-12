@@ -19,7 +19,7 @@ INSTALLVARIANT = i32
 MODULENOTES = 32-bit version
 
 CMAKESUBDIR = src
-CMAKEPREFIXPATHSET = 1
+PREFIXPATHSET = 1
 CPTOINSTALLDIR = src/examples
 
 DOWNLOADURL = https://github.com/hypre-space/hypre/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
