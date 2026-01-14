@@ -4,7 +4,7 @@
 ####
 ################################################################
 
-PACKAGE = SILO
+PACKAGE = silo
 ABOUT = File-based, scientific data exchange and software interoperability
 URL = https://silo.llnl.gov/
 CODEURL = https://github.com/llnl/Silo
@@ -16,7 +16,7 @@ MODE = seq
 MODULES = hdf5/<2
 
 HASBIN=1
-CMAKEPREFIXPATHSET = 1
+PREFIXPATHSET = 1
 DEPENDSONCURRENT = hdf5
 
 BUILDSYSTEM = cmake

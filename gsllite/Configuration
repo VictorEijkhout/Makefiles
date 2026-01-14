@@ -4,7 +4,7 @@
 ####
 ################################################################
 
-PACKAGE = GSLLITE
+PACKAGE = gsllite
 ABOUT = ISO C++ Core Guidelines Library
 let PACKAGEVERSION = 1.0.1
 # 0.43.0

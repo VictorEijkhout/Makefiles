@@ -4,7 +4,7 @@
 ####
 ################################################################
 
-PACKAGE = SUNDIALS
+PACKAGE = sundials
 ABOUT = SUite of Nonlinear and DIfferential/ALgebraic equation Solvers
 URL = https://computing.llnl.gov/projects/sundials
 SOFTWAREURL = https://github.com/LLNL/sundials
@@ -18,6 +18,6 @@ let PARALLEL = ON
 CMAKEFLAGS = \
     -D ENABLE_MPI=${PARALLEL} \
     -D BUILD_FORTRAN_MODULE_INTERFACE=ON
-CMAKEPREFIXPATHSET = 1
+PREFIXPATHSET = 1
 
 DOWNLOADURL = https://github.com/LLNL/sundials/releases/download/v${PACKAGEVERSION}/sundials-${PACKAGEVERSION}.tar.gz

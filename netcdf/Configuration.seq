@@ -6,7 +6,7 @@
 ####
 ################################################################
 
-PACKAGE = NETCDF
+PACKAGE = netcdf
 ABOUT = Network Common Data Format
 URL = https://netcdf.geodynamics.org/ 
 CODEURL = https://github.com/Unidata/netcdf-c 

@@ -7,7 +7,7 @@
 ####
 ################################################################
 
-PACKAGE = DEALII
+PACKAGE = dealii
 ABOUT = Finite Element Library
 URL = https://github.com/dealii/dealii
 let PACKAGEVERSION = 9.7.1
@@ -33,7 +33,7 @@ CMAKEFLAGS = \
     -D DEAL_II_WITH_SUNDIALS=ON -D SUNDIALS_DIR=${TACC_SUNDIALS_DIR} \
     -D DEAL_II_WITH_TRILINOS=ON -D TRILINOS_DIR=${TACC_TRILINOS_DIR}
 
-CMAKEPREFIXPATHSET = 1
+PREFIXPATHSET = 1
 CPTOINSTALLDIR = examples
 CMAKEBUILDTYPE = DebugRelease
 INSTALLEXT = real

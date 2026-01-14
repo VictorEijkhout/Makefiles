@@ -4,7 +4,7 @@
 ####
 ################################################################
 
-PACKAGE = SUNDIALS
+PACKAGE = sundials
 ABOUT = SUite of Nonlinear and DIfferential/ALgebraic equation Solvers
 MODULENOTES = Sequential version
 URL = https://computing.llnl.gov/projects/sundials
@@ -19,7 +19,7 @@ let PARALLEL = OFF
 CMAKEFLAGS = \
     -D ENABLE_MPI=${PARALLEL} \
     -D BUILD_FORTRAN_MODULE_INTERFACE=ON
-CMAKEPREFIXPATHSET = 1
+PREFIXPATHSET = 1
 
 MODULENAME=ssundials
 MODULENAMEALT=sundials

@@ -4,24 +4,24 @@
 ####
 ################################################################
 
-PACKAGE = HDF5
+PACKAGE = hdf5
 ABOUT =  Hierarchical Data Format, version 5
 URL = https://www.hdfgroup.org/
 SOFTWAREURL = https://github.com/HDFGroup/hdf5
 
-let PACKAGEVERSION = 2.0.0
+PACKAGEVERSION = 2.0.0
 
 MODULES = zlib
 
 # parallel settings
-let HDF5PARALLEL = ON
+HDF5PARALLEL = ON
 MODE = mpi
 MODULENAME = phdf5
 MODULENAMEALT = hdf5
 
-let HDFFORTRAN = ON
-let TESTING = ON
-let THREADSAFE = ON
+HDFFORTRAN = ON
+TESTING = ON
+THREADSAFE = ON
 
 CMAKEFLAGS = \
   -D HDF5_ENABLE_PLUGIN_SUPPORT=OFF \

@@ -15,7 +15,7 @@ module unload intel oneapi gcc impi mvapich2 python3 python2
 echo "adding experimental and my own module paths"
 ## ONEAPI IS not yet OFFICIAL as INTEL
 module use /scratch/projects/compilers/modulefiles
-export VICTOR_WORK=/work2/00434/eijkhout/ls6
+export VICTOR_WORK=/work/00434/eijkhout/ls6
 export MODULEROOT=${VICTOR_WORK}/modulefiles
 
 export MY_MODULEPATH_ROOT=${MODULEROOT}
