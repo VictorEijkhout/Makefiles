@@ -26,3 +26,6 @@ module load impi/21.9
 export PATH=${HOME}/bin/gcc15:${PATH}
 
 module -t list | sort
+
+export PATH=${STOCKYARD}/MrPackMod:${PATH}
+export PYTHONPATH=${STOCKYARD}:${PYTHONPATH}
