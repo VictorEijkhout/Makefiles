@@ -11,16 +11,18 @@ ABOUT = Network Common Data Format
 URL = https://netcdf.geodynamics.org/ 
 CODEURL = https://github.com/Unidata/netcdf-c 
 DOCURL = https://docs.unidata.ucar.edu/nug/current/getting_and_building_netcdf.html#configure_options
-let PACKAGEVERSION = 4.9.3
+PACKAGEVERSION = 4.9.3
+DOWNLOADURL = https://downloads.unidata.ucar.edu/netcdf-c/${PACKAGEVERSION}/netcdf-c-${PACKAGEVERSION}.tar.gz
+GITREPO = http://github.com/Unidata/netcdf-c
 
 MODE = mpi
-MODULES = pnetcdf phdf5
+MODULES = pnetcdf phdf5/<2
 
 BUILDSYSTEM = cmake
 HASBIN=1
 PREFIXPATHSET = 1
 PKGCONFIGLIB = pkgconfig
-let NETCDF_PARALLEL = ON
+NETCDF_PARALLEL = ON
 MODULENAME = parallelnetcdf
 DEPENDSONCURRENT = phdf5
 LINKLIB64toLIB = 1
@@ -33,6 +35,3 @@ CMAKEFLAGS = \
     -D ENABLE_PARALLEL_TESTS=OFF \
     -D NETCDF_ENABLE_HDF5=ON \
     -D ENABLE_DAP=ON
-
-DOWNLOADURL = https://downloads.unidata.ucar.edu/netcdf-c/${PACKAGEVERSION}/netcdf-c-${PACKAGEVERSION}.tar.gz
-GITREPO = http://github.com/Unidata/netcdf-c
