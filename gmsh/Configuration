@@ -10,7 +10,7 @@ PACKAGEVERSION = 4.15.0
 URL = https://gmsh.info/
 DOWNLOADURL = https://gmsh.info/src/gmsh-${PACKAGEVERSION}-source.tgz
 
-MODE = seq
+MODE = core
 BUILDSYSTEM = cmake
 NOINC = 1
 NOLIB = 1

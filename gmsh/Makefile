@@ -8,7 +8,7 @@ PACKAGE = GMSH
 ABOUT = Mesh Generator
 PACKAGEVERSION = 4.15.0
 URL = https://gmsh.info/
-MODE = seq
+MODE = core
 
 include ${MAKEINCLUDES}/Make.info
 
