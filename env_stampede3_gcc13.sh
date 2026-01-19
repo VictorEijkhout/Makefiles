@@ -22,7 +22,8 @@ gccversion=13.2.0
 echo "loading gcc ${gccversion}"
 module load gcc/${gccversion}
 module load mkl
-module load impi/21.9
+module load impi
+# /21.9 or 21.11?
 export PATH=${HOME}/bin/gcc15:${PATH}
 
 module -t list | sort

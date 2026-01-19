@@ -1,0 +1,17 @@
+################################################################
+####
+#### Makefile for GMSH installation
+####
+################################################################
+
+PACKAGE = gmsh
+ABOUT = Mesh Generator
+PACKAGEVERSION = 4.15.0
+URL = https://gmsh.info/
+DOWNLOADURL = https://gmsh.info/src/gmsh-${PACKAGEVERSION}-source.tgz
+
+MODE = seq
+BUILDSYSTEM = cmake
+NOINC = 1
+NOLIB = 1
+HASBIN = 1

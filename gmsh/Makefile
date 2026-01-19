@@ -6,12 +6,13 @@
 
 PACKAGE = GMSH
 ABOUT = Mesh Generator
-PACKAGEVERSION = 4.14.1
+PACKAGEVERSION = 4.15.0
 URL = https://gmsh.info/
 MODE = seq
 
 include ${MAKEINCLUDES}/Make.info
 
+NOINC = 1
 NOLIB = 1
 HASBIN = 1
 include ${MAKEINCLUDES}/Make.cmake
