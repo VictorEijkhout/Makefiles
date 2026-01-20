@@ -13,8 +13,7 @@ ABOUT = Network Common Data Format
 URL = https://netcdf.geodynamics.org/ \
     https://github.com/Unidata/netcdf-c \
     https://docs.unidata.ucar.edu/nug/current/getting_and_building_netcdf.html#configure_options
-PACKAGEVERSION = 4.9.2
-# 4.9.3 is out
+PACKAGEVERSION = 4.9.3
 MODE = seq
 MODULES_seq = hdf5
 MODULES_par = pnetcdf phdf5
