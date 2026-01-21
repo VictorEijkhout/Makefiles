@@ -1,3 +1,0 @@
-BLASLAPACK_INC = ${TACC_MKL_INC}
-BLASLAPACK_LIB = ${TACC_MKL_LIB}
-BLASLAPACK_LIBS = mkl_intel_lp64;mkl_sequential;mkl_core;pthread
