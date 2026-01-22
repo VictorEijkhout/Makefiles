@@ -14,7 +14,7 @@ MODE = seq
 
 BUILDSYSTEM = cmake
 PKGCONFIGLIB = pkgconfig
-CMAKEPREFIXPATHSET=1
+PREFIXPATHSET=1
 
 DOWNLOADURL = https://github.com/PCRE2Project/pcre2/archive/refs/tags/pcre2-${PACKAGEVERSION}.tar.gz
 GITREPO = https://github.com/PhilipHazel/pcre2.git

@@ -7,7 +7,7 @@
 PACKAGE = meson
 ABOUT = The Meson Build System
 PACKAGEVERSION = 1.4.1
-# 1.10.0 is out
+# 1.10.1 is out
 URL = https://github.com/mesonbuild/meson
 MODE = core
 MODULE = 

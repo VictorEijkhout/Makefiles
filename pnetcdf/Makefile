@@ -1,6 +1,6 @@
 ################################################################
 ####
-#### Makefile for Netcdf installation
+#### Makefile for PNetcdf installation
 ####
 ################################################################
 
@@ -13,7 +13,12 @@ MODE = mpi
 MODULES = automake
 
 include ${MAKEINCLUDES}/Make.info
-CONFIGUREFLAGS = --enable-fortran --enable-shared
+ifeq "${TACC_FAMILY_COMPILER}" "gcc"
+  CONFIGUREFLAGS = --enable-shared
+else
+  CONFIGUREFLAGS = --enable-fortran --enable-shared
+endif
+
 FORCERECONF = 1
 # WEIRD only for gcc15 in jail.
 ifeq "${TACC_FAMILY_COMPILER}" "gcc"
