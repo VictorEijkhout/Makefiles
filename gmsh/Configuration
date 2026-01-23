@@ -8,10 +8,13 @@ PACKAGE = gmsh
 ABOUT = Mesh Generator
 PACKAGEVERSION = 4.15.0
 URL = https://gmsh.info/
+CODEURL = https://gitlab.onelab.info/gmsh/gmsh
 DOWNLOADURL = https://gmsh.info/src/gmsh-${PACKAGEVERSION}-source.tgz
 
-MODE = core
+MODE = seq
 BUILDSYSTEM = cmake
-NOINC = 1
-NOLIB = 1
+CMAKEFLAGS = \
+    -D ENABLE_BUILD_DYNAMIC=1
+#NOINC = 1
+#NOLIB = 1
 HASBIN = 1
