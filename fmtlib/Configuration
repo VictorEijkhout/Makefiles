@@ -6,8 +6,9 @@
 
 PACKAGE = fmtlib
 ABOUT = A modern formatting library
-URL = https://github.com/fmtlib/fmt
-let PACKAGEVERSION = 12.1.0
+URL = https://fmt.dev/
+CODEURL = https://github.com/fmtlib/fmt
+PACKAGEVERSION = 12.1.0
 DOWNLOADURL = https://github.com/fmtlib/fmt/archive/${PACKAGEVERSION}.tar.gz
 MODE = seq
 

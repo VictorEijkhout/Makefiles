@@ -7,8 +7,7 @@
 PACKAGE = fmtlib
 ABOUT = A modern formatting library
 URL = https://github.com/fmtlib/fmt
-PACKAGEVERSION = 12.0.0
-# 12.1.0
+PACKAGEVERSION = 12.1.0
 MODE = seq
 
 include ${MAKEINCLUDES}/Make.info
