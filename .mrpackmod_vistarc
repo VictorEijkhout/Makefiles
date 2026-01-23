@@ -1,4 +1,4 @@
-let BLASLAPACK_INC = ${TACC_NVPL_INC}
-let BLASLAPACK_LIB = ${TACC_NVPL_LIB}
-let BLASLAPACK_LIBS = nvpl_lapack_lp64_seq;nvpl_lapack_core;nvpl_blas_lp64_seq;nvpl_blas_core
+BLASLAPACK_INC = ${TACC_NVPL_INC}
+BLASLAPACK_LIB = ${TACC_NVPL_LIB}
+BLASLAPACK_LIBS = nvpl_lapack_lp64_seq;nvpl_lapack_core;nvpl_blas_lp64_seq;nvpl_blas_core
 
