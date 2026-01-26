@@ -4,3 +4,11 @@ Intel 23 bombs on "unsupported compiler"
 Gcc 13 ditto.
 https://kokkosteam.slack.com/archives/C5BGU5NDQ/p1696340753714289
 
+Lonestar 6:
+
+gcc supported compiler
+try to force it and you get:
+
+/usr/include/stdlib.h(140): error: identifier "_Float32" is undefined
+/usr/include/stdlib.h(146): error: identifier "_Float64" is undefined
+/usr/include/stdlib.h(152): error: identifier "_Float128" is undefined
