@@ -30,18 +30,19 @@ package_options :
 	 && for p in ${packagelist} ; do \
 	      export P=$$( echo $$p | tr a-z A-Z ) && eval optval=\$${$${P}} \
 	       && echo "package select $$p optval=$$optval" echo >/dev/null \
+	       && downloads="$$downloads --with-$${p}=$${optval}" \
 	       && if [ "$$optval" = "1" ] ; then \
 	            plocation=$$( make --no-print-directory package_location PACKAGE=$${p} ) \
 	             && eval extra=\$${$${p}_extra} \
-	             && downloads="$$downloads --with-$${p}=1 $${plocation}" \
+	             && downloads="$$downloads $${plocation}" \
 	          ; fi \
 	    ; done \
 	 && echo $${downloads}
-.PHONY : package_location
 ##
 ## make -with-foo-download vs --foo-dir=/home/victor/foo option
 ## this is invoked above by package_options
 ##
+.PHONY : package_location
 package_location :
 	@export p=${PACKAGE} && export P=$$( echo $$p | tr a-z A-Z ) \
 	     && export hdf5_extra="--download-hdf5-configure-arguments=\"--with-zlib=yes\" --download-hdf5-fortran-bindings=0" \
