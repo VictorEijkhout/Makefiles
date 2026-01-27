@@ -67,7 +67,11 @@ COMPUTE = ${COMPUTE_${TACC_SYSTEM}}
 
 .PHONY: cuda gpu configure_cuda 
 gpu cuda : configure_cuda
-	@make --no-print-directory \
+	@echo "Build CUDA" \
+	 && export NVCC_WRAPPER_DEFAULT_COMPILER=${TACC_CXX} \
+	 && export NVCC_APPEND_FLAGS=-allow-unsupported-compiler \
+	 && echo "CUDA environment:" && env | grep -i NVCC \
+	 && make --no-print-directory \
 	    build public \
 	    MODULES=cuda DEPENDSON=cuda/12 \
 	    INSTALLVARIANT=cuda INSTALLEXT=cuda \
@@ -78,7 +82,10 @@ gpu cuda : configure_cuda
 configure_cuda :
 	@if [ -z "${TACC_CXX}" ] ; then \
 	    echo "No TACC_CXX defined" && exit 1 ; fi 
-	@export NVCC_WRAPPER_DEFAULT_COMPILER=${TACC_CXX} \
+	@echo "Configure CUDA" \
+	 && export NVCC_WRAPPER_DEFAULT_COMPILER=${TACC_CXX} \
+	 && export NVCC_APPEND_FLAGS=-allow-unsupported-compiler \
+	 && echo "CUDA environment:" && env | grep -i NVCC \
 	 && make --no-print-directory configure \
 	    CMAKEFLAGS=" \
 	      -D Kokkos_ENABLE_SERIAL=ON \
