@@ -1,7 +1,13 @@
-User request for GPU version on LS6
-https://consult.tacc.utexas.edu/Ticket/Display.html?id=109558
+================ Issues
+
+Optimized blas lapack problem:
+https://github.com/Nek5000/nekRS/issues/681
 
 Version 23 hypre problem
 https://github.com/Nek5000/nekRS/issues/648
 solved in 26
 
+================ History
+
+User request for GPU version on LS6
+https://consult.tacc.utexas.edu/Ticket/Display.html?id=109558
