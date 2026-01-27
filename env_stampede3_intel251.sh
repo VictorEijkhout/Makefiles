@@ -11,8 +11,7 @@ echo "module unload intel and others"
 module unload intel oneapi gcc impi mvapich2 python3 python2 2>/dev/null
 
 ## 25 is on scratch
-## no longer?
-## module -T use /scratch/projects/compilers/modulefiles
+module -T use /scratch/projects/compilers/modulefiles
 
 export VICTOR_WORK=/work2/00434/eijkhout/stampede3
 export MODULEROOT=${VICTOR_WORK}/modulefiles

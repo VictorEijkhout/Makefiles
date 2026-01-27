@@ -1,0 +1,35 @@
+################################################################
+####
+#### Makefile for NekRS installation
+####
+################################################################
+
+PACKAGE = nekRS
+ABOUT = Next generation fast and scalable CFD code
+URL = https://github.com/Nek5000/nekRS
+DOCURL = https://github.com/Nek5000/nekRS/discussions/680
+PACKAGEVERSION = 26.0
+DOWNLOADURL = https://github.com/Nek5000/nekRS/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
+BRANCH = next
+# BOOTSTRAP = find . -name polyfill.hpp -exec sed -i -e 's/ uint/ std::uint/g' {} \;
+GITREPO = https://github.com/Nek5000/nekRS.git
+
+MODE = mpi
+MODULES = 
+
+BUILDSYSTEM = cmake
+#OPTIMIZEDBLAS = ON
+USECUDA = OFF
+CMAKEFLAGS = \
+    -D USE_OPTIMIZED_BLAS=ON \
+    -D USE_NATIVE_BLAS=OFF \
+    -D BLAS_LIBRARIES='${BLASLAPACK_LIBS}' \
+     \
+    -D USE_OPTIMIZED_LAPACK=ON \
+    -D USE_NATIVE_LAPACK=OFF \
+    -D LAPACK_LIBRARIES='${BLASLAPACK_LIBS}' \
+     \
+    -D NEKRS_USE_CUDA:BOOL=${USECUDA} \
+    -D OCCA_ENABLE_CUDA=${USECUDA} \
+    -D NEKRS_GPU_MPI=OFF
+HASBIN = 1
