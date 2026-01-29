@@ -1,0 +1,19 @@
+################################################################
+####
+#### Makefile for CMAKE installation
+####
+################################################################
+
+PACKAGE = cmake
+ABOUT = Powerful Software Build System
+PACKAGEVERSION = 4.2.3
+URL = https://cmake.org/
+SOFTWAREURL = https://github.com/Kitware/CMake
+DOWNLOADURL = https://github.com/Kitware/CMake/releases/download/v${PACKAGEVERSION}/cmake-${PACKAGEVERSION}.tar.gz
+MODE = core
+
+BUILDSYSTEM = cmake
+PREFIXPATHSET = 1
+NOLIB = 1
+NOINC = 1
+HASBIN = 1
