@@ -27,6 +27,10 @@ echo "Loading intel ${intelversion}"
 module load intel/${intelversion}
 module load impi
 
+PATH=/opt/apps/gcc/15.1.0/bin:${PATH}
+LD_LIBRARY_PATH=/opt/apps/gcc/15.1.0/lib:${LD_LIBRARY_PATH}
+LD_LIBRARY_PATH=/opt/apps/gcc/15.1.0/lib64:${LD_LIBRARY_PATH}
+
 echo && echo "Module path:"
 # why is this needed?
 export MODULEPATH=$( splitpath MODULEPATH | grep -v intel24 | assemblepath )

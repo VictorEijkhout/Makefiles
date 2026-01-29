@@ -8,6 +8,7 @@ PACKAGE = LIBCEED
 ABOUT = Code for Efficient Extensible Discretizations
 URL = https://github.com/ceed/libceed
 PACKAGEVERSION = git
+# 1.0.0 is at rc1
 CHMODR = 1
 MODULES = petsc
 MODE = mpi

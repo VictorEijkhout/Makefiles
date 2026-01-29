@@ -8,7 +8,7 @@ PACKAGE = hypre
 ABOUT = Parallel solvers for sparse linear systems featuring multigrid methods.
 URL = https://github.com/hypre-space/hypre
 DOCURL = https://hypre.readthedocs.io/en/latest/ch-misc.html#cmake-instructions
-let PACKAGEVERSION = 3.0.0
+PACKAGEVERSION = 3.1.0
 
 MODE = mpi
 MODULES = 

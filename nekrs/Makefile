@@ -7,9 +7,7 @@
 PACKAGE = nekRS
 ABOUT = Next generation fast and scalable CFD code
 URL = https://github.com/Nek5000/nekRS
-PACKAGEVERSION = 23.0
-## hypre complicatin problem is fixed in repo;
-## waiting for 25 release
+PACKAGEVERSION = 26.0
 
 MODE = mpi
 MODULES_BASIC = 
@@ -28,15 +26,15 @@ else
   BLASLIB=${TACC_MKL_LIB}/libmkl_intel_lp64.so ${TACC_MKL_LIB}/libmkl_core.so 
   LAPACKLIB=${BLASLIB}
 endif
-OPTIMIZEDLBAS = OFF
+OPTIMIZEDBLAS = OFF
 
 USECUDA = OFF
 # cuda fails on hypre:
 # https://github.com/Nek5000/nekRS/issues/648
 CMAKEFLAGS = \
-    -D USE_OPTIMIZED_BLAS=${OPTIMIZEDLBAS} \
+    -D USE_OPTIMIZED_BLAS=${OPTIMIZEDBLAS} \
     -D BLAS_LIBRARIES='${BLASLIB}' \
-    -D USE_OPTIMIZED_LAPACK=${OPTIMIZEDLBAS} \
+    -D USE_OPTIMIZED_LAPACK=${OPTIMIZEDBLAS} \
     -D LAPACK_LIBRARIES='${LAPACKLIB}' \
     -D NEKRS_USE_CUDA:BOOL=${USECUDA} \
     -D OCCA_ENABLE_CUDA=${USECUDA} \
