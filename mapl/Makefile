@@ -9,8 +9,7 @@
 PACKAGE = mapl
 ABOUT = Foundation layer of the GEOS architecture
 URL = https://github.com/GEOS-ESM/MAPL
-PACKAGEVERSION = 2.56.0
-# 2.64.2 is out
+PACKAGEVERSION = 2.65.0 is out
 
 MODE = mpi
 MODULES = gftl gftlshared pflogger yafyaml \
