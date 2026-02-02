@@ -27,14 +27,17 @@ USECUDA = ON
 INSTALLVARIANT = gpu 
 MODULEVERSIONEXTRA = gpu
 
+#
+# developers say blas/lapack is not used in performance critical
+#
 not_opt = \
     -D BLAS_LIBRARIES='${BLASLAPACK_LIBS}' \
     -D LAPACK_LIBRARIES='${BLASLAPACK_LIBS}' \
-    -D stop
-CMAKEFLAGS = \
     -D USE_OPTIMIZED_BLAS=${OPTIMIZEDBLAS} \
     -D USE_OPTIMIZED_LAPACK=${OPTIMIZEDBLAS} \
      \
+    -D stop
+CMAKEFLAGS = \
     -D NEKRS_USE_CUDA:BOOL=${USECUDA} \
     -D OCCA_ENABLE_CUDA=${USECUDA} \
     -D NEKRS_GPU_MPI=OFF

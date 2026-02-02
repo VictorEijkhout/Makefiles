@@ -12,17 +12,23 @@ ABOUT = Next generation fast and scalable CFD code
 URL = https://github.com/Nek5000/nekRS
 DOCURL = https://github.com/Nek5000/nekRS/discussions/680
 PACKAGEVERSION = 26.0
+#
+# a fixed adios will be included in 26.1
+#
+BOOTSTRAP = sed -i \
+    -e 's/\([^:]\)uint/\1std::uint/g' \
+    -e '1a#include <cstdint>' \
+    3rd_party/adios/thirdparty/yaml-cpp/yaml-cpp/src/emitterutils.cpp
 DOWNLOADURL = https://github.com/Nek5000/nekRS/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
-BRANCH = next
-# BOOTSTRAP = find . -name polyfill.hpp -exec sed -i -e 's/ uint/ std::uint/g' {} \;
 GITREPO = https://github.com/Nek5000/nekRS.git
+BRANCH = next
 
 MODE = mpi
 MODULES = 
 
 BUILDSYSTEM = cmake
 # these two need to be opposite
-OPTIMIZEDBLAS= OFF
+OPTIMIZEDBLAS= ON
 ## does not exist? NATIVEBLAS = ON
 
 # see Configuration.gpu
@@ -31,14 +37,14 @@ INSTALLVARIANT = cpu
 MODULEVERSIONEXTRA = cpu
 
 not_opt = \
-    -D BLAS_LIBRARIES='${BLASLAPACK_LIBS}' \
-    -D LAPACK_LIBRARIES='${BLASLAPACK_LIBS}' \
-    -D stop
-CMAKEFLAGS = \
     -D USE_OPTIMIZED_BLAS=${OPTIMIZEDBLAS} \
     -D USE_OPTIMIZED_LAPACK=${OPTIMIZEDBLAS} \
-     \
-    -D NEKRS_USE_CUDA:BOOL=${USECUDA} \
+    -D BLAS_LIBRARIES='${BLASLAPACK_LIBS}' \
+    -D LAPACK_LIBRARIES='${BLASLAPACK_LIBS}' \
+    \
+    -D stop
+CMAKEFLAGS = \
+     -D NEKRS_USE_CUDA:BOOL=${USECUDA} \
     -D OCCA_ENABLE_CUDA=${USECUDA} \
     -D NEKRS_GPU_MPI=OFF
 HASBIN = 1
