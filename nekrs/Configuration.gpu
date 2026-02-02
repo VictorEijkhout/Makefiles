@@ -15,7 +15,7 @@ BRANCH = next
 GITREPO = https://github.com/Nek5000/nekRS.git
 
 MODE = mpi
-MODULES = 
+MODULES = cuda
 
 BUILDSYSTEM = cmake
 # these two need to be opposite
@@ -23,9 +23,9 @@ OPTIMIZEDBLAS= OFF
 ## does not exist? NATIVEBLAS = ON
 
 # see Configuration.gpu
-USECUDA = OFF
-INSTALLVARIANT = cpu 
-MODULEVERSIONEXTRA = cpu
+USECUDA = ON
+INSTALLVARIANT = gpu 
+MODULEVERSIONEXTRA = gpu
 
 not_opt = \
     -D BLAS_LIBRARIES='${BLASLAPACK_LIBS}' \
