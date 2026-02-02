@@ -2,6 +2,9 @@
 ####
 #### Makefile for NekRS installation
 ####
+#### build problem in jail:
+#### https://github.com/Nek5000/nekRS/issues/683
+####
 ################################################################
 
 PACKAGE = nekrs
@@ -39,3 +42,4 @@ CMAKEFLAGS = \
     -D OCCA_ENABLE_CUDA=${USECUDA} \
     -D NEKRS_GPU_MPI=OFF
 HASBIN = 1
+CPTOINSTALLDIR = examples
