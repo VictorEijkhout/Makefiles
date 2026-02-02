@@ -24,7 +24,7 @@ GITREPO = https://github.com/Nek5000/nekRS.git
 BRANCH = next
 
 MODE = mpi
-MODULES = 
+MODULES = adios2
 
 BUILDSYSTEM = cmake
 # these two need to be opposite
@@ -44,8 +44,11 @@ not_opt = \
     \
     -D stop
 CMAKEFLAGS = \
-     -D NEKRS_USE_CUDA:BOOL=${USECUDA} \
+    -D ADIOS2_INSTALL_DIR=${TACC_ADIOS2_DIR} \
+    \
+    -D NEKRS_USE_CUDA:BOOL=${USECUDA} \
     -D OCCA_ENABLE_CUDA=${USECUDA} \
     -D NEKRS_GPU_MPI=OFF
 HASBIN = 1
+DEPENDSON = adios2
 CPTOINSTALLDIR = examples
