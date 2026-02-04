@@ -6,7 +6,7 @@
 
 PACKAGE = YAMLCPP
 ABOUT = A YAML parser and emitter in C++ 
-PACKAGEVERSION = 0.8.0
+PACKAGEVERSION = 0.9.0
 URL = https://github.com/jbeder/yaml-cpp
 MODE = seq
 
