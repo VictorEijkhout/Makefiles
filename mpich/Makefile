@@ -6,8 +6,8 @@
 
 PACKAGE = MPICH
 ABOUT = High performance and widely portable implementation of the Message Passing Interface (MPI) standard.
-PACKAGEVERSION = 4.3.0
-PACKAGEVERSION_DOWNLOAD = 4.3.0rc4
+PACKAGEVERSION = 5.0.0
+PACKAGEVERSION_DOWNLOAD = 5.0.0
 URL = https://www.mpich.org
 MODE = seq
 FAMILY = mpi

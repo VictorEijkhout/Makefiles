@@ -13,7 +13,8 @@ MODE = mpi
 MODULES = automake
 
 BUILDSYSTEM = autotools
-CONFIGUREFLAGS = --enable-fortran --enable-shared
+SYSTEM==vista CONFIGUREFLAGS = --enable-shared --disable-fortran
+SYSTEM!=vista CONFIGUREFLAGS = --enable-shared --enable-fortran
 FORCERECONF = 1
 HASBIN=1
 PKGCONFIGLIB = pkgconfig
