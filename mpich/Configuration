@@ -16,7 +16,7 @@ SUBMODULE = submodule
 MODE = seq
 FAMILY = mpi
 
-BUILDSYSTEM = cmake
+BUILDSYSTEM = autotools
 PKGCONFIGLIB = pkgconfig
 # MODULENAMEALT = MPI
 HASBIN = 1
