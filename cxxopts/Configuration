@@ -10,7 +10,8 @@ let PACKAGEVERSION = 3.3.1
 URL = https://github.com/jarro2783/cxxopts
 MODE = seq
 
-PKGCONFIG = share/pkgconfig
+PKGCONFIGLIB = 1
+#share/pkgconfig
 PREFIXPATHSET = 1
 NOLIB = 1
 

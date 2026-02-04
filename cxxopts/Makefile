@@ -12,7 +12,7 @@ MODE = seq
 
 include ${MAKEINCLUDES}/Make.info
 
-PKGCONFIGLIB = pkgconfig
+PKGCONFIGLIB = 1
 CMAKEPREFIXPATHSET = 1
 NOLIB = 1
 include ${MAKEINCLUDES}/Make.cmake

@@ -19,10 +19,12 @@ export VICTOR_MODULEPATH_ROOT=${MODULEROOT}
 module use ${VICTOR_MODULEPATH_ROOT}/Core
 
 gccversion=13.2.0
+impiversion=21.9
 echo "loading gcc ${gccversion}"
 module load gcc/${gccversion}
 module load mkl
-module load impi
+module unload impi
+module load impi/${impiversion}
 # /21.9 or 21.11?
 export PATH=${HOME}/bin/gcc15:${PATH}
 
