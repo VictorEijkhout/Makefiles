@@ -1,0 +1,24 @@
+################################################################
+####
+#### Makefile for Mpich installation
+####
+################################################################
+
+PACKAGE = MPICH
+ABOUT = High performance and widely portable implementation of the Message Passing Interface (MPI) standard.
+PACKAGEVERSION = 5.0.0
+PACKAGEVERSION_DOWNLOAD = 5.0.0
+URL = https://www.mpich.org
+CODEURL = https://www.mpich.org/downloads/
+DOWNLOADURL = http://www.mpich.org/static/downloads/${PACKAGEVERSION_DOWNLOAD}/mpich-${PACKAGEVERSION_DOWNLOAD}.tar.gz
+SUBMODULE = submodule
+
+MODE = seq
+FAMILY = mpi
+
+BUILDSYSTEM = cmake
+PKGCONFIGLIB = pkgconfig
+# MODULENAMEALT = MPI
+HASBIN = 1
+NOMODULE = 1
+
