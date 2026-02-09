@@ -9,7 +9,7 @@ ABOUT = Translator library for raster and vector geospatial data formats
 URL = https://gdal.org/index.html \
     https://github.com/OSGeo/GDAL
 PACKAGEVERSION = 3.11.4
-# 3.12.1
+# 3.12.2
 DOCURL = https://gdal.org/en/stable/development/building_from_source.html
 MODE = seq
 MODULES = jsonc netcdf proj swig zlib 
