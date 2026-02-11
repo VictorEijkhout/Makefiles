@@ -2,7 +2,7 @@
 ####
 #### Makefile for Netcdf installation
 ####
-#### this is the C version
+#### this is the C version, parallel
 ####
 ################################################################
 

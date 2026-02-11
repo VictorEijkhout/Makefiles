@@ -10,7 +10,7 @@ URL = https://parallel-netcdf.github.io/
 SOFTWAREURL = https://github.com/Parallel-NetCDF/PnetCDF
 PACKAGEVERSION = 1.14.1
 MODE = mpi
-MODULES = automake
+MODULES = autoconf/2.>=70 automake
 
 BUILDSYSTEM = autotools
 SYSTEM==vista CONFIGUREFLAGS = --enable-shared --disable-fortran
