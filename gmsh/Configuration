@@ -11,7 +11,7 @@ URL = https://gmsh.info/
 CODEURL = https://gitlab.onelab.info/gmsh/gmsh
 DOWNLOADURL = https://gmsh.info/src/gmsh-${PACKAGEVERSION}-source.tgz
 
-MODE = seq
+MODE = omp
 BUILDSYSTEM = cmake
 CMAKEFLAGS = \
     -D ENABLE_BUILD_DYNAMIC=1
