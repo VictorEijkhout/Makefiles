@@ -18,9 +18,9 @@ MODE = mpi
 MODULES = adios2 cuda
 
 BUILDSYSTEM = cmake
-# these two need to be opposite
+# blas compilation problem:
+# https://github.com/Nek5000/nekRS/issues/684
 OPTIMIZEDBLAS= OFF
-## does not exist? NATIVEBLAS = ON
 
 # see Configuration.gpu
 USECUDA = ON

@@ -23,19 +23,15 @@ module use ${VICTOR_MODULEPATH_ROOT}/Core
 intelversion=25.2
 echo "loading intel ${intelversion}"
 module load intel/${intelversion}
-module load impi
-#/21.12
+impiversion=21.12
+module unload impi
+module load impi/${impiversion}
 
-echo "add python3 from intel21"
-export PATH=/scratch1/projects/compilers/oneapi_2021.4.0.3422/intelpython/python3.7/bin/:$PATH
-export PYTHONPATH=/opt/apps/intel19/impi19_0/python3/3.7.0/lib/python3.7/site-packages:$PYTHONPATH
+# echo "add python3 from intel21"
+# export PATH=/scratch1/projects/compilers/oneapi_2021.4.0.3422/intelpython/python3.7/bin/:$PATH
+# export PYTHONPATH=/opt/apps/intel19/impi19_0/python3/3.7.0/lib/python3.7/site-packages:$PYTHONPATH
 
-## module load python3/3.9.2
+export PATH=/work2/00434/eijkhout/python/installation-python-3.12.5-clx-intel23.1-impi21.9.0/bin:${PATH}
 
-# pv=3.9
-# pvv=3.9.2
-# export PATH=/opt/apps/intel19/python3/${pvv}/bin:${PATH}
-# export LD_LIBRARY_PATH=/opt/apps/intel19/python3/${pvv}/lib:${LD_LIBRARY_PATH}
-# export PYTHONPATH=/opt/apps/intel19/impi19_0/python3/${pvv}/lib/python${pv}/site-packages:${PYTHONPATH}
 
 module -t list | sort | tr '\n' ' '
