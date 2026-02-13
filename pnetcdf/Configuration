@@ -13,8 +13,12 @@ MODE = mpi
 MODULES = autoconf/2.>=70 automake
 
 BUILDSYSTEM = autotools
-SYSTEM==vista CONFIGUREFLAGS = --enable-shared --disable-fortran
-SYSTEM!=vista CONFIGUREFLAGS = --enable-shared --enable-fortran
+## is this still needed?
+## SYSTEM==vista CONFIGUREFLAGS = --enable-shared --disable-fortran
+## SYSTEM!=vista CONFIGUREFLAGS = --enable-shared --enable-fortran
+## vista staff: fortran works.
+
+CONFIGUREFLAGS = --enable-shared --enable-fortran
 FORCERECONF = 1
 HASBIN=1
 PKGCONFIGLIB = pkgconfig
