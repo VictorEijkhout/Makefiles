@@ -1,0 +1,28 @@
+################################################################
+####
+#### Makefile for Entity installation
+####
+################################################################
+
+PACKAGE = entity
+ABOUT = New generation astrophysical plasma simulation code with CPU/GPU portability
+URL = https://github.com/entity-toolkit/entity
+PACKAGEVERSION = 1.3.2
+# 1.3.3
+DOWNLOADURL = https://github.com/entity-toolkit/entity/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
+GITREPO = https://github.com/entity-toolkit/entity.git
+
+MODE = mpi
+MODULES = kokkos adios2 phdf5
+
+BUILDSYSTEM = cmake
+# see `pgens' directory for choices
+CMAKEFLAGS =  \
+    -D output=ON -D mpi=ON \
+    -D pgen=shock
+#    -D HDF5_ROOT=${TACC_PHDF5_DIR}
+HASBIN = 1
+NOINC = 1
+NOLIB = 1
+
+## ???? export HDF5_ROOT=${TACC_PHDF5_DIR} 
