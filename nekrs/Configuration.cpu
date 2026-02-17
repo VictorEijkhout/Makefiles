@@ -25,6 +25,7 @@ BRANCH = next
 
 MODE = mpi
 MODULES = adios2
+NONMODULES = cuda
 
 BUILDSYSTEM = cmake
 # these two need to be opposite

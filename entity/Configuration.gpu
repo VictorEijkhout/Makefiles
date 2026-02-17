@@ -19,6 +19,7 @@ INSTALLVARIANT=cuda
 MODULEVERSIONEXTRA=cuda 
 CMAKEFLAGS =  \
     -D output=ON -D mpi=ON \
+    -D GPU_AWARE_MPI=OFF \
     -D pgen=shock \
     -D HDF5_ROOT=${TACC_PHDF5_DIR} \
     -D Kokkos_ENABLE_CUDA=ON 
