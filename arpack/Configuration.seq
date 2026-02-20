@@ -1,0 +1,28 @@
+################################################################
+####
+#### Makefile for Arpack installation
+#### 
+################################################################
+
+PACKAGE = arpack
+ABOUT = Collection of Fortran77 subroutines designed to solve large scale eigenvalue problems.
+URL = https://github.com/opencollab/arpack-ng
+PACKAGEVERSION = 3.9.1
+DOWNLOADURL = https://github.com/opencollab/arpack-ng/archive/refs/tags/${PACKAGEVERSION}.tar.gz
+GITREPO = https://github.com/opencollab/arpack-ng.git
+
+MODE = seq
+MODULES = eigen blaslapack
+
+BUILDSYSTEM = cmake
+USEEIGEN = ON
+SYSTEM==vista COMPILER==nvidia USEEIGEN = OFF
+CMAKEFLAGS = \
+    -D EXAMPLES=ON -D ICB=ON -D EIGEN=${USEEIGEN} \
+    -D ARPACKPARALLEL=OFF \
+    -D BLAS_LIBRARIES='${BLASLAPACK_LIBRARIES}' \
+    -D LAPACK_LIBRARIES='${BLASLAPACK_LIBRARIES}'
+MODULENAME=arpack
+PKGCONFIGLIB = pkgconfig
+CMAKEPREFIXPATHSET = 1
+CPTOINSTALLDIR = EXAMPLES
