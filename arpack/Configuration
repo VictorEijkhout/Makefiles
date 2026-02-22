@@ -12,13 +12,17 @@ DOWNLOADURL = https://github.com/opencollab/arpack-ng/archive/refs/tags/${PACKAG
 GITREPO = https://github.com/opencollab/arpack-ng.git
 
 MODE = seq
-MODULES = eigen blaslapack
+MODULES = eigen/3 blaslapack
+# arpack explicitly loads 3.3
+# eigen/5 needs c++14 support
+# which is not propagated from arpack
 
 BUILDSYSTEM = cmake
 USEEIGEN = ON
 SYSTEM==vista COMPILER==nvidia USEEIGEN = OFF
 CMAKEFLAGS = \
-    -D EXAMPLES=ON -D ICB=ON -D EIGEN=${USEEIGEN} \
+    -D EXAMPLES=ON -D ICB=ON \
+    -D EIGEN=${USEEIGEN} \
     -D ARPACKPARALLEL=OFF \
     -D BLAS_LIBRARIES='${BLASLAPACK_LIBRARIES}' \
     -D LAPACK_LIBRARIES='${BLASLAPACK_LIBRARIES}'
