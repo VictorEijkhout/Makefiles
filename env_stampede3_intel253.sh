@@ -25,7 +25,8 @@ export MODULEPATH=$( splitpath MODULEPATH | grep -v intel24 | assemblepath )
 intelversion=25.3
 echo "Loading intel ${intelversion}"
 module load intel/${intelversion}
-module load impi
+impiversion=21.17
+module load impi/${impiversion}
 
 PATH=/opt/apps/gcc/15.1.0/bin:${PATH}
 LD_LIBRARY_PATH=/opt/apps/gcc/15.1.0/lib:${LD_LIBRARY_PATH}
