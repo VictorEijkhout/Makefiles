@@ -17,6 +17,8 @@ info ::
 	@echo "note: custom configure rule"
 	@echo "    NOX86 nonzero for non-x86 archs"
 NOX86 =
+# the POSIX_C_SOURCE below if fixed in the repo but not release:
+# https://github.com/KarypisLab/GKlib/issues/24
 configure :: 
 	@if [ ! -z "${SETX}" ] ; then set -x ; fi \
 	 && source ${MAKEINCLUDES}/names.sh \
