@@ -6,6 +6,7 @@
 ####
 ################################################################
 
+SKIPPACKAGE = 1
 PACKAGE = gftl
 URL = https://github.com/Goddard-Fortran-Ecosystem/gFTL
 PACKAGEVERSION = 1.12.0
