@@ -13,17 +13,16 @@ DOWNLOADURL = https://github.com/entity-toolkit/entity/archive/refs/tags/v${PACK
 GITREPO = https://github.com/entity-toolkit/entity.git
 
 MODE = mpi
-MODULES = kokkos/*.*.*cuda adios2 phdf5 cuda
-NVCC_APPEND_FLAGS='-allow-unsupported-compiler' 
-INSTALLVARIANT=cuda
-MODULEVERSIONEXTRA=cuda 
+MODULES = kokkos adios2 phdf5
+
+BUILDSYSTEM = cmake
+# see `pgens' directory for choices
 CMAKEFLAGS =  \
     -D output=ON -D mpi=ON \
-    -D GPU_AWARE_MPI=OFF \
-    -D pgen=shock \
-    -D HDF5_ROOT=${TACC_PHDF5_DIR} \
-    -D Kokkos_ENABLE_CUDA=ON 
-
+    -D pgen=shock
+#    -D HDF5_ROOT=${TACC_PHDF5_DIR}
 HASBIN = 1
 NOINC = 1
 NOLIB = 1
+
+## ???? export HDF5_ROOT=${TACC_PHDF5_DIR} 
