@@ -6,10 +6,11 @@
 ####
 ################################################################
 
+SKIPPACKAGE = 1
 PACKAGE = fargparse
 URL = https://github.com/Goddard-Fortran-Ecosystem/fArgParse
-PACKAGEVERSION = 1.6.0
-PACKAGEVERSION_MAJORMINOR = 1.6
+PACKAGEVERSION = 1.12.0
+PACKAGEVERSION_MAJORMINOR = 1.12
 
 MODE = seq
 MODULES = 
