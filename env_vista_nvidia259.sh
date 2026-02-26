@@ -15,7 +15,8 @@ export MODULEPATH=${WORK}/modulefiles/Core\
 :${MODULEPATH}
 module load nvidia/25.9
 module load openmpi/5.0.8
-module load cuda/12.9
+cudaversion=13.0
+module load cuda/${cudaversion}
 module load nvpl nvidia_math
 #module load nvhpc-hpcx
 module -t list 2>&1 \

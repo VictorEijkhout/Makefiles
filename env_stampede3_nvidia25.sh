@@ -9,7 +9,8 @@ module reset
 module load TACC
 
 echo "module unload intel and others"
-module unload intel oneapi gcc nvidia impi mvapich2 openmpi python3 python2 2>/dev/null
+module unload intel oneapi gcc nvidia impi mvapich2 openmpi \
+    cuda python3 python2 2>/dev/null
 
 export VICTOR_WORK=/work2/00434/eijkhout/stampede3
 export MODULEROOT=${VICTOR_WORK}/modulefiles
@@ -28,5 +29,10 @@ export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/opt/apps/gcc/15.1.0/lib
 
 module load openmpi
 
-module -t list 2>&1 | sort | awk '{v=v" "$0} END {print v}'
+which modulelist >/dev/null 2>&1
+if [ $? -eq 0 ] ; then
+    modulelist
+else
+    module -t list 2>&1 | sort | awk '{v=v" "$0} END {print v}'
+fi
 
