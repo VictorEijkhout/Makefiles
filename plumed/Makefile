@@ -33,13 +33,13 @@ CONFIGUREFLAGS = \
     --enable-external-lapack=yes \
     --enable-fftw=yes \
     --enable-gsl=yes \
-    --enable-python=yes \
+    --enable-python=no \
     --enable-zlib=yes
 CFLAGS   = -I${TACC_FFTW3_INC} -I${TACC_GSL_INC} -I${TACC_ZLIB_INC} -I${TACC_MKL_INC}
 CXXFLAGS = -I${TACC_FFTW3_INC} -I${TACC_GSL_INC} -I${TACC_ZLIB_INC} -I${TACC_MKL_INC}
 FCFLAGS  = -I${TACC_FFTW3_INC} -I${TACC_GSL_INC} -I${TACC_ZLIB_INC} -I${TACC_MKL_INC}
 CPPFLAGS = -I${TACC_FFTW3_INC} -I${TACC_GSL_INC} -I${TACC_ZLIB_INC} -I${TACC_MKL_INC}
-CONFIGUREENV = PYTHON_BIN=$$( which python3 )
+# CONFIGUREENV = PYTHON_BIN=$$( which python3 )
 LIBS = \
     -L${TACC_FFTW3_LIB} -lfftw3 -L${TACC_GSL_LIB} -lgsl -L${TACC_ZLIB_LIB} -lz \
     -L${TACC_MKL_LIB} -lmkl_intel_lp64 -lmkl_sequential -lmkl_core -lpthread 
