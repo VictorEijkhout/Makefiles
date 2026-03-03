@@ -117,6 +117,7 @@ configure_sycl :
 	      " \
 	    INSTALLVARIANT=sycl INSTALLEXT=sycl
 
+## WHAT IS THIS FOR?
 info ::
 	@echo "make kokkoscore INSTALLVARIANT=..."
 .PHONY: kokkoscore
