@@ -1,0 +1,42 @@
+################################################################
+####
+#### Makefile for Kokkos installation
+####
+################################################################
+
+PACKAGE = kokkos
+ABOUT = C++ Performance Portability Programming Ecosystem
+URL = https://github.com/kokkos/kokkos
+DOCURL = https://kokkos.github.io/kokkos-core-wiki/building.html
+PACKAGEVERSION = 5.0.2
+
+MODE = seq
+MODULES = cuda
+MODULE_MINIMUM_VERSION_cuda = 12
+
+SYSTEM==frontera  COMPUTE = TURING75
+SYSTEM==ls6       COMPUTE = TURING75
+SYSTEM==stampede3 COMPUTE = HOPPER90
+SYSTEM==vista     COMPUTE = HOPPER90
+
+BUILDSYSTEM = cmake
+CMAKEFLAGS = \
+    -D Kokkos_ENABLE_SERIAL=ON \
+    -D Kokkos_ENABLE_CUDA=ON -D Kokkos_ENABLE_CUDA_LAMBDA=ON \
+    -D Kokkos_ARCH_${COMPUTE}=ON
+#  
+#  -D Kokkos_ENABLE_OPENMP=ON
+HASBIN = 1
+PREFIXPATHSET = 1
+export NVCC_WRAPPER_DEFAULT_COMPILER=${TACC_CXX}
+export NVCC_APPEND_FLAGS=-allow-unsupported-compiler
+
+SRCPATH = ${PACKAGEROOT}/kokkos/kokkos-${PACKAGEVERSION}
+INSTALLEXT = cuda
+INSTALLVARIANT = cuda
+MODULEVERSIONEXTRA = cuda
+
+EXTRAVARS = "Kokkos_ENABLE_CUDA=ON Kokkos_ARCH_${COMPUTE}=ON Kokkos_ARCH_${HOST}=ON"
+
+DOWNLOADURL = https://github.com/kokkos/kokkos/archive/refs/tags/${PACKAGEVERSION}.tar.gz
+GITREPO = https://github.com/kokkos/kokkos.git
