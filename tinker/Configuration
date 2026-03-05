@@ -10,3 +10,5 @@ BUILDSYSTEM = cmake
 MODE = mpi
 MODULES = fftw3
 CMAKESUBDIR = cmake
+HASBIN = 1
+NOINC = 1
