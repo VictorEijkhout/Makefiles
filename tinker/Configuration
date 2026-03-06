@@ -1,7 +1,7 @@
 PACKAGE = tinker
 ABOUT = Software Tools for Molecular Design 
 URL = https://dasher.wustl.edu/tinker/
-SOFTWAREURL = https://github.com/TinkerTools/tinker
+CODEURL = https://github.com/TinkerTools/tinker
 PACKAGEVERSION = 26.1.2
 DOWNLOADURL = https://github.com/TinkerTools/tinker/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
 GITREPO = https://github.com/TinkerTools/tinker.git
