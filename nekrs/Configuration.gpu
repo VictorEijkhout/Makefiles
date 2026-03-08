@@ -1,6 +1,7 @@
 ################################################################
 ####
 #### Makefile for NekRS installation
+#### gpu version
 ####
 ################################################################
 
@@ -46,3 +47,4 @@ CMAKEFLAGS = \
 HASBIN = 1
 DEPENDSON = adios2 cuda
 CPTOINSTALLDIR = examples
+EXTRAPATHREL = NEKRS_HOME=
