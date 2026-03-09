@@ -1,6 +1,7 @@
 ################################################################
 ####
 #### Makefile for Fftw3 installation
+####
 #### double variant
 ####
 ################################################################
@@ -24,27 +25,21 @@ CONFIGUREFLAGS = \
     --enable-threads \
     --disable-dependency-tracking \
     --enable-mpi
+
 ##
 ## extra flags for intel
 ## I'm not sure if flags should be additive
 ##
-## COMPILER==intel CONFIGUREFLAGS = \
+## COMPILER==intel CONFIGUREFLAGS += \
 ##     --enable-sse2 \
 ##     --enable-avx \
 ##     --enable-avx2 \
 ##     --enable-avx512 
+
+## insert: AC_DEFUN([_AC_PROG_FC_V], [])
 
 DEFUNPROGFC = 1
 FORCERECONF = 1
 
 PKGCONFIGLIB = pkgconfig
 PREFIXPATHSET = 1
-
-##
-## Double variant is default
-##
-## INSTALLVARIANT=double
-## INSTALLEXT=double 
-## MODULEVERSIONEXTRA=double
-
-
