@@ -2,7 +2,7 @@
 ####
 #### Makefile for Netcdf installation
 ####
-#### this is the C version
+#### this is the C version, parallel
 ####
 ################################################################
 
@@ -12,6 +12,7 @@ URL = https://netcdf.geodynamics.org/
 CODEURL = https://github.com/Unidata/netcdf-c 
 DOCURL = https://docs.unidata.ucar.edu/nug/current/getting_and_building_netcdf.html#configure_options
 PACKAGEVERSION = 4.9.3
+# 4.10.0
 DOWNLOADURL = https://downloads.unidata.ucar.edu/netcdf-c/${PACKAGEVERSION}/netcdf-c-${PACKAGEVERSION}.tar.gz
 GITREPO = http://github.com/Unidata/netcdf-c
 

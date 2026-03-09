@@ -1,8 +1,7 @@
 ################################################################
 ####
 #### Makefile for Fftw3 installation
-####
-#### double variant
+#### single variant
 ####
 ################################################################
 
@@ -14,32 +13,33 @@ PACKAGEVERSION = 3.3.10
 DOWNLOADURL = http://fftw.org/fftw-${PACKAGEVERSION}.tar.gz
 
 BUILDSYSTEM = autotools
-
 MODE = mpi
 MODULES = 
 
+# note `float'
 CONFIGUREFLAGS = \
     --with-pic \
     --enable-shared \
     --enable-openmp \
     --enable-threads \
     --disable-dependency-tracking \
-    --enable-mpi
-
-##
-## extra flags for intel
-## I'm not sure if flags should be additive
-##
-## COMPILER==intel CONFIGUREFLAGS += \
+    --enable-mpi \
+    --enable-float
+## COMPILER==intel CONFIGUREFLAGS = \
 ##     --enable-sse2 \
 ##     --enable-avx \
 ##     --enable-avx2 \
 ##     --enable-avx512 
 
 ## insert: AC_DEFUN([_AC_PROG_FC_V], [])
-
 DEFUNPROGFC = 1
 FORCERECONF = 1
 
 PKGCONFIGLIB = pkgconfig
 PREFIXPATHSET = 1
+
+INSTALLVARIANT=single
+INSTALLEXT=single 
+MODULEVERSIONEXTRA=single
+
+

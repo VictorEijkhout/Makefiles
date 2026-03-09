@@ -2,9 +2,6 @@
 ####
 #### Makefile for Precice installation
 ####
-#### build in jail fails:
-#### https://github.com/precice/precice/issues/2303
-####
 ################################################################
 
 PACKAGE = precice
@@ -12,6 +9,8 @@ ABOUT = coupling library for partitioned multi-physics simulations
 URL = https://github.com/precice/precice
 PACKAGEVERSION = 3.2.0
 # 3.3.1
+#### should solve:
+#### https://github.com/precice/precice/issues/2303
 
 MODE = mpi
 MODULES = boost eigen petsc

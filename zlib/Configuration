@@ -7,7 +7,9 @@
 PACKAGE = zlib
 ABOUT = A massively spiffy yet delicately unobtrusive compression library.
 URL = https://github.com/madler/zlib
-let PACKAGEVERSION = 1.3.1
+PACKAGEVERSION = 1.3.2
+DOWNLOADURL = https://github.com/madler/zlib/releases/download/v${PACKAGEVERSION}/zlib-${PACKAGEVERSION}.tar.gz
+
 MODE = seq
 
 BUILDSYSTEM = cmake
@@ -16,4 +18,3 @@ CMAKFLAGS=\
   -D CMAKE_CXX_FLAGS=-fPIC
 PKGCONFIG = share/pkgconfig
 
-DOWNLOADURL = https://github.com/madler/zlib/releases/download/v${PACKAGEVERSION}/zlib-${PACKAGEVERSION}.tar.gz

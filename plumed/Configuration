@@ -2,52 +2,38 @@
 ####
 #### Makefile for Plumed installation
 ####
-#### even the release seems to want to submodule
-####
 ################################################################
 
 PACKAGE = plumed
 ABOUT = The community-developed PLUgin for MolEcular Dynamics
 URL = https://github.com/plumed/plumed2
 PACKAGEVERSION = 2.9.4
+DOWNLOADURL = https://github.com/plumed/plumed2/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
 
 MODE = hybrid
 MODULES = fftw3 gsl zlib \
     blaslapack
 
-include ${MAKEINCLUDES}/Make.info
+BUILDSYSTEM = autotools
 
-info ::
-	@echo "make default_install : configure build"
-.PHONY: default_install
-default_install : configure build
-
-include ${MAKEINCLUDES}/Make.configure
-# most of these enable flags are yes by default;
-# configure fails gracefully if the package is not found
-# blas/lapack ticket:
-# https://github.com/plumed/plumed2/issues/1279
+HAS_PYTHON = no
 CONFIGUREFLAGS = \
     --enable-external-blas=yes \
     --enable-external-lapack=yes \
     --enable-fftw=yes \
     --enable-gsl=yes \
-    --enable-python=no \
+    --enable-python=${HAS_PYTHON} \
     --enable-zlib=yes
 CFLAGS   = -I${TACC_FFTW3_INC} -I${TACC_GSL_INC} -I${TACC_ZLIB_INC} -I${TACC_MKL_INC}
 CXXFLAGS = -I${TACC_FFTW3_INC} -I${TACC_GSL_INC} -I${TACC_ZLIB_INC} -I${TACC_MKL_INC}
 FCFLAGS  = -I${TACC_FFTW3_INC} -I${TACC_GSL_INC} -I${TACC_ZLIB_INC} -I${TACC_MKL_INC}
 CPPFLAGS = -I${TACC_FFTW3_INC} -I${TACC_GSL_INC} -I${TACC_ZLIB_INC} -I${TACC_MKL_INC}
-# CONFIGUREENV = PYTHON_BIN=$$( which python3 )
+
 LIBS = \
     -L${TACC_FFTW3_LIB} -lfftw3 -L${TACC_GSL_LIB} -lgsl -L${TACC_ZLIB_LIB} -lz \
     -L${TACC_MKL_LIB} -lmkl_intel_lp64 -lmkl_sequential -lmkl_core -lpthread 
 
-include ${MAKEINCLUDES}/Make.install
+HAS_PYTHON==yes CONFIGUREENV = PYTHON_BIN=$$( which python3 )
+
 HASBIN = 1
-
-DOWNLOADURL = https://github.com/plumed/plumed2/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
-include ${MAKEINCLUDES}/Make.download
-
-include ${MAKEINCLUDES}/Make.clean
 

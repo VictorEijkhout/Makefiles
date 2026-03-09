@@ -1,6 +1,7 @@
 ################################################################
 ####
 #### Makefile for NekRS installation
+#### cpu version
 ####
 #### build problem in jail:
 #### https://github.com/Nek5000/nekRS/issues/683
@@ -25,6 +26,7 @@ BRANCH = next
 
 MODE = mpi
 MODULES = adios2
+NONMODULES = cuda
 
 BUILDSYSTEM = cmake
 # these two need to be opposite
@@ -52,3 +54,4 @@ CMAKEFLAGS = \
 HASBIN = 1
 DEPENDSON = adios2
 CPTOINSTALLDIR = examples
+EXTRAPATHREL = NEKRS_HOME=

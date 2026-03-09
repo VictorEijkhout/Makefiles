@@ -6,10 +6,11 @@
 ####
 ################################################################
 
+SKIPPACKAGE = 1
 PACKAGE = gftl
 URL = https://github.com/Goddard-Fortran-Ecosystem/gFTL
-PACKAGEVERSION = 1.11.0
-PACKAGEVERSION_MAJORMINOR = 1.11
+PACKAGEVERSION = 1.12.0
+PACKAGEVERSION_MAJORMINOR = 1.12
 
 MODE = seq
 MODULES = 

@@ -24,6 +24,9 @@ module load mkl
 module load impi
 export PATH=${HOME}/bin/gcc15:${PATH}
 
+# append for libisl
+export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/opt/apps/gcc/15.1.0/lib
+
 module -t list 2>&1 | sort | awk '{v=v" "$0} END {print v}'
 
 export PATH=${STOCKYARD}/MrPackMod:${PATH}

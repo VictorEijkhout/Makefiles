@@ -7,7 +7,7 @@
 PACKAGE = ZLIB
 ABOUT = A massively spiffy yet delicately unobtrusive compression library.
 URL = https://github.com/madler/zlib
-PACKAGEVERSION = 1.3.1
+PACKAGEVERSION = 1.3.2
 MODE = seq
 
 include ${MAKEINCLUDES}/Make.info

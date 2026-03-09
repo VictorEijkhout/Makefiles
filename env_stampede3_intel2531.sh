@@ -22,15 +22,10 @@ module use ${VICTOR_MODULEPATH_ROOT}/Core
 export MODULEPATH=$( splitpath MODULEPATH | grep -v intel24 | assemblepath )
 # splitpath MODULEPATH
 
-intelversion=25.3
+intelversion=25.3.1
 echo "Loading intel ${intelversion}"
 module load intel/${intelversion}
-impiversion=21.17
-module load impi/${impiversion}
-
-PATH=/opt/apps/gcc/15.1.0/bin:${PATH}
-LD_LIBRARY_PATH=/opt/apps/gcc/15.1.0/lib:${LD_LIBRARY_PATH}
-LD_LIBRARY_PATH=/opt/apps/gcc/15.1.0/lib64:${LD_LIBRARY_PATH}
+module load impi
 
 echo && echo "Module path:"
 # why is this needed?

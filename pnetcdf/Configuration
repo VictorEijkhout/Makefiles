@@ -10,11 +10,14 @@ URL = https://parallel-netcdf.github.io/
 SOFTWAREURL = https://github.com/Parallel-NetCDF/PnetCDF
 PACKAGEVERSION = 1.14.1
 MODE = mpi
-MODULES = automake
+MODULES = autoconf/2.>=70 automake
 
 BUILDSYSTEM = autotools
-SYSTEM==vista CONFIGUREFLAGS = --enable-shared --disable-fortran
-SYSTEM!=vista CONFIGUREFLAGS = --enable-shared --enable-fortran
+# default: use fortran
+CONFIGUREFLAGS = --enable-shared --enable-fortran
+# vista gcc stumbles on some pgf90 stuff
+SYSTEM==vista COMPILER==gcc CONFIGUREFLAGS = --enable-shared --disable-fortran
+
 FORCERECONF = 1
 HASBIN=1
 PKGCONFIGLIB = pkgconfig

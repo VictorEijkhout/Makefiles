@@ -6,10 +6,11 @@
 ####
 ################################################################
 
+SKIPPACKAGE = 1
 PACKAGE = gftl-shared
 URL = https://github.com/Goddard-Fortran-Ecosystem/gFTL-shared
-PACKAGEVERSION = 1.7.0
-PACKAGEVERSION_MAJORMINOR = 1.7
+PACKAGEVERSION = 1.12.0
+PACKAGEVERSION_MAJORMINOR = 1.12
 
 MODE = seq
 MODULES = gftl
