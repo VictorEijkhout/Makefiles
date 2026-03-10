@@ -10,7 +10,7 @@
 PACKAGE = dealii
 ABOUT = Finite Element Library
 URL = https://github.com/dealii/dealii
-PACKAGEVERSION = 9.7.1
+PACKAGEVERSION = 9.9.9
 DOWNLOADURL = https://github.com/dealii/dealii/releases/download/v${PACKAGEVERSION}/dealii-${PACKAGEVERSION}.tar.gz
 GITREPO = https://github.com/dealii/dealii.git
 
@@ -20,14 +20,16 @@ MODULES = petsc phdf5/1.14 sundials
 # optional packages
 HAS_P4EST = OFF
 HAS_P4EST==ON MODULES = p4est
-HAS_TRILINOS = ON
+HAS_TRILINOS = OFF
 HAS_TRILINOS==ON MODULES = trilinos
 
 CONFIGURATION = default
 COMPLEX = OFF
+
 # c++23 makes trilinos barf
 CPP23FLAGS = -D CMAKE_CXX_STANDARD=20
 HAS_TRILINOS==OFF CPP23FLAGS = -D CMAKE_CXX_STANDARD=23 -D DEAL_II_HAVE_CXX23_FEATURES=ON
+
 CMAKEFLAGS = \
     -D DEAL_II_WITH_MPI=ON \
     -D CMAKE_CXX_FLAGS="-fopenmp" \

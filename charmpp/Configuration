@@ -1,0 +1,30 @@
+################################################################
+####
+#### Makefile for Charm++ installation
+####
+################################################################
+
+PACKAGE = charmpp
+ABOUT = Parallel programming framework
+URL = https://charmplusplus.org/
+CODEURL = https://github.com/UIUC-PPL/charm
+PACKAGEVERSION = 8.0.1
+DOWNLOADURL = https://github.com/charmplusplus/charm/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
+
+BUILDSYSTEM = cmake
+MODE = mpi
+MODULES = 
+
+CMAKEFLAGS = \
+    -D NETWORK=mpi \
+    -D CMAKE_POSITION_INDEPENDENT_CODE=ON
+BUILDSTATICLIBS = 1
+
+# Vista Intel build fails
+# https://github.com/charmplusplus/charm/issues/3851
+# intel 25 problem:
+# https://github.com/charmplusplus/charm/issues/3901
+
+HASBIN=1
+PKGCONFIGLIB = pkgconfig
+
