@@ -1,0 +1,30 @@
+################################################################
+####
+#### Makefile for NANOBIND installation
+####
+################################################################
+
+PACKAGE = nanobind
+ABOUT = Tiny and efficient C++/Python bindings
+URL = https://github.com/wjakob/nanobind
+DOCURL = https://nanobind.readthedocs.io/en/latest/
+
+PACKAGEVERSION = 2.12.0
+GITREPO = https://github.com/wjakob/nanobind.git
+SUBMODULE = 1
+
+# 2.12.0 not possible to install tags
+# https://github.com/wjakob/nanobind/issues/1308
+DOWNLOADURL = https://github.com/wjakob/nanobind/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
+
+MODE = seq
+MODULES = robinmap
+
+BUILDSYSTEM = cmake
+CMAKEFLAGS = -D NB_USE_SUBMODULE_DEPS=OFF
+NOLIB = 1
+INCLUDELOC = nanobind/include
+# share/nanobind/include in git?
+PREFIXPATHSET = 1
+PYTHONPATHADD = nanobind/cmake
+# share/nanobind/cmake in git?

@@ -1,0 +1,18 @@
+################################################################
+####
+#### Makefile for Basix installation
+####
+################################################################
+
+PACKAGE = basix
+ABOUT = FEniCSx finite element basis evaluation library
+PACKAGEVERSION = 0.10.0.post0
+URL = https://github.com/FEniCS/basix
+DOWNLOADURL = https://github.com/FEniCS/basix/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
+
+MODE = seq
+MODULES = nanobind
+
+BUILDSYSTEM = cmake
+CMAKEFLAGS = 
+PREFIXPATHSET = 1

@@ -1,0 +1,28 @@
+%%% jail
+
+mpif90=/scratch/projects/compilers/intel25.3/oneapi/mpi/2021.17/bin/mpif90
+
+show:  ifx
+-I/scratch/projects/compilers/intel25.3/oneapi/mpi/2021.17/include/mpi/gfortran/11.1.0
+-I"/scratch/projects/compilers/intel25.3/oneapi/mpi/2021.17/include/mpi/gfortran"
+-I"/scratch/projects/compilers/intel25.3/oneapi/mpi/2021.17/include"
+-I"/scratch/projects/compilers/intel25.3/oneapi/mpi/2021.17/include/mpi"
+-L"/scratch/projects/compilers/intel25.3/oneapi/mpi/2021.17/lib"
+-L"/scratch/projects/compilers/intel25.3/oneapi/mpi/2021.17/lib"
+-Xlinker --enable-new-dtags -Xlinker -rpath -Xlinker "/scratch/projects/compilers/intel25.3/oneapi/mpi/2021.17/lib" -Xlinker -rpath \
+-Xlinker "/scratch/projects/compilers/intel25.3/oneapi/mpi/2021.17/lib"
+-lmpifort -lmpi -lrt -lpthread -Wl,-z,now -Wl,-z,relro -Wl,-z,noexecstack -Xlinker --enable-new-dtags -ldl
+
+where ifx=/scratch/projects/compilers/intel25.3/oneapi/compiler/2025.3/bin/ifx
+
+%%% production
+
+mpig90=/scratch/projects/compilers/intel25.3/mpi/2021.17/bin/mpif90
+
+ifx
+-I"/scratch/projects/compilers/intel25.3/mpi/2021.17/include/mpi/gfortran"
+-I"/scratch/projects/compilers/intel25.3/mpi/2021.17/include"
+-I"/scratch/projects/compilers/intel25.3/mpi/2021.17/include/mpi"
+-L"/scratch/projects/compilers/intel25.3/mpi/2021.17/lib"
+-L"/scratch/projects/compilers/intel25.3/mpi/2021.17/lib"
+-Xlinker --enable-new-dtags -Xlinker -rpath -Xlinker "/scratch/projects/compilers/intel25.3/mpi/2021.17/lib" -Xlinker -rpath -Xlinker "/scratch/projects/compilers/intel25.3/mpi/2021.17/lib" -lmpifort -lmpi -lrt -lpthread -Wl,-z,now -Wl,-z,relro -Wl,-z,noexecstack -Xlinker --enable-new-dtags -ldl

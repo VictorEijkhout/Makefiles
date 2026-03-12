@@ -11,9 +11,18 @@ URL = https://github.com/FEniCS/dolfinx
 DOWNLOADURL = https://github.com/FEniCS/dolfinx/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
 
 MODE = mpi
-MODULES = pugixml
+MODULES = basix ffcx pugixml spdlog \
+    boost phdf5/<2 petsc
 
 BUILDSYSTEM = cmake
 CMAKESUBDIR = cpp
-CMAKEFLAGS = 
+CMAKEFLAGS =
+PREFIXPATHSET = 1
 
+CPTOINSTALLDIR = python
+
+# run in python subdir:
+
+# pip install scikit-build-core
+# python3 -m scikit_build_core.build requires | python3 -c "import sys, json; print(' '.join(json.load(sys.stdin)))" | xargs pip install
+# pip install --check-build-dependencies --no-build-isolation .
