@@ -8,7 +8,7 @@ PACKAGE = silo
 ABOUT = File-based, scientific data exchange and software interoperability
 URL = https://silo.llnl.gov/
 CODEURL = https://github.com/llnl/Silo
-let PACKAGEVERSION = 4.12.0
+PACKAGEVERSION = 4.12.0
 DOWNLOADURL = https://github.com/LLNL/Silo/archive/refs/tags/${PACKAGEVERSION}.tar.gz
 GITREPO = https://github.com/LLNL/Silo.git
 
