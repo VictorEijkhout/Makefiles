@@ -16,7 +16,9 @@ MODULES = basix ffcx pugixml spdlog \
 
 BUILDSYSTEM = cmake
 CMAKESUBDIR = cpp
-CMAKEFLAGS =
+# find ufcx through cmake, not python
+CMAKEFLAGS = \
+    -D DOLFINX_UFCX_PYTHON=OFF
 PREFIXPATHSET = 1
 
 CPTOINSTALLDIR = python
