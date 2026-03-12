@@ -26,5 +26,6 @@ NOLIB = 1
 INCLUDELOC = nanobind/include
 # share/nanobind/include in git?
 PREFIXPATHSET = 1
-PYTHONPATHADD = nanobind/cmake
-# share/nanobind/cmake in git?
+# there is $TACC_NANOBIND_DIR/nanobin/__init__.py
+PYTHONPATHADD = .
+
