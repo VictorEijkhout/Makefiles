@@ -10,7 +10,8 @@ URL = https://www.sqlite.org https://github.com/sqlite/sqlite
 ## version could be newer:
 ## I don't know how to download a specific version
 PACKAGEVERSION = 3.49.2
-# 3.51.1 is out
+# 3.51.3
+# 3.52.0
 MODE = seq
 MODULES = 
 
