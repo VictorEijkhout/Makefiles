@@ -15,7 +15,13 @@ clean :: localclean
 	@for d in * ; do \
 	  if [ -d "$${d}" ] ; then \
 	    echo " .. cleaning $$d" \
-	     && ( cd "$${d}" && make --no-print-directory clean ) \
+	     && ( cd "$${d}" \
+	         && if [ -f Configuration ] ; then \
+	                mpm.py clean \
+	            ; else \
+	                make --no-print-directory clean \
+	            ; fi \
+	         ) \
 	  ; fi \
 	done
 
