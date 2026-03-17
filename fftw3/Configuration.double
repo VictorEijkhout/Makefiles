@@ -14,6 +14,7 @@ PACKAGEVERSION = 3.3.10
 DOWNLOADURL = http://fftw.org/fftw-${PACKAGEVERSION}.tar.gz
 
 BUILDSYSTEM = autotools
+AUTOUPDATE = 1
 
 MODE = mpi
 MODULES = 
@@ -30,11 +31,7 @@ CONFIGUREFLAGS = \
 ## extra flags for intel
 ## I'm not sure if flags should be additive
 ##
-## COMPILER==intel CONFIGUREFLAGS += \
-##     --enable-sse2 \
-##     --enable-avx \
-##     --enable-avx2 \
-##     --enable-avx512 
+COMPILER==intel CONFIGUREFLAGS += --enable-sse2 --enable-avx --enable-avx2 --enable-avx512 
 
 ## insert: AC_DEFUN([_AC_PROG_FC_V], [])
 

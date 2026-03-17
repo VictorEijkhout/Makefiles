@@ -1,37 +1,24 @@
 ################################################################
 ####
 #### Makefile for Fftw3 installation
-<<<<<<< HEAD
 ####
-################################################################
-
-PACKAGE = FFTW3
-=======
 #### double variant
 ####
 ################################################################
 
 PACKAGE = fftw3
->>>>>>> 59f3e1c80b908065f3c2243ba7d74d2d0c976f20
 ABOUT = Fastest Fourier Transform in the West, version 3
 URL = http://fftw.org/
 DOCURL = http://www.fftw.org/fftw3_doc/Installation-on-Unix.html
 PACKAGEVERSION = 3.3.10
 DOWNLOADURL = http://fftw.org/fftw-${PACKAGEVERSION}.tar.gz
 
-<<<<<<< HEAD
-MODE = mpi
-MODULES = 
-
 BUILDSYSTEM = autotools
-
-=======
-BUILDSYSTEM = autotools
+AUTOUPDATE = 1
 
 MODE = mpi
 MODULES = 
 
->>>>>>> 59f3e1c80b908065f3c2243ba7d74d2d0c976f20
 CONFIGUREFLAGS = \
     --with-pic \
     --enable-shared \
@@ -39,39 +26,17 @@ CONFIGUREFLAGS = \
     --enable-threads \
     --disable-dependency-tracking \
     --enable-mpi
-<<<<<<< HEAD
-## COMPILER==intel CONFIGUREFLAGS += \
-=======
+
 ##
 ## extra flags for intel
 ## I'm not sure if flags should be additive
 ##
-## COMPILER==intel CONFIGUREFLAGS = \
->>>>>>> 59f3e1c80b908065f3c2243ba7d74d2d0c976f20
-##     --enable-sse2 \
-##     --enable-avx \
-##     --enable-avx2 \
-##     --enable-avx512 
-
-<<<<<<< HEAD
+COMPILER==intel CONFIGUREFLAGS += --enable-sse2 --enable-avx --enable-avx2 --enable-avx512 
 
 ## insert: AC_DEFUN([_AC_PROG_FC_V], [])
-=======
->>>>>>> 59f3e1c80b908065f3c2243ba7d74d2d0c976f20
+
 DEFUNPROGFC = 1
 FORCERECONF = 1
 
 PKGCONFIGLIB = pkgconfig
 PREFIXPATHSET = 1
-<<<<<<< HEAD
-=======
-
-##
-## Double variant is default
-##
-## INSTALLVARIANT=double
-## INSTALLEXT=double 
-## MODULEVERSIONEXTRA=double
-
-
->>>>>>> 59f3e1c80b908065f3c2243ba7d74d2d0c976f20
