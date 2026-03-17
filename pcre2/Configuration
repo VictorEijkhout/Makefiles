@@ -9,7 +9,7 @@
 PACKAGE = pcre2
 ABOUT = Perl-compatible Regular Expressions
 URL = https://github.com/PCRE2Project/pcre2
-let PACKAGEVERSION = 10.46
+PACKAGEVERSION = 10.46
 MODE = seq
 
 BUILDSYSTEM = cmake

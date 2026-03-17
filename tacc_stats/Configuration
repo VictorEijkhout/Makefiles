@@ -1,0 +1,27 @@
+################################################################
+####
+#### Makefile for tacc_stats installation
+####
+################################################################
+
+PACKAGE = taccstats
+ABOUT = TACC Job Statistics
+PACKAGEVERSION = git
+URL = https://github.com/TACC/HPCPerfStats/tree/vista_GPU?tab=readme-ov-file
+GITREPO = https://github.com/TACC/HPCPerfStats.git
+BRANCH = vista_GPU
+DOWNLOADURL = 
+
+MODE = core
+BUILDSYSTEM = autotools
+CONFIGURESUBDIR = monitor
+CONFIGUREFLAGS = \
+    --enable-gpu CPPFLAGS=-I/usr/include/datacenter-gpu-manager-4
+HASBIN = 1
+
+## module load automake autoconf
+## aclocal
+## autoconf
+## Automake
+## ./configure 
+## cd src and make

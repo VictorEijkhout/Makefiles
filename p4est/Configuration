@@ -8,7 +8,7 @@ PACKAGE = p4est
 ABOUT = Parallel AMR on Forests of Octrees
 URL = http://p4est.org/
 CODEURL = https://github.com/cburstedde/p4est
-let PACKAGEVERSION = 2.8.7
+PACKAGEVERSION = 2.8.7
 
 MODE = mpi
 MODULES = 

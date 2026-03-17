@@ -9,7 +9,7 @@
 PACKAGE = libsc
 ABOUT = The "sc" auxiliary library
 URL = https://github.com/cburstedde/libsc
-let PACKAGEVERSION = 2.8.7
+PACKAGEVERSION = 2.8.7
 DOWNLOADURL = https://github.com/cburstedde/libsc/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
 
 SKIPPACKAGE = 1
