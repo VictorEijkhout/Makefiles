@@ -7,7 +7,7 @@
 PACKAGE = OPENBLAS
 ABOUT = Toolkit for molecular simulation using high performance GPU code.
 URL = https://github.com/OpenMathLib/OpenBLAS
-PACKAGEVERSION = 0.3.31
+PACKAGEVERSION = 0.3.32
 MODE = seq
 
 include ${MAKEINCLUDES}/Make.info

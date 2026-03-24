@@ -6,8 +6,7 @@
 
 PACKAGE = GSLLITE
 ABOUT = ISO C++ Core Guidelines Library
-PACKAGEVERSION = 0.43.0
-# 1.0.1 is out
+PACKAGEVERSION = 1.1.0
 URL = https://github.com/gsl-lite/gsl-lite
 MODE = seq
 
