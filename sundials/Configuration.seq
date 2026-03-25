@@ -11,8 +11,9 @@ URL = https://computing.llnl.gov/projects/sundials
 SOFTWAREURL = https://github.com/LLNL/sundials
 DOCURL = \
     https://sundials.readthedocs.io/en/latest/sundials/Install_link.html#installation-cmake
-PACKAGEVERSION = 7.5.0
-# 7.6.0
+PACKAGEVERSION = 7.6.0
+DOWNLOADURL = https://github.com/LLNL/sundials/releases/download/v${PACKAGEVERSION}/sundials-${PACKAGEVERSION}.tar.gz
+
 MODE = seq
 
 BUILDSYSTEM = cmake
@@ -24,5 +25,3 @@ PREFIXPATHSET = 1
 
 MODULENAME=ssundials
 MODULENAMEALT=sundials
-
-DOWNLOADURL = https://github.com/LLNL/sundials/releases/download/v${PACKAGEVERSION}/sundials-${PACKAGEVERSION}.tar.gz
