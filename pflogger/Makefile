@@ -9,8 +9,8 @@
 PACKAGE = pflogger
 ABOUT = A parallel Fortran logger
 URL = https://github.com/Goddard-Fortran-Ecosystem/pFlogger
-PACKAGEVERSION = 1.12.0
-PACKAGEVERSION_MAJORMINOR = 1.12
+PACKAGEVERSION = 1.18.0
+PACKAGEVERSION_MAJORMINOR = 1.18
 
 MODE = mpi
 MODULES = yafyaml
