@@ -4,7 +4,7 @@
 ####
 ################################################################
 
-PACKAGE = SCALAPACK
+PACKAGE = scalapack
 ABOUT  = Scalable parallel lapack
 URL = https://github.com/Reference-ScaLAPACK/scalapack
 PACKAGEVERSION = 2.2.3

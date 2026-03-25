@@ -4,7 +4,7 @@
 ####
 ################################################################
 
-PACKAGE = SCALAPACK
+PACKAGE = scalapack
 ABOUT  = Scalable parallel lapack
 PACKAGEVERSION = 2.2.3
 # release can not be compiled, waitinf for new:
