@@ -6,8 +6,7 @@
 
 PACKAGE = SCALAPACK
 ABOUT  = Scalable parallel lapack
-PACKAGEVERSION = git
-# 2.2.2
+PACKAGEVERSION = 2.2.3
 # release can not be compiled, waitinf for new:
 # https://github.com/Reference-ScaLAPACK/scalapack.git
 URL = https://github.com/Reference-ScaLAPACK/scalapack
