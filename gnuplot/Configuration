@@ -1,0 +1,26 @@
+################################################################
+####
+#### Makefile for Gnuplot installation
+####
+################################################################
+
+PACKAGE = gnuplot
+ABOUT = A portable, multi-platform, command-line driven graphing utility
+URL = https://gnuplot.sourceforge.net 
+DOCURL = https://sourceforge.net/p/gnuplot/gnuplot-main/ci/master/tree/INSTALL
+PACKAGEVERSION = 6.0.4
+DOWNLOADURL = https://sourceforge.net/projects/gnuplot/files/gnuplot/${PACKAGEVERSION}/gnuplot-${PACKAGEVERSION}.tar.gz/download
+
+MODE = core
+MODULES = qt5
+
+BUILDSYSTEM = autotools
+CONFIGUREFLAGS = \
+    --with-qt=qt5
+
+HASBIN = 1
+NOLIB = 1
+NOINC = 1
+CPTOINSTALLDIR = demo
+
+
