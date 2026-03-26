@@ -33,11 +33,11 @@ module load mkl
 ## Python
 ##
 
-# module load python3/3.9.7
-export TACC_PYTHON_DIR=/opt/apps/gcc11_2/python3/3.9.7
-export TACC_PYTHON3_DIR=${TACC_PYTHON_DIR}
-export PATH=${TACC_PYTHON_DIR}/bin:${PATH}
-export TACC_INTEL_LIB=/scratch/projects/compilers/intel24.1/oneapi/2024.1/lib
-export LD_LIBRARY_PATH=${TACC_PYTHON_DIR}/lib:${LD_LIBRARY_PATH}:${TACC_INTEL_LIB}
+ module load python/3.12
+# export TACC_PYTHON_DIR=/opt/apps/gcc11_2/python3/3.9.7
+# export TACC_PYTHON3_DIR=${TACC_PYTHON_DIR}
+# export PATH=${TACC_PYTHON_DIR}/bin:${PATH}
+# export TACC_INTEL_LIB=/scratch/projects/compilers/intel24.1/oneapi/2024.1/lib
+# export LD_LIBRARY_PATH=${TACC_PYTHON_DIR}/lib:${LD_LIBRARY_PATH}:${TACC_INTEL_LIB}
 
 module -t list

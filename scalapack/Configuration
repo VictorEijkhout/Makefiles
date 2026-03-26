@@ -1,0 +1,21 @@
+################################################################
+####
+#### Makefile for scalapack
+####
+################################################################
+
+PACKAGE = scalapack
+ABOUT  = Scalable parallel lapack
+URL = https://github.com/Reference-ScaLAPACK/scalapack
+PACKAGEVERSION = 2.2.3
+DOWNLOADURL = https://github.com/Reference-ScaLAPACK/scalapack/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
+MODE = mpi
+
+BUILDSYSTEM = cmake
+
+CMAKEFLAGS = 
+NOINC = 1
+PKGCONFIGLIB = pkgconfig
+PREFIXPATHSET = 1
+
+GITREPO = https://github.com/Reference-ScaLAPACK/scalapack.git
