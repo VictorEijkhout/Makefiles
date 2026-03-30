@@ -6,10 +6,11 @@
 
 PACKAGE = cmake
 ABOUT = Powerful Software Build System
-PACKAGEVERSION = 4.3.0
+PACKAGEVERSION = 4.3.1
 URL = https://cmake.org/
 SOFTWAREURL = https://github.com/Kitware/CMake
 DOWNLOADURL = https://github.com/Kitware/CMake/releases/download/v${PACKAGEVERSION}/cmake-${PACKAGEVERSION}.tar.gz
+
 MODE = core
 
 BUILDSYSTEM = cmake

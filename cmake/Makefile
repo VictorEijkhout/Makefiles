@@ -6,9 +6,10 @@
 
 PACKAGE = cmake
 ABOUT = Powerful Software Build System
-PACKAGEVERSION = 4.3.0
+PACKAGEVERSION = 4.3.1
 URL = https://cmake.org/ \
     https://github.com/Kitware/CMake
+
 MODE = core
 
 include ${MAKEINCLUDES}/Make.info
