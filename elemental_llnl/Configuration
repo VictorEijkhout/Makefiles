@@ -1,0 +1,24 @@
+################################################################
+####
+#### Makefile for Hydrogen / Elemental
+####
+#### llnl clone of Poulson Elemental, using cuda and such, however last update 2023
+####
+################################################################
+
+PACKAGE = elemental
+ABOUT  = Distributed-memory, arbitrary-precision, dense and sparse-direct linear algebra, conic optimization, and lattice reduction 
+URL = https://github.com/LLNL/Elemental
+PACKAGEVERSION = 1.5.3
+DOWNLOADURL = https://github.com/llnl/Elemental/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
+
+MODE = mpi
+
+BUILDSYSTEM = cmake
+
+CMAKEFLAGS = 
+# NOINC = 1
+PKGCONFIGLIB = pkgconfig
+PREFIXPATHSET = 1
+
+GITREPO = 

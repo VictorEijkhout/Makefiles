@@ -58,7 +58,7 @@ os.chdir( f"{os.getenv('HOME')}/Software" )
 build_all = arguments.all
 packages  = arguments.packages
 if build_all:
-    if len(package)>0:
+    if len(packages)>0:
         print( f"Warning: flagg -a/--all override explicit package specification." )
     packages = [ d for d in os.listdir(".") if os.path.isdir(d) and d not in ignored_packages ]
     print( f"Packages from directory listing: {packages}" )
