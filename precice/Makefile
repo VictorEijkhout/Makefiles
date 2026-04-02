@@ -8,7 +8,7 @@ PACKAGE = precice
 ABOUT = coupling library for partitioned multi-physics simulations
 URL = https://github.com/precice/precice
 PACKAGEVERSION = 3.2.0
-# 3.3.1
+# 3.4.0
 #### should solve:
 #### https://github.com/precice/precice/issues/2303
 
