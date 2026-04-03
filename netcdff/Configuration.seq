@@ -2,21 +2,20 @@
 ####
 #### Makefile for Netcdf installation
 ####
-#### this is the C version
+#### this is the Fortran version, sequential
 ####
 ################################################################
 
-PACKAGE = netcdf
-ABOUT = Network Common Data Format
+PACKAGE = netcdff
+ABOUT = Network Common Data Format, Fortran version
 URL = https://netcdf.geodynamics.org/ 
-CODEURL = https://github.com/Unidata/netcdf-c 
+CODEURL = https://github.com/Unidata/netcdf-fortran
 DOCURL = https://docs.unidata.ucar.edu/nug/current/getting_and_building_netcdf.html#configure_options
-PACKAGEVERSION = 4.10.0
-DOWNLOADURL = https://downloads.unidata.ucar.edu/netcdf-c/${PACKAGEVERSION}/netcdf-c-${PACKAGEVERSION}.tar.gz
-GITREPO = http://github.com/Unidata/netcdf-c
+PACKAGEVERSION = 4.6.2
+DOWNLOADURL = https://github.com/Unidata/netcdf-fortran/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
 
 MODE = seq
-MODULES = hdf5
+MODULES = hdf5 netcdf
 NETCDF_PARALLEL = OFF
 
 BUILDSYSTEM = cmake
@@ -26,11 +25,13 @@ PKGCONFIGLIB = pkgconfig
 DEPENDSONCURRENT = hdf5
 LINKLIB64toLIB = 1
 CPTOINSTALLDIR = examples
-MODULENAME = netcdf
+MODULENAME = netcdff
 
 CMAKEFLAGS = \
     -D NETCDF_ENABLE_PARALLEL4=${NETCDF_PARALLEL} \
     -D ENABLE_PARALLEL_TESTS=OFF \
     -D NETCDF_ENABLE_HDF5=ON \
+    -D netCDF_INCLUDE_DIR=${TACC_NETCDF_INC} \
+    -D netCDF_LIBRARIES=${TACC_NETCDF_LIB}/libnetcdf.so \
     -D ENABLE_DAP=ON
 
