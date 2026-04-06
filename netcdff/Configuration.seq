@@ -7,31 +7,16 @@
 ################################################################
 
 PACKAGE = netcdff
-ABOUT = Network Common Data Format, Fortran version
+ABOUT = Network Common Data Format, Fortran version, sequential
 URL = https://netcdf.geodynamics.org/ 
 CODEURL = https://github.com/Unidata/netcdf-fortran
 DOCURL = https://docs.unidata.ucar.edu/nug/current/getting_and_building_netcdf.html#configure_options
 PACKAGEVERSION = 4.6.2
 DOWNLOADURL = https://github.com/Unidata/netcdf-fortran/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
 
-MODE = seq
-MODULES = hdf5 netcdf
-NETCDF_PARALLEL = OFF
-
-BUILDSYSTEM = cmake
-HASBIN=1
-PREFIXPATHSET = 1
-PKGCONFIGLIB = pkgconfig
-DEPENDSONCURRENT = hdf5
-LINKLIB64toLIB = 1
-CPTOINSTALLDIR = examples
-MODULENAME = netcdff
-
-CMAKEFLAGS = \
-    -D NETCDF_ENABLE_PARALLEL4=${NETCDF_PARALLEL} \
-    -D ENABLE_PARALLEL_TESTS=OFF \
-    -D NETCDF_ENABLE_HDF5=ON \
+MODULES += netcdf
+CMAKEFORTRANFLAGS = \
     -D netCDF_INCLUDE_DIR=${TACC_NETCDF_INC} \
-    -D netCDF_LIBRARIES=${TACC_NETCDF_LIB}/libnetcdf.so \
-    -D ENABLE_DAP=ON
+    -D netCDF_LIBRARIES=${TACC_NETCDF_LIB}/libnetcdf.so
+include ../netcdf/Configuration.seq_common
 
