@@ -17,6 +17,8 @@ BUILDSYSTEM = autotools
 CONFIGURESUBDIR = monitor
 CONFIGUREFLAGS = \
     --enable-gpu CPPFLAGS=-I/usr/include/datacenter-gpu-manager-4
+DEFUNPROGFC = 1
+PKGPROGPKGCONFIG = 1
 HASBIN = 1
 
 ## module load automake autoconf
