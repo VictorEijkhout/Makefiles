@@ -1,0 +1,22 @@
+################################################################
+####
+#### Makefile for Netcdf installation
+####
+#### this is the Fortran version, parallel
+####
+################################################################
+
+PACKAGE = parallelnetcdff
+ABOUT = Network Common Data Format, Fortran version, parallel
+URL = https://netcdf.geodynamics.org/ 
+CODEURL = https://github.com/Unidata/netcdf-c 
+DOCURL = https://docs.unidata.ucar.edu/nug/current/getting_and_building_netcdf.html#configure_options
+PACKAGEVERSION = 4.6.2
+DOWNLOADURL = https://github.com/Unidata/netcdf-fortran/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
+## ??? DOWNLOADURL = https://downloads.unidata.ucar.edu/netcdf-c/${PACKAGEVERSION}/netcdf-c-${PACKAGEVERSION}.tar.gz
+
+MODULES += parallelnetcdf
+#CMAKEFORTRANFLAGS = 
+include ../netcdf/Configuration.par_common
+
+## GITREPO = http://github.com/Unidata/netcdf-c

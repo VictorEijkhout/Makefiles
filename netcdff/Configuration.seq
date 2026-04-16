@@ -1,0 +1,22 @@
+################################################################
+####
+#### Makefile for Netcdf installation
+####
+#### this is the Fortran version, sequential
+####
+################################################################
+
+PACKAGE = netcdff
+ABOUT = Network Common Data Format, Fortran version, sequential
+URL = https://netcdf.geodynamics.org/ 
+CODEURL = https://github.com/Unidata/netcdf-fortran
+DOCURL = https://docs.unidata.ucar.edu/nug/current/getting_and_building_netcdf.html#configure_options
+PACKAGEVERSION = 4.6.2
+DOWNLOADURL = https://github.com/Unidata/netcdf-fortran/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
+
+MODULES += netcdf
+CMAKEFORTRANFLAGS = \
+    -D netCDF_INCLUDE_DIR=${TACC_NETCDF_INC} \
+    -D netCDF_LIBRARIES=${TACC_NETCDF_LIB}/libnetcdf.so
+include ../netcdf/Configuration.seq_common
+
