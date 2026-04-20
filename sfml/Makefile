@@ -10,7 +10,7 @@ PACKAGE = SFML
 ABOUT  = Simple and Fast Multimedia Library
 URL = https://github.com/SFML/SFML
 PACKAGEVERSION = 3.0.1
-# 3.0.2
+# 3.1.0
 MODE = seq
 
 include ${MAKEINCLUDES}/Make.info

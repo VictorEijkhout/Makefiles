@@ -1,6 +1,7 @@
 ################################################################
 ####
 #### Makefile for Arpack installation
+#### parallel version: PArpack
 #### 
 ################################################################
 
@@ -13,17 +14,6 @@ GITREPO = https://github.com/opencollab/arpack-ng.git
 
 MODE = mpi
 MODULENAME=parpack
-MODULES = eigen blaslapack
-
-BUILDSYSTEM = cmake
-USEEIGEN = ON
-SYSTEM==vista COMPILER==nvidia USEEIGEN = OFF
-CMAKEFLAGS = \
-    -D EXAMPLES=ON -D ICB=ON -D EIGEN=${USEEIGEN} \
-    -D ARPACKPARALLEL=OFF \
-    -D BLAS_LIBRARIES='${BLASLAPACK_LIBS}' \
-    -D LAPACK_LIBRARIES='${BLASLAPACK_LIBS}'
-PKGCONFIGLIB = pkgconfig
-CMAKEPREFIXPATHSET = 1
-CPTOINSTALLDIR = EXAMPLES
+ARPACKPARALLEL = ON
+include Configuration.common
 
