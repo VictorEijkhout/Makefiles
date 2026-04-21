@@ -9,6 +9,8 @@
 ####   --with-64-bit-indices option requires a metis build with IDXTYPEWIDTH=64
 #### however
 #### https://github.com/scivision/METIS/issues/7
+#### solved in 5.2.1.4
+#### https://github.com/scivision/METIS/commit/456244e99d7f0027706033d18bc1b3424d3507cc
 ####
 #### https://github.com/scivision/METIS/issues/10
 #### https://github.com/scivision/METIS/issues/8
