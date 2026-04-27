@@ -10,10 +10,16 @@ MODE = seq
 MODULES += hdf5
 NETCDF_PARALLEL = OFF
 
+# NETCDF_ENABLE_LARGE_FILE_SUPPORT
 CMAKEFLAGS = \
     -D NETCDF_ENABLE_PARALLEL4=${NETCDF_PARALLEL} \
     -D ENABLE_PARALLEL_TESTS=OFF \
     -D NETCDF_ENABLE_HDF5=ON \
     -D ENABLE_NETCDF_4=ON \
-    -D ENABLE_DAP=ON \
+    -D NETCDF_ENABLE_DAP=ON \
     ${CMAKEFORTRANFLAGS}
+SYSTEM==ls6 CMAKEFLAGS += -D HAVE_STDINT_H=OFF
+
+# ls6:
+# include/ncconfigure.h:81:37: note: ‘size_t’ is defined in header ‘<stddef.h>’; did you forget to ‘\#include <stddef.h>’?
+BOOTSTRAP = sed -i -e '/stdint.h/a#include <stddef.h>' include/ncconfigure.h
