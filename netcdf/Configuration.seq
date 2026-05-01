@@ -15,4 +15,8 @@ PACKAGEVERSION = 4.10.0
 DOWNLOADURL = https://downloads.unidata.ucar.edu/netcdf-c/${PACKAGEVERSION}/netcdf-c-${PACKAGEVERSION}.tar.gz
 GITREPO = http://github.com/Unidata/netcdf-c
 
+# this macro is used in the common settings;
+# it will be non-zero for the netcdff build
+CMAKEFORTRANFLAGS = 
+
 include Configuration.seq_common

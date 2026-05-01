@@ -1,0 +1,23 @@
+################################################################
+####
+#### Makefile for Adios2 installation
+####
+#### uint_ types:
+#### https://github.com/ornladios/ADIOS2/issues/4534
+####
+################################################################
+
+PACKAGE = orthofinder3
+SKIPPACKAGE = 1
+ABOUT = Phylogenetic orthology inference for comparative genomics
+URL = https://github.com/OrthoFinder/OrthoFinder
+DOCURL = https://orthofinder.github.io/OrthoFinder
+PACKAGEVERSION = 3.1.4
+
+MODE = seq
+MODULES = 
+
+BUILDSYSTEM = pip
+HASBIN = 1
+
+DOWNLOADURL = https://github.com/OrthoFinder/OrthoFinder/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
