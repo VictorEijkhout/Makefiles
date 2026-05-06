@@ -8,7 +8,7 @@ PACKAGE = kokkos
 ABOUT = C++ Performance Portability Programming Ecosystem
 URL = https://github.com/kokkos/kokkos
 DOCURL = https://kokkos.github.io/kokkos-core-wiki/building.html
-PACKAGEVERSION = 5.1.0
+PACKAGEVERSION = 5.1.1
 # also 4.7.04
 
 MODE = seq
@@ -36,6 +36,7 @@ SRCPATH = ${PACKAGEROOT}/kokkos/kokkos-${PACKAGEVERSION}
 INSTALLEXT = cuda
 INSTALLVARIANT = cuda
 MODULEVERSIONEXTRA = cuda
+DEPENDSONCURRENT = cuda
 
 EXTRAVARS = "Kokkos_ENABLE_CUDA=ON Kokkos_ARCH_${COMPUTE}=ON Kokkos_ARCH_${HOST}=ON"
 
