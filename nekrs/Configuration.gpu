@@ -6,45 +6,16 @@
 ################################################################
 
 PACKAGE = nekrs
-ABOUT = Next generation fast and scalable CFD code
-URL = https://github.com/Nek5000/nekRS
-DOCURL = https://github.com/Nek5000/nekRS/discussions/680
-PACKAGEVERSION = 26.0
-DOWNLOADURL = https://github.com/Nek5000/nekRS/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
-BRANCH = next
-# BOOTSTRAP = find . -name polyfill.hpp -exec sed -i -e 's/ uint/ std::uint/g' {} \;
-GITREPO = https://github.com/Nek5000/nekRS.git
+include Configuration.basic
 
 MODE = mpi
 MODULES = adios2 cuda
-
-BUILDSYSTEM = cmake
-# blas compilation problem:
-# https://github.com/Nek5000/nekRS/issues/684
-OPTIMIZEDBLAS= OFF
 
 # see Configuration.gpu
 USECUDA = ON
 INSTALLVARIANT = gpu 
 MODULEVERSIONEXTRA = gpu
 
-#
-# developers say blas/lapack is not used in performance critical
-#
-not_opt = \
-    -D BLAS_LIBRARIES='${BLASLAPACK_LIBS}' \
-    -D LAPACK_LIBRARIES='${BLASLAPACK_LIBS}' \
-    -D USE_OPTIMIZED_BLAS=${OPTIMIZEDBLAS} \
-    -D USE_OPTIMIZED_LAPACK=${OPTIMIZEDBLAS} \
-     \
-    -D stop
-CMAKEFLAGS = \
-    -D ADIOS2_INSTALL_DIR=${TACC_ADIOS2_DIR} \
-    \
-    -D NEKRS_USE_CUDA:BOOL=${USECUDA} \
-    -D OCCA_ENABLE_CUDA=${USECUDA} \
-    -D NEKRS_GPU_MPI=OFF
-HASBIN = 1
+include Configuration.common
+
 DEPENDSON = adios2 cuda
-CPTOINSTALLDIR = examples
-EXTRAPATHREL = NEKRS_HOME=
