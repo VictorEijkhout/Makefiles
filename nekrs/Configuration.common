@@ -1,0 +1,27 @@
+# see Configuration.gpu
+USECUDA = OFF
+INSTALLVARIANT = cpu 
+MODULEVERSIONEXTRA = cpu
+
+# optimized blas is not needed per:
+# https://github.com/Nek5000/nekRS/issues/681
+# https://github.com/Nek5000/nekRS/issues/684
+OPTIMIZEDBLAS = OFF
+
+not_opt = \
+    -D USE_OPTIMIZED_BLAS=${OPTIMIZEDBLAS} \
+    -D USE_OPTIMIZED_LAPACK=${OPTIMIZEDBLAS} \
+    -D BLAS_LIBRARIES='${BLASLAPACK_LIBS}' \
+    -D LAPACK_LIBRARIES='${BLASLAPACK_LIBS}' \
+    -D CBLAS=ON \
+    \
+    -D stop
+CMAKEFLAGS = \
+    -D ADIOS2_INSTALL_DIR=${TACC_ADIOS2_DIR} \
+    \
+    -D NEKRS_USE_CUDA:BOOL=${USECUDA} \
+    -D OCCA_ENABLE_CUDA=${USECUDA} \
+    -D NEKRS_GPU_MPI=OFF
+HASBIN = 1
+CPTOINSTALLDIR = examples
+EXTRAPATHREL = NEKRS_HOME=
