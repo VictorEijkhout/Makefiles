@@ -11,51 +11,16 @@
 ################################################################
 
 PACKAGE = nekrs
-ABOUT = Next generation fast and scalable CFD code
-URL = https://github.com/Nek5000/nekRS
-PACKAGEVERSION = 26.0
-#
-# a fixed adios will be included in 26.1
-#
-notBOOTSTRAP = sed -i \
-    -e 's/\([^:]\)uint/\1std::uint/g' \
-    -e '1a#include <cstdint>' \
-    3rd_party/adios/thirdparty/yaml-cpp/yaml-cpp/src/emitterutils.cpp
-DOWNLOADURL = https://github.com/Nek5000/nekRS/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
-GITREPO = https://github.com/Nek5000/nekRS.git
-BRANCH = next
+include Configuration.basic
 
 MODE = mpi
 MODULES = adios2
 NONMODULES = cuda
 
-BUILDSYSTEM = cmake
 # these two need to be opposite
 OPTIMIZEDBLAS= ON
 ## does not exist? NATIVEBLAS = ON
 
-# see Configuration.gpu
-USECUDA = OFF
-INSTALLVARIANT = cpu 
-MODULEVERSIONEXTRA = cpu
+include Configuration.common
 
-# optimized blas is not needed per:
-# https://github.com/Nek5000/nekRS/issues/681
-not_opt = \
-    -D USE_OPTIMIZED_BLAS=${OPTIMIZEDBLAS} \
-    -D USE_OPTIMIZED_LAPACK=${OPTIMIZEDBLAS} \
-    -D BLAS_LIBRARIES='${BLASLAPACK_LIBS}' \
-    -D LAPACK_LIBRARIES='${BLASLAPACK_LIBS}' \
-    -D CBLAS=ON \
-    \
-    -D stop
-CMAKEFLAGS = \
-    -D ADIOS2_INSTALL_DIR=${TACC_ADIOS2_DIR} \
-    \
-    -D NEKRS_USE_CUDA:BOOL=${USECUDA} \
-    -D OCCA_ENABLE_CUDA=${USECUDA} \
-    -D NEKRS_GPU_MPI=OFF
-HASBIN = 1
 DEPENDSON = adios2
-CPTOINSTALLDIR = examples
-EXTRAPATHREL = NEKRS_HOME=
