@@ -1,0 +1,12 @@
+PACKAGE = berkeleygw
+PACKAGEVERSION = 4.0
+URL = https://berkeleygw.org/
+DOCURL = https://berkeleygw.org/documentation/
+DOWNLOADURL = https://app.box.com/shared/static/22edl07muvhfnd900tnctsjjftbtcqc4.gz
+MODE = mpi
+MODULES = fftw3
+
+BUILDSYSTEM = make
+PREMAKE = cat arch.mk \
+    | cat > ${SRCDIR}/arch.mk
+MAKETARGETS = all

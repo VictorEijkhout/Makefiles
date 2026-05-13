@@ -17,7 +17,7 @@ PACKAGEVERSION = 26.0
 #
 # a fixed adios will be included in 26.1
 #
-BOOTSTRAP = sed -i \
+notBOOTSTRAP = sed -i \
     -e 's/\([^:]\)uint/\1std::uint/g' \
     -e '1a#include <cstdint>' \
     3rd_party/adios/thirdparty/yaml-cpp/yaml-cpp/src/emitterutils.cpp
