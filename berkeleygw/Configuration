@@ -7,6 +7,5 @@ MODE = mpi
 MODULES = fftw3
 
 BUILDSYSTEM = make
-PREMAKE = cat arch.mk \
-    | cat > ${SRCDIR}/arch.mk
+PREMAKE = cat arch.mk | cat > ${SRCDIR}/arch.mk && cp flavor_real.mk ${SRCDIR}/flavor.mk
 MAKETARGETS = all

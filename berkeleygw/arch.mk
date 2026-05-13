@@ -46,7 +46,7 @@ REMOVE  = /bin/rm -f
 # Math Libraries
 #
 FFTWLIB      = -L${TACC_FFTW3_LIB} -lfftw3
-FFTWINCLUDE  = -I${TACC_FFTW3_INC}
+FFTWINCLUDE  = ${TACC_FFTW3_INC}
 LAPACKLIB    = -L/usr/lib/ -llapack
 BLACSDIR     = /usr/lib
 BLACS        = $(BLACSDIR)/blacs_MPI-LINUX-1.a $(BLACSDIR)/blacsF77init_MPI-LINUX-1.a $(BLACSDIR)/blacs_MPI-LINUX-1.a
