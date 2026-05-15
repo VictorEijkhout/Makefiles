@@ -1,0 +1,220 @@
+################################################################
+####
+#### Configuration for Trilinos installation
+#### version 17 has a bunch of modules removed
+####
+################################################################
+
+PACKAGE = trilinos
+ABOUT = Collection of reusable scientific software libraries
+URL = https://github.com/trilinos/Trilinos
+
+# https://github.com/trilinos/Trilinos/issues/14831
+# until move is complete:
+# https://trilinos.github.io/pdfs/TrilinosBuildReference.pdf
+DOCURL = https://www.docs.trilinos.org/files/TrilinosBuildReference.html
+
+PACKAGEVERSION = 17.0.0
+PACKAGEVERSION_DOWNLOAD = 17-0-0
+
+DOWNLOADURL = https://github.com/trilinos/Trilinos/archive/refs/tags/trilinos-release-${PACKAGEVERSION_DOWNLOAD}.tar.gz
+GITREPO = git@github.com:trilinos/Trilinos.git
+
+##
+MODE = hybrid
+MODULES = boost swig phdf5 parallelnetcdf pnetcdf parmetis
+# blaslapack
+HAS_CUDA = ON
+HAS_CUDA==ON MODULES += cuda
+MODULE_MINIMUM_VERSION_intel = 20
+
+BUILDSYSTEM = cmake
+PREFIXPATHSET = 1
+LANGUAGE = CXX
+CPPSTANDARD = 20
+
+#
+# lots of package settings
+#
+PYTHON = OFF
+HAS_ADAPTERS = ON
+HAS_EPETRA = ON
+HAS_BOOST = ON
+# exodus seems external to trilinos, so let's turn it off
+HAS_EXODUS = OFF
+HAS_FEI = ${HAS_ADAPTERS}
+HAS_KOKKOS = ON
+HAS_NETCDF = ON
+HAS_PNETCDF = ON
+HAS_SEACASEXODUS = ON
+# only for vista:
+SYSTEM==vista HAS_SEACASIOSS = OFF
+SYSTEM!=vista HAS_SEACASIOSS = ON
+HAS_HDF5 = ON
+HAS_OPENMP = OFF
+HAS_TEKO = ${HAS_ADAPTERS}
+
+HAS_MUELU = ON
+HAS_MUMPS = OFF
+HAS_STK = ON
+HAS_YAMLCPP = OFF 
+# if [ "$${HAS_YAMLCPP}" = "1" ] ; then 
+# source $${scriptdir}/../yaml-cpp/yamlcpp_vars.sh
+# fi
+
+TRILINOS_BLAS_INC    = ${BLASLAPACK_INC}
+TRILINOS_LAPACK_INC  = ${BLASLAPACK_INC}
+TRILINOS_BLAS_LIB    = ${BLASLAPACK_LIB}
+TRILINOS_LAPACK_LIB  = ${BLASLAPACK_LIB}
+TRILINOS_BLAS_LIBS   = ${BLASLAPACK_LIBS}
+TRILINOS_LAPACK_LIBS = ${BLASLAPACK_LIBS}
+
+DEPRECATED=OFF 
+HAS_TEUCHOS=ON 
+
+CMAKEFLAGS = \
+  -D Trilinos_VERBOSE_CONFIGURE=ON \
+  \
+  -D Trilinos_ENABLE_ALL_PACKAGES:BOOL=OFF \
+  -D Trilinos_DUMP_PACKAGE_DEPENDENCIES=ON \
+  -D Trilinos_ASSERT_DEFINED_DEPENDENCIES=OFF \
+  -D TRIBITS_HANDLE_TRIBITS_DEPRECATED_CODE=IGNORE \
+  -D Trilinos_ENABLE_ALL_OPTIONAL_PACKAGES:BOOL=OFF \
+  -D Trilinos_ENABLE_TESTS:BOOL=OFF \
+  -D Trilinos_ENABLE_EXAMPLES:BOOL=ON \
+  -D Trilinos_ENABLE_Export_Makefiles:BOOL=ON \
+  -D Trilinos_ENABLE_Gtest=OFF \
+  -D TPL_ENABLE_gtest=OFF \
+  -D Trilinos_ENABLE_Fortran:BOOL=ON \
+  \
+  -D CMAKE_C_COMPILER=mpicc \
+  -D CMAKE_CXX_COMPILER=mpicxx \
+  -D CMAKE_Fortran_COMPILER=mpif90 \
+  -D CMAKE_CXX_STANDARD:STRING=${CPPSTANDARD} \
+  \
+  -D Kokkos_ENABLE_CUDA=${HAS_CUDA} \
+  -D Kokkos_ENABLE_CUDA_LAMBDA=${HAS_CUDA} \
+  -D Kokkos_ARCH_HOPPER90=${HAS_CUDA} \
+  \
+  -D Trilinos_ENABLE_OpenMP:BOOL=${HAS_OPENMP} \
+  \
+  -D TPL_ENABLE_MPI:BOOL=ON \
+  -D MPI_BASE_DIR=${TACC_IMPI_DIR}/intel64 \
+  -D MPI_INCLUDE_DIRS=${TACC_IMPI_INC} \
+  -D MPI_EXEC:FILEPATH='/opt/apps/xalt/0.6/bin/ibrun' \
+  -D TPL_ENABLE_GLM=OFF \
+  -D TPL_ENABLE_Matio=OFF \
+  \
+  -D TPL_ENABLE_BLAS=ON \
+  -D TPL_BLAS_INCLUDE_DIRS:PATH=${BLASLAPACK_INC} \
+  -D TPL_BLAS_LIBRARIES:STRING='${BLASLAPACK_LIBS}' \
+  -D TPL_LAPACK_INCLUDE_DIRS:PATH=${BLASLAPACK_INC} \
+  -D TPL_LAPACK_LIBRARIES:STRING='${BLASLAPACK_LIBS}' \
+  \
+  -D BLAS_LIBRARY_DIRS:PATH='${BLASLAPACK_LIB}' \
+  -D BLAS_LIBRARY_NAMES:STRING='${BLASLAPACK_LIBS}' \
+  -D BLAS_INCLUDE_DIRS:PATH='${BLASLAPACK_INC}' \
+  -D LAPACK_INCLUDE_DIRS:PATH='${BLASLAPACK_INC}' \
+  -D LAPACK_LIBRARY_DIRS:PATH='${BLASLAPACK_LIB}' \
+  -D LAPACK_LIBRARY_NAMES:STRING='${BLASLAPACK_LIBS}' \
+  \
+  -D TPL_ENABLE_HDF5:BOOL=${HAS_HDF5} \
+  -D HDF5_INCLUDE_DIRS:PATH=${TACC_PHDF5_INC}    \
+  -D HDF5_LIBRARY_DIRS:PATH=${TACC_PHDF5_LIB}    \
+  \
+  -D TPL_ENABLE_Netcdf:BOOL=${HAS_NETCDF} \
+  -D TPL_Netcdf_INCLUDE_DIRS:PATH=${TACC_PARALLELNETCDF_INC} \
+  -D TPL_Netcdf_LIBRARY_DIRS:PATH=${TACC_PARALLELNETCDF_LIB} \
+  -D TPL_Netcdf_LIBRARIES=${TACC_PARALLELNETCDF_LIB}/libnetcdf.so \
+  \
+  -D TPL_ENABLE_Pnetcdf:BOOL=${HAS_PNETCDF} \
+  -D TPL_Pnetcdf_INCLUDE_DIRS:PATH=${TACC_PNETCDF_INC} \
+  -D TPL_Pnetcdf_LIBRARY_DIRS:PATH=${TACC_PNETCDF_LIB} \
+  -D TPL_Pnetcdf_LIBRARIES=${TACC_PNETCDF_LIB}/libpnetcdf.so \
+  \
+  -D BoostLib_LIBRARY_DIRS:PATH=$TACC_BOOST_LIB      \
+  \
+  -D TPL_ENABLE_MUMPS:BOOL=${HAS_MUMPS} \
+  -D MUMPS_INCLUDE_DIRS=${TACC_MUMPS_INC} \
+  -D MUMPS_LIBRARY_DIRS=${TACC_MUMPS_LIB} \
+  -D MUMPS_LIBRARY_NAMES:STRING=${MUMPSLIBNAMES} \
+  -D VLE_TPL_MUMPS_LIBRARIES:STRING=${MUMPSLIBS} \
+  -D TPL_ParMETIS_LIBRARIES='${PARMETISLIBS}' \
+  -D TPL_ParMETIS_INCLUDE_DIRS=${TACC_PARMETIS_INC} \
+  \
+  -D TPL_ENABLE_yaml-cpp:BOOL=${HAS_YAMLCPP} \
+  -D yaml-cpp_INCLUDE_DIRS:PATH=${TACC_YAMLCPP_INC} \
+  -D yaml-cpp_LIBRARY_DIRS:PATH=${TACC_YAMLCPP_LIB} \
+  \
+  -D Trilinos_ENABLE_Amesos:BOOL=${HAS_EPETRA} \
+      -D Trilinos_ENABLE_Amesos2:BOOL=${HAS_KOKKOS} \
+      -D Amesos2_ENABLE_KLU2:BOOL=ON \
+      -D Amesos2_ENABLE_Basker:BOOL=ON \
+  -D Trilinos_ENABLE_Anasazi:BOOL=ON \
+  -D Trilinos_ENABLE_AztecOO:Bool=${HAS_EPETRA} \
+  -D Trilinos_ENABLE_Belos:BOOL=ON \
+  -D Trilinos_ENABLE_Epetra:Bool=${HAS_EPETRA} \
+  -D Trilinos_ENABLE_EpetraExt:Bool=${HAS_EPETRA} \
+  -D                 Epetra_ENABLE_TESTS:BOOL=ON \
+  -D Trilinos_ENABLE_ThyraEpetraAdapters=${HAS_ADAPTERS} \
+  -D Trilinos_ENABLE_ThyraEpetraExtAdapters=${HAS_ADAPTERS} \
+  -D Trilinos_ENABLE_ExodusII:Bool=${HAS_EXODUS} \
+  -D Trilinos_ENABLE_FEI:Bool=${HAS_FEI} \
+  -D Trilinos_ENABLE_Ifpack:Bool=${HAS_EPETRA} \
+      -D Trilinos_ENABLE_Ifpack2:BOOL=${HAS_KOKKOS} \
+  -D Trilinos_ENABLE_Intrepid:BOOL=${DEPRECATED} \
+      -D Trilinos_ENABLE_Intrepid2:BOOL=${HAS_KOKKOS} \
+      -D Intrepid_ENABLE_TESTS:BOOL=ON \
+  -D Trilinos_ENABLE_Isorropia:BOOL=${HAS_EPETRA} \
+  -D Trilinos_ENABLE_ML:BOOL=ON \
+      -D ML_TAKES_SUPERLU_LESS_THAN_5=TRUE \
+      -D ML_ENABLE_SuperLU:BOOL=OFF \
+  -D Trilinos_ENABLE_MOOCHO:BOOL=ON \
+  -D Trilinos_ENABLE_MueLu:BOOL=${HAS_MUELU} \
+  -D                 MueLu_ENABLE_Tutorial:BOOL=OFF \
+  -D                 MueLu_ENABLE_EXAMPLES:BOOL=OFF \
+  -D Trilinos_ENABLE_NOX=ON \
+  -D                 NOX_ENABLE_TESTS:BOOL=OFF \
+  -D Trilinos_ENABLE_Pamgen:Bool=ON \
+  -D Trilinos_ENABLE_Panzer:Bool=ON \
+  -D Trilinos_ENABLE_Phalanx:BOOL=${HAS_KOKKOS} \
+      -D Phalanx_EXPLICIT_TEMPLATE_INSTANTIATION=ON \
+      -D Phalanx_ENABLE_EXAMPLES=OFF \
+  -D Trilinos_ENABLE_Piro:BOOL=ON \
+  -D Trilinos_ENABLE_Rythmos:BOOL=ON \
+  -D Trilinos_ENABLE_Sacado:Bool=ON \
+  -D Trilinos_ENABLE_SEACAS:BOOL=${HAS_SEACASEXODUS} \
+      -D Trilinos_ENABLE_SEACASIoss:BOOL=${HAS_SEACASIOSS} \
+      -D Trilinos_ENABLE_SEACASBlot:BOOL=OFF \
+      -D Trilinos_ENABLE_SEACASExodus:BOOL=${HAS_SEACASEXODUS} \
+  -D Trilinos_ENABLE_SECONDARY_STABLE_CODE:BOOL=ON \
+  -D Trilinos_ENABLE_Shards:BOOL=ON \
+  -D Trilinos_ENABLE_ShyLU:BOOL=OFF \
+  -D Trilinos_ENABLE_Stokhos:BOOL=${HAS_KOKKOS} \
+  -D Trilinos_ENABLE_Stratimikos:BOOL=ON \
+  -D Trilinos_ENABLE_Teko:BOOL=${HAS_TEKO} \
+  -D Trilinos_ENABLE_Teuchos:BOOL=${HAS_TEUCHOS} \
+      -D Teuchos_ENABLE_LONG_LONG_INT:BOOL=ON \
+  -D Trilinos_ENABLE_Thyra:BOOL=ON \
+  -D Trilinos_ENABLE_Tpetra:BOOL=ON \
+  -D Trilinos_ENABLE_TriKota:BOOL=ON \
+  -D Trilinos_ENABLE_Zoltan:BOOL=ON \
+      -D Trilinos_ENABLE_Zoltan2:BOOL=ON \
+  \
+  -D KOKKOS_IS_REQUIRED_FOR_SEVERAL_PACKAGES=off \
+  -D Trilinos_ENABLE_Kokkos:BOOL=${HAS_KOKKOS} \
+  -D Trilinos_ENABLE_KokkosCore:BOOL=${HAS_KOKKOS} \
+  -D Phalanx_INDEX_SIZE_TYPE:STRING='INT' \
+  -D Phalanx_SHOW_DEPRECATED_WARNINGS:BOOL=OFF \
+  -D Kokkos_ENABLE_SERIAL:BOOL=ON \
+  -D Kokkos_ENABLE_OPENMP:BOOL=${HAS_OPENMP} \
+  -D Kokkos_ENABLE_PTHREAD:BOOL=OFF \
+  \
+  -D Trilinos_ENABLE_STK:BOOL=${HAS_STK} \
+      -D Trilinos_ENABLE_STKIO:BOOL=${HAS_SEACASIOSS} \
+      -D Trilinos_ENABLE_STKMesh:BOOL=${HAS_STK} \
+  \
+  -D SWIG_EXECUTABLE:FILEPATH=${TACC_SWIG_BIN}/swig
+
+
+

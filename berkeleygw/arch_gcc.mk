@@ -20,10 +20,20 @@ MATHFLAG  =
 #   NOTE: This arch.mk is used by a buildslave. The compiler flags are  #
 #   optimized to debug the code and not for code performance.           #
 #########################################################################
-FCPP    = cpp -C
+
+# VLE cpp is found in TACC_GCC_BIN or /usr/bin
+# there doesn't seem to be much difference.
+# Setting "-x none" leads to a "gfortran -E" error. Hm.
+# Leave out the "-C" option fixes it???
+FCPP    = cpp 
+
 #F90free = /usr/bin/mpif90 -ffree-form -ffree-line-length-none -Wall
-F90free = mpif90 -ffree-form -ffree-line-length-none -fbounds-check -Wall -pedantic-errors -std=gnu
 #F90free = mpif90 -ffree-form -ffree-line-length-none -fbounds-check -fbacktrace -ffpe-trap=invalid,zero,overflow
+
+# VLE there are MPI type errors;
+# leave out "-Wall -pedantic-errors"
+F90free = mpif90 -ffree-form -ffree-line-length-none -fbounds-check -std=gnu
+
 # denormal not supported, according to runtime error
 # precision is flagged by cputime: http://gcc.gnu.org/onlinedocs/gcc-4.5.3/gfortran/Debugging-Options.html
 # underflow is flagged by dlamch from lapack
