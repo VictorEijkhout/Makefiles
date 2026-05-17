@@ -12,7 +12,8 @@ URL = https://github.com/trilinos/Trilinos
 # https://github.com/trilinos/Trilinos/issues/14831
 # until move is complete:
 # https://trilinos.github.io/pdfs/TrilinosBuildReference.pdf
-DOCURL = https://www.docs.trilinos.org/files/TrilinosBuildReference.html
+DOCURL = https://github.com/trilinos/Trilinos/blob/master/doc/build_ref/TrilinosBuildReferenceTemplate.rst
+# https://www.docs.trilinos.org/files/TrilinosBuildReference.html
 
 PACKAGEVERSION = 17.0.0
 PACKAGEVERSION_DOWNLOAD = 17-0-0
@@ -24,12 +25,7 @@ GITREPO = git@github.com:trilinos/Trilinos.git
 MODE = hybrid
 MODULES = boost swig phdf5 parallelnetcdf pnetcdf parmetis
 # blaslapack
-HAS_CUDA = ON
-HAS_CUDA==ON MODULES += cuda
-INSTALLEXT = cuda
-INSTALLVARIANT = cuda
-MODULEVERSIONEXTRA = cuda
-
+HAS_CUDA = OFF
 MODULE_MINIMUM_VERSION_intel = 20
 
 BUILDSYSTEM = cmake
@@ -40,7 +36,6 @@ CPPSTANDARD = 20
 #
 # lots of package settings
 #
-DEPRECATED=OFF 
 PYTHON = OFF
 HAS_ADAPTERS = ON
 HAS_EPETRA = ON
@@ -57,7 +52,6 @@ SYSTEM==vista HAS_SEACASIOSS = OFF
 SYSTEM!=vista HAS_SEACASIOSS = ON
 HAS_HDF5 = ON
 HAS_OPENMP = OFF
-HAS_TEUCHOS=ON 
 HAS_TEKO = ${HAS_ADAPTERS}
 
 HAS_MUELU = ON
@@ -75,6 +69,8 @@ TRILINOS_LAPACK_LIB  = ${BLASLAPACK_LIB}
 TRILINOS_BLAS_LIBS   = ${BLASLAPACK_LIBS}
 TRILINOS_LAPACK_LIBS = ${BLASLAPACK_LIBS}
 
+DEPRECATED=OFF 
+HAS_TEUCHOS=ON 
 
 # STK_FP problems:
 # https://github.com/trilinos/Trilinos/issues/15271
