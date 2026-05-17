@@ -24,8 +24,13 @@ GITREPO = git@github.com:trilinos/Trilinos.git
 MODE = hybrid
 MODULES = boost swig phdf5 parallelnetcdf pnetcdf parmetis
 # blaslapack
+
+##
+## CUDA settings
+##
 HAS_CUDA = ON
-HAS_CUDA==ON MODULES += cuda
+MODULES += cuda
+export NVCC_APPEND_FLAGS=-allow-unsupported-compiler
 INSTALLEXT = cuda
 INSTALLVARIANT = cuda
 MODULEVERSIONEXTRA = cuda
