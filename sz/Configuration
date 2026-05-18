@@ -1,0 +1,21 @@
+################################################################
+####
+#### Configuration for SZ installation
+####
+################################################################
+
+PACKAGE = sz
+ABOUT = Error-bounded Lossy Data Compressor 
+URL = https://github.com/szcompressor/SZ/
+PACKAGEVERSION = 2.1.12
+PACKAGEVERSIONDOWNLOAD = 2.1.12.5
+DOWNLOADURL = https://github.com/szcompressor/SZ/archive/refs/tags/v${PACKAGEVERSIONDOWNLOAD}.tar.gz
+GITREPO = https://github.com/szcompressor/SZ.git
+
+MODE = seq
+
+BUILDSYSTEM = cmake
+PKGCONFIG = share/pkgconfig
+PREFIXPATHSET = 1
+POSTINSTALLinLIB = ln libSZ.so libsz.so
+

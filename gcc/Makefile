@@ -5,7 +5,7 @@
 ################################################################
 
 PACKAGE = gcc
-PACKAGEVERSION = 14.2
+PACKAGEVERSION = 16.1
 URL = 
 MODE = core
 MODULES = 
@@ -51,5 +51,5 @@ HASBIN = 1
 include ${MAKEINCLUDES}/Make.public
 
 GITREPO = https://gcc.gnu.org/git/gcc.git
-BRANCH = releases/gcc-14
+BRANCH = releases/gcc-16
 include ${MAKEINCLUDES}/Make.git

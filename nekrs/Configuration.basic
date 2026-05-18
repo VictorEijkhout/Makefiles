@@ -1,0 +1,16 @@
+ABOUT = Next generation fast and scalable CFD code
+URL = https://github.com/Nek5000/nekRS
+PACKAGEVERSION = 26.0
+#
+# a fixed adios will be included in 26.1
+#
+BOOTSTRAP = sed -i \
+    -e 's/\([^:]\)uint/\1std::uint/g' \
+    -e '1a#include <cstdint>' \
+    3rd_party/adios/thirdparty/yaml-cpp/yaml-cpp/src/emitterutils.cpp
+# BOOTSTRAP = find . -name polyfill.hpp -exec sed -i -e 's/ uint/ std::uint/g' {} \;
+DOWNLOADURL = https://github.com/Nek5000/nekRS/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
+GITREPO = https://github.com/Nek5000/nekRS.git
+BRANCH = next
+
+BUILDSYSTEM = cmake
