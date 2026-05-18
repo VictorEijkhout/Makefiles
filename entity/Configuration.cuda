@@ -9,6 +9,7 @@ ABOUT = New generation astrophysical plasma simulation code with CPU/GPU portabi
 URL = https://github.com/entity-toolkit/entity
 DOCURL = https://entity-toolkit.github.io/wiki/content/1-getting-started/1-compile-run/#configuring-compiling
 PACKAGEVERSION = 1.3.3
+# 1.4.0
 DOWNLOADURL = https://github.com/entity-toolkit/entity/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
 GITREPO = https://github.com/entity-toolkit/entity.git
 
