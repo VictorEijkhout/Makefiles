@@ -13,8 +13,8 @@ URL = https://github.com/trilinos/Trilinos
 # https://trilinos.github.io/pdfs/TrilinosBuildReference.pdf
 DOCURL = https://www.docs.trilinos.org/files/TrilinosBuildReference.html
 
-PACKAGEVERSION = 16.2.0
-PACKAGEVERSION_DOWNLOAD = 16-2-0
+PACKAGEVERSION = 16.2.1
+PACKAGEVERSION_DOWNLOAD = 16-2-1
 
 #DOWNLOADURL = https://github.com/trilinos/Trilinos/archive/refs/tags/${PACKAGEVERSION}.tar.gz
 # Use this for 17 and up:
