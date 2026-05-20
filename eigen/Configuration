@@ -1,0 +1,26 @@
+################################################################
+####
+#### Configuration for Eigen installation
+####
+#### eigen can not be used in Arpack with nvidia compiler:
+#### https://gitlab.com/libeigen/eigen/-/issues/2846
+####
+################################################################
+
+PACKAGE = eigen
+ABOUT = C++ template library for linear algebra
+PACKAGEVERSION = 5.0.0
+URL = https://eigen.tuxfamily.org/index.php?title=Main_Page
+SOFTWAREURL = https://gitlab.com/libeigen/eigen/-/tree/master
+DOWNLOADURL = https://gitlab.com/libeigen/eigen/-/archive/${PACKAGEVERSION}/eigen-${PACKAGEVERSION}.tar.gz
+GITREPO = https://gitlab.com/libeigen/eigen.git
+
+MODULES = 
+MODE = seq
+
+BUILDSYSTEM = cmake
+NOLIB = 1
+PKGCONFIG = share/pkgconfig
+PREFIXPATHSET = 1
+INCLUDELOC = include/eigen3
+
