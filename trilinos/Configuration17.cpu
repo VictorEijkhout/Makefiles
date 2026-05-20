@@ -23,7 +23,7 @@ GITREPO = git@github.com:trilinos/Trilinos.git
 
 ##
 MODE = hybrid
-MODULES = boost swig phdf5 parallelnetcdf pnetcdf parmetis
+MODULES = boost swig phdf5 parallelnetcdf parmetis pnetcdf
 # blaslapack
 HAS_CUDA = OFF
 MODULE_MINIMUM_VERSION_intel = 20

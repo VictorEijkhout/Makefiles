@@ -26,6 +26,8 @@ module load mkl
 module unload impi
 module load impi/${impiversion}
 # /21.9 or 21.11?
+
+# why do we need this?
 export PATH=${HOME}/bin/gcc15:${PATH}
 
 # append for libisl
