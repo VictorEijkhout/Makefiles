@@ -30,5 +30,7 @@ HAS_DEBUG==ON ARCH *= -debug
 # hypre
 HAS_HYPRE=ON
 HAS_HYPRE==ON PETSCFLAGS += --with-hypre=yes --download-hypre=yes
+
 #
 export PETSC_ARCH=${ARCH}
+EXTRAVARS = PETSC_DIR=${PREFIXDIR} PETSC_ARCH=${ARCH}

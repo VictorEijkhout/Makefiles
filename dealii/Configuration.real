@@ -16,7 +16,7 @@ GITREPO = https://github.com/dealii/dealii.git
 
 BUILDSYSTEM = cmake
 MODE = mpi
-MODULES = petsc phdf5/1.14 sundials
+MODULES = boost petsc phdf5/1.14 sundials
 # optional packages
 HAS_P4EST = OFF
 HAS_P4EST==ON MODULES += p4est
