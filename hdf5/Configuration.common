@@ -6,6 +6,8 @@ HDFFORTRAN = ON
 TESTING = ON
 THREADSAFE = ON
 
+# szip & libaec:
+# https://github.com/HDFGroup/hdf5/blob/develop/docs/INSTALL_Filters.md#libaec-szip-options
 CMAKEFLAGS = \
   -D HDF5_ENABLE_PLUGIN_SUPPORT=OFF \
   -D HDF5_ENABLE_THREADSAFE=${THREADSAFE} \

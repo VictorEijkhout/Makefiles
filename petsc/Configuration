@@ -6,16 +6,29 @@
 
 PACKAGE = petsc
 ABOUT = Portable, Extensible Toolkit for Scientific Computation
-DOWNLOADURL = https://petsc.org/release/install/download/
-PACKAGEVERSION = 3.24
-PACKAGEVERSION_DOWNLOAD = 3.24.2
+URL = https://petsc.org
+SOFTWAREURL = https://petsc.org/release/install/download/
+
+PACKAGEVERSION = 3.25
+PACKAGEVERSION_DOWNLOAD = 3.25.1
 DOWNLOADURL = https://web.cels.anl.gov/projects/petsc/download/release-snapshots/petsc-${PACKAGEVERSION_DOWNLOAD}.tar.gz
 GITREPO = https://gitlab.com/petsc/petsc.git
 BRANCH = main
 
 MODE = mpi
-OPTFLAGS=-O2 -fPIC
-LOPTFLAGS=-O1 -fPIC
 
-CUDA = 0
-# include Makefile.packages
+BUILDSYSTEM = petsc
+# set configure flags
+PETSCFLAGS =
+ARCH=${PACKAGEVERSION}
+
+# debug
+HAS_DEBUG=OFF
+HAS_DEBUG==ON PETSCFLAGS += --with-debug=yes
+HAS_DEBUG==ON ARCH *= -debug
+
+# hypre
+HAS_HYPRE=ON
+HAS_HYPRE==ON PETSCFLAGS += --with-hypre=yes --download-hypre=yes
+#
+export PETSC_ARCH=${ARCH}
