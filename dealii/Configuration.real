@@ -14,9 +14,10 @@ PACKAGEVERSION = 9.7.1
 DOWNLOADURL = https://github.com/dealii/dealii/releases/download/v${PACKAGEVERSION}/dealii-${PACKAGEVERSION}.tar.gz
 GITREPO = https://github.com/dealii/dealii.git
 
-BUILDSYSTEM = cmake
 MODE = mpi
 MODULES = boost petsc phdf5/1.14 sundials
+
+BUILDSYSTEM = cmake
 # optional packages
 HAS_P4EST = OFF
 HAS_P4EST==ON MODULES += p4est
@@ -49,7 +50,7 @@ CMAKEFLAGS = \
 	-D TRILINOS_INCLUDE_DIRS=${TACC_TRILINOS_INC}
 
 PREFIXPATHSET = 1
-CPTOINSTALLDIR = examples
+#CPTOINSTALLDIR = examples
 CMAKEBUILDTYPE = DebugRelease
 INSTALLEXT = real
 INSTALLVARIANT = real
