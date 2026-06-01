@@ -68,3 +68,7 @@ HAS_MUMPS==ON PETSCFLAGS += --with-mumps=yes --download-mumps=yes
 ##
 export PETSC_ARCH=${ARCH}
 EXTRAVARS = PETSC_DIR=${PREFIXDIR} PETSC_ARCH=${ARCH}
+LOGS = \
+    ${SRCDIR}/${ARCH}/lib/petsc/conf/configure.log \
+    ${SRCDIR}/${ARCH}/lib/petsc/conf/make.log
+    
