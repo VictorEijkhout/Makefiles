@@ -14,6 +14,9 @@ GITREPO = https://gitlab.com/petsc/petsc.git
 BRANCH = main
 
 MODE = mpi
+
+BUILDSYSTEM = petsc
+
 OPTFLAGS=-O2 -fPIC
 LOPTFLAGS=-O1 -fPIC
 
