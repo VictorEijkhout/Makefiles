@@ -23,15 +23,48 @@ BUILDSYSTEM = petsc
 PETSCFLAGS =
 ARCH=${PACKAGEVERSION}
 
+##
+## Settings
+##
+
 # debug
 HAS_DEBUG=OFF
 HAS_DEBUG==ON PETSCFLAGS += --with-debug=yes
 HAS_DEBUG==ON ARCH *= -debug
 
-# hypre
+##
+## Packages
+##
+
+HAS_CHACO=ON
+HAS_CHACO==ON PETSCFLAGS += --with-chaco=yes --download-chaco=yes
+
+HAS_EIGEN=ON
+HAS_EIGEN==ON PETSCFLAGS += --with-eigen=yes --download-eigen=yes
+
+HAS_FFTW=ON
+HAS_FFTW==ON PETSCFLAGS += --with-fftw=yes --download-fftw=yes
+
+HAS_HDF5=ON
+HAS_HDF5==ON PETSCFLAGS += --with-hdf5=yes --download-hdf5=yes
+
 HAS_HYPRE=ON
 HAS_HYPRE==ON PETSCFLAGS += --with-hypre=yes --download-hypre=yes
 
-#
+HAS_KOKKOS=ON
+HAS_KOKKOS==ON PETSCFLAGS += --with-kokkos=yes --download-kokkos=yes
+
+HAS_MPE=ON
+HAS_MPE==ON PETSCFLAGS += --with-mpe=yes --download-mpe=yes
+
+HAS_METIS=ON
+HAS_METIS==ON PETSCFLAGS += --with-metis=yes --download-metis=yes
+
+HAS_MUMPS=ON
+HAS_MUMPS==ON PETSCFLAGS += --with-mumps=yes --download-mumps=yes
+
+##
+## Modulefile stuff
+##
 export PETSC_ARCH=${ARCH}
 EXTRAVARS = PETSC_DIR=${PREFIXDIR} PETSC_ARCH=${ARCH}
