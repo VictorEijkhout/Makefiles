@@ -5,45 +5,12 @@
 ################################################################
 
 PACKAGE = hdf5
-ABOUT =  Hierarchical Data Format, version 5
-URL = https://www.hdfgroup.org/
-SOFTWAREURL = https://github.com/HDFGroup/hdf5
-
 PACKAGEVERSION = 2.0.0
-
-MODULES = zlib
 
 # sequential settings
 HDF5PARALLEL = OFF
 MODE = seq
 MODULENAME = hdf5
 
-HDFFORTRAN = ON
-TESTING = ON
-THREADSAFE = ON
+include Configuration.common
 
-CMAKEFLAGS = \
-  -D HDF5_ENABLE_PLUGIN_SUPPORT=OFF \
-  -D HDF5_ENABLE_THREADSAFE=${THREADSAFE} \
-  -D BUILD_TESTING:BOOL=${TESTING} \
-  -D CMAKE_EXE_LINKER_FLAGS=-lpthread \
-  \
-  -D HDF5_ENABLE_Z_LIB_SUPPORT:BOOL=ON \
-  -D ZLIB_INCLUDE_DIR:PATH=${TACC_ZLIB_INC} \
-  -D ZLIB_LIBRARY:PATH=${TACC_ZLIB_LIB}/libz.so \
-  \
-  -D ALLOW_UNSUPPORTED=ON \
-  -D HDF5_ALLOW_UNSUPPORTED=ON \
-  -D HDF5_BUILD_FORTRAN:BOOL=${HDFFORTRAN} \
-  -D HDF5_BUILD_CPP_LIB:BOOL=ON \
-  -D HDF5_ENABLE_PARALLEL:BOOL=${HDF5PARALLEL}
-
-HASBIN=1
-PKGCONFIGLIB = pkgconfig
-PREFIXPATHSET = 1
-MODULENOTES = Thread-safe mode enabled
-FAMILY = hdf5
-
-DOWNLOADURL = https://github.com/HDFGroup/hdf5/releases/download/${PACKAGEVERSION}/hdf5-${PACKAGEVERSION}.tar.gz
-
-GITREPO = https://github.com/HDFGroup/hdf5.git

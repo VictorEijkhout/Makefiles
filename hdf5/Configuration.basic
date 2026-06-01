@@ -1,0 +1,5 @@
+ABOUT =  Hierarchical Data Format, version 5
+URL = https://www.hdfgroup.org/
+SOFTWAREURL = https://github.com/HDFGroup/hdf5
+DOWNLOADURL = https://github.com/HDFGroup/hdf5/releases/download/${PACKAGEVERSION}/hdf5-${PACKAGEVERSION}.tar.gz
+GITREPO = https://github.com/HDFGroup/hdf5.git

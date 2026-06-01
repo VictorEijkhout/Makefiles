@@ -1,0 +1,82 @@
+################################################################
+####
+#### Configuration for Trilinos installation
+#### version 17 has a bunch of modules removed
+####
+################################################################
+
+PACKAGE = trilinos
+ABOUT = Collection of reusable scientific software libraries
+URL = https://github.com/trilinos/Trilinos
+
+# https://github.com/trilinos/Trilinos/issues/14831
+# until move is complete:
+# https://trilinos.github.io/pdfs/TrilinosBuildReference.pdf
+DOCURL = https://github.com/trilinos/Trilinos/blob/master/doc/build_ref/TrilinosBuildReferenceTemplate.rst
+# https://www.docs.trilinos.org/files/TrilinosBuildReference.html
+
+PACKAGEVERSION = 17.1.0
+# 17.1.1
+PACKAGEVERSION_DOWNLOAD = 17-1-0
+
+DOWNLOADURL = https://github.com/trilinos/Trilinos/archive/refs/tags/trilinos-release-${PACKAGEVERSION_DOWNLOAD}.tar.gz
+GITREPO = git@github.com:trilinos/Trilinos.git
+
+##
+MODE = hybrid
+MODULES = boost swig phdf5 parallelnetcdf parmetis pnetcdf
+# blaslapack
+HAS_CUDA = OFF
+MODULE_MINIMUM_VERSION_intel = 20
+
+BUILDSYSTEM = cmake
+PREFIXPATHSET = 1
+LANGUAGE = CXX
+CPPSTANDARD = 20
+
+#
+# lots of package settings
+#
+PYTHON = OFF
+HAS_ADAPTERS = ON
+HAS_EPETRA = ON
+HAS_BOOST = ON
+# exodus seems external to trilinos, so let's turn it off
+HAS_EXODUS = OFF
+HAS_FEI = ${HAS_ADAPTERS}
+HAS_KOKKOS = ON
+HAS_NETCDF = ON
+HAS_PNETCDF = ON
+HAS_SEACASEXODUS = ON
+# only for vista:
+SYSTEM==vista HAS_SEACASIOSS = OFF
+SYSTEM!=vista HAS_SEACASIOSS = ON
+HAS_HDF5 = ON
+HAS_OPENMP = OFF
+HAS_TEKO = ${HAS_ADAPTERS}
+
+HAS_MUELU = ON
+HAS_MUMPS = OFF
+HAS_STK = ON
+HAS_YAMLCPP = OFF 
+# if [ "$${HAS_YAMLCPP}" = "1" ] ; then 
+# source $${scriptdir}/../yaml-cpp/yamlcpp_vars.sh
+# fi
+
+TRILINOS_BLAS_INC    = ${BLASLAPACK_INC}
+TRILINOS_LAPACK_INC  = ${BLASLAPACK_INC}
+TRILINOS_BLAS_LIB    = ${BLASLAPACK_LIB}
+TRILINOS_LAPACK_LIB  = ${BLASLAPACK_LIB}
+TRILINOS_BLAS_LIBS   = ${BLASLAPACK_LIBS}
+TRILINOS_LAPACK_LIBS = ${BLASLAPACK_LIBS}
+
+DEPRECATED=OFF 
+HAS_TEUCHOS=ON 
+
+# STK_FP problems:
+# https://github.com/trilinos/Trilinos/issues/15271
+
+include Configuration17.common
+
+
+
