@@ -6,8 +6,8 @@
 
 PACKAGE = boost
 ABOUT = C++ Libraries
-PACKAGEVERSION = 1.86.0
-PACKAGEVERSION_DOWNLOAD = 1_86_0
+PACKAGEVERSION = 1.91.0
+PACKAGEVERSION_DOWNLOAD = 1_91_0
 URL = https://www.boost.org/ \
     https://www.boost.org/doc/libs/${PACKAGEVERSION_DOWNLOAD}/tools/build/doc/html/index.html
 MODE = seq
@@ -79,5 +79,6 @@ include ${MAKEINCLUDES}/Make.vars
 ## NOLIB = 1
 include ${MAKEINCLUDES}/Make.public
 
-DOWNLOADURL = https://boostorg.jfrog.io/artifactory/main/release/${PACKAGEVERSION}/source/boost_${PACKAGEVERSION_DOWNLOAD}.tar.gz
+DOWNLOADURL = https://archives.boost.io/release/1.91.0/source/boost_${PACKAGEVERSION_DOWNLOAD}.tar.gz
+#https://boostorg.jfrog.io/artifactory/main/release/${PACKAGEVERSION}/source/boost_${PACKAGEVERSION_DOWNLOAD}.tar.gz
 include ${MAKEINCLUDES}/Make.download

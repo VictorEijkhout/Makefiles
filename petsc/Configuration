@@ -10,7 +10,7 @@ URL = https://petsc.org
 SOFTWAREURL = https://petsc.org/release/install/download/
 
 PACKAGEVERSION = 3.25
-PACKAGEVERSION_DOWNLOAD = 3.25.1
+PACKAGEVERSION_DOWNLOAD = 3.25.2
 DOWNLOADURL = https://web.cels.anl.gov/projects/petsc/download/release-snapshots/petsc-${PACKAGEVERSION_DOWNLOAD}.tar.gz
 GITREPO = https://gitlab.com/petsc/petsc.git
 BRANCH = main
