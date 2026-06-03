@@ -79,6 +79,6 @@ include ${MAKEINCLUDES}/Make.vars
 ## NOLIB = 1
 include ${MAKEINCLUDES}/Make.public
 
-DOWNLOADURL = https://archives.boost.io/release/1.91.0/source/boost_${PACKAGEVERSION_DOWNLOAD}.tar.gz
+DOWNLOADURL = https://archives.boost.io/release/${PACKAGEVERSION}/source/boost_${PACKAGEVERSION_DOWNLOAD}.tar.gz
 #https://boostorg.jfrog.io/artifactory/main/release/${PACKAGEVERSION}/source/boost_${PACKAGEVERSION_DOWNLOAD}.tar.gz
 include ${MAKEINCLUDES}/Make.download
