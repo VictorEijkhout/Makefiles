@@ -27,47 +27,118 @@ ARCH=${PACKAGEVERSION}
 ## Settings
 ##
 
+# scalar
+SCALAR = real
+PETSCFLAGS += --with-scalar-type=${SCALAR}
+SCALAR==complex ARCH *= complex
+
+# precision
+PRECISION = double
+PETSCFLAGS += --with-precision=${PRECISION}
+PRECISION==single ARCH *= single
+
+# int length
+INTSIZE = 32
+INTSIZE==64 PETSCFLAGS += --with-64-bit-indices=1
+INTSIZE==64 ARCH *= i64
+
 # debug
-HAS_DEBUG=OFF
-HAS_DEBUG==ON PETSCFLAGS += --with-debug=yes
-HAS_DEBUG==ON ARCH *= -debug
+DEBUG=OFF
+DEBUG==ON PETSCFLAGS += --with-debug=yes
+DEBUG==ON ARCH *= debug
+
+# fortran
+HAS_FORTRAN=ON
+COMPILER==gcc HAS_FORTRAN=OFF
+HAS_FORTRAN==ON  PETSCFLAGS += --with-fortran-bindings=yes
+HAS_FORTRAN==OFF PETSCFLAGS += --with-fortran-bindings=no
 
 ##
-## Packages
+## External Packages, unless small installation
 ##
+INSTALLATION=BIG
+INSTALLATION==BIG   MODULENOTE = External packages:
+INSTALLATION==SMALL MODULENOTE = No external packages.
 
 HAS_CHACO=ON
-HAS_CHACO==ON PETSCFLAGS += --with-chaco=yes --download-chaco=yes
+INSTALLATION==SMALL HAS_CHACO=OFF
+HAS_CHACO==ON MODULENOTE += chaco
 
 HAS_EIGEN=ON
-HAS_EIGEN==ON PETSCFLAGS += --with-eigen=yes --download-eigen=yes
+INSTALLATION==SMALL HAS_EIGEN=OFF
+HAS_EIGEN==ON MODULENOTE += eigen
 
 HAS_FFTW=ON
-HAS_FFTW==ON PETSCFLAGS += --with-fftw=yes --download-fftw=yes
+INSTALLATION==SMALL HAS_FFTW=OFF
+HAS_FFTW==ON MODULENOTE += fftw
 
 HAS_HDF5=ON
-HAS_HDF5==ON PETSCFLAGS += --with-hdf5=yes --download-hdf5=yes
+INSTALLATION==SMALL HAS_HDF5=OFF
+HAS_HDF5==ON MODULENOTE += hdf5
 
 HAS_HYPRE=ON
-HAS_HYPRE==ON PETSCFLAGS += --with-hypre=yes --download-hypre=yes
+INSTALLATION==SMALL HAS_HYPRE=OFF
+HAS_HYPRE==ON MODULENOTE += hypre
 
 HAS_KOKKOS=ON
-HAS_KOKKOS==ON PETSCFLAGS += --with-kokkos=yes --download-kokkos=yes
+INSTALLATION==SMALL HAS_KOKKOS=OFF
+HAS_KOKKOS==ON MODULENOTE += kokkos
 
-HAS_MPE=ON
-HAS_MPE==ON PETSCFLAGS += --with-mpe=yes --download-mpe=yes
+# problem
+HAS_MPE=OFF
+
+#
+# Mumps depends on Metis & Parmetis
+#
+HAS_MUMPS=ON
+INSTALLATION==SMALL HAS_MUMPS=OFF
+HAS_MUMPS==ON MODULENOTE += mumps
 
 HAS_METIS=ON
-HAS_METIS==ON PETSCFLAGS += --with-metis=yes --download-metis=yes
+INSTALLATION==SMALL HAS_METIS=OFF
+HAS_METIS==ON MODULENOTE += metis
 
-HAS_MUMPS=ON
-HAS_MUMPS==ON PETSCFLAGS += --with-mumps=yes --download-mumps=yes
+HAS_PARMETIS=ON
+INSTALLATION==SMALL HAS_PARMETIS=OFF
+HAS_PARMETIS==ON MODULENOTE += parmetis
+
+HAS_SCALAPACK=ON
+INSTALLATION==SMALL HAS_SCALAPACK=OFF
+HAS_SCALAPACK==ON MODULENOTE += scalapack
+
+# turn off mumps if any of metis/parmetis/scalapack is disabled
+HAS_METIS==OFF     HAS_MUMPS=OFF
+HAS_PARMETIS==OFF  HAS_MUMPS=OFF
+HAS_SCALAPACK==OFF HAS_MUMPS=OFF
+# if mumps is still on, turn on metis/parmetis/scalapack
+HAS_MUMPS==ON HAS_SCALAPACK=ON
+HAS_MUMPS==ON HAS_PARMETIS=ON
+HAS_MUMPS==ON HAS_METIS=ON
+HAS_MUMPS==ON MODULENOTE += mumps
+
+HAS_PTSCOTCH=ON
+INSTALLATION==SMALL HAS_PTSCOTCH=OFF
+HAS_PTSCOTCH==ON MODULENOTE += ptscotch
+
+HAS_CHACO==ON     PETSCFLAGS += --with-chaco=yes     --download-chaco=yes
+HAS_EIGEN==ON     PETSCFLAGS += --with-eigen=yes     --download-eigen=yes
+HAS_FFTW==ON      PETSCFLAGS += --with-fftw=yes      --download-fftw=yes
+HAS_HDF5==ON      PETSCFLAGS += --with-hdf5=yes      --download-hdf5=yes
+HAS_HYPRE==ON     PETSCFLAGS += --with-hypre=yes     --download-hypre=yes
+HAS_KOKKOS==ON    PETSCFLAGS += --with-kokkos=yes    --download-kokkos=yes
+HAS_MPE==ON       PETSCFLAGS += --with-mpe=yes       --download-mpe=yes
+HAS_METIS==ON     PETSCFLAGS += --with-metis=yes     --download-metis=yes
+HAS_MUMPS==ON     PETSCFLAGS += --with-mumps=yes     --download-mumps=yes
+HAS_PARMETIS==ON  PETSCFLAGS += --with-parmetis=yes  --download-parmetis=yes
+HAS_PTSCOTCH==ON  PETSCFLAGS += --with-ptscotch=yes  --download-ptscotch=yes
+HAS_SCALAPACK==ON PETSCFLAGS += --with-scalapack=yes --download-scalapack=yes --download-blacs=yes 
 
 ##
 ## Modulefile stuff
 ##
 export PETSC_ARCH=${ARCH}
 EXTRAVARS = PETSC_DIR=${PREFIXDIR} PETSC_ARCH=${ARCH}
+PKGCONFIGLIB = pkgconfig
 LOGS = \
     ${SRCDIR}/${ARCH}/lib/petsc/conf/configure.log \
     ${SRCDIR}/${ARCH}/lib/petsc/conf/make.log
