@@ -1,0 +1,21 @@
+################################################################
+#### Configuration for the !!stupid!! BerkeleyGW package
+################################################################
+
+PACKAGE = berkeleygw
+PACKAGEVERSION = 4.0
+URL = https://berkeleygw.org/
+DOCURL = https://berkeleygw.org/documentation/
+DOWNLOADURL = https://app.box.com/shared/static/22edl07muvhfnd900tnctsjjftbtcqc4.gz
+# BOOTSTRAP = sed -i -e '/call die/s/^/!/' -e '259,263s/^/!/' -e '271,272s/^/!/' Common/message.f90
+# gcc has a problem with idnint : sed -i -e 's/idnint/nint/' Common/*.f90
+
+MODE = mpi
+MODULES = 
+
+BUILDSYSTEM = make
+PREMAKE = ls -l *.mk && cp arch_${TACC_FAMILY_COMPILER}.mk ${SRCDIR}/arch.mk && cp flavor_real.mk ${SRCDIR}/flavor.mk && ls -l ${SRCDIR}/*.mk
+MAKETARGETS = all-flavors
+POSTMAKE = make install INSTDIR=${PREFIXDIR}
+
+HASBIN = 1

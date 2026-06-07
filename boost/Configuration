@@ -7,11 +7,17 @@
 PACKAGE = boost
 ABOUT = C++ Libraries
 PACKAGEVERSION = 1.86.0
-PACKAGEVERSION_DOWNLOAD = 1_86_0
 URL = https://www.boost.org/ \
     https://www.boost.org/doc/libs/${PACKAGEVERSION_DOWNLOAD}/tools/build/doc/html/index.html
+DOWNLOADURL = https://github.com/boostorg/boost/releases/tag/boost-${PACKAGEVERSION}
+GITREPO = https://github.com/boostorg/boost
 MODE = seq
+
+BUILDSYSTEM = cmake
+
 MODULES = 
+
+exit 
 
 include ${MAKEINCLUDES}/Make.info
 
@@ -79,5 +85,3 @@ include ${MAKEINCLUDES}/Make.vars
 ## NOLIB = 1
 include ${MAKEINCLUDES}/Make.public
 
-DOWNLOADURL = https://boostorg.jfrog.io/artifactory/main/release/${PACKAGEVERSION}/source/boost_${PACKAGEVERSION_DOWNLOAD}.tar.gz
-include ${MAKEINCLUDES}/Make.download

@@ -1,0 +1,24 @@
+################################################################
+####
+#### Configuration for SZIP installation
+####
+################################################################
+
+PACKAGE = szip
+PACKAGEVERSION = 2.1.1
+DOWNLOADURL = https://docs.hdfgroup.org/archive/support/ftp/lib-external/szip/${PACKAGEVERSION}/src/szip-${PACKAGEVERSION}.tar.gz
+
+MODE = seq
+
+BUILDSYSTEM = cmake
+CMAKFLAGS=\
+  -D CMAKE_C_FLAGS=-fPIC \
+  -D CMAKE_CXX_FLAGS=-fPIC
+PREFIXPATHSET = 1
+MODULEPATHSET = share/cmake
+
+# there is something wrong with this installation:
+# CMake Error at /Users/eijkhout/Installation/szip/build-2.1.1-macbookair-gcc14/szip-config.cmake:61 (include):
+#   include could not find requested file:
+
+#     /Users/eijkhout/Installation/share/cmake/szip-targets.cmake

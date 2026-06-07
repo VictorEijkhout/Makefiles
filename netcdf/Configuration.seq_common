@@ -1,3 +1,7 @@
+##
+## common settings for netcdf,
+## included in netcdf & netcdff
+##
 BUILDSYSTEM = cmake
 HASBIN=1
 PREFIXPATHSET = 1
@@ -7,7 +11,7 @@ LINKLIB64toLIB = 1
 CPTOINSTALLDIR = examples
 
 MODE = seq
-MODULES += hdf5
+MODULES += hdf5/1.14.6
 NETCDF_PARALLEL = OFF
 
 # NETCDF_ENABLE_LARGE_FILE_SUPPORT

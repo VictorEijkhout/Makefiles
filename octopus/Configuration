@@ -8,19 +8,19 @@ PACKAGE = octopus
 ABOUT = Real-space Time-Dependent Density Functional Theory code
 URL = https://gitlab.com/octopus-code/octopus
 DOCURL = https://www.octopus-code.org/documentation/15/manual/installation/cmake/
-PACKAGEVERSION = 16.3
-GITTAG = 16.3
+PACKAGEVERSION = 16.4
+GITTAG = 16.4
 
 MODE = mpi
-MODULES = gsl scalapack \
-    blaslapack 
+MODULES = gsl scalapack
+#    blaslapack 
 OCTOPUS_MPI = ON
 USEMKL=ON
 DEFINE_LAPACK='-D OCTOPUS_MKL=ON'
 
 CMAKEUSENINJA = 1
 CMAKEFLAGS = \
-    -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
+    -D CMAKE_POLICY_VERSION_MINIMUM=3.5 \
     -D CMAKE_DISABLE_FIND_PACKAGE_Libxc=On \
     -D CMAKE_DISABLE_FIND_PACKAGE_METIS=On \
     -D OCTOPUS_OpenMP=ON \
