@@ -11,10 +11,21 @@ DOCURRL = https://warpx.readthedocs.io/en/latest/index.html
 DOWNLOADURL = https://github.com/BLAST-WarpX/warpx/archive/refs/tags/${PACKAGEVERSION}.tar.gz
 GITREPO= https://github.com/ECP-WarpX/WarpX.git
 MODE = mpi
+
 MODULES = phdf5/1.14
+HAS_FFT = ON
+COMPILER==gcc HAS_FFT=OFF
+HAS_FFT==ON MODULE += fftw3
 
 BUILDSYSTEM = cmake
 
+# hdf5 gets found through cmake prefix path, no options needed
+# mpi mode is also detected automatically
+CMAKEFLAGS = \
+  -D WarpX_DIMS='2;3' \
+  -D WarpX_FFT=${HAS_FFT}
+
 exit
 
-CC=$(which clang) CXX=$(which clang++) WARPX_AMREX_SRC=$PWD/../amrex WARPX_PICSAR_SRC=$PWD/../picsar WARPX_FFT=ON WARPX_MPI=ON WARPX_DIMS="2;3" CMAKE_PREFIX_PATH=$HOME/sw/hdf5-parallel-1.10.4:$CMAKE_PREFIX_PATH python3 -m pip install --force-reinstall --no-deps -v .
+cmake -S . -B build_gpu -DWarpX_COMPUTE=CUDA -DWarpX_FFT=ON -DWarpX_QED_TABLE_GEN=ON -DWarpX_DIMS="1;2;RZ;3"
+cmake --build build_gpu -j 16
