@@ -35,6 +35,7 @@ export NVCC_APPEND_FLAGS=-allow-unsupported-compiler
 INSTALLEXT = cuda
 INSTALLVARIANT = cuda
 MODULEVERSIONEXTRA = cuda
+DEPENDSONCURRENT = cuda
 
 MODULE_MINIMUM_VERSION_intel = 20
 
