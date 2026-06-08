@@ -9,6 +9,7 @@ ABOUT = A modern formatting library
 URL = https://fmt.dev/
 CODEURL = https://github.com/fmtlib/fmt
 PACKAGEVERSION = 12.1.0
+# 12 2.0
 DOWNLOADURL = https://github.com/fmtlib/fmt/archive/${PACKAGEVERSION}.tar.gz
 MODE = seq
 
