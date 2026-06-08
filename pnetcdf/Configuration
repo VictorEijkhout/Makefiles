@@ -25,3 +25,5 @@ PKGCONFIGLIB = pkgconfig
 
 DOWNLOADURL = https://parallel-netcdf.github.io/Release/pnetcdf-${PACKAGEVERSION}.tar.gz
 GITREPO = https://github.com/Parallel-NetCDF/PnetCDF.git
+# git version requires libtool 2.5.4:
+# https://github.com/Parallel-NetCDF/PnetCDF/issues/134
