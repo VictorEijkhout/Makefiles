@@ -13,15 +13,22 @@ GITREPO= https://github.com/ECP-WarpX/WarpX.git
 MODE = mpi
 
 MODULES = phdf5/1.14
+
+# FFT
+# fftw3 is missing the fortran mode when compiled with gcc,
+# though maybe only ls6?
 HAS_FFT = ON
 COMPILER==gcc HAS_FFT=OFF
 HAS_FFT==ON MODULE += fftw3
+
+MODULES += python/3.12
 
 BUILDSYSTEM = cmake
 
 # hdf5 gets found through cmake prefix path, no options needed
 # mpi mode is also detected automatically
 CMAKEFLAGS = \
+  -D WarpX_PYTHON=ON \
   -D WarpX_DIMS='2;3' \
   -D WarpX_FFT=${HAS_FFT}
 
