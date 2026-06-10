@@ -6,9 +6,12 @@
 ################################################################
 
 PACKAGE = nekrs
+MODE = mpi
+
 include Configuration.basic
 
-MODE = mpi
+# adios problem to be fixed in 26.1
+# https://github.com/Nek5000/nekRS/issues/704
 MODULES = adios2 cuda
 
 # see Configuration.gpu
