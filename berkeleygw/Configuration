@@ -11,7 +11,8 @@ DOWNLOADURL = https://app.box.com/shared/static/22edl07muvhfnd900tnctsjjftbtcqc4
 # gcc has a problem with idnint : sed -i -e 's/idnint/nint/' Common/*.f90
 
 MODE = mpi
-MODULES = 
+COMPILER==gcc abort We do not have the arch file yet for gcc
+MODULES = phdf5/1.14
 
 BUILDSYSTEM = make
 PREMAKE = ls -l *.mk && cp arch_${TACC_FAMILY_COMPILER}.mk ${SRCDIR}/arch.mk && cp flavor_real.mk ${SRCDIR}/flavor.mk && ls -l ${SRCDIR}/*.mk

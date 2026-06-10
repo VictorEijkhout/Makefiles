@@ -68,8 +68,8 @@ LAPACKLIB    = -Wl,--start-group \
 		-Wl,--end-group -liomp5 -lpthread -lm -ldl
 SCALAPACKLIB = $(MKLPATH)/libmkl_scalapack_lp64.a
 
-HDF5PATH     = /home1/apps/intel25/impi21/phdf5/1.14.6/lib
-#${TACC_PHDF5_LIB}
+# HDF5PATH     = /home1/apps/intel25/impi21/phdf5/1.14.6/lib
+HDF5PATH = ${TACC_PHDF5_LIB}
 HDF5LIB      =	$(HDF5PATH)/libhdf5_hl_fortran.a \
 		$(HDF5PATH)/libhdf5_hl.a \
 		$(HDF5PATH)/libhdf5_fortran.a \
