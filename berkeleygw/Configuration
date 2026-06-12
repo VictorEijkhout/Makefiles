@@ -18,5 +18,5 @@ BUILDSYSTEM = make
 PREMAKE = ls -l *.mk && cp arch_${TACC_FAMILY_COMPILER}.mk ${SRCDIR}/arch.mk && cp flavor_real.mk ${SRCDIR}/flavor.mk && ls -l ${SRCDIR}/*.mk
 MAKETARGETS = all-flavors
 POSTMAKE = make install INSTDIR=${PREFIXDIR}
-POSTINSTALL = find bin -name \*.py -exec sed -i -e '/python3/!s/env python/env python3/' {} \;
+POSTINSTALL = find . -name \*.py -exec sed -i -e '/python3/!s/env python/env python3/' {} \;
 HASBIN = 1
