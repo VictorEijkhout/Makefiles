@@ -21,6 +21,7 @@ CMAKEFLAGS = \
   -D Kokkos_ENABLE_CUDA=${HAS_CUDA} \
   -D Kokkos_ENABLE_CUDA_LAMBDA=${HAS_CUDA} \
   -D Kokkos_ARCH_HOPPER90=${HAS_CUDA} \
+  -D Trilinos_ENABLE_KokkosKernels=ON \
   \
   -D Trilinos_ENABLE_OpenMP:BOOL=${HAS_OPENMP} \
   \
@@ -39,6 +40,10 @@ CMAKEFLAGS = \
   -D TPL_LAPACK_INCLUDE_DIRS:PATH=${BLASLAPACK_INC} \
   -D TPL_LAPACK_LIBRARIES:STRING='${BLASLAPACK_LIBS}' \
   \
+  -D TPL_ENABLE_Boost=ON \
+  -D Boost_LIBRARY_DIRS=${TACC_BOOST_LIB} \
+  -D Boost_INCLUDE_DIRS=${TACC_BOOST_INC} \
+  \
   -D TPL_ENABLE_HDF5:BOOL=${HAS_HDF5} \
   -D HDF5_INCLUDE_DIRS:PATH=${TACC_PHDF5_INC}    \
   -D HDF5_LIBRARY_DIRS:PATH=${TACC_PHDF5_LIB}    \
@@ -52,8 +57,6 @@ CMAKEFLAGS = \
   -D TPL_Pnetcdf_INCLUDE_DIRS:PATH=${TACC_PNETCDF_INC} \
   -D TPL_Pnetcdf_LIBRARY_DIRS:PATH=${TACC_PNETCDF_LIB} \
   -D TPL_Pnetcdf_LIBRARIES=${TACC_PNETCDF_LIB}/libpnetcdf.so \
-  \
-  -D BoostLib_LIBRARY_DIRS:PATH=$TACC_BOOST_LIB      \
   \
   -D TPL_ENABLE_MUMPS:BOOL=${HAS_MUMPS} \
   -D MUMPS_INCLUDE_DIRS=${TACC_MUMPS_INC} \
@@ -74,9 +77,6 @@ CMAKEFLAGS = \
   -D Trilinos_ENABLE_Anasazi:BOOL=ON \
   -D Trilinos_ENABLE_AztecOO:Bool=${HAS_EPETRA} \
   -D Trilinos_ENABLE_Belos:BOOL=ON \
-  -D Trilinos_ENABLE_Epetra:Bool=${HAS_EPETRA} \
-  -D Trilinos_ENABLE_EpetraExt:Bool=${HAS_EPETRA} \
-  -D                 Epetra_ENABLE_TESTS:BOOL=ON \
   -D Trilinos_ENABLE_ThyraEpetraAdapters=${HAS_ADAPTERS} \
   -D Trilinos_ENABLE_ThyraEpetraExtAdapters=${HAS_ADAPTERS} \
   -D Trilinos_ENABLE_ExodusII:Bool=${HAS_EXODUS} \
@@ -102,6 +102,7 @@ CMAKEFLAGS = \
       -D Phalanx_EXPLICIT_TEMPLATE_INSTANTIATION=ON \
       -D Phalanx_ENABLE_EXAMPLES=OFF \
   -D Trilinos_ENABLE_Piro:BOOL=ON \
+  -D Trilinos_ENABLE_ROL=ON \
   -D Trilinos_ENABLE_Rythmos:BOOL=ON \
   -D Trilinos_ENABLE_Sacado:Bool=ON \
   -D Trilinos_ENABLE_SEACAS:BOOL=${HAS_SEACASEXODUS} \
@@ -117,10 +118,17 @@ CMAKEFLAGS = \
   -D Trilinos_ENABLE_Teuchos:BOOL=${HAS_TEUCHOS} \
       -D Teuchos_ENABLE_LONG_LONG_INT:BOOL=ON \
   -D Trilinos_ENABLE_Thyra:BOOL=ON \
-  -D Trilinos_ENABLE_Tpetra:BOOL=ON \
   -D Trilinos_ENABLE_TriKota:BOOL=ON \
   -D Trilinos_ENABLE_Zoltan:BOOL=ON \
       -D Trilinos_ENABLE_Zoltan2:BOOL=ON \
+  \
+  -D Trilinos_ENABLE_Epetra:Bool=${HAS_EPETRA} \
+  -D Trilinos_ENABLE_EpetraExt:Bool=${HAS_EPETRA} \
+  -D                 Epetra_ENABLE_TESTS:BOOL=ON \
+  -D Trilinos_ENABLE_Tpetra:BOOL=ON \
+  -D Tpetra_INST_INT_INT=ON \
+  -D Trilinos_ENABLE_Xpetra=ON \
+  -D Xpetra_ENABLE_Kokkos_compat=${HAS_KOKKOS} \
   \
   -D KOKKOS_IS_REQUIRED_FOR_SEVERAL_PACKAGES=off \
   -D Trilinos_ENABLE_Kokkos:BOOL=${HAS_KOKKOS} \

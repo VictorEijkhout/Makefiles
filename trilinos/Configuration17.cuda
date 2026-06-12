@@ -14,9 +14,8 @@ URL = https://github.com/trilinos/Trilinos
 # https://trilinos.github.io/pdfs/TrilinosBuildReference.pdf
 DOCURL = https://www.docs.trilinos.org/files/TrilinosBuildReference.html
 
-PACKAGEVERSION = 17.1.0
-# 17.1.1
-PACKAGEVERSION_DOWNLOAD = 17-1-0
+PACKAGEVERSION = 17.1.1
+PACKAGEVERSION_DOWNLOAD = 17-1-1
 
 DOWNLOADURL = https://github.com/trilinos/Trilinos/archive/refs/tags/trilinos-release-${PACKAGEVERSION_DOWNLOAD}.tar.gz
 GITREPO = git@github.com:trilinos/Trilinos.git
@@ -45,10 +44,19 @@ LANGUAGE = CXX
 CPPSTANDARD = 20
 
 #
-# lots of package settings
+# TACC packages
+#
+HAS_HDF5 = ON
+HAS_MUMPS = OFF
+HAS_NETCDF = ON
+HAS_PNETCDF = ON
+HAS_OPENMP = OFF
+PYTHON = OFF
+
+#
+# TPL package settings
 #
 DEPRECATED=OFF 
-PYTHON = OFF
 HAS_ADAPTERS = ON
 HAS_EPETRA = ON
 HAS_BOOST = ON
@@ -56,19 +64,15 @@ HAS_BOOST = ON
 HAS_EXODUS = OFF
 HAS_FEI = ${HAS_ADAPTERS}
 HAS_KOKKOS = ON
-HAS_NETCDF = ON
-HAS_PNETCDF = ON
+HAS_MUELU = ON
+
 HAS_SEACASEXODUS = ON
 # only for vista:
 SYSTEM==vista HAS_SEACASIOSS = OFF
 SYSTEM!=vista HAS_SEACASIOSS = ON
-HAS_HDF5 = ON
-HAS_OPENMP = OFF
 HAS_TEUCHOS=ON 
 HAS_TEKO = ${HAS_ADAPTERS}
 
-HAS_MUELU = ON
-HAS_MUMPS = OFF
 HAS_STK = ON
 HAS_YAMLCPP = OFF 
 # if [ "$${HAS_YAMLCPP}" = "1" ] ; then 
