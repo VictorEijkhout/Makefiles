@@ -15,4 +15,5 @@ PACKAGEVERSION = 4.10.0
 DOWNLOADURL = https://downloads.unidata.ucar.edu/netcdf-c/${PACKAGEVERSION}/netcdf-c-${PACKAGEVERSION}.tar.gz
 GITREPO = http://github.com/Unidata/netcdf-c
 
+MODE = mpi
 include Configuration.par_common
