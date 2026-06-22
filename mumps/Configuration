@@ -1,0 +1,35 @@
+################################################################
+####
+#### Configuration for MUMPS installation
+####
+################################################################
+
+PACKAGE = mumps
+PACKAGEVERSION = 5.9.0
+URL = https://www.mumps-solver.org/
+DOWNLOADURL = https://mumps-solver.org/MUMPS_${PACKAGEVERSION}.tar.gz
+
+PARMODE = par
+PARMODE==seq MODE = seq
+PARMODE==par MODE = mpi
+
+BUILDSYSTEM = make
+PARMODE==seq MODULES = metis scotch blaslapack
+PARMODE==par MODULES = parmetis ptscotch blaslapack
+
+PARMODE==seq MODULENAME = smumps
+PARMODE==par MODULENAME = mumps
+
+exit
+	     && export DESTDIR="$${prefixdir}" && export PREFIX="" \
+	         && make -j ${JCOUNT} allshared \
+	         && cp Makefile.inc    $${prefixdir}/ \
+	         && cp -r include lib  $${prefixdir}/ \
+	         && ( cd examples && make --no-print-directory clean ) \
+	         && cp -r examples doc $${prefixdir}/ \
+	         && cp -r SCILAB/examples $${prefixdir}/examples/SCILIB \
+	    ) 2>&1 | tee $$installlog \
+	 && make --no-print-directory varsmodule
+
+CPTOINSTALLDIR = Makefile.inc
+CPTOINSTALLDIR += examples
