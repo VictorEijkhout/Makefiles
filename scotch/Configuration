@@ -1,0 +1,49 @@
+################################################################
+####
+#### Configuration for Scotch installation
+####
+#### note: also comes in C++ and Fortran download
+#### 
+#### see release_docs/INSTALL_CMake.txt
+#### 
+################################################################
+
+PACKAGE = scotch
+ABOUT = Package for graph and mesh/hypergraph partitioning, graph clustering, and sparse matrix ordering.
+URL = https://www.labri.fr/perso/pelegrin/scotch/ \
+    https://gitlab.inria.fr/scotch/scotch
+PACKAGEVERSION = 7.0.12
+DOWNLOADURL = https://gitlab.inria.fr/scotch/scotch/-/archive/v${PACKAGEVERSION}/scotch-v${PACKAGEVERSION}.tar.gz
+GITREPO = https://gitlab.inria.fr/scotch/scotch.git
+
+# Packagers are  encouraged to configure SCOTCH  so as to make the  widest use
+# of threads, that is: -DCOMMON_PTHREAD -DSCOTCH_PTHREAD -DSCOTCH_PTHREAD_MPI,
+# and also -DCOMMON_PTHREAD_AFFINITY_LINUX whenever possible.  On Windows-like
+# environments, the -DCOMMON_THREAD_WIN32 flag is now available.
+# The  -DSCOTCH_DETERMINISTIC  flag  may be  set or not,  depending on  former
+# practice, given that users can now set this behavior at run time.
+# Please refer to the file INSTALL.txt in the root directory.
+
+MODE = seq
+SCOTCHPARALLEL = OFF
+MODULENAME = scotch
+
+MODE==mpi SCOTCHPARALLEL = ON
+MODE==mpi MODULENAME = ptscotch
+
+INTSIZE = 32
+INSTALLVARIANT = i${INTSIZE}
+INSTALLEXT = ${INSTALLVARIANT}
+
+BUILDSYSTEM = cmake
+MODULES = 
+
+CMAKEFLAGS = \
+    -D BUILD_PTSCOTCH:BOOL=${SCOTCHPARALLEL} \
+    -D INTSIZE:STRING=${INTSIZE} \
+    -D BUILD_FORTRAN=ON
+
+HASBIN=1
+PREFIXPATHSET = 1
+
+COMPILER=gcc export I_MPI_FCFLAGS="-I${TACC_IMPI_INC}/mpi/gfortran/11.1.0"
