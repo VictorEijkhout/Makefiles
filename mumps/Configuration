@@ -13,19 +13,21 @@ MODE = mpi
 
 BUILDSYSTEM = make
 
-COMPILER==intel abort intel include file not working yet
+## COMPILER==intel abort intel include file not working yet
 
 MODE==seq MODULES = metis scotch
 #blaslapack
 MODE==mpi MODULES = parmetis ptscotch
 #blaslapack
+COMPILER==gcc MODULES += mkl
 
 MODE==seq MODULENAME = smumps
 MODE==mpi MODULENAME = mumps
 
 PREMAKE = cp Make.inc.${COMPILER}.${MODE} ${SRCDIR}/Makefile.inc
-export DESTDIR=${PREFIXDIR}
-MAKETARGETS = allshared  DESTDIR=${PREFIXDIR}
+# no DESTDIR? no "make install" rule?
+MAKETARGETS = allshared
+POSTMAKE = cd examples && make clean && cd .. && mkdir -p ${PREFIXDIR} && cp -r doc examples include lib ${PREFIXDIR}
 
 exit
 	     && export DESTDIR="$${prefixdir}" && export PREFIX="" \

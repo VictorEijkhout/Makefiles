@@ -28,7 +28,6 @@ ISCOTCH    = -I${TACC_PTSCOTCH_INC}
 # variable below); for both parallel and sequential analysis choose the second 
 # line (remember to add -Dptscotch in the ORDERINGSF variable below)
 
-#LSCOTCH    = -L$(SCOTCHDIR)/lib -lesmumps -lscotch -lscotcherr
 LSCOTCH    = -L${TACC_PTSCOTCH_LIB} -lesmumps -lptscotch -lptscotcherr
 
 LPORDDIR = $(topdir)/PORD/lib/
@@ -52,7 +51,7 @@ LPORD    = -L$(LPORDDIR) -lpord$(PLAT)
 # If you want to use Metis 4.X or an older version, you should use -Dmetis4 instead of -Dmetis
 # or in addition with -Dparmetis (if you are using parmetis 3.X or older).
 #ORDERINGSF = -Dscotch -Dmetis -Dpord -Dptscotch -Dparmetis
-ORDERINGSF  =
+ORDERINGSF  = -Dpord -Dptscotch
 #-Dpord
 ORDERINGSC  = $(ORDERINGSF)
 
@@ -76,7 +75,7 @@ FPIC_OPT = -fPIC
 OUTC    = -o 
 OUTF    = -o 
 RM = /bin/rm -f
-FL = ${FC}
+FL = ${TACC_FC}
 AR = ar vr 
 #RANLIB = ranlib
 RANLIB  = echo
