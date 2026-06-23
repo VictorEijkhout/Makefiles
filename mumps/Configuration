@@ -8,17 +8,24 @@ PACKAGE = mumps
 PACKAGEVERSION = 5.9.0
 URL = https://www.mumps-solver.org/
 DOWNLOADURL = https://mumps-solver.org/MUMPS_${PACKAGEVERSION}.tar.gz
-
-PARMODE = par
-PARMODE==seq MODE = seq
-PARMODE==par MODE = mpi
+# I'm not sure about the sequential mode
+MODE = mpi
 
 BUILDSYSTEM = make
-PARMODE==seq MODULES = metis scotch blaslapack
-PARMODE==par MODULES = parmetis ptscotch blaslapack
 
-PARMODE==seq MODULENAME = smumps
-PARMODE==par MODULENAME = mumps
+COMPILER==intel abort intel include file not working yet
+
+MODE==seq MODULES = metis scotch
+#blaslapack
+MODE==mpi MODULES = parmetis ptscotch
+#blaslapack
+
+MODE==seq MODULENAME = smumps
+MODE==mpi MODULENAME = mumps
+
+PREMAKE = cp Make.inc.${COMPILER}.${MODE} ${SRCDIR}/Makefile.inc
+export DESTDIR=${PREFIXDIR}
+MAKETARGETS = allshared  DESTDIR=${PREFIXDIR}
 
 exit
 	     && export DESTDIR="$${prefixdir}" && export PREFIX="" \
