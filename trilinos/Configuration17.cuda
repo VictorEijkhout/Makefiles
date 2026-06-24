@@ -22,7 +22,7 @@ GITREPO = git@github.com:trilinos/Trilinos.git
 
 ##
 MODE = hybrid
-MODULES = boost swig phdf5 parallelnetcdf pnetcdf parmetis
+MODULES = boost swig phdf5 parallelnetcdf pnetcdf 
 # blaslapack
 
 ##
@@ -48,7 +48,19 @@ CPPSTANDARD = 20
 #
 HAS_HDF5 = ON
 HAS_MUMPS = OFF
+HAS_MUMPS==OFF MUMPSFLAGS = -D mumps=off
+HAS_MUMPS==ON  MUMPSFLAGS = -D MUMPS_INCLUDE_DIRS=${TACC_MUMPS_INC} -D MUMPS_LIBRARY_DIRS=${TACC_MUMPS_LIB} -D MUMPS_LIBRARY_NAMES:STRING=${MUMPSLIBNAMES}
+HAS_MUMPS==ON MODULES += mumps 
 HAS_NETCDF = ON
+HAS_PNETCDF = ON
+
+HAS_PARMETIS = OFF
+HAS_PARMETIS==ON MODULES += parmetis
+HAS_PARMETIS==OFF PARMETISFLAGS = -D parmetis=off
+HAS_PARMETIS==ON  PARMETISFLAGS = -D TPL_ParMETIS_LIBRARIES='${PARMETISLIBS}' \
+  -D TPL_ParMETIS_INCLUDE_DIRS=${TACC_PARMETIS_INC} \
+
+
 HAS_PNETCDF = ON
 HAS_OPENMP = OFF
 PYTHON = OFF
@@ -74,7 +86,12 @@ HAS_TEUCHOS=ON
 HAS_TEKO = ${HAS_ADAPTERS}
 
 HAS_STK = ON
+
 HAS_YAMLCPP = OFF 
+HAS_YAMLCPP==ON  YAMLFLAGS = -D yaml-cpp_INCLUDE_DIRS:PATH=${TACC_YAMLCPP_INC} \
+  -D yaml-cpp_LIBRARY_DIRS:PATH=${TACC_YAMLCPP_LIB}
+HAS_YAMLCPP==OFF YAMLFLAGS = -D yaml=off
+
 # if [ "$${HAS_YAMLCPP}" = "1" ] ; then 
 # source $${scriptdir}/../yaml-cpp/yamlcpp_vars.sh
 # fi
@@ -92,5 +109,5 @@ TRILINOS_LAPACK_LIBS = ${BLASLAPACK_LIBS}
 
 include Configuration17.common
 
-
+exit
 
