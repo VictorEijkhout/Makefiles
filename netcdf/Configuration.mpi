@@ -16,4 +16,4 @@ DOWNLOADURL = https://downloads.unidata.ucar.edu/netcdf-c/${PACKAGEVERSION}/netc
 GITREPO = http://github.com/Unidata/netcdf-c
 
 MODE = mpi
-include Configuration.par_common
+include Configuration.${MODE}_common
