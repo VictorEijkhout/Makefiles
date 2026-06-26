@@ -16,4 +16,5 @@ DOWNLOADURL = https://downloads.unidata.ucar.edu/netcdf-c/${PACKAGEVERSION}/netc
 GITREPO = http://github.com/Unidata/netcdf-c
 
 MODE = mpi
+CMAKEFORTRANFLAGS = -D fortran=no
 include Configuration.${MODE}_common
