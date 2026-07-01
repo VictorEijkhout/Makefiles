@@ -16,17 +16,18 @@ DOCURL = https://www.docs.trilinos.org/files/TrilinosBuildReference.html
 
 PACKAGEVERSION = 17.1.1
 PACKAGEVERSION_DOWNLOAD = 17-1-1
-
 DOWNLOADURL = https://github.com/trilinos/Trilinos/archive/refs/tags/trilinos-release-${PACKAGEVERSION_DOWNLOAD}.tar.gz
 GITREPO = git@github.com:trilinos/Trilinos.git
 
 ##
 MODE = hybrid
-MODULES = boost swig phdf5 parallelnetcdf pnetcdf 
+MODULES = boost swig phdf5 
 # blaslapack
 
 ##
 ## CUDA settings
+## never seen this before:
+## https://github.com/trilinos/Trilinos/issues/15406
 ##
 HAS_CUDA = ON
 MODULES += cuda
@@ -48,20 +49,17 @@ CPPSTANDARD = 20
 #
 HAS_HDF5 = ON
 HAS_MUMPS = OFF
-HAS_MUMPS==OFF MUMPSFLAGS = -D mumps=off
-HAS_MUMPS==ON  MUMPSFLAGS = -D MUMPS_INCLUDE_DIRS=${TACC_MUMPS_INC} -D MUMPS_LIBRARY_DIRS=${TACC_MUMPS_LIB} -D MUMPS_LIBRARY_NAMES:STRING=${MUMPSLIBNAMES}
-HAS_MUMPS==ON MODULES += mumps 
-HAS_NETCDF = ON
-HAS_PNETCDF = ON
+
+HAS_NETCDF = OFF
+NETCDFFLAGS = -D netcdf=off
+
+HAS_PNETCDF = OFF
+PNETCDFFLAGS = -D pnetcdf=off
 
 HAS_PARMETIS = OFF
-HAS_PARMETIS==ON MODULES += parmetis
-HAS_PARMETIS==OFF PARMETISFLAGS = -D parmetis=off
-HAS_PARMETIS==ON  PARMETISFLAGS = -D TPL_ParMETIS_LIBRARIES='${PARMETISLIBS}' \
-  -D TPL_ParMETIS_INCLUDE_DIRS=${TACC_PARMETIS_INC} \
+PARMETISFLAGS = -D parmetis=off
 
 
-HAS_PNETCDF = ON
 HAS_OPENMP = OFF
 PYTHON = OFF
 
@@ -78,19 +76,13 @@ HAS_FEI = ${HAS_ADAPTERS}
 HAS_KOKKOS = ON
 HAS_MUELU = ON
 
-HAS_SEACASEXODUS = ON
-# only for vista:
-SYSTEM==vista HAS_SEACASIOSS = OFF
-SYSTEM!=vista HAS_SEACASIOSS = ON
 HAS_TEUCHOS=ON 
 HAS_TEKO = ${HAS_ADAPTERS}
 
 HAS_STK = ON
 
 HAS_YAMLCPP = OFF 
-HAS_YAMLCPP==ON  YAMLFLAGS = -D yaml-cpp_INCLUDE_DIRS:PATH=${TACC_YAMLCPP_INC} \
-  -D yaml-cpp_LIBRARY_DIRS:PATH=${TACC_YAMLCPP_LIB}
-HAS_YAMLCPP==OFF YAMLFLAGS = -D yaml=off
+YAMLFLAGS = -D yaml=off
 
 # if [ "$${HAS_YAMLCPP}" = "1" ] ; then 
 # source $${scriptdir}/../yaml-cpp/yamlcpp_vars.sh
@@ -103,6 +95,7 @@ TRILINOS_LAPACK_LIB  = ${BLASLAPACK_LIB}
 TRILINOS_BLAS_LIBS   = ${BLASLAPACK_LIBS}
 TRILINOS_LAPACK_LIBS = ${BLASLAPACK_LIBS}
 
+include Configuration17.dependencies
 
 # STK_FP problems:
 # https://github.com/trilinos/Trilinos/issues/15271

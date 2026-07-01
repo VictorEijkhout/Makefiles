@@ -115,7 +115,6 @@ CMAKEFLAGS = \
   -D Trilinos_ENABLE_EpetraExt:Bool=${HAS_EPETRA} \
   -D                 Epetra_ENABLE_TESTS:BOOL=ON \
   -D Trilinos_ENABLE_Tpetra:BOOL=ON \
-  -D Tpetra_INST_INT_INT=ON \
   -D Trilinos_ENABLE_Xpetra=ON \
   -D Xpetra_ENABLE_Kokkos_compat=${HAS_KOKKOS} \
   \
@@ -129,7 +128,7 @@ CMAKEFLAGS = \
   -D Kokkos_ENABLE_PTHREAD:BOOL=OFF \
   \
   -D Trilinos_ENABLE_STK:BOOL=${HAS_STK} \
-      -D Trilinos_ENABLE_STKIO:BOOL=${HAS_SEACASIOSS} \
+      -D Trilinos_ENABLE_STKIO:BOOL=${HAS_STKIO} \
       -D Trilinos_ENABLE_STKMesh:BOOL=${HAS_STK} \
   \
   -D SWIG_EXECUTABLE:FILEPATH=${TACC_SWIG_BIN}/swig
