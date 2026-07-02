@@ -1,0 +1,13 @@
+PACKAGE = superludist
+PACKAGEVERSION = 9.2.1
+ABOUT = Distributed memory, MPI based SuperLU
+MODE = mpi
+BUILDSYSTEM = cmake
+MODULES = parmetis
+CMAKEFLAGS = \
+    -D TPL_ENABLE_INTERNAL_BLASLIB=ON \
+    -D TPL_PARMETIS_ROOT=${TACC_PARMETIS_DIR} \
+    -D TPL_PARMETIS_LIBRARIES=${TACC_PARMETIS_LIB}/libparmetis.so \
+    -D TPL_PARMETIS_INCLUDE_DIRS=${TACC_PARMETIS_INC} \
+    -D CMAKE_C_FLAGS="-DMETIS_EXPORT="
+DOWNLOADURL = https://github.com/xiaoyeli/superlu_dist/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
