@@ -1,0 +1,48 @@
+################################################################
+####
+#### Configuration for Siesta installation
+####
+#### Fortran debug flags: https://gitlab.com/siesta-project/siesta/-/issues/397
+#### libfdf cloning in F jail: https://gitlab.com/siesta-project/siesta/-/issues/417
+#### scalapack fortran interface: https://gitlab.com/siesta-project/siesta/-/issues/438
+####
+#### Vista:
+#### https://gitlab.com/siesta-project/siesta/-/issues/441
+####
+################################################################
+
+PACKAGE = siesta
+ABOUT = A first-principles materials simulation code using DFT
+URL         = https://siesta-project.org/siesta/index.html
+SOFTWAREURL = https://gitlab.com/siesta-project/siesta
+DOCURL      = https://docs.siesta-project.org/projects/siesta/en/stable/
+## see below if this ever reaches 5.4
+PACKAGEVERSION = 5.4.2
+DOWNLOADURL = https://gitlab.com/siesta-project/siesta/-/releases/${PACKAGEVERSION}/downloads/siesta-${PACKAGEVERSION}.tar.gz
+GITREPO = https://gitlab.com/siesta-project/siesta.git
+SUBMODULE = 1
+MODE = mpi
+
+BUILDSYSTEM = cmake
+MODULES = fftw3 parallelnetcdf
+
+PKGCONFIGLIB = pkgconfig
+
+# https://docs.siesta-project.org/projects/siesta/en/stable/installation/build-issues.html#siesta-does-not-recognize-intel-mkl-libraries
+## CMAKEPREP = find . -name \*make -exec sed -i -e 's/\-xHost//' -e 's/\-check//' {} \;
+## CMAKEBUILDDEBUG = 1
+# for nvidia add flag: -Mextend ?
+# --log-level=debug --log-context
+CMAKEFLAGS =  \
+    -D SIESTA_WITH_FLOOK=FALSE \
+    -D Fortran_FLAGS_DEBUG=-O0 \
+    -D CMAKE_Fortran_FLAGS=-fPIE \
+    \
+    -D SIESTA_WITH_WANNIER90=ON \
+    -D NetCDF_ROOT=${TACC_PARALLELNETCDF_DIR} \
+    \
+    -D SIESTA_WITH_FFTW=TRUE
+
+HASBIN = 1
+CPTOINSTALLDIR = Examples Tests
+
