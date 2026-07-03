@@ -8,3 +8,8 @@ for p in $* ; do
 	echo "$p: missing"
     fi
 done
+
+exit
+
+Stampede3 Intel 26
+arpack complains about eigen
