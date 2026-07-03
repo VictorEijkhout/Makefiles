@@ -14,13 +14,14 @@ MODE = mpi
 MODULES = autoconf automake
 
 BUILDSYSTEM = autotools
+HAS_FORTRAN = ON
 # default: use fortran
 CONFIGUREFLAGS = --enable-shared --enable-fortran
-# vista gcc stumbles on some pgf90 stuff
-SYSTEM==vista COMPILER==gcc CONFIGUREFLAGS = --enable-shared --disable-fortran
+# vista gcc (also S3 gcc15) stumbles on some pgf90 stuff
+COMPILER==gcc CONFIGUREFLAGS = --enable-shared --disable-fortran
 
 FORCERECONF = 1
-HASBIN=1
+# VLE ??? HASBIN=1
 PKGCONFIGLIB = pkgconfig
 
 DOWNLOADURL = https://parallel-netcdf.github.io/Release/pnetcdf-${PACKAGEVERSION}.tar.gz

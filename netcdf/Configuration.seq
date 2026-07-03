@@ -19,4 +19,5 @@ GITREPO = http://github.com/Unidata/netcdf-c
 # it will be non-zero for the netcdff build
 CMAKEFORTRANFLAGS = 
 
+MODE = seq
 include Configuration.seq_common

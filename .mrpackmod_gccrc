@@ -1,6 +1,7 @@
 BLASLAPACK_INC = ${TACC_MKL_INC}
 BLASLAPACK_LIB = ${TACC_MKL_LIB}
 # trilinos wants fully qualified paths
+# note the semicolons: be sure to single-quote this when using the macros
 BLASLAPACK_LIBS = ${TACC_MKL_LIB}/libmkl_intel_lp64.so;${TACC_MKL_LIB}/libmkl_sequential.so;${TACC_MKL_LIB}/libmkl_core.so
 
 exit

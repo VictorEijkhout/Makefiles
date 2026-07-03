@@ -14,9 +14,11 @@ ABOUT = parallel graph partitioner
 PACKAGEVERSION = 4.0.3
 GITREPO = https://github.com/scibuilder/parmetis.git
 ZIPURL = https://github.com/scibuilder/parmetis/archive/refs/heads/master.zip
-
 MODE = hybrid
+
+BUILDSYSTEM = cmake
 MODULES = 
+HASBIN = 1
 
 # ifeq "${TACC_FAMILY_COMPILER}" "intel"
 #   CMAKEFLAGS=\
@@ -25,6 +27,4 @@ MODULES =
 #   CMAKEFLAGS=\
 #     -DCMAKE_C_FLAGS=\"-O2 -fopenmp\" 
 # endif
-
-BUILDSYSTEM = cmake
 

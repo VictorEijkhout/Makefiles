@@ -24,7 +24,7 @@ GITREPO = git@github.com:trilinos/Trilinos.git
 
 ##
 MODE = hybrid
-MODULES = boost swig phdf5 parallelnetcdf parmetis pnetcdf
+MODULES = boost swig phdf5 parmetis
 # blaslapack
 HAS_CUDA = OFF
 MODULE_MINIMUM_VERSION_intel = 20
@@ -45,12 +45,13 @@ HAS_BOOST = ON
 HAS_EXODUS = OFF
 HAS_FEI = ${HAS_ADAPTERS}
 HAS_KOKKOS = ON
+
 HAS_NETCDF = ON
+NETCDFFLAGS = -D netcdf=off
+
 HAS_PNETCDF = ON
-HAS_SEACASEXODUS = ON
-# only for vista:
-SYSTEM==vista HAS_SEACASIOSS = OFF
-SYSTEM!=vista HAS_SEACASIOSS = ON
+PNETCDFFLAGS = -D pnetcdf=off
+
 HAS_HDF5 = ON
 HAS_OPENMP = OFF
 HAS_TEKO = ${HAS_ADAPTERS}
@@ -72,6 +73,8 @@ TRILINOS_LAPACK_LIBS = ${BLASLAPACK_LIBS}
 
 DEPRECATED=OFF 
 HAS_TEUCHOS=ON 
+
+include Configuration17.dependencies
 
 # STK_FP problems:
 # https://github.com/trilinos/Trilinos/issues/15271
