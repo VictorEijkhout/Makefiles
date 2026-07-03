@@ -8,7 +8,8 @@
 # D. Strubbe
 # January 2011, UCB
 
-COMPFLAG  = -DINTEL 
+# VLE just guessing
+COMPFLAG  = -DNVIDIA
 PARAFLAG  = -DMPI -DOMP
 
 MATHFLAG  =  -DUSESCALAPACK -DUSEFFTW3 -DHDF5
@@ -29,11 +30,11 @@ FCPP    = cpp -C -nostdinc
 
 # VLE there are MPI type errors;
 # leave out "-Wall -pedantic-errors"
-F90free = mpif90 -free -qopenmp -no-ipo
+F90free = mpif90 -Mfree
 
-LINK    = mpif90 -qopenmp -no-ipo
-FOPTS   = -O3 -fp-model source
-FNOOPTS = -O2 -fp-model source -no-ipo
+LINK    = mpif90 
+FOPTS   = -O3 
+FNOOPTS = -O2 
 # VLE note the space at the end of this line!
 MOD_OPT = -module 
 INCFLAG = -I
@@ -49,23 +50,23 @@ REMOVE  = /bin/rm -f
 
 # Math Libraries
 #
-MKLPATH      = $(MKLROOT)/lib/intel64
+MKLPATH      = ${TACC_NVPL_LIB}
 
 FFTWLIB      =	-Wl,--start-group \
-		$(MKLPATH)/libmkl_intel_lp64.a \
-		$(MKLPATH)/libmkl_intel_thread.a \
-		$(MKLPATH)/libmkl_core.a \
+		$(MKLPATH)/libnvpl_intel_lp64.a \
+		$(MKLPATH)/libnvpl_intel_thread.a \
+		$(MKLPATH)/libnvpl_core.a \
 		-Wl,--end-group -liomp5 -lpthread -lm -ldl
-FFTWINCLUDE  = $(MKLROOT)/include/fftw
+FFTWINCLUDE  = ${TACC_NVPL_INC}
 
 
 LAPACKLIB    = -Wl,--start-group \
-		$(MKLPATH)/libmkl_intel_lp64.a \
-		$(MKLPATH)/libmkl_intel_thread.a \
-		$(MKLPATH)/libmkl_core.a \
-		$(MKLPATH)/libmkl_blacs_intelmpi_lp64.a \
+		$(MKLPATH)/libnvpl_intel_lp64.a \
+		$(MKLPATH)/libnvpl_intel_thread.a \
+		$(MKLPATH)/libnvpl_core.a \
+		$(MKLPATH)/libnvpl_blacs_intelmpi_lp64.a \
 		-Wl,--end-group -liomp5 -lpthread -lm -ldl
-SCALAPACKLIB = $(MKLPATH)/libmkl_scalapack_lp64.a
+SCALAPACKLIB = $(MKLPATH)/libnvpl_scalapack_lp64.a
 
 # HDF5PATH     = /home1/apps/intel25/impi21/phdf5/1.14.6/lib
 HDF5PATH = ${TACC_PHDF5_LIB}
