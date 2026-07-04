@@ -13,7 +13,8 @@ DOWNLOADURL = https://github.com/LLNL/Silo/archive/refs/tags/${PACKAGEVERSION}.t
 GITREPO = https://github.com/LLNL/Silo.git
 
 MODE = seq
-MODULES = hdf5/<2
+MODULES = hdf5
+#/<2
 
 HASBIN=1
 PREFIXPATHSET = 1
