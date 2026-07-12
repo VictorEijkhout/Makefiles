@@ -15,9 +15,8 @@ URL = https://github.com/trilinos/Trilinos
 DOCURL = https://github.com/trilinos/Trilinos/blob/master/doc/build_ref/TrilinosBuildReferenceTemplate.rst
 # https://www.docs.trilinos.org/files/TrilinosBuildReference.html
 
-PACKAGEVERSION = 17.1.0
-# 17.1.1
-PACKAGEVERSION_DOWNLOAD = 17-1-0
+PACKAGEVERSION = 17.1.1
+PACKAGEVERSION_DOWNLOAD = 17-1-1
 
 DOWNLOADURL = https://github.com/trilinos/Trilinos/archive/refs/tags/trilinos-release-${PACKAGEVERSION_DOWNLOAD}.tar.gz
 GITREPO = git@github.com:trilinos/Trilinos.git
