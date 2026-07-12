@@ -13,6 +13,7 @@ CODEURL = https://github.com/Unidata/netcdf-fortran
 DOCURL = https://docs.unidata.ucar.edu/nug/current/getting_and_building_netcdf.html#configure_options
 PACKAGEVERSION = 4.6.2
 DOWNLOADURL = https://github.com/Unidata/netcdf-fortran/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
+MODE = seq
 
 MODULES += netcdf
 CMAKEFORTRANFLAGS = \
