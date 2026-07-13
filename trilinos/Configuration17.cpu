@@ -23,7 +23,7 @@ GITREPO = git@github.com:trilinos/Trilinos.git
 
 ##
 MODE = hybrid
-MODULES = boost swig phdf5 parmetis
+MODULES = boost swig phdf5 
 # blaslapack
 HAS_CUDA = OFF
 MODULE_MINIMUM_VERSION_intel = 20
@@ -47,6 +47,9 @@ HAS_KOKKOS = ON
 
 HAS_NETCDF = ON
 NETCDFFLAGS = -D netcdf=off
+
+HAS_PARMETIS = ON
+PARMETISFLAGS = -D parmetis=off
 
 HAS_PNETCDF = ON
 PNETCDFFLAGS = -D pnetcdf=off
