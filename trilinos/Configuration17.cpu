@@ -50,6 +50,7 @@ NETCDFFLAGS = -D netcdf=off
 
 HAS_PARMETIS = ON
 PARMETISFLAGS = -D parmetis=off
+PARMETISLIBS = 'libparmetis.so;libmetis.so'
 
 HAS_PNETCDF = ON
 PNETCDFFLAGS = -D pnetcdf=off
@@ -61,7 +62,8 @@ HAS_TEKO = ${HAS_ADAPTERS}
 HAS_MUELU = ON
 HAS_MUMPS = OFF
 HAS_STK = ON
-HAS_YAMLCPP = OFF 
+HAS_YAMLCPP = OFF
+YAMLFLAGS = 
 # if [ "$${HAS_YAMLCPP}" = "1" ] ; then 
 # source $${scriptdir}/../yaml-cpp/yamlcpp_vars.sh
 # fi
