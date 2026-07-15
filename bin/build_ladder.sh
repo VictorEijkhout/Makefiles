@@ -78,7 +78,7 @@ else:
 # packagetgts = { "parallelnetcdf":"par", "parpack":"par", "phdf5":"par",
 #                 "ptscotch":"par32", }
 
-from utils import *
+from ladder_utils import *
 
 ##
 ## Loop over package directories and variants

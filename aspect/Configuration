@@ -10,7 +10,8 @@ URL = https://aspect.geodynamics.org/
 CODEURL = https://github.com/geodynamics/aspect
 PACKAGEVERSION = 3.0.0
 MODE = mpi
-MODULES = dealii/9.>3
+MODULES = dealii
+#/9.>3
 
 BUILDSYSTEM = cmake
 CMAKEFLAGS = \

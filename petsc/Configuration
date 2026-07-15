@@ -1,6 +1,6 @@
 ################################################################
 ####
-#### Makefile for PETSc local installation
+#### Configuration for PETSc installation
 ####
 ################################################################
 
@@ -10,7 +10,7 @@ URL = https://petsc.org
 SOFTWAREURL = https://petsc.org/release/install/download/
 
 PACKAGEVERSION = 3.25
-PACKAGEVERSION_DOWNLOAD = 3.25.2
+PACKAGEVERSION_DOWNLOAD = 3.25.3
 DOWNLOADURL = https://web.cels.anl.gov/projects/petsc/download/release-snapshots/petsc-${PACKAGEVERSION_DOWNLOAD}.tar.gz
 GITREPO = https://gitlab.com/petsc/petsc.git
 BRANCH = main
@@ -21,7 +21,7 @@ BUILDSYSTEM = petsc
 
 # set configure flags
 PETSCFLAGS =
-ARCH=${PACKAGEVERSION}
+ARCH=
 
 ##
 ## Settings
@@ -37,6 +37,14 @@ PRECISION = double
 PETSCFLAGS += --with-precision=${PRECISION}
 PRECISION==single ARCH *= single
 
+# fortran 
+FORTRAN = 90
+COMPILER==gcc HAS_FORTRAN=OFF
+FORTRAN==08 ARCH += f08
+FORTRAN==08  PETSCFLAGS += --with-fortran-bindings=1 --with-mpi-f90module-visibility=0
+FORTRAN==90  PETSCFLAGS += --with-fortran-bindings=1 --with-mpi-f90module-visibility=1
+FORTRAN==OFF PETSCFLAGS += --with-fortran-bindings=0 --with-fc=0
+
 # int length
 INTSIZE = 32
 INTSIZE==64 PETSCFLAGS += --with-64-bit-indices=1
@@ -44,44 +52,39 @@ INTSIZE==64 ARCH *= i64
 
 # debug
 DEBUG=OFF
-DEBUG==ON PETSCFLAGS += --with-debug=yes
-DEBUG==ON ARCH *= debug
-
-# fortran
-HAS_FORTRAN=ON
-COMPILER==gcc HAS_FORTRAN=OFF
-HAS_FORTRAN==ON  PETSCFLAGS += --with-fortran-bindings=yes
-HAS_FORTRAN==OFF PETSCFLAGS += --with-fortran-bindings=no
+DEBUG==OFF PETSCFLAGS += --with-debug=no
+DEBUG==ON  PETSCFLAGS += --with-debug=yes
+DEBUG==ON  ARCH *= debug
 
 ##
 ## External Packages, unless small installation
 ##
-INSTALLATION=BIG
-INSTALLATION==BIG   MODULENOTE = External packages:
-INSTALLATION==SMALL MODULENOTE = No external packages.
+INSTALLATION=big
+INSTALLATION==big   MODULENOTE = External packages:
+INSTALLATION==small MODULENOTE = No external packages.
 
 HAS_CHACO=ON
-INSTALLATION==SMALL HAS_CHACO=OFF
+INSTALLATION==small HAS_CHACO=OFF
 HAS_CHACO==ON MODULENOTE += chaco
 
 HAS_EIGEN=ON
-INSTALLATION==SMALL HAS_EIGEN=OFF
+INSTALLATION==small HAS_EIGEN=OFF
 HAS_EIGEN==ON MODULENOTE += eigen
 
 HAS_FFTW=ON
-INSTALLATION==SMALL HAS_FFTW=OFF
+INSTALLATION==small HAS_FFTW=OFF
 HAS_FFTW==ON MODULENOTE += fftw
 
 HAS_HDF5=ON
-INSTALLATION==SMALL HAS_HDF5=OFF
+INSTALLATION==small HAS_HDF5=OFF
 HAS_HDF5==ON MODULENOTE += hdf5
 
 HAS_HYPRE=ON
-INSTALLATION==SMALL HAS_HYPRE=OFF
+INSTALLATION==small HAS_HYPRE=OFF
 HAS_HYPRE==ON MODULENOTE += hypre
 
 HAS_KOKKOS=ON
-INSTALLATION==SMALL HAS_KOKKOS=OFF
+INSTALLATION==small HAS_KOKKOS=OFF
 HAS_KOKKOS==ON MODULENOTE += kokkos
 
 # problem
@@ -91,19 +94,19 @@ HAS_MPE=OFF
 # Mumps depends on Metis & Parmetis
 #
 HAS_MUMPS=ON
-INSTALLATION==SMALL HAS_MUMPS=OFF
+INSTALLATION==small HAS_MUMPS=OFF
 HAS_MUMPS==ON MODULENOTE += mumps
 
 HAS_METIS=ON
-INSTALLATION==SMALL HAS_METIS=OFF
+INSTALLATION==small HAS_METIS=OFF
 HAS_METIS==ON MODULENOTE += metis
 
 HAS_PARMETIS=ON
-INSTALLATION==SMALL HAS_PARMETIS=OFF
+INSTALLATION==small HAS_PARMETIS=OFF
 HAS_PARMETIS==ON MODULENOTE += parmetis
 
 HAS_SCALAPACK=ON
-INSTALLATION==SMALL HAS_SCALAPACK=OFF
+INSTALLATION==small HAS_SCALAPACK=OFF
 HAS_SCALAPACK==ON MODULENOTE += scalapack
 
 # turn off mumps if any of metis/parmetis/scalapack is disabled
@@ -117,7 +120,7 @@ HAS_MUMPS==ON HAS_METIS=ON
 HAS_MUMPS==ON MODULENOTE += mumps
 
 HAS_PTSCOTCH=ON
-INSTALLATION==SMALL HAS_PTSCOTCH=OFF
+INSTALLATION==small HAS_PTSCOTCH=OFF
 HAS_PTSCOTCH==ON MODULENOTE += ptscotch
 
 HAS_CHACO==ON     PETSCFLAGS += --with-chaco=yes     --download-chaco=yes
@@ -136,10 +139,14 @@ HAS_SCALAPACK==ON PETSCFLAGS += --with-scalapack=yes --download-scalapack=yes --
 ##
 ## Modulefile stuff
 ##
-export PETSC_ARCH=${ARCH}
-EXTRAVARS = PETSC_DIR=${PREFIXDIR} PETSC_ARCH=${ARCH}
+INSTALLEXT = ${ARCH}
+INSTALLVARIANT = ${ARCH}
+PETSCARCH = ${PACKAGEVERSION}
+ARCH!="" PETSCARCH *= -${ARCH}
+MODULEVERSION = ${PETSCARCH}
+export PETSC_ARCH=${PETSCARCH}
+EXTRAVARS = PETSC_DIR=${PREFIXDIR} PETSC_ARCH=${PETSCARCH}
 PKGCONFIGLIB = pkgconfig
 LOGS = \
-    ${SRCDIR}/${ARCH}/lib/petsc/conf/configure.log \
-    ${SRCDIR}/${ARCH}/lib/petsc/conf/make.log
-    
+    ${SRCDIR}/${PETSCARCH}/lib/petsc/conf/configure.log \
+    ${SRCDIR}/${PETSCARCH}/lib/petsc/conf/make.log

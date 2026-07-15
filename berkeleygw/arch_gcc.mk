@@ -10,8 +10,8 @@
 
 COMPFLAG  = -DGNU
 PARAFLAG  = -DMPI
-MATHFLAG  =
-## VLE we will get to this next: -DUSESCALAPACK
+MATHFLAG  =  -DUSESCALAPACK -DUSEFFTW3 -DHDF5
+
 # Only uncomment DEBUGFLAG if you need to develop/debug BerkeleyGW.
 # The output will be much more verbose, and the code will slow down by ~20%.
 #DEBUGFLAG = -DDEBUG
@@ -74,3 +74,32 @@ SCALAPACKLIB = /usr/lib/libscalapack-1.a $(BLACS)
 
 #need to export MPIEXEC=/usr/bin/mpirun if this is not default in `which mpiexec`
 TESTSCRIPT = make check-parallel
+
+MKLPATH      = $(MKLROOT)/lib/intel64
+
+FFTWLIB      =	-Wl,--start-group \
+		$(MKLPATH)/libmkl_intel_lp64.a \
+		$(MKLPATH)/libmkl_intel_thread.a \
+		$(MKLPATH)/libmkl_core.a \
+		-Wl,--end-group -liomp5 -lpthread -lm -ldl
+FFTWINCLUDE  = $(MKLROOT)/include/fftw
+
+
+LAPACKLIB    = -Wl,--start-group \
+		$(MKLPATH)/libmkl_intel_lp64.a \
+		$(MKLPATH)/libmkl_intel_thread.a \
+		$(MKLPATH)/libmkl_core.a \
+		$(MKLPATH)/libmkl_blacs_intelmpi_lp64.a \
+		-Wl,--end-group -liomp5 -lpthread -lm -ldl
+SCALAPACKLIB = $(MKLPATH)/libmkl_scalapack_lp64.a
+
+# HDF5PATH     = /home1/apps/intel25/impi21/phdf5/1.14.6/lib
+HDF5PATH = ${TACC_PHDF5_LIB}
+HDF5LIB      =	$(HDF5PATH)/libhdf5_hl_fortran.a \
+		$(HDF5PATH)/libhdf5_hl.a \
+		$(HDF5PATH)/libhdf5_fortran.a \
+                $(HDF5PATH)/libhdf5_f90cstub.a \
+		$(HDF5PATH)/libhdf5.a \
+		/usr/lib64/libsz.so \
+		-lz
+HDF5INCLUDE  = ${HDF5PATH}/../include

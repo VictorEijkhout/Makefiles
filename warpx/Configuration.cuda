@@ -5,9 +5,10 @@
 ################################################################
 
 PACKAGE = warpx
-PACKAGEVERSION = 26.05
+PACKAGEVERSION = 26.06
 ABOUT = WarpX is an advanced Particle-In-Cell code
-DOCURRL = https://warpx.readthedocs.io/en/latest/index.html
+URL = https://github.com/BLAST-WarpX/warpx
+DOCURL = https://warpx.readthedocs.io/en/latest/index.html
 DOWNLOADURL = https://github.com/BLAST-WarpX/warpx/archive/refs/tags/${PACKAGEVERSION}.tar.gz
 GITREPO= https://github.com/ECP-WarpX/WarpX.git
 MODE = mpi
@@ -35,8 +36,8 @@ export NVCC_APPEND_FLAGS='-allow-unsupported-compiler'
 # mpi mode is also detected automatically
 CMAKEFLAGS = \
   -D WarpX_COMPUTE=CUDA \
-  -D CMAKE_LINKER_FLAGS=-mcmodel=medium \
-  -D CMAKE_EXE_LINKER_FLAGS=-mcmodel=medium \
+  -D CMAKE_LINKER_FLAGS='-mcmodel=medium -Wl,--no-relax' \
+  -D CMAKE_EXE_LINKER_FLAGS='-mcmodel=medium -Wl,--no-relax' \
   -D WarpX_PYTHON=ON \
   -D WarpX_DIMS='2;3' \
   -D WarpX_FFT=${HAS_FFT}

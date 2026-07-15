@@ -5,7 +5,9 @@
 ################################################################
 
 PACKAGE = hdf5
-PACKAGEVERSION = 2.0.0
+PACKAGEVERSION = 2.1.1
+
+include Configuration.basic
 
 # sequential settings
 HDF5PARALLEL = OFF

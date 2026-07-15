@@ -15,16 +15,15 @@ URL = https://github.com/trilinos/Trilinos
 DOCURL = https://github.com/trilinos/Trilinos/blob/master/doc/build_ref/TrilinosBuildReferenceTemplate.rst
 # https://www.docs.trilinos.org/files/TrilinosBuildReference.html
 
-PACKAGEVERSION = 17.1.0
-# 17.1.1
-PACKAGEVERSION_DOWNLOAD = 17-1-0
+PACKAGEVERSION = 17.1.1
+PACKAGEVERSION_DOWNLOAD = 17-1-1
 
 DOWNLOADURL = https://github.com/trilinos/Trilinos/archive/refs/tags/trilinos-release-${PACKAGEVERSION_DOWNLOAD}.tar.gz
 GITREPO = git@github.com:trilinos/Trilinos.git
 
 ##
 MODE = hybrid
-MODULES = boost swig phdf5 parallelnetcdf parmetis pnetcdf
+MODULES = boost swig phdf5 
 # blaslapack
 HAS_CUDA = OFF
 MODULE_MINIMUM_VERSION_intel = 20
@@ -45,12 +44,17 @@ HAS_BOOST = ON
 HAS_EXODUS = OFF
 HAS_FEI = ${HAS_ADAPTERS}
 HAS_KOKKOS = ON
+
 HAS_NETCDF = ON
+NETCDFFLAGS = -D netcdf=off
+
+HAS_PARMETIS = ON
+PARMETISFLAGS = -D parmetis=off
+PARMETISLIBS = 'libparmetis.so;libmetis.so'
+
 HAS_PNETCDF = ON
-HAS_SEACASEXODUS = ON
-# only for vista:
-SYSTEM==vista HAS_SEACASIOSS = OFF
-SYSTEM!=vista HAS_SEACASIOSS = ON
+PNETCDFFLAGS = -D pnetcdf=off
+
 HAS_HDF5 = ON
 HAS_OPENMP = OFF
 HAS_TEKO = ${HAS_ADAPTERS}
@@ -58,7 +62,8 @@ HAS_TEKO = ${HAS_ADAPTERS}
 HAS_MUELU = ON
 HAS_MUMPS = OFF
 HAS_STK = ON
-HAS_YAMLCPP = OFF 
+HAS_YAMLCPP = OFF
+YAMLFLAGS = 
 # if [ "$${HAS_YAMLCPP}" = "1" ] ; then 
 # source $${scriptdir}/../yaml-cpp/yamlcpp_vars.sh
 # fi
@@ -72,6 +77,8 @@ TRILINOS_LAPACK_LIBS = ${BLASLAPACK_LIBS}
 
 DEPRECATED=OFF 
 HAS_TEUCHOS=ON 
+
+include Configuration17.dependencies
 
 # STK_FP problems:
 # https://github.com/trilinos/Trilinos/issues/15271

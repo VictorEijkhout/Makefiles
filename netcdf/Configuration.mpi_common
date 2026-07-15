@@ -8,9 +8,8 @@ PREFIXPATHSET = 1
 PKGCONFIGLIB = pkgconfig
 DEPENDSONCURRENT = phdf5 pnetcdf
 LINKLIB64toLIB = 1
-CPTOINSTALLDIR = examples
+# CPTOINSTALLDIR = examples
 
-MODE = mpi
 MODULES += phdf5/1.14.6 pnetcdf 
 NETCDF_PARALLEL = ON
 

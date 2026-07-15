@@ -1,0 +1,21 @@
+################################################################
+####
+#### Configuration for JSON installation
+####
+################################################################
+
+PACKAGE = json
+ABOUT = JSON for Modern C++
+PACKAGEVERSION = 3.12.0
+DOWNLOADURL = https://github.com/nlohmann/json/archive/refs/tags/v${PACKAGEVERSION}.tar.gz
+URL = https://github.com/nlohmann/json
+MODE = seq
+
+BUILDSYSTEM = cmake
+CMAKEFLAGS = 
+# https://github.com/nlohmann/json/discussions/4899
+COMPILER=nvidia CMAKEFLAGS += -D CMAKE_CXX_FLAGS='-D JSON_HAS_RANGES=0'
+PKGCONFIG = share/pkgconfig
+NOLIB = 1
+
+

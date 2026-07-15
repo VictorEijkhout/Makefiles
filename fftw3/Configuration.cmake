@@ -12,10 +12,12 @@ URL = http://fftw.org/
 DOCURL = http://www.fftw.org/fftw3_doc/Installation-on-Unix.html
 PACKAGEVERSION = 3.3.10
 DOWNLOADURL = http://fftw.org/fftw-${PACKAGEVERSION}.tar.gz
+MODE = mpi
+
+MODE = mpi
 
 BUILDSYSTEM = cmake
 
-MODE = mpi
 MODULES = 
 
 CMAKEFLAGS = \

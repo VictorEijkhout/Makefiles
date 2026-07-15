@@ -16,17 +16,18 @@ DOCURL = https://www.docs.trilinos.org/files/TrilinosBuildReference.html
 
 PACKAGEVERSION = 17.1.1
 PACKAGEVERSION_DOWNLOAD = 17-1-1
-
 DOWNLOADURL = https://github.com/trilinos/Trilinos/archive/refs/tags/trilinos-release-${PACKAGEVERSION_DOWNLOAD}.tar.gz
 GITREPO = git@github.com:trilinos/Trilinos.git
 
 ##
 MODE = hybrid
-MODULES = boost swig phdf5 parallelnetcdf pnetcdf parmetis
+MODULES = boost swig phdf5 
 # blaslapack
 
 ##
 ## CUDA settings
+## never seen this before:
+## https://github.com/trilinos/Trilinos/issues/15406
 ##
 HAS_CUDA = ON
 MODULES += cuda
@@ -48,8 +49,17 @@ CPPSTANDARD = 20
 #
 HAS_HDF5 = ON
 HAS_MUMPS = OFF
-HAS_NETCDF = ON
-HAS_PNETCDF = ON
+
+HAS_NETCDF = OFF
+NETCDFFLAGS = -D netcdf=off
+
+HAS_PNETCDF = OFF
+PNETCDFFLAGS = -D pnetcdf=off
+
+HAS_PARMETIS = OFF
+PARMETISFLAGS = -D parmetis=off
+PARMETISLIBS = 'libparmetis.so;libmetis.so'
+
 HAS_OPENMP = OFF
 PYTHON = OFF
 
@@ -66,15 +76,14 @@ HAS_FEI = ${HAS_ADAPTERS}
 HAS_KOKKOS = ON
 HAS_MUELU = ON
 
-HAS_SEACASEXODUS = ON
-# only for vista:
-SYSTEM==vista HAS_SEACASIOSS = OFF
-SYSTEM!=vista HAS_SEACASIOSS = ON
 HAS_TEUCHOS=ON 
 HAS_TEKO = ${HAS_ADAPTERS}
 
 HAS_STK = ON
+
 HAS_YAMLCPP = OFF 
+YAMLFLAGS = -D yaml=off
+
 # if [ "$${HAS_YAMLCPP}" = "1" ] ; then 
 # source $${scriptdir}/../yaml-cpp/yamlcpp_vars.sh
 # fi
@@ -86,11 +95,12 @@ TRILINOS_LAPACK_LIB  = ${BLASLAPACK_LIB}
 TRILINOS_BLAS_LIBS   = ${BLASLAPACK_LIBS}
 TRILINOS_LAPACK_LIBS = ${BLASLAPACK_LIBS}
 
+include Configuration17.dependencies
 
 # STK_FP problems:
 # https://github.com/trilinos/Trilinos/issues/15271
 
 include Configuration17.common
 
-
+exit
 
