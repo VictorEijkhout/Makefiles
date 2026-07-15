@@ -58,7 +58,7 @@ PNETCDFFLAGS = -D pnetcdf=off
 
 HAS_PARMETIS = OFF
 PARMETISFLAGS = -D parmetis=off
-
+PARMETISLIBS = 'libparmetis.so;libmetis.so'
 
 HAS_OPENMP = OFF
 PYTHON = OFF
