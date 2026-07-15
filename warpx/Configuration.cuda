@@ -30,7 +30,6 @@ MODULES += cuda/12.8
 MODULEVERSIONEXTRA = cuda
 # to distinguish from omp:
 INSTALLVARIANT = cuda
-export NVCC_APPEND_FLAGS='-allow-unsupported-compiler --cudart=shared'
 
 # hdf5 gets found through cmake prefix path, no options needed
 # mpi mode is also detected automatically
@@ -44,12 +43,17 @@ CMAKEFLAGS = \
   -D WarpX_COMPUTE=CUDA \
   -D AMReX_CUDA_ARCH=Volta \
   -D WarpX_CUDA_ARCH=Volta \
-  -D CMAKE_CXX_FLAGS='-mcmodel=medium -Wl,--no-relax' \
-  -D CMAKE_CUDA_FLAGS='-mcmodel=medium -Wl,--no-relax' \
   -D WarpX_PYTHON=ON \
   -D WarpX_DIMS='2;3' \
   -D WarpX_FFT=${HAS_FFT}
 #  -Wl,–no-relax
+
+SYSTEM==ls6 export NVCC_APPEND_FLAGS='-allow-unsupported-compiler --cudart=shared'
+SYSTEM!=ls6 export NVCC_APPEND_FLAGS='-allow-unsupported-compiler'
+SYSTEM==ls6 CMAKEFLAGS += \
+  -D CMAKE_CXX_FLAGS='-mcmodel=medium -Wl,--no-relax' \
+  -D CMAKE_CUDA_FLAGS='-mcmodel=medium -Wl,--no-relax'
+
 exit
 
   -D CMAKE_C_FLAGS='-Wl,--no-relax' \
