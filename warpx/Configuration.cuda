@@ -30,19 +30,32 @@ MODULES += cuda/12.8
 MODULEVERSIONEXTRA = cuda
 # to distinguish from omp:
 INSTALLVARIANT = cuda
-export NVCC_APPEND_FLAGS='-allow-unsupported-compiler'
+export NVCC_APPEND_FLAGS='-allow-unsupported-compiler --cudart=shared'
 
 # hdf5 gets found through cmake prefix path, no options needed
 # mpi mode is also detected automatically
+# -DAMReX_CUDA_ARCH=8.0
+
+# https://github.com/BLAST-WarpX/warpx/pull/3673
+export CUDAFLAGS="--host-linker-script=use-lcs" 
+# no-relax issue:
+# https://github.com/BLAST-WarpX/warpx/issues/7039
 CMAKEFLAGS = \
   -D WarpX_COMPUTE=CUDA \
-  -D CMAKE_LINKER_FLAGS='-mcmodel=medium -Wl,--no-relax' \
-  -D CMAKE_EXE_LINKER_FLAGS='-mcmodel=medium -Wl,--no-relax' \
+  -D AMReX_CUDA_ARCH=Volta \
+  -D WarpX_CUDA_ARCH=Volta \
+  -D CMAKE_CXX_FLAGS='-mcmodel=medium -Wl,--no-relax' \
+  -D CMAKE_CUDA_FLAGS='-mcmodel=medium -Wl,--no-relax' \
   -D WarpX_PYTHON=ON \
   -D WarpX_DIMS='2;3' \
   -D WarpX_FFT=${HAS_FFT}
 #  -Wl,–no-relax
 exit
+
+  -D CMAKE_C_FLAGS='-Wl,--no-relax' \
+  -D CMAKE_Fortran_FLAGS='-Wl,--no-relax' \
+  -D CMAKE_LINKER_FLAGS='-mcmodel=medium -Wl,--no-relax' \
+  -D CMAKE_EXE_LINKER_FLAGS='-mcmodel=medium -Wl,--no-relax' \
 
 cmake -S . -B build_gpu -DWarpX_COMPUTE=CUDA -DWarpX_FFT=ON -DWarpX_QED_TABLE_GEN=ON -DWarpX_DIMS="1;2;RZ;3"
 cmake --build build_gpu -j 16
