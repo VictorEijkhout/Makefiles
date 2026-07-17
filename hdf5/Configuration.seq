@@ -14,5 +14,7 @@ HDF5PARALLEL = OFF
 MODE = seq
 MODULENAME = hdf5
 
+HDFFORTRAN = ON
+HAS_SZIP = ON
 include Configuration.common
 

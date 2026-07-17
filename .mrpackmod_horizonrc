@@ -1,0 +1,7 @@
+BLASLAPACK_INC = ${TACC_NVPL_INC}
+BLASLAPACK_LIB = ${TACC_NVPL_LIB}
+# note the semicolons: be sure to single-quote this when using the macros
+BLASLAPACK_LIBS = nvpl_lapack_lp64_seq;nvpl_lapack_core;nvpl_blas_lp64_seq;nvpl_blas_core
+# note the semicolons: be sure to single-quote this when using the macros
+BLASLAPACK_LIBRARIES = ${TACC_NVPL_LIB}/libnvpl_lapack_lp64_seq.so;${TACC_NVPL_LIB}/libnvpl_lapack_core.so;${TACC_NVPL_LIB}/libnvpl_blas_lp64_seq.so;${TACC_NVPL_LIB}/libnvpl_blas_core.so
+

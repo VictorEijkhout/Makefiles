@@ -2,12 +2,14 @@ MODULES = zlib
 
 BUILDSYSTEM = cmake
 
-HDFFORTRAN = ON
 TESTING = ON
 THREADSAFE = ON
 
 # szip & libaec:
 # https://github.com/HDFGroup/hdf5/blob/develop/docs/INSTALL_Filters.md#libaec-szip-options
+HAS_SZIP==OFF SZIP_OPTIONS = -D LIBAEC_USE_LOCALCONTENT=OFF
+HAS_SZIP==ON  SZIP_OPTIONS = -D LIBAEC_PACKAGE_NAME=libaec
+HAS_SZIP==ON  MODULES += libaec
 
 # unsupported is needed because C++ & parallel is untested in the distro
 # https://github.com/HDFGroup/hdf5/issues/5683
@@ -20,8 +22,8 @@ CMAKEFLAGS = \
   \
   -D HDF5_ALLOW_EXTERNAL_SUPPORT=ON \
   \
-  -D HDF5_ENABLE_SZIP_SUPPORT=OFF \
-  -D LIBAEC_USE_LOCALCONTENT=OFF \
+  -D HDF5_ENABLE_SZIP_SUPPORT=${HAS_SZIP} \
+  ${SZIP_OPTIONS} \
   \
   -D HDF5_ENABLE_Z_LIB_SUPPORT:BOOL=ON \
   -D ZLIB_INCLUDE_DIR:PATH=${TACC_ZLIB_INC} \
