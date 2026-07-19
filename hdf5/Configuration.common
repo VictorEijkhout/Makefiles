@@ -1,15 +1,21 @@
-MODULES = zlib
+##
+## Common settings for hdf5 and phdf5
+##
 
 BUILDSYSTEM = cmake
 
-TESTING = ON
-THREADSAFE = ON
+MODULES = zlib
+DEPENDSON = zlib
 
 # szip & libaec:
 # https://github.com/HDFGroup/hdf5/blob/develop/docs/INSTALL_Filters.md#libaec-szip-options
 HAS_SZIP==OFF SZIP_OPTIONS = -D LIBAEC_USE_LOCALCONTENT=OFF
 HAS_SZIP==ON  SZIP_OPTIONS = -D LIBAEC_PACKAGE_NAME=libaec
-HAS_SZIP==ON  MODULES += libaec
+HAS_SZIP==ON  MODULES   += libaec
+HAS_SZIP==ON  DEPENDSON += libaec
+
+TESTING = ON
+THREADSAFE = ON
 
 # unsupported is needed because C++ & parallel is untested in the distro
 # https://github.com/HDFGroup/hdf5/issues/5683
